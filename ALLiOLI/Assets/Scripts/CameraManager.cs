@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPersonCameraController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [Space]
     [SerializeField] private float yawRotationalSpeed = 200;
@@ -18,6 +18,8 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] private LayerMask layersThatCanClipCamera;
     [SerializeField] private float offsetOnCollision = 0.5f;
 
+    [HideInInspector] public Vector2 cameraMovement;
+
     private void Awake()
     {
         Cursor.visible = false;
@@ -26,24 +28,15 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        float mouseAxisX = 0f;
-        float mouseAxisY = 0f;
-        
-        if (Application.isFocused)
-        {
-            mouseAxisX = Input.GetAxis("Mouse X");
-            mouseAxisY = Input.GetAxis("Mouse Y");
-        }
-
         Vector3 eulerAngles = transform.eulerAngles;
         float yaw = (eulerAngles.y + 180.0f);
         float pitch = eulerAngles.x;
 
-        yaw += yawRotationalSpeed * mouseAxisX * Time.deltaTime;
+        yaw += yawRotationalSpeed * cameraMovement.x * Time.deltaTime;
         yaw *= Mathf.Deg2Rad;
         if (pitch > 180.0f)
             pitch -= 360.0f;
-        pitch += pitchRotationalSpeed * (-mouseAxisY) * Time.deltaTime;
+        pitch += pitchRotationalSpeed * (-cameraMovement.y) * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
         pitch *= Mathf.Deg2Rad;
         Vector3 desiredPosition = target.position + new Vector3(Mathf.Sin(yaw) * Mathf.Cos(pitch) * distanceToTarget,  Mathf.Sin(pitch) * distanceToTarget, Mathf.Cos(yaw) * Mathf.Cos(pitch) * distanceToTarget);
