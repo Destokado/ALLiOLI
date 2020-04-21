@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public void ActivateTrap()
     {
-        //TODO:If there isn't any trap activatable, then activate the nearest one 
+        //TODO:If there isn't any trap activatable, then activate the nearest one if it isn't on CD
     }
     
 }

@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class ATrap : MonoBehaviour
 {
-
-    public bool placed = false;
-    public float activatableRange;
-    public float cooldownTime;
+    public bool placed = false; 
+    [SerializeField] private float activatableRange;
+    [SerializeField]  private float cooldownTime;
 
     public bool OnCD => cdTimer > 0;
 
