@@ -12,4 +12,10 @@ public class Player : MonoBehaviour
     {
         cameraManager.cameraMovement = value.Get<Vector2>();
     }
+
+    public void ActivateTrap()
+    {
+        //TODO:If there isn't any trap activatable, then activate the nearest one 
+    }
+    
 }
