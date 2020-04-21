@@ -35,7 +35,7 @@ public abstract class ATrap : MonoBehaviour
         //TODO
         return 0;
     }
-    public bool isActivatable()
+    public bool IsActivatable()
     {
         return DistanceToNearestCharacter() <= activatableRange;
     }
