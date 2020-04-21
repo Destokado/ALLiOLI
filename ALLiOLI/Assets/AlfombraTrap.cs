@@ -16,7 +16,7 @@ public class AlfombraTrap : ATrap
     // Start is called before the first frame update
     
 
-    protected  void Activate()
+    public override void Activate()
     {
        base.Activate();
        animManager.Play(0);

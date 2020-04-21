@@ -24,7 +24,7 @@ public abstract class ATrap : MonoBehaviour
         
     }
 
-    protected void Activate()
+    public virtual  void Activate()
     {
         cdTimer = cooldownTime;
         
