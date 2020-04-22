@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class End : MatchPhase
+public class End : State
 {
-    public override void StartPhase()
+    public override void StartState()
     {
         Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished");
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateState(float deltaTime)
     {
         
     }
 
-    public override MatchPhase GetCurrentPhase()
+    public override State GetCurrentState()
     {
         return this;
     }
 
-    public override void EndPhase()
+    public override void EndState()
     {
         
     }
