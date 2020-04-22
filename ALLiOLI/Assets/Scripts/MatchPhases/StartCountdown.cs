@@ -2,30 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartCountdown : MatchPhase
+public class StartCountdown : State
 {
-    private float countdownTimer { get; set; }
-
-    public override void StartPhase()
+    public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'StartCountdown'. The 1st stage will start in 10s.");
 
-        countdownTimer = 10;
+        MatchManager.Instance.countdownTimer = 10;
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateState(float deltaTime)
     {
-        countdownTimer -= deltaTime;
+        MatchManager.Instance.countdownTimer -= deltaTime;
     }
 
-    public override MatchPhase GetCurrentPhase()
+    public override State GetCurrentState()
     {
-        if (countdownTimer>0)
+        if (MatchManager.Instance.countdownTimer>0)
             return this;
         return new TrapUp();
     }
 
-    public override void EndPhase()
+    public override void EndState()
     {
         
     }

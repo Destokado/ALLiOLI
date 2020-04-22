@@ -7,12 +7,19 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : MonoBehaviour
 {
-    private MatchPhase currentMatchPhase;
+    private State _currentState;
     public PlayerInputManager playerInputManager { get; private set; }
 
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
+    [SerializeField] public MatchGuiManager guiManager;
 
+    public float countdownTimer { 
+        get => _countdownTimer;
+        set { _countdownTimer = value; MatchManager.Instance.guiManager.SetTimer(_countdownTimer); } 
+    }
+    private float _countdownTimer;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -23,29 +30,29 @@ public class MatchManager : MonoBehaviour
         else
         {
             Instance = this;
-            currentMatchPhase = new WaitingForPlayers();
+            _currentState = new WaitingForPlayers();
             playerInputManager = GetComponent<PlayerInputManager>();
         }
     }
 
     private void Start()
     {
-        currentMatchPhase.StartPhase();
+        _currentState.StartState();
     }
 
     private void Update()
     {
-        MatchPhase nextPhase = currentMatchPhase.GetCurrentPhase();
-        if (currentMatchPhase != nextPhase)
+        State nextPhase = _currentState.GetCurrentState();
+        if (_currentState != nextPhase)
             SetupMatchPhase(nextPhase);
-        currentMatchPhase.UpdatePhase(Time.deltaTime);
+        _currentState.UpdateState(Time.deltaTime);
     }
 
-    private void SetupMatchPhase(MatchPhase nextPhase)
+    private void SetupMatchPhase(State nextPhase)
     {
-        currentMatchPhase?.EndPhase();
-        currentMatchPhase = nextPhase;
-        currentMatchPhase?.StartPhase();
+        _currentState?.EndState();
+        _currentState = nextPhase;
+        _currentState?.StartState();
     }
     
     private void OnPlayerJoined(PlayerInput playerInput)

@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle : MatchPhase
+public class Battle : State
 {
-    public override void StartPhase()
+    public override void StartState()
     {
         Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateState(float deltaTime)
     {
         
     }
 
-    public override MatchPhase GetCurrentPhase()
+    public override State GetCurrentState()
     {
         if (MatchManager.Instance.winnerPlayer==null)
             return this;
         return new End();
     }
 
-    public override void EndPhase()
+    public override void EndState()
     {
         
     }

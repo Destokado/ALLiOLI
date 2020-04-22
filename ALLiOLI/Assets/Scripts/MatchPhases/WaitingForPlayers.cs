@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitingForPlayers : MatchPhase
+public class WaitingForPlayers : State
 {
-    public override void StartPhase()
+    public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
-
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateState(float deltaTime)
     {
         
     }
 
-    public override MatchPhase GetCurrentPhase()
+    public override State GetCurrentState()
     {
         if (MatchManager.Instance.playerInputManager.playerCount < MatchManager.Instance.playerInputManager.maxPlayerCount)
             return this;
@@ -23,7 +22,7 @@ public class WaitingForPlayers : MatchPhase
             return new StartCountdown();
     }
 
-    public override void EndPhase()
+    public override void EndState()
     {
         
     }

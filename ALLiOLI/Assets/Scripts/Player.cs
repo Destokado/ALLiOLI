@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject characterPrefab;
     private Character character;
     
-    private ThirdPersonCamera camera;
+    private new ThirdPersonCamera camera;
     private PlayerInput playerInput;
 
     private void OnCameraMove(InputValue value)
