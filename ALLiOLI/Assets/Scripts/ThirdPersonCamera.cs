@@ -19,7 +19,7 @@ public class ThirdPersonCamera : MonoBehaviour
     [SerializeField] private LayerMask layersThatCanClipCamera;
     [SerializeField] private float offsetOnCollision = 0.5f;
 
-    [HideInInspector] public Vector2 cameraMovement;
+    [HideInInspector] public Vector2 movement;
 
     private void Awake()
     {
@@ -33,11 +33,11 @@ public class ThirdPersonCamera : MonoBehaviour
         float yaw = (eulerAngles.y + 180.0f);
         float pitch = eulerAngles.x;
 
-        yaw += yawRotationalSpeed * cameraMovement.x * Time.deltaTime;
+        yaw += yawRotationalSpeed * movement.x * Time.deltaTime;
         yaw *= Mathf.Deg2Rad;
         if (pitch > 180.0f)
             pitch -= 360.0f;
-        pitch += pitchRotationalSpeed * (-cameraMovement.y) * Time.deltaTime;
+        pitch += pitchRotationalSpeed * (-movement.y) * Time.deltaTime;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
         pitch *= Mathf.Deg2Rad;
         Vector3 desiredPosition = target.position + new Vector3(Mathf.Sin(yaw) * Mathf.Cos(pitch) * distanceToTarget,  Mathf.Sin(pitch) * distanceToTarget, Mathf.Cos(yaw) * Mathf.Cos(pitch) * distanceToTarget);
@@ -48,7 +48,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         RaycastHit raycastHit;
         Ray ray = new Ray(target.position, -direction);
-        Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f );
+        //Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f );
         if (Physics.Raycast(ray, out raycastHit, distanceToTarget, layersThatCanClipCamera))
         {
             desiredPosition = raycastHit.point + direction * offsetOnCollision;
@@ -61,5 +61,12 @@ public class ThirdPersonCamera : MonoBehaviour
     public void Setup(Character character)
     {
         target = character.transform;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(new Vector3(transform.position.x+transform.forward.x, 10, transform.position.z+transform.forward.z), 0.1f);
+        Gizmos.DrawRay(transform.position, transform.forward);
     }
 }
