@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
 {
     public Vector3 movement { get { return _movement;} set { _movement = value.normalized; } }
     private Vector3 _movement;
+    [SerializeField] private float speed = 10;
     
     private Rigidbody rb { get; set; }
 
@@ -17,12 +18,6 @@ public class Character : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (movement != Vector2.zero)
-            rb.velocity = movement * 10;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position, rb.velocity);
+        rb.velocity = movement * speed;
     }
 }

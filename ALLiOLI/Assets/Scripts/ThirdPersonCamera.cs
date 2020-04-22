@@ -62,11 +62,4 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         target = character.transform;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(new Vector3(transform.position.x+transform.forward.x, 10, transform.position.z+transform.forward.z), 0.1f);
-        Gizmos.DrawRay(transform.position, transform.forward);
-    }
 }
