@@ -8,9 +8,8 @@ public class TrapUp : MatchPhase
     
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'TrapUp'. The 1st just started.");
-
         countdownTimer = 2 * 60;
+        Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + countdownTimer + "s remaining.");
     }
 
     public override void UpdatePhase(float deltaTime)

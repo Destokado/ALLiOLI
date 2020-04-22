@@ -6,7 +6,7 @@ public class End : MatchPhase
 {
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'End'. The game has finished");
+        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished");
     }
 
     public override void UpdatePhase(float deltaTime)

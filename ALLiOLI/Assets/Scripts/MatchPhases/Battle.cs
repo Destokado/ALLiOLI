@@ -6,7 +6,7 @@ public class Battle : MatchPhase
 {
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'Battle'. The battle will start in 10s.");
+        Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");
     }
 
     public override void UpdatePhase(float deltaTime)

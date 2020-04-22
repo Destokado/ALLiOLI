@@ -8,7 +8,7 @@ public class StartCountdown : MatchPhase
 
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'StartCountdown'. The 1st stage will start in 10s.");
+        Debug.Log("STAGE 0 - Starting phase 'StartCountdown'. The 1st stage will start in 10s.");
 
         countdownTimer = 10;
     }

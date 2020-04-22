@@ -8,7 +8,7 @@ public class BattleCountdown : MatchPhase
     
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'BattleCountdown'. The battle will start in 10s.");
+        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in 10s.");
 
         countdownTimer = 10;
     }
@@ -22,7 +22,7 @@ public class BattleCountdown : MatchPhase
     {
         if (countdownTimer > 0)
             return this;
-        return new BattleCountdown();
+        return new Battle();
     }
 
     public override void EndPhase()

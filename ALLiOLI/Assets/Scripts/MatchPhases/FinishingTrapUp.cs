@@ -8,7 +8,7 @@ public class FinishingTrapUp : MatchPhase
     
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'FinishingTrapUp'. The 1st stage will end in 10s.");
+        Debug.Log("STAGE 1 - Starting phase 'FinishingTrapUp'. The 1st stage will end in 10s.");
 
         countdownTimer = 10;
     }

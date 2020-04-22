@@ -6,7 +6,7 @@ public class WaitingForPlayers : MatchPhase
 {
     public override void StartPhase()
     {
-        Debug.Log("Starting phase 'WaitingForPlayers'.");
+        Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
 
     }
 
@@ -17,7 +17,7 @@ public class WaitingForPlayers : MatchPhase
 
     public override MatchPhase GetCurrentPhase()
     {
-        if (MatchManager.Instance.playerInputManager.joiningEnabled)
+        if (MatchManager.Instance.playerInputManager.playerCount < MatchManager.Instance.playerInputManager.maxPlayerCount)
             return this;
         else
             return new StartCountdown();
