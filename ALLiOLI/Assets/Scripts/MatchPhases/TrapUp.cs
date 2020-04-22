@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapUp : MatchPhase
+public class TrapUp : State
 {
-    private float countdownTimer { get; set; }
-    
-    public override void StartPhase()
+    public override void StartState()
     {
-        countdownTimer = 2 * 60;
-        Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + countdownTimer + "s remaining.");
+        MatchManager.Instance.countdownTimer = 2 * 60;
+        Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + MatchManager.Instance.countdownTimer + "s remaining.");
     }
 
-    public override void UpdatePhase(float deltaTime)
+    public override void UpdateState(float deltaTime)
     {
-        countdownTimer -= deltaTime;
+        MatchManager.Instance.countdownTimer -= deltaTime;
     }
 
-    public override MatchPhase GetCurrentPhase()
+    public override State GetCurrentState()
     {
-        if (countdownTimer > 0)
+        if (MatchManager.Instance.countdownTimer > 0)
             return this;
         return new FinishingTrapUp();
     }
 
-    public override void EndPhase()
+    public override void EndState()
     {
         
     }

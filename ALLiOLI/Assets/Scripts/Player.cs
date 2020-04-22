@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Character character;
     [SerializeField] private ATrap exampleTrap;
     [SerializeField] private GameObject characterPrefab;
-    private ThirdPersonCamera camera;
+    private new ThirdPersonCamera camera;
     private PlayerInput playerInput;
 
     private void OnCameraMove(InputValue value)
