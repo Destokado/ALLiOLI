@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+[RequireComponent(typeof(Camera))]
+public class ThirdPersonCamera : MonoBehaviour
 {
     [Space]
     [SerializeField] private float yawRotationalSpeed = 200;
@@ -55,5 +56,10 @@ public class CameraManager : MonoBehaviour
             
         transform.forward = direction;
         transform.position = desiredPosition;
+    }
+
+    public void Setup(Character character)
+    {
+        target = character.transform;
     }
 }
