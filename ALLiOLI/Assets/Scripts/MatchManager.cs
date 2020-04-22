@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : MonoBehaviour
 {
-    private State _currentState;
+    public State currentState { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
 
     public static MatchManager Instance { get; private set; }
@@ -30,29 +30,29 @@ public class MatchManager : MonoBehaviour
         else
         {
             Instance = this;
-            _currentState = new WaitingForPlayers();
+            currentState = new WaitingForPlayers();
             playerInputManager = GetComponent<PlayerInputManager>();
         }
     }
 
     private void Start()
     {
-        _currentState.StartState();
+        currentState.StartState();
     }
 
     private void Update()
     {
-        State nextPhase = _currentState.GetCurrentState();
-        if (_currentState != nextPhase)
+        State nextPhase = currentState.GetCurrentState();
+        if (currentState != nextPhase)
             SetupMatchPhase(nextPhase);
-        _currentState.UpdateState(Time.deltaTime);
+        currentState.UpdateState(Time.deltaTime);
     }
 
     private void SetupMatchPhase(State nextPhase)
     {
-        _currentState?.EndState();
-        _currentState = nextPhase;
-        _currentState?.StartState();
+        currentState?.EndState();
+        currentState = nextPhase;
+        currentState?.StartState();
     }
     
     private void OnPlayerJoined(PlayerInput playerInput)
