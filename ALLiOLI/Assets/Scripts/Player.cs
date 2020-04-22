@@ -7,9 +7,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject characterPrefab;
-    private Character character;
     
+    [SerializeField] private Character character;
+    [SerializeField] private ATrap exampleTrap;
+    [SerializeField] private GameObject characterPrefab;
     private ThirdPersonCamera camera;
     private PlayerInput playerInput;
 
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
     }
-    
+
     private void OnCharacterMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
@@ -39,5 +40,13 @@ public class Player : MonoBehaviour
         targetDirection = camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         character.movement = targetDirection;
+    }
+    
+    private void OnTrap()
+    {
+        Debug.Log("Trap button pressed");
+        //TODO:If there isn't any trap activatable, then activate the nearest one if it isn't on CD
+        exampleTrap.Activate();
+
     }
 }
