@@ -13,6 +13,7 @@ public class ThirdPersonCamera : MonoBehaviour
     [SerializeField] private float minPitch = 5;
     [SerializeField] private float maxPitch = 75;
     [Space]
+    [Tooltip("Not necessary to set if the setup is set trough code")]
     [SerializeField] private Transform target;
     [SerializeField] private float distanceToTarget = 10;
     [Space]
@@ -25,6 +26,11 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+    
+    public void Setup(Transform target)
+    {
+        this.target = target;
     }
 
     void LateUpdate()
@@ -43,13 +49,10 @@ public class ThirdPersonCamera : MonoBehaviour
         Vector3 desiredPosition = target.position + new Vector3(Mathf.Sin(yaw) * Mathf.Cos(pitch) * distanceToTarget,  Mathf.Sin(pitch) * distanceToTarget, Mathf.Cos(yaw) * Mathf.Cos(pitch) * distanceToTarget);
         Vector3 direction = target.position - desiredPosition;
 
-
         direction /= distanceToTarget; //TODO: Isn't it 'normalize'?
 
-        RaycastHit raycastHit;
         Ray ray = new Ray(target.position, -direction);
-        //Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f );
-        if (Physics.Raycast(ray, out raycastHit, distanceToTarget, layersThatCanClipCamera))
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, distanceToTarget, layersThatCanClipCamera))
         {
             desiredPosition = raycastHit.point + direction * offsetOnCollision;
         }
@@ -58,8 +61,5 @@ public class ThirdPersonCamera : MonoBehaviour
         transform.position = desiredPosition;
     }
 
-    public void Setup(Character character)
-    {
-        target = character.transform;
-    }
+
 }

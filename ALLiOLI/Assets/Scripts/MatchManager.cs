@@ -7,16 +7,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : MonoBehaviour
 {
-    private State _currentState;
+    public State currentState { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
-
+    public List<Player> players { get; private set; }
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
 
     public float countdownTimer { 
         get => _countdownTimer;
-        set { _countdownTimer = value; MatchManager.Instance.guiManager.SetTimer(_countdownTimer); } 
+        set { _countdownTimer = value; Instance.guiManager.SetTimer(_countdownTimer); } 
     }
     private float _countdownTimer;
     
@@ -30,34 +30,36 @@ public class MatchManager : MonoBehaviour
         else
         {
             Instance = this;
-            _currentState = new WaitingForPlayers();
+            currentState = new WaitingForPlayers();
             playerInputManager = GetComponent<PlayerInputManager>();
+            players= new List<Player>();
         }
     }
 
     private void Start()
     {
-        _currentState.StartState();
+        currentState.StartState();
     }
 
     private void Update()
     {
-        State nextPhase = _currentState.GetCurrentState();
-        if (_currentState != nextPhase)
+        State nextPhase = currentState.GetCurrentState();
+        if (currentState != nextPhase)
             SetupMatchPhase(nextPhase);
-        _currentState.UpdateState(Time.deltaTime);
+        currentState.UpdateState(Time.deltaTime);
     }
 
     private void SetupMatchPhase(State nextPhase)
     {
-        _currentState?.EndState();
-        _currentState = nextPhase;
-        _currentState?.StartState();
+        currentState?.EndState();
+        currentState = nextPhase;
+        currentState?.StartState();
     }
     
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         Debug.Log("Player joined with input device: " + playerInput.devices[0], playerInput.gameObject);
+        players.Add(playerInput.GetComponent<Player>());
         //Player player = playerInput.GetComponent<Player>();
         //player.Setup();
     }
@@ -65,7 +67,8 @@ public class MatchManager : MonoBehaviour
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
-        
+        players.Remove(playerInput.gameObject.GetComponent<Player>());
+
     }
     
 }
