@@ -9,14 +9,14 @@ public class MatchManager : MonoBehaviour
 {
     public State currentState { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
-
+    public List<Player> players { get; private set; }
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
 
     public float countdownTimer { 
         get => _countdownTimer;
-        set { _countdownTimer = value; MatchManager.Instance.guiManager.SetTimer(_countdownTimer); } 
+        set { _countdownTimer = value; Instance.guiManager.SetTimer(_countdownTimer); } 
     }
     private float _countdownTimer;
     
@@ -58,6 +58,7 @@ public class MatchManager : MonoBehaviour
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         Debug.Log("Player joined with input device: " + playerInput.devices[0], playerInput.gameObject);
+        players.Add(playerInput.GetComponent<Player>());
         //Player player = playerInput.GetComponent<Player>();
         //player.Setup();
     }
@@ -65,7 +66,8 @@ public class MatchManager : MonoBehaviour
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
-        
+        players.Remove(playerInput.GetComponent<Player>());
+
     }
     
 }

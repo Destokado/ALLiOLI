@@ -1,45 +1,47 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 public abstract class ATrap : MonoBehaviour
 {
-    public bool placed = false; 
-    [SerializeField] private float activatableRange;
-    [SerializeField]  private float cooldownTime;
+    public bool placed { get; private set; }
 
-    public bool OnCD => cdTimer > 0;
+    [SerializeField] private float activatableRange;
+    [SerializeField] private float cooldownTime;
+
+    public bool OnCd
+    {
+        get => cdTimer > 0;
+        private set { }
+    }
 
     private float cdTimer;
-    
+
+    private void Start()
+    {
+        placed = false;
+    }
 
     private void Update()
     {
         cdTimer -= Time.deltaTime;
     }
 
-    public void Init()
+    public void SetUp()
     {
-        placed = true;
-        
+        placed = !placed;
     }
 
-    public virtual  void Activate()
+    public virtual void Activate()
     {
         cdTimer = cooldownTime;
-        
     }
 
-    public float DistanceToNearestCharacter()
+    private bool HasCharInRange()
     {
-        //TODO
-        return 0;
+        return TrapManager.Instance.HasCharInRange(transform.position, activatableRange);
     }
+
     public bool IsActivatable()
     {
-        return DistanceToNearestCharacter() <= activatableRange;
+        return HasCharInRange() && !OnCd;
     }
-    
 }
-
-
