@@ -7,12 +7,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    
-    public  Character character { get; private set; }
-    [SerializeField] private ATrap exampleTrap;
+    public Character character { get; private set; }
     [SerializeField] private GameObject characterPrefab;
     private new ThirdPersonCamera camera;
     private PlayerInput playerInput;
+    [SerializeField] private List<ATrap> ownedTraps;
 
     private void OnCameraMove(InputValue value)
     {
@@ -23,7 +22,7 @@ public class Player : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
-        
+
         SpawnNewCharacter();
         camera.Setup(character);
     }
@@ -41,23 +40,19 @@ public class Player : MonoBehaviour
         targetDirection.y = 0.0f;
         character.movement = targetDirection;
     }
-    
+
     private void OnTrap()
     {
         Debug.Log("Trap button pressed");
         State state = MatchManager.Instance.currentState;
-        
+
         if (state is Battle)
         {
-            character.ActivateTrap();
-
+            character.ActivateTrap(ownedTraps);
         }
         else if (state is TrapUp)
         {
-            character.SetUpTrap();
+            ownedTraps = character.SetUpTrap(camera.transform.position, camera.transform.forward, ownedTraps);
         }
-        
-        exampleTrap.Activate();
-
     }
 }
