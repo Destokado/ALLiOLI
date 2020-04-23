@@ -23,10 +23,12 @@ public abstract class Trap : MonoBehaviour
 
     private bool HasCharacterInActionZone()
     {
-        foreach (Player player in MatchManager.Instance.players)
+        //TODO: keep track if any alive character is inside the "action zone"
+        
+        /*foreach (Player player in MatchManager.Instance.players)
         {
             if (Vector3.Distance(player.transform.position, transform.position) <= activatableRange) return true;
-        }
+        }*/
 
         return false;
     }
@@ -38,6 +40,9 @@ public abstract class Trap : MonoBehaviour
 
     public float GetDistanceTo(Character character)
     {
+        if (HasCharacterInActionZone())
+            return 0f;
+        
         //return Vector3.Distance(character.transform.position, this.gameObject.transform.position);
         return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position);
     }

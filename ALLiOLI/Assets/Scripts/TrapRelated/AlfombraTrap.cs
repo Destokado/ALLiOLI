@@ -20,7 +20,5 @@ public class AlfombraTrap : Trap
     {
        base.Activate();
        animManager.Play(0);
-      
-        
     }
 }

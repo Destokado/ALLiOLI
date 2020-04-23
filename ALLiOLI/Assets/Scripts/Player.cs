@@ -72,7 +72,6 @@ public class Player : MonoBehaviour
 
     private void OnTrap()
     {
-        Debug.Log("Trap button pressed");
         State state = MatchManager.Instance.currentState;
 
         switch (state)
@@ -93,5 +92,7 @@ public class Player : MonoBehaviour
         
         if (!ownedTraps.Remove(trapInFront))
             ownedTraps.Add(trapInFront);
+        
+        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
     }
 }
