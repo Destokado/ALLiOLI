@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     private void OnTrap()
     {
         Debug.Log("Trap button pressed");
+        //TODO: If we are in Trap Up! use it to put/quit traps, else if we are in "Fight", use it to activate traps
         //TODO:If there isn't any trap activatable, then activate the nearest one if it isn't on CD
         exampleTrap.Activate();
 
