@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class AlfombraTrap : ATrap
+public class AlfombraTrap : Trap
 {
     
     private SimpleAnimationsManager animManager;

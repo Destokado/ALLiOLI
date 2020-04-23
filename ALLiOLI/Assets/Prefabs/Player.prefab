@@ -48,6 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 4170785821846641001, guid: bf0202a64cf78564581ea75ff4c7a7c4,
     type: 3}
+  maxDistanceToInteractWithTrap: 5
+  layersThatCanInterfereWithInteractions:
+    serializedVersion: 2
+    m_Bits: 531
 --- !u!114 &1646646748
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,16 +7,19 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    public Character character { get; private set; }
-    [SerializeField] private GameObject characterPrefab;
     private new ThirdPersonCamera camera;
     private PlayerInput playerInput;
-    [SerializeField] private List<ATrap> ownedTraps;
-
-    private void OnCameraMove(InputValue value)
-    {
-        camera.movement = value.Get<Vector2>();
-    }
+    
+    [Space]
+    [SerializeField] private GameObject characterPrefab;
+    public Character character { get; private set; }
+    
+    [Space]
+    [SerializeField] private float maxDistanceToInteractWithTrap = 10;
+    [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
+    private TrapManager ownedTraps = new TrapManager();
+    private Trap trapInFront;
+    private GameObject lastObjectInFront;
 
     private void Awake()
     {
@@ -24,12 +27,38 @@ public class Player : MonoBehaviour
         camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
 
         SpawnNewCharacter();
-        camera.Setup(character);
+        camera.Setup(character.cameraTarget);
+    }
+
+    
+    private void Update()
+    {
+        UpdateObjectsInFront();
+    }
+    
+    private void UpdateObjectsInFront()
+    {
+        Ray ray = new Ray(character.cameraTarget.position, camera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions)) {
+            if (lastObjectInFront != hit.collider.gameObject)
+            {
+                lastObjectInFront = hit.collider.gameObject;
+                trapInFront = hit.transform.GetComponentInParent<Trap>();
+            }
+        } else {
+            lastObjectInFront = null;
+            trapInFront = null;
+        }
     }
 
     public void SpawnNewCharacter()
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
+    }
+    
+    private void OnCameraMove(InputValue value)
+    {
+        camera.movement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
@@ -46,13 +75,23 @@ public class Player : MonoBehaviour
         Debug.Log("Trap button pressed");
         State state = MatchManager.Instance.currentState;
 
-        if (state is Battle)
+        switch (state)
         {
-            character.ActivateTrap(ownedTraps);
+            case Battle battle:
+                ownedTraps.GetBestTrapToActivate()?.Activate();
+                break;
+            case TrapUp trapUp:
+                SetUpTrapInFront();
+                break;
         }
-        else if (state is TrapUp)
-        {
-            ownedTraps = character.SetUpTrap(camera.transform.position, camera.transform.forward, ownedTraps);
-        }
+    }
+
+    private void SetUpTrapInFront()
+    {
+        if (trapInFront == null) 
+            return;
+        
+        if (!ownedTraps.Remove(trapInFront))
+            ownedTraps.Add(trapInFront);
     }
 }
