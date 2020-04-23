@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     
-    [SerializeField] private Character character;
+    public  Character character { get; private set; }
     [SerializeField] private ATrap exampleTrap;
     [SerializeField] private GameObject characterPrefab;
     private new ThirdPersonCamera camera;

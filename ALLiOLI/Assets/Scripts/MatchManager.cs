@@ -32,6 +32,7 @@ public class MatchManager : MonoBehaviour
             Instance = this;
             currentState = new WaitingForPlayers();
             playerInputManager = GetComponent<PlayerInputManager>();
+            players= new List<Player>();
         }
     }
 
@@ -66,7 +67,7 @@ public class MatchManager : MonoBehaviour
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
-        players.Remove(playerInput.GetComponent<Player>());
+        players.Remove(playerInput.gameObject.GetComponent<Player>());
 
     }
     

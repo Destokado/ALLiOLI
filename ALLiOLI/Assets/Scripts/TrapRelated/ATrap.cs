@@ -28,16 +28,24 @@ public abstract class ATrap : MonoBehaviour
     public void SetUp()
     {
         placed = !placed;
+        Debug.Log("The trap "+gameObject.name+" has been set to:"+placed);
+
     }
 
     public virtual void Activate()
     {
+        Debug.Log("The trap "+gameObject.name+" has been activated");
         cdTimer = cooldownTime;
     }
 
     private bool HasCharInRange()
     {
-        return TrapManager.Instance.HasCharInRange(transform.position, activatableRange);
+        foreach (Player player in MatchManager.Instance.players)
+        {
+            if (Vector3.Distance(player.transform.position, transform.position) <= activatableRange) return true;
+        }
+
+        return false;
     }
 
     public bool IsActivatable()
