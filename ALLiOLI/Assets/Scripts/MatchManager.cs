@@ -1,5 +1,3 @@
-﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,25 +6,46 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : MonoBehaviour
 {
-    [SerializeField] public MatchGuiManager guiManager;
-    [SerializeField] public Color[] playerColors;
-    
     public MatchPhase currentPhase { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
     public HashSet<Player> players { get; private set; }
-    public Player winnerPlayer { get; private set; }
-    public float matchCountdown { 
+
+    public float matchCountdown
+    {
         get => _matchCountdown;
-        set { _matchCountdown = value; Instance.guiManager.SetTimer(_matchCountdown); } 
+        set
+        {
+            _matchCountdown = value;
+            Instance.guiManager.SetTimer(_matchCountdown);
+        }
     }
+
     private float _matchCountdown;
+
+
     public static MatchManager Instance { get; private set; }
-    
+    public Player winnerPlayer { get; private set; }
+    [SerializeField] public MatchGuiManager guiManager;
+    [SerializeField] public Color[] playerColors;
+
+    public float countdownTimer
+    {
+        get => _countdownTimer;
+        set
+        {
+            _countdownTimer = value;
+            Instance.guiManager.SetTimer(_countdownTimer);
+        }
+    }
+
+    private float _countdownTimer;
+
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name, gameObject);
+            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
+                gameObject);
             Destroy(this);
         }
         else
@@ -36,7 +55,7 @@ public class MatchManager : MonoBehaviour
             players = new HashSet<Player>();
         }
     }
-    
+
     private void Start()
     {
         SetNewMatchPhase(new WaitingForPlayers());
@@ -46,7 +65,7 @@ public class MatchManager : MonoBehaviour
     {
         State nextPhase = currentPhase.GetCurrentState();
         if (currentPhase != nextPhase)
-            SetNewMatchPhase((MatchPhase)nextPhase);
+            SetNewMatchPhase((MatchPhase) nextPhase);
         currentPhase.UpdateState(Time.deltaTime);
     }
 
@@ -57,21 +76,26 @@ public class MatchManager : MonoBehaviour
         currentPhase?.EndState();
         currentPhase = nextPhase;
         currentPhase?.StartState();
-        
+
         guiManager.SetupForCurrentPhase();
-        
+
         foreach (Player player in players)
             player.SetupForCurrentPhase();
     }
-    
+
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         Player player = playerInput.GetComponent<Player>();
         players.Add(player);
         player.Setup(playerColors[playerInput.playerIndex]);
+
         SetAllPlayersAsNotReady();
-        
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0], playerInput.gameObject);
+
+        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
+            playerInput.gameObject);
+
+        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
+            playerInput.gameObject);
     }
 
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
@@ -84,7 +108,7 @@ public class MatchManager : MonoBehaviour
     {
         return players.Any(player => player.isReady);
     }
-    
+
     public bool AreAllPlayersReady()
     {
         return players.All(player => player.isReady);
@@ -94,5 +118,12 @@ public class MatchManager : MonoBehaviour
     {
         foreach (Player player in players)
             player.isReady = false;
+    }
+
+    public void MatchFinished(Player winner)
+    {
+        winnerPlayer = winner;
+        Debug.Log("The winner is" + winner.gameObject.name);
+        //TODO: Win screen w/ statistics
     }
 }

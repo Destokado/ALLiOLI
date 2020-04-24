@@ -1,17 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BattleCountdown : MatchPhase
 {
-    public override bool showTrapsCounter { get => false; protected set {} }
-    public override bool showReadiness { get => false; protected set {} }
-    public override bool showMatchTimer { get => true; protected set {} }
-    
+    public override bool showTrapsCounter
+    {
+        get => false;
+        protected set { }
+    }
+
+    public override bool showReadiness
+    {
+        get => false;
+        protected set { }
+    }
+
+    public override bool showMatchTimer
+    {
+        get => true;
+        protected set { }
+    }
+
     public override void StartState()
     {
-        MatchManager.Instance.matchCountdown = 10;
-        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " + MatchManager.Instance.matchCountdown + "s.");
+        MatchManager.Instance.countdownTimer = 10;
+        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " +
+                  MatchManager.Instance.countdownTimer + "s.");
+        FlagSpawner.Instance.Spawn();
     }
 
     public override void UpdateState(float deltaTime)
@@ -29,6 +43,5 @@ public class BattleCountdown : MatchPhase
 
     public override void EndState()
     {
-        
     }
 }
