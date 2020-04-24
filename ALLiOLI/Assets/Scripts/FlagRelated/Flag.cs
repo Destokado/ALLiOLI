@@ -7,11 +7,9 @@ public class Flag : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entered trigger");
         if (other.GetComponent<Spawner>() && owner) MatchManager.Instance.MatchFinished(owner);
         if (carrier) return;
         Character ch = other.GetComponentInParent<Character>();
-        Debug.Log(ch);
         if (!ch) return;
         if(ch.isDead) return;
         ch.flag = this;

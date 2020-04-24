@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8554888641985696113}
   - component: {fileID: 8554888641985696115}
   - component: {fileID: 261605224802710102}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ThirdPersonCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -127,6 +127,6 @@ MonoBehaviour:
   distanceToTarget: 10
   layersThatCanClipCamera:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1
   offsetOnCollision: 0.5
   movement: {x: 0, y: 0}

@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 706007683649112154}
   - component: {fileID: 1646646748}
   - component: {fileID: 3068239589645329126}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
   maxDistanceToInteractWithTrap: 5
   layersThatCanInterfereWithInteractions:
     serializedVersion: 2
-    m_Bits: 531
+    m_Bits: 513
 --- !u!114 &1646646748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,6 +1016,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ThirdPersonCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554888641985696124, guid: 7669884ca81fb1f408c458df68c681e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7669884ca81fb1f408c458df68c681e4, type: 3}
