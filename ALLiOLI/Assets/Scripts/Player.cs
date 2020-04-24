@@ -119,6 +119,8 @@ public class Player : MonoBehaviour
     private void OnSuicide()
     {
         character.Die();
+        SpawnNewCharacter();
+        camera.Setup(character.cameraTarget);
     }
 
     private void SetUpTrapInFront()
