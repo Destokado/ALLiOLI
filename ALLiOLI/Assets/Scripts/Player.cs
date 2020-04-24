@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    private new ThirdPersonCamera camera;
+    public ThirdPersonCamera playerCamera { get; private set;  }
     private PlayerInput playerInput;
     
 	[Space]
@@ -53,14 +53,14 @@ public class Player : MonoBehaviour
         ownedTraps = new TrapManager();
         
         playerInput = GetComponent<PlayerInput>();
-        camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
+        playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
         
         this.color = color;
         gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
         
         SpawnNewCharacter();
         
-        camera.Setup(character.cameraTarget);
+        playerCamera.Setup(character.cameraTarget);
     }
 
     
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
     
     private void UpdateObjectsInFront()
     {
-        Ray ray = new Ray(character.cameraTarget.position, camera.transform.forward);
+        Ray ray = new Ray(character.cameraTarget.position, playerCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions)) {
             if (lastObjectInFront != hit.collider.gameObject)
             {
@@ -87,20 +87,17 @@ public class Player : MonoBehaviour
     public void SpawnNewCharacter()
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
+        this.character.owner = this;
     }
     
     private void OnCameraMove(InputValue value)
     {
-        camera.movement = value.Get<Vector2>();
+        playerCamera.movement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
     {
-        Vector2 input = value.Get<Vector2>();
-        Vector3 targetDirection = new Vector3(input.x, 0f, input.y);
-        targetDirection = camera.gameObject.transform.TransformDirection(targetDirection);
-        targetDirection.y = 0.0f;
-        character.movement = targetDirection;
+        character.movementControllerController.movement = value.Get<Vector2>();
     }
 
     private void OnTrap()
@@ -116,6 +113,11 @@ public class Player : MonoBehaviour
                 SetUpTrapInFront();
                 break;
         }
+    }
+
+    private void OnJump(InputValue value)
+    {
+        character.movementControllerController.jumping = value.isPressed;
     }
 
     private void SetUpTrapInFront()
