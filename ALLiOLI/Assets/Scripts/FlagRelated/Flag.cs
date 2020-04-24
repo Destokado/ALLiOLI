@@ -2,7 +2,6 @@
 
 public class Flag : MonoBehaviour
 {
-    private Player oldCarrier;
     public Player owner { get; private set; }
     public Player carrier { get; private set; }
 
@@ -27,7 +26,6 @@ public class Flag : MonoBehaviour
 
     public void Detach()
     {
-        oldCarrier = carrier;
         carrier = null;
         transform.parent = null;
     }

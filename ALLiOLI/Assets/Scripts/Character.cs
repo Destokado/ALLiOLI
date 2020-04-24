@@ -1,33 +1,26 @@
-﻿using UnityEngine;
+﻿﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterMovementController))]
 public class Character : MonoBehaviour
 {
-    [SerializeField] private float speed = 10;
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public Transform flagPosition;
-    public Flag flag;
-
-    public Player owner;
-
-    public Vector3 movement
-    {
-        get { return _movement; }
-        set { _movement = value.normalized; }
-    }
-
-    private Vector3 _movement;
+    
+    [HideInInspector] public Flag flag;
+    [HideInInspector] public Player owner;
+    
     public bool isDead { get; private set; }
-    private Rigidbody rb { get; set; }
+
+    //private Rigidbody rb { get; set; }
+    public CharacterMovementController movementControllerController { get; private set; }
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    private void FixedUpdate()
-    {
-        rb.velocity = movement * speed;
+        //rb = GetComponent<Rigidbody>();
+        movementControllerController = GetComponent<CharacterMovementController>();
     }
 
     public void Die()
@@ -35,4 +28,5 @@ public class Character : MonoBehaviour
         isDead = true;
         if (flag != null) flag.Detach();
     }
+
 }

@@ -111,6 +111,7 @@ public class MatchManager : MonoBehaviour
 
     public bool AreAllPlayersReady()
     {
+        if (players == null || players.Count <= 0) return false;
         return players.All(player => player.isReady);
     }
 

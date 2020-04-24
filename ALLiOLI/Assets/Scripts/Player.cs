@@ -4,43 +4,27 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    private new ThirdPersonCamera camera;
-    private PlayerInput playerInput;
     [Space]
     [SerializeField] private PlayerGuiManager playerGui;
-    //public PlayerGuiManager playerGui{ get {return _playerGui; } private set {_playerGui = value; }}
-
-
-    [Space] [SerializeField] private GameObject characterPrefab;
+    
+    [Space] 
+    [SerializeField] private GameObject characterPrefab;
     public Character character { get; private set; }
-
-    [Space] [SerializeField] private float maxDistanceToInteractWithTrap = 10;
+    
+    [Space] 
+    [SerializeField] private float maxDistanceToInteractWithTrap = 10;
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
     private Trap trapInFront;
     private GameObject lastObjectInFront;
-
-    public Color color
-    {
-        get { return _color; }
-        private set
-        {
-            _color = value;
-            playerGui.SetColor(_color);
-        }
-    }
-
-    private Color _color;
     
-    public bool isReady
-    {
-        get { return _isReady; }
-        set {
-            _isReady = value; 
-             playerGui.ShowReadiness(isReady);
-        }
-    }
+    private PlayerInput playerInput;
+    public ThirdPersonCamera playerCamera { get; private set;  }
+    
+    public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
+    private Color _color;
+    public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
     private bool _isReady;
 
     public void Setup(Color color)
@@ -48,38 +32,31 @@ public class Player : MonoBehaviour
         ownedTraps = new TrapManager();
         
         playerInput = GetComponent<PlayerInput>();
-        camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
-
+        playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
         this.color = color;
         gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
 
         SpawnNewCharacter();
-
-        camera.Setup(character.cameraTarget);
     }
-
-
+    
     private void Update()
     {
         UpdateObjectsInFront();
+        //TODO: highlight the 'trapInFront'
     }
 
     private void UpdateObjectsInFront()
     {
-        Ray ray = new Ray(character.cameraTarget.position, camera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap,
-            layersThatCanInterfereWithInteractions))
-        {
+        Ray ray = new Ray(character.cameraTarget.position, playerCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions)) {
             if (lastObjectInFront != hit.collider.gameObject)
             {
                 lastObjectInFront = hit.collider.gameObject;
                 trapInFront = hit.transform.GetComponentInParent<Trap>();
-                //TODO: Highlight selected trap
             }
         }
         else
         {
-            //TODO: Stop highlighting selected trap
             lastObjectInFront = null;
             trapInFront = null;
         }
@@ -88,23 +65,20 @@ public class Player : MonoBehaviour
     public void SpawnNewCharacter()
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
-        character.owner = this;
+        this.character.owner = this;
+        playerCamera.Setup(this.character.cameraTarget);
     }
 
     #region Input
 
     private void OnCameraMove(InputValue value)
     {
-        camera.movement = value.Get<Vector2>();
+        playerCamera.movement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
     {
-        Vector2 input = value.Get<Vector2>();
-        Vector3 targetDirection = new Vector3(input.x, 0f, input.y);
-        targetDirection = camera.gameObject.transform.TransformDirection(targetDirection);
-        targetDirection.y = 0.0f;
-        character.movement = targetDirection;
+        character.movementControllerController.movement = value.Get<Vector2>();
     }
 
     private void OnTrap()
@@ -128,15 +102,19 @@ public class Player : MonoBehaviour
         isReady = !isReady;
     }
 
-    #endregion
-
     private void OnSuicide()
     {
         character.Die();
         SpawnNewCharacter();
-        camera.Setup(character.cameraTarget);
     }
-
+    
+    private void OnJump(InputValue value)
+    {
+        character.movementControllerController.jumping = value.isPressed;
+    }
+    
+    #endregion
+    
     private void SetUpTrapInFront()
     {
         if (trapInFront == null)
@@ -148,7 +126,6 @@ public class Player : MonoBehaviour
         playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
         DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
     }
-
     
     public void SetupForCurrentPhase()
     {
