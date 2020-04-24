@@ -9,10 +9,11 @@ public class MatchManager : MonoBehaviour
 {
     public State currentState { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
-    public List<Player> players { get; private set; }
+    public HashSet<Player> players { get; private set; }
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
+    [SerializeField] public Color[] playerColors;
 
     public float countdownTimer { 
         get => _countdownTimer;
@@ -32,7 +33,7 @@ public class MatchManager : MonoBehaviour
             Instance = this;
             currentState = new WaitingForPlayers();
             playerInputManager = GetComponent<PlayerInputManager>();
-            players= new List<Player>();
+            players= new HashSet<Player>();
         }
     }
 
@@ -58,10 +59,10 @@ public class MatchManager : MonoBehaviour
     
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        Debug.Log("Player joined with input device: " + playerInput.devices[0], playerInput.gameObject);
-        players.Add(playerInput.GetComponent<Player>());
-        //Player player = playerInput.GetComponent<Player>();
-        //player.Setup();
+        Player player = playerInput.GetComponent<Player>();
+        players.Add(player);
+        player.Setup(playerColors[playerInput.playerIndex]);
+        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0], playerInput.gameObject);
     }
 
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)

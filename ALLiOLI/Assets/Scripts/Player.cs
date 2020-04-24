@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,13 +24,28 @@ public class Player : MonoBehaviour
     private TrapManager ownedTraps = new TrapManager();
     private Trap trapInFront;
     private GameObject lastObjectInFront;
+    
+    public Color color
+    {
+        get { return _color;}
+        private set
+        {
+            _color = value;
+            playerGui.SetColor(_color);
+        }
+    }
+    private Color _color;
 
-    private void Awake()
+    public void Setup(Color color)
     {
         playerInput = GetComponent<PlayerInput>();
         camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
-
+        
+        this.color = color;
+        gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
+        
         SpawnNewCharacter();
+        
         camera.Setup(character.cameraTarget);
     }
 
@@ -75,9 +91,9 @@ public class Player : MonoBehaviour
 
     private void OnTrap()
     {
-        State state = MatchManager.Instance.currentState;
+        State currentState = MatchManager.Instance.currentState;
 
-        switch (state)
+        switch (currentState)
         {
             case Battle battle:
                 ownedTraps.GetBestTrapToActivate()?.Activate();
