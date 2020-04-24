@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Ready",
+                    "type": "Button",
+                    "id": "d5b35eb3-7159-4398-9d24-d1d882c440f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -193,6 +201,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Trap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8af818a9-f151-40c1-97a7-e47deac1f34c",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Ready",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0cc054df-7d73-4a50-b6c4-058b70b681a1",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ready",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

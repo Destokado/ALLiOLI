@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle : State
+public class Battle : MatchPhase
 {
     public override void StartState()
     {

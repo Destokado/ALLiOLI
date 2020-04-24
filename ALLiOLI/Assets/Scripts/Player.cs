@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxDistanceToInteractWithTrap = 10;
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
     private TrapManager ownedTraps = new TrapManager();
+    private int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
     private Trap trapInFront;
     private GameObject lastObjectInFront;
     
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour
         }
     }
     private Color _color;
+    
+    public bool isReady;
 
     public void Setup(Color color)
     {
@@ -111,7 +114,13 @@ public class Player : MonoBehaviour
         
         if (!ownedTraps.Remove(trapInFront))
             ownedTraps.Add(trapInFront);
-        
+
+        playerGui.SetCurrentNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
         DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
+    }
+
+    private void OnReady()
+    {
+        isReady = !isReady;
     }
 }

@@ -22,7 +22,7 @@ public class TrapManager : List<Trap>
             trapsByDistance.Add(distance, trap);
         }
 
-        if (trapsByDistance.Count > 0)
+        if (trapsByDistance.Count <= 0)
             return null;
         return trapsByDistance.Values[0];
     }

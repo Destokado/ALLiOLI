@@ -71,5 +71,26 @@ public class MatchManager : MonoBehaviour
         players.Remove(playerInput.gameObject.GetComponent<Player>());
 
     }
+
+    public bool IsAnyPlayerReady()
+    {
+        foreach (Player player in players)
+            if (player.isReady)
+                return true;
+        return false;
+    }
     
+    public bool AreAllPlayersReady()
+    {
+        foreach (Player player in players)
+            if (!player.isReady)
+                return false;
+        return true;
+    }
+
+    public void SetAllPlayersAsNotReady()
+    {
+        foreach (Player player in players)
+            player.isReady = false;
+    }
 }

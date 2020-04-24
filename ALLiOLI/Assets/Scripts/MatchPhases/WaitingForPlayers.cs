@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitingForPlayers : State
+public class WaitingForPlayers : MatchPhase
 {
     public override void StartState()
     {
@@ -16,7 +16,7 @@ public class WaitingForPlayers : State
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.playerInputManager.playerCount < MatchManager.Instance.playerInputManager.maxPlayerCount)
+        if (MatchManager.Instance.playerInputManager.playerCount < MatchManager.Instance.playerInputManager.maxPlayerCount || !MatchManager.Instance.AreAllPlayersReady())
             return this;
         else
             return new StartCountdown();
@@ -24,6 +24,6 @@ public class WaitingForPlayers : State
 
     public override void EndState()
     {
-        
+        MatchManager.Instance.SetAllPlayersAsNotReady();
     }
 }

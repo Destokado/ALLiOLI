@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class End : State
+public class End : MatchPhase
 {
     public override void StartState()
     {
