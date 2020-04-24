@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class WaitingForPlayers : MatchPhase
 {
+    
+    public override bool showTrapsCounter { get => false; protected set {} }
+    public override bool showReadiness { get => true; protected set {} }
+    public override bool showMatchTimer { get => false; protected set {} }
+    
     public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
@@ -24,6 +29,6 @@ public class WaitingForPlayers : MatchPhase
 
     public override void EndState()
     {
-        MatchManager.Instance.SetAllPlayersAsNotReady();
+        
     }
 }

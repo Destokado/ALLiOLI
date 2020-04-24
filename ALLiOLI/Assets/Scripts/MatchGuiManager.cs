@@ -6,6 +6,7 @@ using UnityEngine;
 public class MatchGuiManager : MonoBehaviour
 {
 
+    [SerializeField] private GameObject matchTimerGameObject;
     [SerializeField] private TMP_Text matchTimer;
 
     public void SetTimer(float timeInSeconds)
@@ -15,5 +16,10 @@ public class MatchGuiManager : MonoBehaviour
         string time = minutes + ":" + seconds;
 
         matchTimer.text = time;
+    }
+    
+    public void SetupForCurrentPhase()
+    {
+        matchTimerGameObject.SetActive(MatchManager.Instance.currentPhase.showMatchTimer);
     }
 }

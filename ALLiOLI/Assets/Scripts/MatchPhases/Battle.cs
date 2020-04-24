@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Battle : MatchPhase
 {
+    public override bool showTrapsCounter { get => false; protected set {} }
+    public override bool showReadiness { get => false; protected set {} }
+    public override bool showMatchTimer { get => false; protected set {} }
+    
     public override void StartState()
     {
         Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     
 	[Space]
     [SerializeField] private PlayerGuiManager playerGui;
+    //public PlayerGuiManager playerGui{ get {return _playerGui; } private set {_playerGui = value; }}
 
     [Space]
     [SerializeField] private GameObject characterPrefab;
@@ -21,8 +22,8 @@ public class Player : MonoBehaviour
     [Space]
     [SerializeField] private float maxDistanceToInteractWithTrap = 10;
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
-    private TrapManager ownedTraps = new TrapManager();
-    private int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
+    public TrapManager ownedTraps { get; private set; }
+    public int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
     private Trap trapInFront;
     private GameObject lastObjectInFront;
     
@@ -36,11 +37,21 @@ public class Player : MonoBehaviour
         }
     }
     private Color _color;
-    
-    public bool isReady;
+
+    public bool isReady
+    {
+        get { return _isReady; }
+        set {
+            _isReady = value; 
+             playerGui.ShowReadiness(isReady);
+        }
+    }
+    private bool _isReady;
 
     public void Setup(Color color)
     {
+        ownedTraps = new TrapManager();
+        
         playerInput = GetComponent<PlayerInput>();
         camera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
         
@@ -94,7 +105,7 @@ public class Player : MonoBehaviour
 
     private void OnTrap()
     {
-        State currentState = MatchManager.Instance.currentState;
+        State currentState = MatchManager.Instance.currentPhase;
 
         switch (currentState)
         {
@@ -115,12 +126,17 @@ public class Player : MonoBehaviour
         if (!ownedTraps.Remove(trapInFront))
             ownedTraps.Add(trapInFront);
 
-        playerGui.SetCurrentNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
+        playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
         DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
     }
 
     private void OnReady()
     {
         isReady = !isReady;
+    }
+
+    public void SetupForCurrentPhase()
+    {
+        playerGui.SetupForCurrentPhase(this);
     }
 }
