@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BattleCountdown : MatchPhase
 {
     public override void StartState()
     {
         MatchManager.Instance.countdownTimer = 10;
-        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " + MatchManager.Instance.countdownTimer + "s.");
+        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " +
+                  MatchManager.Instance.countdownTimer + "s.");
+        FlagSpawner.Instance.Spawn();
     }
 
     public override void UpdateState(float deltaTime)
@@ -25,6 +25,5 @@ public class BattleCountdown : MatchPhase
 
     public override void EndState()
     {
-        
     }
 }
