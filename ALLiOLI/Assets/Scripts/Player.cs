@@ -105,7 +105,6 @@ public class Player : MonoBehaviour
     private void OnSuicide()
     {
         character.Die();
-        SpawnNewCharacter();
     }
     
     private void OnJump(InputValue value)

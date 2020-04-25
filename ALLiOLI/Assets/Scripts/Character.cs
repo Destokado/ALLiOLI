@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.Collections.Generic;
+ using System.Collections;
+ using System.Collections.Generic;
 using UnityEngine;
 
 //[RequireComponent(typeof(Rigidbody))]
@@ -25,8 +26,20 @@ public class Character : MonoBehaviour
 
     public void Die()
     {
+        if (!isDead)
+            StartCoroutine(nameof(DieCoroutine));
+    }
+    
+    private IEnumerator DieCoroutine()
+    {
         isDead = true;
         if (flag != null) flag.Detach();
+        movementControllerController.enabled = false;
+        //TODO: Character becomes ragdoll
+        
+        yield return new WaitForSeconds(1.5f);
+        
+        owner.SpawnNewCharacter();
     }
 
 }

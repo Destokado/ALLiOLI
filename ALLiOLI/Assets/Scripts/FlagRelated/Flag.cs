@@ -7,19 +7,25 @@ public class Flag : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Spawner>() && owner) MatchManager.Instance.MatchFinished(owner);
-        if (carrier) return;
-        Character ch = other.GetComponentInParent<Character>();
-        if (!ch) return;
-        if(ch.isDead) return;
-        ch.flag = this;
-        owner = ch.owner;
+        if (other.GetComponent<Spawner>() && owner) 
+            MatchManager.Instance.MatchFinished(owner);
+        
+        if (carrier) 
+            return;
+        
+        Character character = other.GetComponentInParent<Character>();
+        if (!character || character.isDead) 
+            return;
+        
+        Debug.Log("FLAG BY " + other.gameObject.name);
+
+        character.flag = this;
+        owner = character.owner;
         carrier = owner;
 
         Transform tr = transform;
-        tr.position = ch.flagPosition.position;
-        tr.rotation = ch.transform.rotation;
-        tr.parent = ch.flagPosition;
+        tr.SetProperties(character.flagPosition);
+        tr.parent = character.flagPosition;
     }
 
     public void Detach()
