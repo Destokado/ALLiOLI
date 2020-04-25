@@ -124,7 +124,7 @@ MonoBehaviour:
   minPitch: 5
   maxPitch: 75
   target: {fileID: 0}
-  distanceToTarget: 10
+  distanceToTarget: 1.75
   layersThatCanClipCamera:
     serializedVersion: 2
     m_Bits: 1

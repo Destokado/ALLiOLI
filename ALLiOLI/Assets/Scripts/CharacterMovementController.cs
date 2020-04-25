@@ -16,6 +16,8 @@ public class CharacterMovementController : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
+    [Space]
+    [SerializeField] private Animator animator;
     
     private bool onGround = false;
     private float verticalSpeed = 0f;
@@ -56,6 +58,14 @@ public class CharacterMovementController : MonoBehaviour
             onGround=false;
         if((collisionFlags & CollisionFlags.Above)!=0 &&  verticalSpeed>0.0f)
             verticalSpeed=0.0f;
+
+        GiveStateToAnimations(displacement);
+    }
+
+    private void GiveStateToAnimations(Vector3 displacement)
+    {
+        animator.SetFloat("HorMove", Mathf.Abs(displacement.ToVector2WithoutY().magnitude)*10);
+        animator.SetFloat("VerMove", displacement.y*10);
     }
 
     private Vector3 GetDirection()
