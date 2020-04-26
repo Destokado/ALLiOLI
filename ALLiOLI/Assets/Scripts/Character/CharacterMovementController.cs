@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Character))]
 public class CharacterMovementController : MonoBehaviour
 {
-    [HideInInspector] public Vector2 movement;
+    [HideInInspector] public Vector2 horizontalMovementInput;
     public bool jumping { get; set; }
     
     private CharacterController characterController;
@@ -30,10 +30,10 @@ public class CharacterMovementController : MonoBehaviour
 
     void Update()
     {
-        Vector3 direction = GetDirection();
+        Vector3 direction = GetDirectionRelativeToTheCamera();
         
         // Calculate walking the distance
-        Vector3 displacement = direction * walkSpeed * Time.deltaTime;
+        Vector3 displacement = direction * (walkSpeed * Time.deltaTime);
 
         //Jump
         if(onGround && jumping)
@@ -43,6 +43,9 @@ public class CharacterMovementController : MonoBehaviour
         verticalSpeed+=Physics.gravity.y*Time.deltaTime;
         displacement.y=verticalSpeed*Time.deltaTime;
     
+        if (Math.Abs(displacement.y) < characterController.minMoveDistance)
+            Debug.LogWarning("WAT displacement.y = " + displacement.y);
+        
         // Apply Movement to Player
         CollisionFlags collisionFlags=characterController.Move(displacement);
 
@@ -65,12 +68,12 @@ public class CharacterMovementController : MonoBehaviour
     private void GiveStateToAnimations(Vector3 displacement)
     {
         animator.SetFloat("HorMove", Mathf.Abs(displacement.ToVector2WithoutY().magnitude)*10);
-        animator.SetFloat("VerMove", displacement.y*10);
+        animator.SetBool("Grounded", onGround);
     }
 
-    private Vector3 GetDirection()
+    private Vector3 GetDirectionRelativeToTheCamera()
     {
-        Vector3 targetDirection = new Vector3(movement.x, 0f, movement.y);
+        Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection = character.owner.playerCamera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         return targetDirection.normalized;

@@ -29,7 +29,7 @@ public class IKFootPlacement : MonoBehaviour
         
         RaycastHit hit;
         Ray ray = new Ray(anim.GetIKPosition(foot)+Vector3.up*maxFootElevation, Vector3.down);
-        if (Physics.Raycast(ray, out hit, Vector3.Distance(anim.GetIKPosition(foot), Vector3.up*maxFootElevation), walkableLayers))
+        if (Physics.Raycast(ray, out hit, Vector3.Distance(anim.GetIKPosition(foot)+Vector3.down*footBoneDistanceToGround, ray.origin), walkableLayers))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             Vector3 footPosition = hit.point;

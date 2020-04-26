@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
     private void OnCharacterMove(InputValue value)
     {
-        character.movementControllerController.movement = value.Get<Vector2>();
+        character.movementControllerController.horizontalMovementInput = value.Get<Vector2>();
     }
 
     private void OnTrap()
