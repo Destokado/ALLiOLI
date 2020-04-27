@@ -10,42 +10,21 @@ public class MatchManager : MonoBehaviour
     public PlayerInputManager playerInputManager { get; private set; }
     public HashSet<Player> players { get; private set; }
 
-    public float matchCountdown
-    {
-        get => _matchCountdown;
-        set
-        {
-            _matchCountdown = value;
-            Instance.guiManager.SetTimer(_matchCountdown);
-        }
-    }
-
-    private float _matchCountdown;
-
+    public float matchTimer { get => _matchTimer;
+        set { _matchTimer = value; Instance.guiManager.SetTimer(_matchTimer);  } }
+    private float _matchTimer;
 
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
     [SerializeField] public Color[] playerColors;
-
-    public float countdownTimer
-    {
-        get => _countdownTimer;
-        set
-        {
-            _countdownTimer = value;
-            Instance.guiManager.SetTimer(_countdownTimer);
-        }
-    }
-
-    private float _countdownTimer;
+    
 
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
-                gameObject);
+            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name, gameObject);
             Destroy(this);
         }
         else

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Battle : MatchPhase
 {
+    public override string informativeText { get => "Bring the flag to the spawn point."; protected set {} }
     public override bool showTrapsCounter { get => false; protected set {} }
     public override bool showReadiness { get => false; protected set {} }
     public override bool showMatchTimer { get => false; protected set {} }

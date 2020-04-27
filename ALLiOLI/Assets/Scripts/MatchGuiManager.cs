@@ -8,6 +8,7 @@ public class MatchGuiManager : MonoBehaviour
 
     [SerializeField] private GameObject matchTimerGameObject;
     [SerializeField] private TMP_Text matchTimer;
+    [SerializeField] private TMP_Text matchInformativeText;
 
     public void SetTimer(float timeInSeconds)
     {
@@ -21,5 +22,6 @@ public class MatchGuiManager : MonoBehaviour
     public void SetupForCurrentPhase()
     {
         matchTimerGameObject.SetActive(MatchManager.Instance.currentPhase.showMatchTimer);
+        matchInformativeText.SetText(MatchManager.Instance.currentPhase.informativeText);
     }
 }
