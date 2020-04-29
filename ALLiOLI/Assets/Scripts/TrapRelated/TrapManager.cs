@@ -26,4 +26,14 @@ public class TrapManager : List<Trap>
             return null;
         return trapsByDistance.Values[0];
     }
+
+    public List<KeyValuePair<Player, float>> GetRadarReport(Player exception)
+    {
+        List<KeyValuePair<Player, float>> report = new List<KeyValuePair<Player, float>>();
+        
+        foreach (Trap trap in this)
+            report.AddRange(trap.GetRadarReport());
+
+        return report;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -43,6 +44,13 @@ public class Player : MonoBehaviour
     {
         UpdateObjectsInFront();
         //TODO: highlight the 'trapInFront'
+        UpdateRadarTraps();
+    }
+
+    private void UpdateRadarTraps()
+    {
+        List<KeyValuePair<Player, float>> radarReport = ownedTraps.GetRadarReport(this);
+        playerGui.ReportInRadar(radarReport);
     }
 
     private void UpdateObjectsInFront()

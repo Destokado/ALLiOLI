@@ -13,6 +13,8 @@ public class PlayerGuiManager : MonoBehaviour
     [Space]
     [SerializeField] private GameObject readinessGameObject;
     [SerializeField] private TMP_Text readinessText;
+    [Space] 
+    [SerializeField] private RadarUI radarUi;
 
     public void SetColor(Color color)
     {
@@ -40,6 +42,10 @@ public class PlayerGuiManager : MonoBehaviour
         readinessGameObject.SetActive(MatchManager.Instance.currentPhase.showReadiness);
         readinessText.SetText(isReady? "READY" : "Waiting");
     }
-
-
+    
+    
+    public void ReportInRadar(List<KeyValuePair<Player, float>> report)
+    {
+        radarUi.RenderReport(report);
+    }
 }

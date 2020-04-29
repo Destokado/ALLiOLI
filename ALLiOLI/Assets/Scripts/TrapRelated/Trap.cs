@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Trap : MonoBehaviour
 {
     [SerializeField] private float cooldownTime;
+    [SerializeField] private RadarTriggerTrap radarTrigger;
     public bool OnCd => cdTimer > 0;
     public float cdTimer { get; private set; }
 
@@ -23,13 +25,6 @@ public abstract class Trap : MonoBehaviour
         cdTimer = cooldownTime;
     }
 
-    private bool HasCharacterInRange()
-    {
-        //TODO: keep track if any alive character is inside the "action zone"
-
-        return false;
-    }
-
     public bool IsActivatable()
     {
         return !OnCd;
@@ -37,10 +32,11 @@ public abstract class Trap : MonoBehaviour
 
     public float GetDistanceTo(Character character)
     {
-        if (HasCharacterInRange())
-            return 0f;
-        
-        return Vector3.Distance(character.transform.position+Vector3.up, this.gameObject.transform.position);
-        //return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position);
+        return radarTrigger.GetRadarDistanceTo(character);
+    }
+
+    public List<KeyValuePair<Player, float>> GetRadarReport()
+    {
+        return radarTrigger.GetRadarReport();
     }
 }
