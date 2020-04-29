@@ -1722,10 +1722,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1717563515}
     m_Modifications:
+    - target: {fileID: 346470233563386899, guid: 4d4beeaba5280bf4d9866501ab5eca31,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.32
+      objectReference: {fileID: 0}
     - target: {fileID: 3744543497031322388, guid: 4d4beeaba5280bf4d9866501ab5eca31,
         type: 3}
       propertyPath: m_Name
       value: Alfombra Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868707399402254385, guid: 4d4beeaba5280bf4d9866501ab5eca31,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6512536796590345445, guid: 4d4beeaba5280bf4d9866501ab5eca31,
         type: 3}
@@ -10540,6 +10550,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 198512975, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
+      propertyPath: playerColors.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198512975, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
+      propertyPath: playerColors.Array.data[5].g
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3653955649973999062, guid: 17db44679e28ec2478a6e5e982e5c651,
         type: 3}
       propertyPath: m_LocalPosition.x

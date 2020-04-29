@@ -55,6 +55,6 @@ public class RadarTriggerTrap : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1f, 0f, 1f, 0.25f);
-        Gizmos.DrawSphere(this.transform.position, maximumRadarDistance);
+        Gizmos.DrawSphere(pointOfMaxEffectivity.position, maximumRadarDistance);
     }
 }
