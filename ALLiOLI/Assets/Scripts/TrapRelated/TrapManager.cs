@@ -10,7 +10,7 @@ public class TrapManager : List<Trap>
 
         foreach (Trap trap in this)
         {
-            if (!trap.ItActivatable()) continue;
+            if (!trap.IsActivatable()) continue;
             
             float distance = float.MaxValue;
             foreach (Player player in MatchManager.Instance.players)

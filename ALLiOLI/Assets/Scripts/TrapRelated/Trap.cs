@@ -2,18 +2,20 @@
 
 public abstract class Trap : MonoBehaviour
 {
-    [SerializeField] private float activatableRange;
     [SerializeField] private float cooldownTime;
-
-    protected bool OnCd { get => cdTimer > 0; }
-
-    private float cdTimer;
+    public bool OnCd => cdTimer > 0;
+    public float cdTimer { get; private set; }
 
     private void Update()
     {
-        if (cdTimer > 0)
+        if (OnCd) {
             cdTimer -= Time.deltaTime;
+            if (!OnCd)
+                Reload();
+        }
     }
+
+    protected abstract void Reload();
 
     public virtual void Activate()
     {
@@ -21,29 +23,24 @@ public abstract class Trap : MonoBehaviour
         cdTimer = cooldownTime;
     }
 
-    private bool HasCharacterInActionZone()
+    private bool HasCharacterInRange()
     {
         //TODO: keep track if any alive character is inside the "action zone"
-        
-        /*foreach (Player player in MatchManager.Instance.players)
-        {
-            if (Vector3.Distance(player.transform.position, transform.position) <= activatableRange) return true;
-        }*/
 
         return false;
     }
 
-    public bool ItActivatable()
+    public bool IsActivatable()
     {
         return !OnCd;
     }
 
     public float GetDistanceTo(Character character)
     {
-        if (HasCharacterInActionZone())
+        if (HasCharacterInRange())
             return 0f;
         
-        //return Vector3.Distance(character.transform.position, this.gameObject.transform.position);
-        return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position);
+        return Vector3.Distance(character.transform.position+Vector3.up, this.gameObject.transform.position);
+        //return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position);
     }
 }

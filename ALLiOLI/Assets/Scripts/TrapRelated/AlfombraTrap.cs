@@ -13,12 +13,17 @@ public class AlfombraTrap : Trap
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
-    // Start is called before the first frame update
-    
+    protected override void Reload()
+    {
+        animManager.GetAnimation(0).mirror = true;
+        animManager.Play(0);
+    }
 
     public override void Activate()
     {
        base.Activate();
+       animManager.GetAnimation(0).mirror = false;
        animManager.Play(0);
     }
+    
 }
