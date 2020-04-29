@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527384f141f8a4b41bb87aed84a7fbb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 0
-  radarTrigger: {fileID: 0}
+  cooldownTime: 3
+  radarTrigger: {fileID: 7929078429384219183}
 --- !u!65 &6699464269862131600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -434,3 +434,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 572109262115258409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7929078429384219183 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7636192393158449670, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+    type: 3}
+  m_PrefabInstance: {fileID: 572109262115258409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f07d83156b735b4e8807364bed2bbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

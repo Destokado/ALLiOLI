@@ -21,16 +21,17 @@ public class RadarUI : MonoBehaviour
         for (int r = 0; r < report.Count; r++)
         {
             KeyValuePair<Player, float> rep = report[r];
+            float clampedValue = Mathf.Clamp(rep.Value, 0f, 1f);
             radarIndicator[r].color = rep.Key.color;
-            radarIndicator[r].rectTransform.anchorMax = new Vector2(rep.Value, radarIndicator[r].rectTransform.anchorMax.y);
-            radarIndicator[r].rectTransform.anchorMin = new Vector2(rep.Value, radarIndicator[r].rectTransform.anchorMin.y);
+            radarIndicator[r].rectTransform.anchorMax = new Vector2(clampedValue, radarIndicator[r].rectTransform.anchorMax.y);
+            radarIndicator[r].rectTransform.anchorMin = new Vector2(clampedValue, radarIndicator[r].rectTransform.anchorMin.y);
             radarIndicator[r].gameObject.SetActive(true);
         }
 
         if (dif < 0)
         {
-            for (int i = 0; i < -dif; i++)
-                radarIndicator[radarIndicator.Count-dif].gameObject.SetActive(false);
+            for (int i = -dif; i > 0; i--)
+                radarIndicator[radarIndicator.Count-i].gameObject.SetActive(false);
         }
         
     }

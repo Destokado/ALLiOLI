@@ -8,6 +8,7 @@ public class RadarTriggerTrap : MonoBehaviour
     
     private HashSet<Character> charactersInRadar = new HashSet<Character>();
     [SerializeField] private float maximumRadarDistance = 5;
+    [SerializeField] private Transform pointOfMaxEffectivity;
     
     /*public List<Player> playersInRadar
     {
@@ -35,7 +36,7 @@ public class RadarTriggerTrap : MonoBehaviour
 
     public float GetRadarDistanceTo(Character character)
     {
-        return Vector3.Distance(character.transform.position+Vector3.up, this.gameObject.transform.position)/maximumRadarDistance;
+        return Vector3.Distance(character.transform.position+Vector3.up, this.pointOfMaxEffectivity.position)/maximumRadarDistance;
         //return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position)/maximumRadarDistance;
     }
 
