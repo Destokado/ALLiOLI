@@ -121,8 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yawRotationalSpeed: 200
   pitchRotationalSpeed: 200
-  minPitch: 5
-  maxPitch: 75
+  minPitch: -45
+  maxPitch: 80
   target: {fileID: 0}
   distanceToTarget: 1.75
   layersThatCanClipCamera:
