@@ -18,7 +18,7 @@ public class MatchManager : MonoBehaviour
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
     [SerializeField] public Color[] playerColors;
-    
+    public Trap TestTrap;
 
     private void Awake()
     {

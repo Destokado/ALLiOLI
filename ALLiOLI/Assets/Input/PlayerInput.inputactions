@@ -71,7 +71,7 @@
                     "id": "5da3b6a3-1e87-4770-ba4e-06b56dabe944",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "NormalizeVector2,ScaleVector2(x=2.5,y=2.5)",
                     "groups": "Keyboard&Mouse",
                     "action": "CameraMove",
                     "isComposite": false,

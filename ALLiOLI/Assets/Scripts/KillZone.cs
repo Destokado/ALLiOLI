@@ -14,5 +14,6 @@ public class KillZone : MonoBehaviour
             return;
         
         character.Die();
+        Debug.Log(character.name+" was killed by"+transform.parent.gameObject.name);
     }
 }
