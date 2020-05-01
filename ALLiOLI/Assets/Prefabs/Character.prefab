@@ -190,8 +190,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalMovementInput: {x: 0, y: 0}
-  walkSpeed: 5
-  jumpSpeed: 4
+  walkSpeed: 6
+  jumpSpeed: 3.5
   animator: {fileID: 2109401773116520401}
 --- !u!114 &2090334162427195722
 MonoBehaviour:
