@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class AlfombraTrap : Trap
+public class SwordsTrap : Trap
 {
     
     private SimpleAnimationsManager animManager;
@@ -13,14 +14,21 @@ public class AlfombraTrap : Trap
     protected override void Reload()
     {
         animManager.GetAnimation(0).mirror = true;
+        animManager.GetAnimation(1).mirror = true;
+
         animManager.Play(0);
+        animManager.Play(1);
+        
     }
 
     public override void Activate()
     {
-       base.Activate();
-       animManager.GetAnimation(0).mirror = false;
-       animManager.Play(0);
+        base.Activate();
+        animManager.GetAnimation(0).mirror = false;
+        animManager.GetAnimation(1).mirror = false;
+        animManager.Play(0);
+        animManager.Play(1);
     }
     
 }
+

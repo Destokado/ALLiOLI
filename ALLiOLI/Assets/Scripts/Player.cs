@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     
     private PlayerInput playerInput;
     public ThirdPersonCamera playerCamera { get; private set;  }
-    
+
+    public Trap exampleTrap;
     public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
     private Color _color;
     public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
 
     private void OnTrap()
     {
-
+        MatchManager.Instance.TestTrap.Activate();
         State currentState = MatchManager.Instance.currentPhase;
         
         switch (currentState)

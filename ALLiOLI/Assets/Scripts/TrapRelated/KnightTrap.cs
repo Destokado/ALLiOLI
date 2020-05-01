@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class AlfombraTrap : Trap
+public class KnightTrap : Trap
 {
-    
     private SimpleAnimationsManager animManager;
 
-    private void Awake()
+    public void Awake() 
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
@@ -18,9 +19,8 @@ public class AlfombraTrap : Trap
 
     public override void Activate()
     {
-       base.Activate();
-       animManager.GetAnimation(0).mirror = false;
-       animManager.Play(0);
+        base.Activate();
+        animManager.GetAnimation(0).mirror = false;
+        animManager.Play(0);
     }
-    
 }
