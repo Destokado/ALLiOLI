@@ -5,6 +5,7 @@ using UnityEngine;
 public class KnightTrap : Trap
 {
     private SimpleAnimationsManager animManager;
+    [SerializeField] private KillZone killZone;
 
     public void Awake() 
     {
@@ -22,5 +23,13 @@ public class KnightTrap : Trap
         base.Activate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
+        killZone.SetState(true);
     }
+    
+    private void DisableKillZone()
+    {
+        killZone.SetState(false);
+    }
+    
+    
 }
