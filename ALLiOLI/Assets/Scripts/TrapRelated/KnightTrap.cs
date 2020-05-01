@@ -26,7 +26,7 @@ public class KnightTrap : Trap
         killZone.SetState(true);
     }
     
-    private void DisableKillZone()
+    public void DisableKillZone()
     {
         killZone.SetState(false);
     }

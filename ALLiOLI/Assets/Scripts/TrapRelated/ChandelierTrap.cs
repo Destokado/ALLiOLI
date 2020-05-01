@@ -4,6 +4,7 @@ public class ChandelierTrap : Trap
 {
     
     private SimpleAnimationsManager animManager;
+    [SerializeField] private KillZone killZone;
 
     private void Awake()
     {
@@ -21,6 +22,11 @@ public class ChandelierTrap : Trap
         base.Activate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
+    }
+
+    public void DisableKillZone()
+    {
+        killZone.SetState(false);
     }
     
 }
