@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2966397949992838644}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3465016616503246111}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: KeyPoints1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3509145097343164070}
   - component: {fileID: 3752991290797583667}
   - component: {fileID: 8821608614399726542}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -847,7 +847,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5193209966832609883}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 6139048576383468440}
   - component: {fileID: 1796078254864703090}
   - component: {fileID: 7293466783603441368}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 'Sword2 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1565,7 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3695039402048950379}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1608,7 +1608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4681601731408858950}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1638,7 +1638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8059398701748691162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: KeyPoints2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1889,6 +1889,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: KillZone1
       objectReference: {fileID: 0}
+    - target: {fileID: 2688938407335990105, guid: 81c7c28be9aac5344ad7ce131206226a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7939103734119353607, guid: 81c7c28be9aac5344ad7ce131206226a,
         type: 3}
       propertyPath: m_Radius
@@ -1999,6 +2004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: KillZone2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688938407335990105, guid: 81c7c28be9aac5344ad7ce131206226a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7939103734119353607, guid: 81c7c28be9aac5344ad7ce131206226a,
         type: 3}
