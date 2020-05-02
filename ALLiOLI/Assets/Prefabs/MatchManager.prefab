@@ -207,7 +207,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 119.2
+  m_fontSize: 111.3
   m_fontSizeBase: 411.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -529,12 +529,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guiManager: {fileID: 7240563388403644552}
   playerColors:
-  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  TestTrap: {fileID: 0}
 --- !u!81 &4597509817002724976
 AudioListener:
   m_ObjectHideFlags: 0

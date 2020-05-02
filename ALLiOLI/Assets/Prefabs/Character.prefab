@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 4284157050568516975}
   - component: {fileID: 3916815057974936622}
   - component: {fileID: 2090334162427195722}
+  - component: {fileID: 6994346500892704524}
   m_Layer: 8
   m_Name: Character
   m_TagString: Untagged
@@ -209,6 +210,19 @@ MonoBehaviour:
   flagPosition: {fileID: 8905692259442087517}
   flag: {fileID: 0}
   owner: {fileID: 0}
+--- !u!114 &6994346500892704524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170785821846641001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1761beff750249a17d70533fbc98f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushPower: 0.25
 --- !u!1 &4318997438352351522
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footBoneDistanceToGround: 0.092
-  maxFootElevation: 1
+  maxFootElevation: 0.6
   walkableLayers:
     serializedVersion: 2
     m_Bits: 513

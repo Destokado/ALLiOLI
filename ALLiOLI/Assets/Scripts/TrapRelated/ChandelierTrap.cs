@@ -26,7 +26,8 @@ public class ChandelierTrap : Trap
 
     public void DisableKillZone()
     {
-        killZone.SetState(false);
+        //TODO: CHANGE
+        //killZone.SetState(false);
     }
     
 }

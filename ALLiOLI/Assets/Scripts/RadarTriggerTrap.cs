@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RadarTriggerTrap : MonoBehaviour
@@ -54,6 +55,8 @@ public class RadarTriggerTrap : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (Selection.activeGameObject != transform.gameObject) return;
+        
         Gizmos.color = new Color(1f, 0f, 1f, 0.25f);
         Gizmos.DrawSphere(pointOfMaxEffectivity.position, maximumRadarDistance);
     }

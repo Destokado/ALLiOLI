@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class KnightTrap : Trap
 {
@@ -23,13 +24,12 @@ public class KnightTrap : Trap
         base.Activate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
-        killZone.SetState(true);
+        killZone.enabled = true;
     }
     
     public void DisableKillZone()
     {
-        killZone.SetState(false);
+        killZone.enabled = false;
     }
-    
     
 }
