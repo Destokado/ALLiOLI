@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +12,14 @@ public class ProjectileTrap : Trap
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionForce;
     [SerializeField] private Transform explosionPos;
+    private Pool pool;
 
-    protected override void Reload()
+    private void Awake()
     {
-       /* animManager.GetAnimation(0).mirror = true;
-        animManager.Play(0);*/
+        pool = new Pool(projectilePrefab, projectilePos.Count, transform.position, Quaternion.identity, false);
     }
+
+    protected override void Reload() { }
 
     public override void Activate()
     {
@@ -24,10 +27,15 @@ public class ProjectileTrap : Trap
        
        foreach (Transform trans in projectilePos)
        {
-           GameObject projectile = Instantiate(projectilePrefab, trans.position, Quaternion.identity);
-           projectile.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionPos.position, explosionRadius,0.1f, ForceMode.Impulse);
-           Destroy(projectile,10f);
+           GameObject projectile = pool.Spawn(trans.position, Quaternion.identity, Vector3.one);
+           StartCoroutine(AddForce(projectile));
        }
             
+    }
+
+    private IEnumerator AddForce(GameObject projectile)
+    {
+        yield return new WaitForFixedUpdate();
+        projectile.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionPos.position, explosionRadius,0.1f, ForceMode.Impulse);
     }
 }

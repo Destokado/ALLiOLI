@@ -8,11 +8,11 @@ public class KillZone : MonoBehaviour
     [Tooltip("Not mandatory")]
     [SerializeField] public new Rigidbody rigidbody;
     [Tooltip("Not mandatory")]
-    [SerializeField] private float minimumVelocityToKill = 0.1f;
+    [SerializeField] private float minimumVelocityToKill = 0.75f;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (rigidbody != null)
+        if (rigidbody)
             if (rigidbody.velocity.magnitude < minimumVelocityToKill)
                 return;
 
@@ -21,7 +21,9 @@ public class KillZone : MonoBehaviour
             return;
         
         character.Die();
-        Debug.Log(character.name + " was killed by" + transform.parent.gameObject.name);
+
+        string additionalReport = rigidbody? "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)" : "";
+        Debug.Log(character.name + " was killed by" + transform.parent.gameObject.name + additionalReport, this);
     }
 
 }
