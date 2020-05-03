@@ -23,9 +23,9 @@ public class LineRendererCollider : MonoBehaviour
         capsuleCollider.height = distance;
         
         Vector3 capsuleColliderCenter = capsuleCollider.center;
-        capsuleColliderCenter.z = distance/2f;
+        capsuleColliderCenter.y = distance/2f;
         capsuleCollider.center = capsuleColliderCenter;
         
-        capsuleCollider.transform.rotation = Quaternion.LookRotation(lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0));
+        //capsuleCollider.transform.rotation = Quaternion.LookRotation(lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0));
     }
 }
