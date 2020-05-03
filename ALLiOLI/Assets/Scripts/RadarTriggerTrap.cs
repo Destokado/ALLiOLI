@@ -53,6 +53,7 @@ public class RadarTriggerTrap : MonoBehaviour
         if (character) charactersInRadar.Remove(character);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (Selection.activeGameObject != transform.gameObject) return;
@@ -60,4 +61,6 @@ public class RadarTriggerTrap : MonoBehaviour
         Gizmos.color = new Color(1f, 0f, 1f, 0.25f);
         Gizmos.DrawSphere(pointOfMaxEffectivity.position, maximumRadarDistance);
     }
+#endif
+
 }
