@@ -9,9 +9,9 @@ public class CharacterMovementController : MonoBehaviour
 {
     [HideInInspector] public Vector2 horizontalMovementInput;
     public bool jumping { get; set; }
-    
-    private CharacterController characterController;
-    private Character character;
+
+    public CharacterController characterController { get; private set; }
+    public Character character { get; private set; }
     
     [Header("Configuration")]
     [SerializeField] private float walkSpeed;
