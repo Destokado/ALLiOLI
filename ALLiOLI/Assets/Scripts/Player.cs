@@ -17,7 +17,11 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
-    private Trap trapInFront;
+    private Trap trapInFront {
+        get => _trapInFront;
+        set { _trapInFront = value; playerGui.ShowInteractionText(value != null && 
+            (MatchManager.Instance.currentPhase is TrapUp || MatchManager.Instance.currentPhase is FinishingTrapUp));}}
+    private Trap _trapInFront;
     private GameObject lastObjectInFront;
     
     private PlayerInput playerInput;

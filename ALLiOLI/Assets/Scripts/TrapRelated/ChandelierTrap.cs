@@ -4,23 +4,26 @@ public class ChandelierTrap : Trap
 {
     
     private SimpleAnimationsManager animManager;
+    [SerializeField] private Rigidbody chandelier;
 
-    private void Awake()
+    public void Awake() 
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
     protected override void Reload()
     {
-        animManager.GetAnimation(0).mirror = true;
+        ((TransformAnimation)animManager.GetAnimation(0)).originTransform.SetProperties(chandelier.transform);
+        chandelier.isKinematic = true;
         animManager.Play(0);
     }
 
     public override void Activate()
     {
         base.Activate();
-        animManager.GetAnimation(0).mirror = false;
-        animManager.Play(0);
+        
+        animManager.Stop(0);
+        chandelier.isKinematic = false;
     }
     
 }

@@ -8,12 +8,12 @@ namespace UnityEngine
     [Serializable]
     public class TransformAnimation : SimpleAnimation
     {
-        [SerializeField] private Transform transformToAnimate;
-        [SerializeField] private Transform originTransform;
-        [SerializeField] private Transform destinationTransform;
-        [SerializeField] private bool move;
-        [SerializeField] private bool rotate;
-        [SerializeField] private bool scale;
+        [SerializeField] public Transform transformToAnimate;
+        [SerializeField] public Transform originTransform;
+        [SerializeField] public Transform destinationTransform;
+        [SerializeField] public bool move;
+        [SerializeField] public bool rotate;
+        [SerializeField] public bool scale;
 
         // It is mandatory to have a parameterless constructor to properly work with the SimpleAnimationsManager component in the inspector.
         public TransformAnimation() : this(null, null, null) { } 
