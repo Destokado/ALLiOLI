@@ -1,86 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5727159210328017968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294765198857436210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e036a47f9f6bb4aa7937ec351f8121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldownTime: 1
-  radarTrigger: {fileID: 0}
-  projectilePos:
-  - {fileID: 2623276466465209901}
-  - {fileID: 2742353835684753671}
-  - {fileID: 1782795829550840660}
-  - {fileID: 3531989191717649953}
-  - {fileID: 4681032961624718630}
-  - {fileID: 6700926801134619328}
-  - {fileID: 6447925388501994539}
-  projectilePrefab: {fileID: 4219826507680822496, guid: 4155765c86707e9409d804204fe92455,
-    type: 3}
-  explosionRadius: 3
-  explosionForce: 15
-  explosionPos: {fileID: 801131595405873476}
---- !u!114 &7896702645285381611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294765198857436210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d8d36295b507141a4b64d8ebf2c605, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animations:
-  - id: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: TransformAnimation, ns: UnityEngine, asm: UnityEssentials}
-      data:
-        mirror: 0
-        duration: 0.3
-        curve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 2
-            outSlope: 2
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        OnFinish:
-          m_PersistentCalls:
-            m_Calls: []
-        transformToAnimate: {fileID: 3060774464027541668}
-        originTransform: {fileID: 722516113539626352}
-        destinationTransform: {fileID: 5425461589424187232}
-        move: 1
-        rotate: 1
-        scale: 1
 --- !u!1 &536693817665039818
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +182,87 @@ Transform:
   m_Father: {fileID: 5029090094217723019}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -140.233, z: 0}
+--- !u!114 &5727159210328017968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294765198857436210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e036a47f9f6bb4aa7937ec351f8121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 5
+  radarTrigger: {fileID: 6478924803434540297}
+  projectilePos:
+  - {fileID: 2623276466465209901}
+  - {fileID: 2742353835684753671}
+  - {fileID: 1782795829550840660}
+  - {fileID: 3531989191717649953}
+  - {fileID: 4681032961624718630}
+  - {fileID: 6700926801134619328}
+  - {fileID: 6447925388501994539}
+  projectilePrefab: {fileID: 4219826507680822496, guid: 4155765c86707e9409d804204fe92455,
+    type: 3}
+  explosionRadius: 3
+  explosionForce: 15
+  explosionPos: {fileID: 801131595405873476}
+--- !u!114 &7896702645285381611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294765198857436210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d8d36295b507141a4b64d8ebf2c605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animations:
+  - id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: TransformAnimation, ns: UnityEngine, asm: UnityEssentials}
+      data:
+        mirror: 0
+        duration: 0.3
+        curve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        OnFinish:
+          m_PersistentCalls:
+            m_Calls: []
+        transformToAnimate: {fileID: 3060774464027541668}
+        originTransform: {fileID: 722516113539626352}
+        destinationTransform: {fileID: 5425461589424187232}
+        move: 1
+        rotate: 1
+        scale: 1
 --- !u!1 &4407710880807509189
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,15 +989,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6f1e609c6ac64f4a8a460f8fb2f956a, type: 3}
---- !u!4 &3789782840972738896 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 326779425378809439, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3463540027249735439}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7890676723068173251 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3463540027249735439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6478924803434540297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7636192393158449670, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3463540027249735439}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f07d83156b735b4e8807364bed2bbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3789782840972738896 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 326779425378809439, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
     type: 3}
   m_PrefabInstance: {fileID: 3463540027249735439}
   m_PrefabAsset: {fileID: 0}

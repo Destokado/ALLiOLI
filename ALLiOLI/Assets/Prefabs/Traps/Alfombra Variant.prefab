@@ -77,6 +77,9 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        OnFinish:
+          m_PersistentCalls:
+            m_Calls: []
         transformToAnimate: {fileID: 6348936295114943654}
         originTransform: {fileID: 1567128877031781197}
         destinationTransform: {fileID: 4922460264053395519}
@@ -95,21 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527384f141f8a4b41bb87aed84a7fbb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 3
+  cooldownTime: 5
   radarTrigger: {fileID: 7929078429384219183}
---- !u!65 &6699464269862131600
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822442943437704970}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5843932303331965446
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +222,7 @@ Transform:
   m_Children:
   - {fileID: 3577117866287167750}
   m_Father: {fileID: 250088800104707702}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7439814460204607964
 GameObject:
@@ -425,12 +415,6 @@ Transform:
 --- !u!4 &250088800104707702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 326779425378809439, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
-    type: 3}
-  m_PrefabInstance: {fileID: 572109262115258409}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &822442943437704970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 907876820047023907, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
     type: 3}
   m_PrefabInstance: {fileID: 572109262115258409}
   m_PrefabAsset: {fileID: 0}

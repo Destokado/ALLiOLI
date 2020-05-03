@@ -13,7 +13,7 @@ namespace UnityEngine
         [SerializeField] public bool mirror;
         [SerializeField] public float duration;
         [SerializeField] public AnimationCurve curve;
-        //[SerializeField] public UnityEvent OnFinish;
+        [SerializeField] public UnityEvent OnFinish;
 
         /// <summary>
         /// Go forward or backwards in the animation.

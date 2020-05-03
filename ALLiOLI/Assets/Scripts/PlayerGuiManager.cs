@@ -15,6 +15,8 @@ public class PlayerGuiManager : MonoBehaviour
     [SerializeField] private TMP_Text readinessText;
     [Space] 
     [SerializeField] private RadarUI radarUi;
+    [Space] 
+    [SerializeField] private GameObject interactionText;
 
     public void SetColor(Color color)
     {
@@ -47,5 +49,10 @@ public class PlayerGuiManager : MonoBehaviour
     public void ReportInRadar(List<KeyValuePair<Player, float>> report)
     {
         radarUi.RenderReport(report);
+    }
+
+    public void ShowInteractionText(bool show)
+    {
+        interactionText.SetActive(show);
     }
 }
