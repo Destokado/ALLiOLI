@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -22,5 +23,12 @@ public class Spawner : MonoBehaviour
         //TODO: Maybe it should be a pool?
         
         return Instantiate(prefab, transform.position, Quaternion.identity);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var character = other.GetComponent<Character>();
+        if(character && character.flag)
+            MatchManager.Instance.MatchFinished(character.owner);
     }
 }
