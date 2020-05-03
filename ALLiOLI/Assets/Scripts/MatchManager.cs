@@ -18,7 +18,6 @@ public class MatchManager : MonoBehaviour
     public Player winnerPlayer { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
     [SerializeField] public Color[] playerColors;
-    public Trap TestTrap;
 
     private void Awake()
     {
@@ -48,7 +47,7 @@ public class MatchManager : MonoBehaviour
         currentPhase.UpdateState(Time.deltaTime);
     }
 
-    private void SetNewMatchPhase(MatchPhase nextPhase)
+    public void SetNewMatchPhase(MatchPhase nextPhase)
     {
         SetAllPlayersAsNotReady();
 
