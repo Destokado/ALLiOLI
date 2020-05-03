@@ -110,7 +110,7 @@ HingeJoint:
   m_Anchor: {x: -0.06, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.778, y: 0.71465397, z: 0.618}
+  m_ConnectedAnchor: {x: -0.60099995, y: 0.8732751, z: 0.691}
   m_UseSpring: 1
   m_Spring:
     spring: 600
@@ -1571,7 +1571,7 @@ PrefabInstance:
     - target: {fileID: 8354195293167907478, guid: 81c7c28be9aac5344ad7ce131206226a,
         type: 3}
       propertyPath: minimumVelocityToKill
-      value: 0.1
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c7c28be9aac5344ad7ce131206226a, type: 3}
