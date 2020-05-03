@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(SimpleAnimationsManager))]
 
-public class DragonTrap : Trap
+[RequireComponent(typeof(SimpleAnimationsManager))]
+public class SpikesTrap : Trap
 {
+    // Start is called before the first frame update
     private SimpleAnimationsManager animManager;
+
     private void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
