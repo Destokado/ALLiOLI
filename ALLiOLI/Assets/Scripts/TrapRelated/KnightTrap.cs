@@ -2,34 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SimpleAnimationsManager))]
-public class KnightTrap : Trap
+public class KnightTrap : SlapTrap
 {
-    private SimpleAnimationsManager animManager;
-    [SerializeField] private KillZone killZone;
-
-    public void Awake() 
-    {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
-    }
-
-    protected override void Reload()
-    {
-        animManager.GetAnimation(0).mirror = true;
-        animManager.Play(0);
-    }
-
-    public override void Activate()
-    {
-        base.Activate();
-        animManager.GetAnimation(0).mirror = false;
-        animManager.Play(0);
-        killZone.enabled = true;
-    }
-    
-    public void DisableKillZone()
-    {
-        killZone.enabled = false;
-    }
-    
+   
 }
