@@ -17,8 +17,8 @@ MonoBehaviour:
   radarTrigger: {fileID: 8632979656985438639}
   myKillZone: {fileID: 1551301805124375276}
   joint: {fileID: 2358935107920093430}
-  startAngle: 0
-  targetAngle: -119
+  startAngle: 1
+  targetAngle: 179
 --- !u!1 &2388583351130151735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,6 +1338,11 @@ PrefabInstance:
       propertyPath: minimumVelocityToKill
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 8354195293167907478, guid: 81c7c28be9aac5344ad7ce131206226a,
+        type: 3}
+      propertyPath: rigidbody
+      value: 
+      objectReference: {fileID: 2881467908250844087}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c7c28be9aac5344ad7ce131206226a, type: 3}
 --- !u!1 &4838629215814660899 stripped

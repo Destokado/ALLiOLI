@@ -46,7 +46,7 @@ public class PlayerGuiManager : MonoBehaviour
     }
     
     
-    public void ReportInRadar(List<KeyValuePair<Player, float>> report)
+    public void ReportInRadar(List<KeyValuePair<Trap, SortedList<float, Character>>> report)
     {
         radarUi.RenderReport(report);
     }

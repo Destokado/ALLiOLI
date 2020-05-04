@@ -50,8 +50,8 @@ public abstract class Trap : MonoBehaviour
         return radarTrigger.GetRadarDistanceTo(character);
     }
 
-    public List<KeyValuePair<Player, float>> GetRadarReport()
+    public SortedList<float, Character> GetCharactersInTrapRadar(Player exception)
     {
-        return radarTrigger.GetRadarReport();
+        return radarTrigger.GetCharactersInTrapRadar(exception);
     }
 }

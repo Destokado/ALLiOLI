@@ -10,29 +10,16 @@ public class RadarTriggerTrap : MonoBehaviour
     private HashSet<Character> charactersInRadar = new HashSet<Character>();
     [SerializeField] private float maximumRadarDistance = 5;
     [SerializeField] private Transform pointOfMaxEffectivity;
-    
-    /*public List<Player> playersInRadar
-    {
-        get
-        {
-            List<Player> players = new List<Player>();
-            foreach (Character character in charactersInRadar)
-                if (!character.isDead)
-                    players.Add(character.owner);
 
-            return players;
-        }
-    }*/
-
-    public List<KeyValuePair<Player, float>> GetRadarReport()
+    public SortedList<float, Character> GetCharactersInTrapRadar(Player exception) // Sorted by distance
     {
-        List<KeyValuePair<Player, float>> report = new List<KeyValuePair<Player, float>>();
+        SortedList<float, Character> playersInTrapRadar = new SortedList<float, Character>();
         
         foreach (Character character in charactersInRadar)
-            if (!character.isDead)
-                report.Add( new KeyValuePair<Player, float>(character.owner, GetRadarDistanceTo(character) ));
+            if (!character.isDead && character.owner != exception)
+                playersInTrapRadar.Add(GetRadarDistanceTo(character), character);
 
-        return report;
+        return playersInTrapRadar;
     }
 
     public float GetRadarDistanceTo(Character character)

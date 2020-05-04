@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxDistanceToInteractWithTrap = 10;
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
     public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 10 / MatchManager.Instance.players.Count;
+    public int maxOwnableTraps => 50 / MatchManager.Instance.players.Count;
     private Trap trapInFront {
         get => _trapInFront;
         set { _trapInFront = value; playerGui.ShowInteractionText(value != null && 
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void UpdateRadarTraps()
     {
-        List<KeyValuePair<Player, float>> radarReport = ownedTraps.GetRadarReport(this);
+        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = ownedTraps.GetCharactersInEachTrapRadar(this);
         playerGui.ReportInRadar(radarReport);
     }
 
