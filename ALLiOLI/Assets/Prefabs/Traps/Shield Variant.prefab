@@ -262,6 +262,9 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        OnFinish:
+          m_PersistentCalls:
+            m_Calls: []
         transformToAnimate: {fileID: 8692238219176492067}
         originTransform: {fileID: 1929061616504888898}
         destinationTransform: {fileID: 5780530738768634694}
@@ -281,7 +284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 5
+  durationTime: 3
   radarTrigger: {fileID: 780347212550539120}
+  myKillZone: {fileID: 7343212640561906269}
   shield: {fileID: 7502491066875957140}
   throwDirection: {x: 5, y: 0, z: -1}
   throwSpeed: 10
@@ -423,6 +428,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1592097951375339723}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7343212640561906269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8354195293167907478, guid: 81c7c28be9aac5344ad7ce131206226a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1592097951375339723}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695559301821113234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6afe82fa93e6041916699563b6aaa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7146488177362296182
 PrefabInstance:
   m_ObjectHideFlags: 0

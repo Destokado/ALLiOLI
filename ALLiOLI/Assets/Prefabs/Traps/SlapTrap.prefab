@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
+  durationTime: 3
   radarTrigger: {fileID: 8632979656985438639}
+  myKillZone: {fileID: 1551301805124375276}
   joint: {fileID: 2358935107920093430}
   startAngle: 0
   targetAngle: -119
@@ -1350,3 +1352,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7383445562049110138}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1551301805124375276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8354195293167907478, guid: 81c7c28be9aac5344ad7ce131206226a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7383445562049110138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4838629215814660899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6afe82fa93e6041916699563b6aaa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

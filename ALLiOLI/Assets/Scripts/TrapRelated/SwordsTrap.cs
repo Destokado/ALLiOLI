@@ -1,33 +1,30 @@
 ﻿
 using UnityEngine;
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class SwordsTrap : Trap
+public class SwordsTrap : SlapTrap
 {
-    
-    private SimpleAnimationsManager animManager;
-
-    private void Awake()
-    {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
-    }
+    [SerializeField] private HingeJoint secondJoint;
+    [SerializeField] private float secondSstartAngle;
+    [SerializeField] private float secondTargetAngle;
+    [SerializeField] private KillZone secondKillZone;
+  
 
     protected override void Reload()
     {
-        animManager.GetAnimation(0).mirror = true;
-        animManager.GetAnimation(1).mirror = true;
-
-        animManager.Play(0);
-        animManager.Play(1);
-        
+         base.Reload();
+         var jointSpring = secondJoint.spring;
+         jointSpring.targetPosition = secondSstartAngle;
+         secondJoint.spring = jointSpring;
+         secondKillZone.enabled = false;
     }
 
     public override void Activate()
     {
-        base.Activate();
-        animManager.GetAnimation(0).mirror = false;
-        animManager.GetAnimation(1).mirror = false;
-        animManager.Play(0);
-        animManager.Play(1);
+         base.Activate();
+        var jointSpring = secondJoint.spring;
+        jointSpring.targetPosition = secondTargetAngle;
+        secondJoint.spring = jointSpring;
+        secondKillZone.enabled = true;
     }
     
 }

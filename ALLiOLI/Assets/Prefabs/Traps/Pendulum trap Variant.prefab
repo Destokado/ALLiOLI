@@ -333,7 +333,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 10
+  durationTime: 3
   radarTrigger: {fileID: 4638663025538229398}
+  myKillZone: {fileID: 5684636987171352318}
   ball: {fileID: 7724252859047401175}
 --- !u!135 &422295104999485755
 SphereCollider:
@@ -623,3 +625,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4401128871574264936}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5684636987171352318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8354195293167907478, guid: 81c7c28be9aac5344ad7ce131206226a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4401128871574264936}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748228297869545265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6afe82fa93e6041916699563b6aaa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
