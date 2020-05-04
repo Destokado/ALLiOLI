@@ -8,23 +8,20 @@ public class SlapTrap : Trap
     [SerializeField] private HingeJoint joint;
     [SerializeField] private float startAngle;
     [SerializeField] private float targetAngle;
-  
-
-    // Update is called once per frame
-   
-
     protected override void Reload()
     {
         var jointSpring = joint.spring;
         jointSpring.targetPosition = startAngle;
         joint.spring = jointSpring;
+       
     }
 
     public override void Activate()
     {
         base.Activate();
-        var spring = joint.spring;
-        spring.targetPosition = targetAngle;
-        joint.spring = spring;
+        var jointSpring = joint.spring;
+        jointSpring.targetPosition = targetAngle;
+        joint.spring = jointSpring;
+        
     }
 }
