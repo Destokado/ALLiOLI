@@ -13,7 +13,6 @@ public class BattleCountdown : MatchPhase
         MatchManager.Instance.matchTimer = 10;
         Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " +
                   MatchManager.Instance.matchTimer + "s.");
-        FlagSpawner.Instance.Spawn();
     }
 
     public override void UpdateState(float deltaTime)

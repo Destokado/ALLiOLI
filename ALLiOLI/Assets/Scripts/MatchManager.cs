@@ -105,4 +105,12 @@ public class MatchManager : MonoBehaviour
         Debug.Log(winner.gameObject.name + "won");
         guiManager.ShowEndScreen(winner.gameObject.name);
     }
+
+    public void KillPlayers()
+    {
+        foreach (Player p in players)
+        {
+            p.character.Die();
+        }
+    }
 }

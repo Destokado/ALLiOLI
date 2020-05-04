@@ -11,7 +11,9 @@ public class TrapUp : MatchPhase
     
     public override void StartState()
     {
+        
         MatchManager.Instance.matchTimer = 30;
+        MatchManager.Instance.KillPlayers();
         Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + MatchManager.Instance.matchTimer + "s remaining.");
     }
 
