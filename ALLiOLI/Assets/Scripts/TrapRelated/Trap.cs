@@ -3,12 +3,14 @@ using UnityEngine;
 
 public abstract class Trap : MonoBehaviour
 {
-    [SerializeField] private float cooldownTime = 5f;
-    [SerializeField] private float durationTime = 3f;
     [SerializeField] private RadarTriggerTrap radarTrigger;
     [SerializeField] private KillZone myKillZone;
+    
+    [SerializeField] private float cooldownTime = 5f;
     public bool OnCd => cdTimer > 0;
     public float cdTimer { get; private set; }
+    
+    [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
     public bool active => activatedTimer > 0;
     public float activatedTimer  { get; private set; }
 
