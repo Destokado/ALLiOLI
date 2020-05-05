@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         switch (currentState)
         {
             case Battle battle:
-                ownedTraps.GetBestTrapToActivate()?.Activate();
+                ownedTraps.GetBestTrapToActivate(this)?.Activate();
                 break;
             case TrapUp trapUp:
                 SetUpTrapInFront();

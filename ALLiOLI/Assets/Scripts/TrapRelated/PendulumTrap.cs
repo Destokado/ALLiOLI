@@ -10,7 +10,7 @@ public class PendulumTrap : Trap
     protected override void Reload()
     {
         JointSpring hingeSpring = ball.spring;
-        hingeSpring.spring = 2500;
+        hingeSpring.spring = 10000;
         hingeSpring.damper = 0;
         hingeSpring.targetPosition = 85;
         ball.spring = hingeSpring;

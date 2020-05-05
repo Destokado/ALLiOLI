@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class TrapManager : List<Trap>
 {
-    public Trap GetBestTrapToActivate()
+    public Trap GetBestTrapToActivate(Player playerToAvoid)
     {
-        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = GetCharactersInEachTrapRadar(null);
+        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = GetCharactersInEachTrapRadar(playerToAvoid);
         if (radarReport.Count > 0)
             return radarReport[0].Key;
         
