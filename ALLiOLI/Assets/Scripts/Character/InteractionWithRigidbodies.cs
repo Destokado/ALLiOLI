@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class InteractionWithRigidbodies : MonoBehaviour
 {
     
     private CharacterController characterController;
-    [SerializeField] float pushPower = 0.5f;
+    [SerializeField] float pushPower = 3f;
+    [SerializeField] float weight = 1f;
     
     private void Awake()
     {
@@ -18,24 +20,18 @@ public class InteractionWithRigidbodies : MonoBehaviour
     {
         Rigidbody body = hit.collider.attachedRigidbody;
 
-        // no rigidbody
-        if (body == null || body.isKinematic)
-        {
-            return;
-        }
+        // Do not push objects without rigidbody
+        if (body == null || body.isKinematic) return;
 
-        // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3)
-        {
-            return;
-        }
-
-        // Calculate push direction from move direction,
-        // we only push objects to the sides never up and down
-        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+        // Calculate direction of the push
+        Vector3 pushDir = hit.moveDirection;
+        
+        // Vertical push (weight) //TODO: decide if this is needed --> Can cause bugs with physics
+        if (hit.moveDirection.y < 0)
+            pushDir.y = Mathf.Abs(pushDir.y) * Physics.gravity.y * weight;
 
         // Apply the push
-        body.AddForce(pushDir * (pushPower * characterController.velocity.magnitude), ForceMode.Impulse);
+        body.AddForceAtPosition(pushDir * (pushPower * characterController.velocity.magnitude), hit.point, ForceMode.Force);
         
     }
 }
