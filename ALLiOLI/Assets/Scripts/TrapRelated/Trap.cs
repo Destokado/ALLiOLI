@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class Trap : MonoBehaviour
 {
-    [SerializeField] private RadarTriggerTrap radarTrigger;
-    [SerializeField] private KillZone myKillZone;
+    [SerializeField] protected RadarTriggerTrap radarTrigger;
+    //[SerializeField] protected KillZone myKillZone;
     
     [SerializeField] private float cooldownTime = 5f;
     public bool OnCd => cdTimer > 0;
@@ -29,13 +29,13 @@ public abstract class Trap : MonoBehaviour
 
     protected virtual void Reload()
     {
-        if (myKillZone) myKillZone.enabled = false;
+        //if (myKillZone) myKillZone.enabled = false;
     }
 
     public virtual void Activate()
     {
         Debug.Log("The trap "+gameObject.name+" has been activated.");
-        if (myKillZone) myKillZone.enabled = true;
+        //if (myKillZone) myKillZone.enabled = true;
 
         cdTimer = cooldownTime;
         activatedTimer = durationTime;

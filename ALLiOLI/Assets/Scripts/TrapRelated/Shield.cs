@@ -9,7 +9,7 @@ public class Shield : Trap
 {
     private SimpleAnimationsManager animManager;
     [SerializeField] private Rigidbody shield;
-    [SerializeField] private Vector3 throwDirection;
+    private Vector3 throwDirection => radarTrigger.transform.forward;
     [SerializeField] private float throwSpeed;
 
     public void Awake() 

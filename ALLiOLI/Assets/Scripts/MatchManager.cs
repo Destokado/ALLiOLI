@@ -110,7 +110,7 @@ public class MatchManager : MonoBehaviour
     {
         foreach (Player p in players)
         {
-            p.character.Die();
+            p.character.Suicide();
         }
     }
 }

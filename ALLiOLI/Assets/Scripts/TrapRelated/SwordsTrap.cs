@@ -6,7 +6,7 @@ public class SwordsTrap : SlapTrap
     [SerializeField] private HingeJoint secondJoint;
     [SerializeField] private float secondSstartAngle;
     [SerializeField] private float secondTargetAngle;
-    [SerializeField] private KillZone secondKillZone;
+    //[SerializeField] private KillZone secondKillZone;
   
 
     protected override void Reload()
@@ -15,7 +15,7 @@ public class SwordsTrap : SlapTrap
          var jointSpring = secondJoint.spring;
          jointSpring.targetPosition = secondSstartAngle;
          secondJoint.spring = jointSpring;
-         secondKillZone.enabled = false;
+         //secondKillZone.enabled = false;
     }
 
     public override void Activate()
@@ -24,7 +24,7 @@ public class SwordsTrap : SlapTrap
         var jointSpring = secondJoint.spring;
         jointSpring.targetPosition = secondTargetAngle;
         secondJoint.spring = jointSpring;
-        secondKillZone.enabled = true;
+        //secondKillZone.enabled = true;
     }
     
 }

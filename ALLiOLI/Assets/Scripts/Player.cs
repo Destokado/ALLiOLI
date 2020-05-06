@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
 
     private void OnSuicide()
     {
-        character.Die();
+        character.Suicide();
     }
     
     private void OnJump(InputValue value)

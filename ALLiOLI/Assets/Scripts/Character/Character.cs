@@ -24,13 +24,13 @@ public class Character : MonoBehaviour
         movementControllerController = GetComponent<CharacterMovementController>();
     }
 
-    public void Die()
+    public void Die(Vector3 impact, Vector3 impactPoint)
     {
         if (!isDead)
-            StartCoroutine(DieCoroutine());
+            StartCoroutine(DieCoroutine(impact, impactPoint));
     }
     
-    private IEnumerator DieCoroutine()
+    private IEnumerator DieCoroutine(Vector3 impact, Vector3 impactPoint)
     {
         isDead = true;
         if (flag != null) flag.Detach();
@@ -38,11 +38,16 @@ public class Character : MonoBehaviour
 
         movementControllerController.enabled = false;
         movementControllerController.characterController.enabled = false;
-        gameObject.AddComponent<Rigidbody>();
+        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+        rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
         
         yield return new WaitForSeconds(1.5f);
         
         owner.SpawnNewCharacter();
     }
 
+    public void Suicide()
+    {
+        Die(Vector3.up*2, transform.position);
+    }
 }
