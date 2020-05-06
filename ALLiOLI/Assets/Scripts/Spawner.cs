@@ -21,8 +21,10 @@ public class Spawner : MonoBehaviour
     public GameObject Spawn(GameObject prefab)
     {
         //TODO: Maybe it should be a pool?
-        
-        return Instantiate(prefab, transform.position, Quaternion.identity);
+        EasyRandom random = new EasyRandom();
+        Vector3 spawnPoint = new Vector3(transform.position.x + random.GetRandomFloat(-2, 2), transform.position.y,
+            transform.position.z + random.GetRandomFloat(-2, 2));
+        return Instantiate(prefab, spawnPoint, Quaternion.identity);
     }
 
     private void OnTriggerEnter(Collider other)
