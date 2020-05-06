@@ -71,9 +71,6 @@ public class MatchManager : MonoBehaviour
 
         Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
             playerInput.gameObject);
-
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
-            playerInput.gameObject);
     }
 
     private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
