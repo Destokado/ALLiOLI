@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
         movementControllerController.characterController.enabled = false;
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
+        //rb.AddExplosionForce(impact.magnitude, impactPoint, 30, 300f);
         
         yield return new WaitForSeconds(1.5f);
         
@@ -48,6 +49,6 @@ public class Character : MonoBehaviour
 
     public void Suicide()
     {
-        Die(Vector3.up*2, transform.position);
+        Die(Vector3.up+transform.forward*2, transform.position+Vector3.up);
     }
 }
