@@ -35,8 +35,6 @@ public class Character : MonoBehaviour
         isDead = true;
         if (flag != null) flag.Detach();
         movementControllerController.enabled = false;
-
-        movementControllerController.enabled = false;
         movementControllerController.characterController.enabled = false;
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
