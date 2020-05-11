@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,8 +26,9 @@ public class Player : MonoBehaviour
     private GameObject lastObjectInFront;
     
     private PlayerInput playerInput;
-    public ThirdPersonCamera playerCamera { get; private set;  }
-    
+    //public ThirdPersonCamera playerCamera { get; private set;  }
+    public CmCamera playerCamera{ get; private set;  }
+    private Vector2 cameraMovement;
     public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
     private Color _color;
     public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
@@ -37,7 +39,9 @@ public class Player : MonoBehaviour
         ownedTraps = new TrapManager();
         
         playerInput = GetComponent<PlayerInput>();
-        playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
+       // playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
+        playerCamera = playerInput.camera.gameObject.GetComponent<CmCamera>();
+        CinemachineCore.GetInputAxis = GetAxisCustom;
         this.color = color;
         gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
 
@@ -78,14 +82,31 @@ public class Player : MonoBehaviour
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
         this.character.owner = this;
-        playerCamera.Setup(this.character.cameraTarget);
+       // playerCamera.Setup(this.character.cameraTarget);
+        playerCamera.Setup(this.character.cameraTarget,this.character.cameraTarget);
     }
 
     #region Input
 
     private void OnCameraMove(InputValue value)
     {
-        playerCamera.movement = value.Get<Vector2>();
+        //playerCamera.movement = value.Get<Vector2>();
+        cameraMovement = value.Get<Vector2>();
+    }
+    public float GetAxisCustom(string axisName)
+    {
+        var LookDelta = cameraMovement;
+        LookDelta.Normalize();
+ 
+        if (axisName == "Mouse X")
+        {
+            return LookDelta.x;
+        }
+        else if (axisName == "Mouse Y")
+        {
+            return LookDelta.y;
+        }
+        return 0;
     }
 
     private void OnCharacterMove(InputValue value)
@@ -141,4 +162,5 @@ public class Player : MonoBehaviour
     {
         playerGui.SetupForCurrentPhase(this);
     }
+    
 }
