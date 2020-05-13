@@ -76,7 +76,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection = character.owner.playerCamera.gameObject.transform.TransformDirection(targetDirection);
-       /// targetDirection = character.owner.playerCamera.GetComponent<CinemachineFreeLook>().
+        /// targetDirection = character.owner.playerCamera.GetComponent<CinemachineFreeLook>().
         targetDirection.y = 0.0f;
         return targetDirection.normalized;
     }

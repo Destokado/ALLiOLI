@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
        // playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
         playerCamera = playerInput.camera.gameObject.GetComponent<CmCamera>();
         CinemachineCore.GetInputAxis = GetAxisCustom;
+      
         this.color = color;
         gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
 
