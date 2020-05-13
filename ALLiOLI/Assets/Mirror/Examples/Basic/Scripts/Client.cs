@@ -3,11 +3,8 @@ using UnityEngine.UI;
 
 namespace Mirror.Examples.Basic
 {
-    public class Player : NetworkBehaviour
+    public class Client : NetworkBehaviour
     {
-        [Header("Player Components")]
-        public RectTransform rectTransform;
-        public Image image;
 
         [Header("Child Text Objects")]
         public Text playerNameText;
@@ -56,25 +53,19 @@ namespace Mirror.Examples.Basic
             base.OnStartClient();
 
             // Make this a child of the layout panel in the Canvas
-            transform.SetParent(GameObject.Find("PlayersPanel").transform);
-
-            // Calculate position in the layout panel
-            int x = 100 + ((playerNo % 4) * 150);
-            int y = -170 - ((playerNo / 4) * 80);
-            rectTransform.anchoredPosition = new Vector2(x, y);
+            transform.SetParent(GameObject.Find("PlayersPanel").transform, false);
 
             // Apply SyncVar values
             playerNameText.color = playerColor;
-            playerNameText.text = string.Format("Player {0:00}", playerNo);
+            playerNameText.text = string.Format("Client {0:00}", playerNo);
         }
 
         // This only fires on the local client when this player object is network-ready
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
-
-            // apply a shaded background to our player
-            image.color = new Color(1f, 1f, 1f, 0.1f);
+            
+            Debug.Log("OnStartLocalPlayer");
         }
     }
 }
