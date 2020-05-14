@@ -29,22 +29,24 @@ public class MatchManager : MonoBehaviour
         else
         {
             Instance = this;
-            playerInputManager = GetComponent<PlayerInputManager>();
             players = new HashSet<Player>();
+            playerInputManager = GetComponent<PlayerInputManager>();
+            playerInputManager.enabled = false;
         }
     }
 
     private void Start()
     {
-        SetNewMatchPhase(new WaitingForPlayers());
+        //SetNewMatchPhase(new WaitingForPlayers());
+        SetNewMatchPhase(null);
     }
 
     private void Update()
     {
-        State nextPhase = currentPhase.GetCurrentState();
+        State nextPhase = currentPhase?.GetCurrentState();
         if (currentPhase != nextPhase)
             SetNewMatchPhase((MatchPhase) nextPhase);
-        currentPhase.UpdateState(Time.deltaTime);
+        currentPhase?.UpdateState(Time.deltaTime);
     }
 
     public void SetNewMatchPhase(MatchPhase nextPhase)

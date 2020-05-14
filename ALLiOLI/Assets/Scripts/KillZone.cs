@@ -12,7 +12,7 @@ public class KillZone : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
+        // Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
         
         if (rigidbody)
         {

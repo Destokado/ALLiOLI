@@ -31,7 +31,7 @@ public class LobbyManager : NetworkBehaviour
         
         clientsPanel.transform.DestroyAllChildren();
 
-        List<Client> clients = (NetworkManager.singleton as AllIOliNetworkManager)?.clients;
+        List<Client> clients = GameManager.singleton.clients;
         
         if (clients != null)
             foreach (Client client in clients)
@@ -51,7 +51,9 @@ public class LobbyManager : NetworkBehaviour
     [ClientRpc] // Called on all clients
     public void RpcStartMatchAllClients()
     {
-        SceneManager.LoadScene(matchScene, LoadSceneMode.Single);
+        //SceneManager.LoadScene(matchScene, LoadSceneMode.Single);
+        MatchManager.Instance.SetNewMatchPhase(new WaitingForPlayers());
+        gameObject.SetActive(false);
     }
 
 }

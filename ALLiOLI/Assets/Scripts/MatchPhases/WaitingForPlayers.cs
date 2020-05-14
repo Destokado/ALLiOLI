@@ -12,6 +12,7 @@ public class WaitingForPlayers : MatchPhase
     public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
+        MatchManager.Instance.playerInputManager.enabled = true;
     }
 
     public override void UpdateState(float deltaTime)
@@ -29,6 +30,6 @@ public class WaitingForPlayers : MatchPhase
 
     public override void EndState()
     {
-        
+        MatchManager.Instance.playerInputManager.enabled = false;
     }
 }

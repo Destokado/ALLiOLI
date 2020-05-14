@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class AllIOliNetworkManager : NetworkManager
 {
-    public List<Client> clients = new List<Client>();
-
+    
     // When a player/client is connected
     public override void OnServerAddPlayer(NetworkConnection conn)
     {

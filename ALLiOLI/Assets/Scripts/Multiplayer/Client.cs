@@ -21,7 +21,7 @@ public class Client : NetworkBehaviour
     {
         base.OnStartClient();
         transform.SetParent(NetworkManager.singleton.transform, false);
-        (NetworkManager.singleton as AllIOliNetworkManager)?.clients.Add(this);
+        GameManager.singleton.clients.Add(this);
         LobbyManager.singleton.SetupLobby();
     }
     
@@ -35,7 +35,7 @@ public class Client : NetworkBehaviour
     public override void OnStopClient()
     {
         base.OnStopClient();
-        (NetworkManager.singleton as AllIOliNetworkManager)?.clients.Remove(this);
+        GameManager.singleton.clients.Remove(this);
     }
 
 }

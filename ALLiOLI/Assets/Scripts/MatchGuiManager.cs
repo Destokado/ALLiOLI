@@ -25,8 +25,9 @@ public class MatchGuiManager : MonoBehaviour
     
     public void SetupForCurrentPhase()
     {
-        matchTimerGameObject.SetActive(MatchManager.Instance.currentPhase.showMatchTimer);
-        matchInformativeText.SetText(MatchManager.Instance.currentPhase.informativeText);
+        MatchPhase curPhase = MatchManager.Instance.currentPhase;
+        matchTimerGameObject.SetActive(curPhase != null && curPhase.showMatchTimer);
+        matchInformativeText.SetText(curPhase != null ? curPhase.informativeText : "");
     }
 
     public void ShowEndScreen(string winner)
