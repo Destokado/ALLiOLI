@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 278338621}
   - component: {fileID: 278338622}
   m_Layer: 5
-  m_Name: PlayersPanel
+  m_Name: ClientsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,6 +550,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4460915851043539305, guid: 915148d52f8f01b4f918527e5f0efea2,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460915851043539305, guid: 915148d52f8f01b4f918527e5f0efea2,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 4241994829874630583, guid: a49e20e55db48a14bafd04a79b5435c6,
+        type: 3}
     - target: {fileID: 8486767287859903377, guid: 915148d52f8f01b4f918527e5f0efea2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1474,6 +1485,9 @@ MonoBehaviour:
   syncInterval: 0.1
   matchScene: Prototype
   startMatchButton: {fileID: 1558645292}
+  clientsPanel: {fileID: 278338620}
+  clientVisualizationPrefab: {fileID: 2589384488249223762, guid: 105b8d0ea5cb6ea4bb29fc7629a0e8a5,
+    type: 3}
 --- !u!114 &1522173367
 MonoBehaviour:
   m_ObjectHideFlags: 0

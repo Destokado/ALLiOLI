@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerNameText: {fileID: 5578943194704289781}
-  playerDataText: {fileID: 5578943193891794221}
+  otherPrefab: {fileID: 4241994829874630583, guid: a49e20e55db48a14bafd04a79b5435c6,
+    type: 3}
   playerData: 0
 --- !u!1001 &4787383483567815386
 PrefabInstance:
@@ -112,7 +112,7 @@ PrefabInstance:
     - target: {fileID: 1088833923132447022, guid: 22f1fa3a0aff72b46a371f667bb4fb30,
         type: 3}
       propertyPath: m_Name
-      value: ALLiOLI Client Variant
+      value: Client ALLiOLI
       objectReference: {fileID: 0}
     - target: {fileID: 1088833923132447023, guid: 22f1fa3a0aff72b46a371f667bb4fb30,
         type: 3}

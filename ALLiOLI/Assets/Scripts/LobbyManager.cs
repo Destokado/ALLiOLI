@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -11,6 +13,9 @@ public class LobbyManager : NetworkBehaviour
 
     [SerializeField] private string matchScene;
     [SerializeField] private GameObject startMatchButton;
+    [Space]
+    [SerializeField] private GameObject clientsPanel;
+    [SerializeField] private GameObject clientVisualizationPrefab;
     
     private void Awake()
     {
@@ -23,17 +28,30 @@ public class LobbyManager : NetworkBehaviour
     public void SetupLobby()
     {
         startMatchButton.SetActive(isServer);
+        
+        clientsPanel.transform.DestroyAllChildren();
+
+        List<Client> clients = (NetworkManager.singleton as AllIOliNetworkManager)?.clients;
+        
+        if (clients != null)
+            foreach (Client client in clients)
+            {
+                GameObject go = Instantiate(clientVisualizationPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                go.transform.SetParent(clientsPanel.transform, false);
+                go.GetComponent<Image>().color = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
+            }
     }
     
-    [Server]
+    //[Server] // Allows only the server to start a match 
     public void StartMatch()
     {
         RpcStartMatchAllClients();
     }
 
-    [ClientRpc]
+    [ClientRpc] // Called on all clients
     public void RpcStartMatchAllClients()
     {
         SceneManager.LoadScene(matchScene, LoadSceneMode.Single);
     }
+
 }
