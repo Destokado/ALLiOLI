@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class AllIOliNetworkManager : NetworkManager
 {
-    
-    private List<Client> clients = new List<Client>();
-    
+    private List<Client> clients = new List<Client>(); // Only known by server (rn)
+
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         // Same as base method
         Transform startPos = GetStartPosition();
-        GameObject client = startPos != null ? Instantiate(playerPrefab, startPos.position, startPos.rotation) : Instantiate(playerPrefab);
-        NetworkServer.AddPlayerForConnection(conn, client);
+        GameObject clientGo = startPos != null ? Instantiate(playerPrefab, startPos.position, startPos.rotation) : Instantiate(playerPrefab);
+        NetworkServer.AddPlayerForConnection(conn, clientGo);
         
-        // New code, needed the reference to the player
-        clients.Add(client.GetComponent<Client>());
+        // Easy track of clients
+        Client client = clientGo.GetComponent<Client>();
+        clients.Add(client);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
