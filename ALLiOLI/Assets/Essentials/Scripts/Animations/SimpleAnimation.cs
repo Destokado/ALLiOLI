@@ -6,10 +6,12 @@ using UnityEngine.Events;
 
 namespace UnityEngine
 {
-    
+    [Serializable]
     public abstract class SimpleAnimation : ISimpleAnimation
     {
         public float timeStamp { get; protected set; }
+        [Space(30, order = 0)]
+        [Header("Animation configuration", order = 1)]
         [SerializeField] public bool mirror;
         [SerializeField] public float duration;
         [SerializeField] public AnimationCurve curve;
@@ -27,7 +29,13 @@ namespace UnityEngine
             else
                 timeStamp -= deltaTime;
 
-            return ((timeStamp >= duration) && !mirror) || ((timeStamp <= 0) && mirror);
+            if ( ((timeStamp >= duration) && !mirror) || ((timeStamp <= 0) && mirror) )
+            {
+                OnFinish?.Invoke();
+                return ((timeStamp >= duration) && !mirror) || ((timeStamp <= 0) && mirror); // Double evaluation to avoid bugs with modifications on the event invoked.
+            }
+            
+            return false;
         }
 
         /// <summary>
@@ -37,10 +45,13 @@ namespace UnityEngine
         {
             timeStamp = !mirror? 0f : duration;
         }
-        
-        
-        
-        
+
+
+        public override string ToString()
+        {
+            return "Current time: " + timeStamp + "/" + duration + ". Mirror: " + mirror;
+        }
+
 
         /// <summary>
         /// Obtains the desired type of animation curve with a duration of 1 (starting on 0), the start value being 0 and the end value being 1
@@ -65,4 +76,6 @@ namespace UnityEngine
         Linear,
         EaseInOut
     }
+    
+    
 }

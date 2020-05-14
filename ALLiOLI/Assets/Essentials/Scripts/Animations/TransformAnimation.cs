@@ -11,22 +11,16 @@ namespace UnityEngine
         [SerializeField] public Transform transformToAnimate;
         [SerializeField] public Transform originTransform;
         [SerializeField] public Transform destinationTransform;
-        [SerializeField] public bool move;
-        [SerializeField] public bool rotate;
-        [SerializeField] public bool scale;
 
         // It is mandatory to have a parameterless constructor to properly work with the SimpleAnimationsManager component in the inspector.
         public TransformAnimation() : this(null, null, null) { } 
         
-        public TransformAnimation(Transform transformToAnimate, Transform destination, Transform origin, float duration = 1f, Curve curve = Curve.EaseInOut, bool move = true, bool rotate = true, bool scale = true)
+        public TransformAnimation(Transform transformToAnimate, Transform destination, Transform origin, float duration = 1f, Curve curve = Curve.EaseInOut)
         {
             this.transformToAnimate = transformToAnimate;
             this.originTransform = origin;
             this.destinationTransform = destination;
-
-            this.move = move;
-            this.rotate = rotate;
-            this.scale = scale;
+            
 
             this.duration = duration;
             this.curve = SimpleAnimation.GetCurve(curve);
@@ -36,7 +30,7 @@ namespace UnityEngine
         {
             bool endOfAnimation = base.Step(deltaTime);
             
-            transformToAnimate.SetLerp(originTransform.transform, destinationTransform, curve.Evaluate(timeStamp / duration), move, rotate, scale);
+            transformToAnimate.SetLerp(originTransform.transform, destinationTransform, curve.Evaluate(timeStamp / duration));
 
             return endOfAnimation;
         }

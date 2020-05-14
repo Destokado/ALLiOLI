@@ -1,0 +1,3 @@
+[Server] / [Client] tags can be used for the server-only and client-only parts.
+[Command] are used for Client->Server, and [ClientRpc] / [TargetRpc] for Server->Client communication.
+[SyncVar]s and SyncLists are used to automatically synchronize state.
