@@ -40,17 +40,11 @@ public class LobbyManager : NetworkBehaviour
             }
     }
 
-    //[Server] // Allows only the server to start a match 
+    [Server] // Allows only the server to start a match 
     public void StartMatch()
     {
-        RpcStartMatchAllClients();
-    }
-
-    [ClientRpc] // Called on all clients
-    public void RpcStartMatchAllClients()
-    {
-        //SceneManager.LoadScene(matchScene, LoadSceneMode.Single);
         MatchManager.Instance.SetNewMatchPhase(new WaitingForPlayers());
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // Hide the lobby
     }
+    
 }

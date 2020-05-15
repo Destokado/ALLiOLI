@@ -357,10 +357,12 @@ PrefabInstance:
     - target: {fileID: 8971644055343109699, guid: 17db44679e28ec2478a6e5e982e5c651,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188254500061783513, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
+    - {fileID: 6105114381733012457, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
+    - {fileID: 4597509817002724976, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}
 --- !u!4 &3083499980464051023 stripped
 Transform:
