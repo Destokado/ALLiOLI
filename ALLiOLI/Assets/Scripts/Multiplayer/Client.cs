@@ -15,7 +15,7 @@ public class Client : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        //clientId = connectionToClient.connectionId;
+        clientId = connectionToClient.connectionId;
     }
 
     // Called on all clients (when this player object is network-ready)
@@ -23,28 +23,28 @@ public class Client : NetworkBehaviour
     {
         base.OnStartClient();
 
-        //transform.SetParent(NetworkManager.singleton.transform, false);
-        //GameManager.singleton.clients.Add(this);
+        transform.SetParent(NetworkManager.singleton.transform, false);
+        GameManager.singleton.clients.Add(this);
 
-        //if (LobbyManager.singleton.gameObject.activeSelf)
-        //    LobbyManager.singleton.SetupLobby();
+        if (LobbyManager.singleton.gameObject.activeSelf)
+            LobbyManager.singleton.SetupLobby();
 
-        //playerManager = GetComponent<PlayerManager>();
-        //playerInputManager = GetComponent<PlayerInputManager>();
-        //playerInputManager.enabled = false;
+        playerManager = GetComponent<PlayerManager>();
+        playerInputManager = GetComponent<PlayerInputManager>();
+        playerInputManager.enabled = false;
     }
 
     // Called on the local client (when this player object is network-ready)
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-        //localClient = this;
+        localClient = this;
     }
 
     //Called on remaining clients, when a client disconnects
     public override void OnStopClient()
     {
         base.OnStopClient();
-        //GameManager.singleton.clients.Remove(this);
+        GameManager.singleton.clients.Remove(this);
     }
 }
