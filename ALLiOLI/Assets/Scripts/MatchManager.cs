@@ -8,9 +8,12 @@ public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
     
-    [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId;
+    [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId = -420;
     public void SetNewPhaseById(int oldVal, int newVal)
-    { currentPhase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId); }
+    {
+        SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId)); 
+        Debug.Log("new Phase ID = " + newVal);
+    }
     public MatchPhase currentPhase { get; private set; }
     
     [SerializeField] public MatchGuiManager guiManager;
@@ -45,7 +48,7 @@ public class MatchManager : NetworkBehaviour
     {
         base.OnStartServer();
         
-        SetNewMatchPhase(null);
+        BroadcastNewMatchPhase(null);
     }
 
     
@@ -63,7 +66,7 @@ public class MatchManager : NetworkBehaviour
         State nextPhase = currentPhase?.GetCurrentState();
         
         if (currentPhase != nextPhase)
-            SetNewMatchPhase((MatchPhase) nextPhase);
+            BroadcastNewMatchPhase((MatchPhase) nextPhase);
     }
 
     [ClientRpc]
@@ -75,20 +78,25 @@ public class MatchManager : NetworkBehaviour
     }
     
     [Server]
-    public void SetNewMatchPhase(MatchPhase nextPhase)
+    public void BroadcastNewMatchPhase(MatchPhase newPhase)
+    {
+        currentPhaseId = MatchPhaseManager.GetPhaseId(newPhase);
+    }
+
+    [Client]
+    private void SetNewMatchPhase(MatchPhase newPhase)
     {
         RpcSetAllPlayersAsNotReady();
 
         currentPhase?.EndState();
-        //currentPhase = nextPhase;
-        currentPhaseId = MatchPhaseManager.GetPhaseId(nextPhase);
+        currentPhase = newPhase;
         currentPhase?.StartState();
 
         guiManager.SetupForCurrentPhase();
 
         foreach (Client client in GameManager.singleton.clients)
-            foreach (Player player in client.playerManager.players)
-                player.SetupForCurrentPhase();
+        foreach (Player player in client.playerManager.players)
+            player.SetupForCurrentPhase();
     }
 
 

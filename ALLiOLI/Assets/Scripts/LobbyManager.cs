@@ -43,7 +43,7 @@ public class LobbyManager : NetworkBehaviour
     [Server] // Allows only the server to start a match 
     public void StartMatch()
     {
-        MatchManager.Instance.SetNewMatchPhase(new WaitingForPlayers());
+        MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
         gameObject.SetActive(false); // Hide the lobby
     }
     

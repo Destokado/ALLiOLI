@@ -32,7 +32,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new WaitingForPlayers());
+            MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
         }
         else
         {
@@ -45,7 +45,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new StartCountdown());
+            MatchManager.Instance.BroadcastNewMatchPhase(new StartCountdown());
         }
         else
         {
@@ -58,7 +58,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new TrapUp());
+            MatchManager.Instance.BroadcastNewMatchPhase(new TrapUp());
         }
         else
         {
@@ -71,7 +71,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new FinishingTrapUp());
+            MatchManager.Instance.BroadcastNewMatchPhase(new FinishingTrapUp());
         }
         else
         {
@@ -84,7 +84,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new BattleCountdown());
+            MatchManager.Instance.BroadcastNewMatchPhase(new BattleCountdown());
         }
         else
         {
@@ -97,7 +97,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new Battle());
+            MatchManager.Instance.BroadcastNewMatchPhase(new Battle());
         }
         else
         {
@@ -110,7 +110,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.SetNewMatchPhase(new End());
+            MatchManager.Instance.BroadcastNewMatchPhase(new End());
         }
         else
         {
