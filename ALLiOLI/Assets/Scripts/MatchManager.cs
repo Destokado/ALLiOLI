@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInputManager))]
-public class MatchManager : MonoBehaviour
+public class MatchManager : NetworkBehaviour
 {
-    public MatchPhase currentPhase { get; private set; }
+    [SyncVar] public MatchPhase currentPhase;// { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
-    public HashSet<Player> players { get; private set; }
 
     public float matchTimer { get => _matchTimer;
         set { _matchTimer = value; Instance.guiManager.SetTimer(_matchTimer);  } }
@@ -29,7 +29,6 @@ public class MatchManager : MonoBehaviour
         else
         {
             Instance = this;
-            players = new HashSet<Player>();
             playerInputManager = GetComponent<PlayerInputManager>();
             playerInputManager.enabled = false;
         }
@@ -59,7 +58,7 @@ public class MatchManager : MonoBehaviour
 
         guiManager.SetupForCurrentPhase();
 
-        foreach (Player player in players)
+        foreach (Player player in Client.localClient.players)
             player.SetupForCurrentPhase();
     }
 
@@ -78,7 +77,7 @@ public class MatchManager : MonoBehaviour
             playerInput.gameObject);
     }
 
-    private void OnPlayerJoinedOnPlayerLeft(PlayerInput playerInput)
+    private void OnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
         players.Remove(playerInput.gameObject.GetComponent<Player>());
