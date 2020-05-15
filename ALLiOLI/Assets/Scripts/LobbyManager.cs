@@ -13,6 +13,8 @@ public class LobbyManager : NetworkBehaviour
 
     [SerializeField] private string matchScene;
     [SerializeField] private GameObject startMatchButton;
+    [SyncVar (hook = nameof(SetActive))] private bool isVisible = true; // Default value is useful, bc the hook will only be called if the value in the var changes
+    private void SetActive(bool oldVal, bool newVal) { gameObject.SetActive(newVal); }
 
     private void Awake()
     {
@@ -40,11 +42,12 @@ public class LobbyManager : NetworkBehaviour
             }
     }
 
-    [Server] // Allows only the server to start a match 
+    [Server]
     public void StartMatch()
     {
+        isVisible = false;
+        Debug.Log("SERVER: isVisible? " + isVisible);
         MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
-        gameObject.SetActive(false); // Hide the lobby
     }
     
 }
