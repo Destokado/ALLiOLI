@@ -4,13 +4,11 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
     [SyncVar] public MatchPhase currentPhase; // { get; private set; }
     [SerializeField] public MatchGuiManager guiManager;
-    public PlayerInputManager playerInputManager { get; private set; }
 
     public float matchTimer
     {
@@ -36,8 +34,7 @@ public class MatchManager : NetworkBehaviour
         else
         {
             Instance = this;
-            playerInputManager = GetComponent<PlayerInputManager>();
-            playerInputManager.enabled = false;
+
         }
     }
 

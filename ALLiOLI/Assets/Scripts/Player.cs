@@ -69,12 +69,12 @@ public class Player : MonoBehaviour
         SpawnNewCharacter();
     }
 
-    private void Update()
+    /*private void Update()
     {
         UpdateObjectsInFront();
         //TODO: highlight the 'trapInFront'
         UpdateRadarTraps();
-    }
+    }*/
 
     private void UpdateRadarTraps()
     {

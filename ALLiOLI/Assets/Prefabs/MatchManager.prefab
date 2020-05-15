@@ -269,11 +269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fcc88fb17536b94494d11dce9040d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchTimerGameObject: {fileID: 5813654976486266409}
-  matchTimer: {fileID: 6102750973453410633}
-  matchInformativeText: {fileID: 7007408861646856652}
   endScreen: {fileID: 8066166005072802260}
   endScreenText: {fileID: 960678942953287406}
+  matchInformativeText: {fileID: 7007408861646856652}
+  matchTimer: {fileID: 6102750973453410633}
+  matchTimerGameObject: {fileID: 5813654976486266409}
 --- !u!1 &5813654976486266409
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +667,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3653955649973999062}
-  - component: {fileID: 3188254500061783513}
   - component: {fileID: 198512975}
   - component: {fileID: 4597509817002724976}
   - component: {fileID: 4370554710211659511}
@@ -693,61 +692,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3188254500061783513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8971644055343109699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NotificationBehavior: 0
-  m_MaxPlayerCount: 4
-  m_AllowJoining: 1
-  m_JoinBehavior: 0
-  m_PlayerJoinedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 198512975}
-        m_MethodName: OnPlayerJoined
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_PlayerLeftEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_JoinAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Join
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: bd71c671-2dda-4a71-b862-f8ee55d0a96a
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-    m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 4981279840164259478, guid: 166759889660ca84b892af0cea8be673,
-    type: 3}
-  m_SplitScreen: 1
-  m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
-  m_SplitScreenRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!114 &198512975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,12 +704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74025956165595a4ba14ef4b825f3cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   guiManager: {fileID: 7240563388403644552}
-  playerColors:
-  - {r: 0.8490566, g: 0, b: 0.11614456, a: 1}
-  - {r: 0.15690637, g: 0.8113208, b: 0.15690637, a: 1}
-  - {r: 0.14983091, g: 0.14983091, b: 0.8584906, a: 1}
-  - {r: 0.8490566, g: 0.8490566, b: 0.1481844, a: 1}
 --- !u!81 &4597509817002724976
 AudioListener:
   m_ObjectHideFlags: 0

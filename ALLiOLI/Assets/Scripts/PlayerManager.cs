@@ -9,12 +9,14 @@ public class PlayerManager : NetworkBehaviour
     public HashSet<Player> players { get; private set; }
 
     // Called on the local client (when this player object is network-ready)
-    public override void OnStartLocalPlayer()
+    public override void OnStartClient()
     {
-        base.OnStartLocalPlayer();
+        base.OnStartClient();
+        players = new HashSet<Player>();
     }
+    
 
-    private void OnPlayerJoined(PlayerInput playerInput)
+    /*private void OnPlayerJoined(PlayerInput playerInput)
     {
         Player player = playerInput.GetComponent<Player>();
         players.Add(player);
@@ -33,10 +35,5 @@ public class PlayerManager : NetworkBehaviour
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
         players.Remove(playerInput.gameObject.GetComponent<Player>());
-    }
-
-    public bool IsAnyPlayerReady()
-    {
-        return players.Any(player => player.isReady);
-    }
+    }*/
 }
