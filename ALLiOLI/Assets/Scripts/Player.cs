@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private PlayerInput playerInput;
     public Character character { get; private set; }
     public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / MatchManager.Instance.players.Count;
+    public int maxOwnableTraps => 50 / GameManager.singleton.totalPlayers;
 
     private Trap trapInFront
     {

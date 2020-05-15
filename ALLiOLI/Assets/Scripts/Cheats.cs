@@ -11,12 +11,13 @@ public class Cheats
         {
             Trap[] allTraps = Object.FindObjectsOfType<Trap>();
 
-            foreach (Player player in MatchManager.Instance.players)
-            {
-                foreach (Trap trap in allTraps)
-                    player.ownedTraps.Add(trap);
-                Debug.Log("Player " + player.name + " owns " + player.ownedTraps.Count + " traps.");
-            }
+            foreach (Client client in GameManager.singleton.clients)
+                foreach (Player player in client.playerManager.players)
+                {
+                    foreach (Trap trap in allTraps)
+                        player.ownedTraps.Add(trap);
+                    Debug.Log("Player " + player.name + " owns " + player.ownedTraps.Count + " traps.");
+                }
         }
         else
         {

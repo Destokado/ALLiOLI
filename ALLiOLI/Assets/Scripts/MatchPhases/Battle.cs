@@ -29,7 +29,7 @@ public class Battle : MatchPhase
     public override void StartState()
     {
         Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");
-        MatchManager.Instance.KillPlayers();
+        MatchManager.Instance.KillActiveCharacters();
         FlagSpawner.Instance.Spawn();
     }
 

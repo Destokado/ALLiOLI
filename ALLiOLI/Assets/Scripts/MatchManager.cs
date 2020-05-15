@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -53,6 +55,13 @@ public class MatchManager : NetworkBehaviour
         currentPhase?.UpdateState(Time.deltaTime);
     }
 
+    public void SetAllPlayersAsNotReady()
+    {
+        foreach (Client client in GameManager.singleton.clients)
+            foreach (Player player in client.playerManager.players)
+                player.isReady = false;
+    }
+    
     public void SetNewMatchPhase(MatchPhase nextPhase)
     {
         SetAllPlayersAsNotReady();
@@ -63,18 +72,24 @@ public class MatchManager : NetworkBehaviour
 
         guiManager.SetupForCurrentPhase();
 
-        foreach (Player player in Client.localClient.players)
-            player.SetupForCurrentPhase();
+        foreach (Client client in GameManager.singleton.clients)
+            foreach (Player player in client.playerManager.players)
+                player.SetupForCurrentPhase();
     }
 
 
     public bool AreAllPlayersReady()
     {
-        if (players == null || players.Count <= 0) return false;
-        return players.All(player => player.isReady);
+        foreach (Client client in GameManager.singleton.clients)
+        {
+            HashSet<Player> players = client.playerManager.players;
+            if (players == null || players.Count <= 0) return false;
+            if (!players.All(player => player.isReady)) return false;
+        }
+
+        return true;
     }
-
-
+    
     public void MatchFinished(Player winner)
     {
         winnerPlayer = winner;
@@ -82,8 +97,10 @@ public class MatchManager : NetworkBehaviour
         guiManager.ShowEndScreen(winner.gameObject.name);
     }
 
-    public void KillPlayers()
+    public void KillActiveCharacters()
     {
-        foreach (Player p in players) p.character.Suicide();
+        foreach (Client client in GameManager.singleton.clients)
+            foreach (Player player in client.playerManager.players)
+                player.character.Suicide();
     }
 }

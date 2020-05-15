@@ -23,12 +23,13 @@ public class TrapManager : List<Trap>
             if (!trap.IsActivatable()) continue;
 
             float distance = float.MaxValue;
-            foreach (Player player in MatchManager.Instance.players)
-            {
-                float trapDistance = trap.GetDistanceTo(player.character);
-                if (trapDistance < distance)
-                    distance = trapDistance;
-            }
+            foreach (Client client in GameManager.singleton.clients)
+                foreach (Player player in client.playerManager.players)
+                {
+                    float trapDistance = trap.GetDistanceTo(player.character);
+                    if (trapDistance < distance)
+                        distance = trapDistance;
+                }
 
             trapsByDistance.Add(distance, trap);
         }

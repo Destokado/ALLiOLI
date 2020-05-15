@@ -20,7 +20,7 @@ public class PlayerManager : NetworkBehaviour
         players.Add(player);
         player.Setup(GameManager.singleton.playerColors[playerInput.playerIndex]);
 
-        GameManager.singleton.SetAllPlayersAsNotReady();
+        MatchManager.Instance.SetAllPlayersAsNotReady();
 
         Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
             playerInput.gameObject);
