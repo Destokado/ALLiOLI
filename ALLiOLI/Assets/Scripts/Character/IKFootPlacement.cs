@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class IKFootPlacement : MonoBehaviour
@@ -26,17 +23,21 @@ public class IKFootPlacement : MonoBehaviour
     {
         anim.SetIKPositionWeight(foot, 1f);
         anim.SetIKRotationWeight(foot, 1f);
-        
+
         RaycastHit hit;
-        Ray ray = new Ray(anim.GetIKPosition(foot)+Vector3.up*maxFootElevation, Vector3.down);
-        if (Physics.Raycast(ray, out hit, Vector3.Distance(anim.GetIKPosition(foot)+Vector3.down*footBoneDistanceToGround, ray.origin), walkableLayers))
+        Ray ray = new Ray(anim.GetIKPosition(foot) + Vector3.up * maxFootElevation, Vector3.down);
+        if (Physics.Raycast(ray, out hit,
+            Vector3.Distance(anim.GetIKPosition(foot) + Vector3.down * footBoneDistanceToGround, ray.origin),
+            walkableLayers))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             Vector3 footPosition = hit.point;
             footPosition.y += footBoneDistanceToGround;
             anim.SetIKPosition(foot, footPosition);
-            anim.SetIKRotation(foot,Quaternion.LookRotation(transform.forward, hit.normal));
-        } else {
+            anim.SetIKRotation(foot, Quaternion.LookRotation(transform.forward, hit.normal));
+        }
+        else
+        {
             Debug.DrawRay(ray.origin, ray.direction, Color.green);
         }
     }

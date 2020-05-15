@@ -5,37 +5,62 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    [Space]
-    [SerializeField] private PlayerGuiManager playerGui;
-    
-    [Space] 
-    [SerializeField] private GameObject characterPrefab;
-    public Character character { get; private set; }
-    
-    [Space] 
-    [SerializeField] private float maxDistanceToInteractWithTrap = 10;
+    private Color _color;
+    private bool _isReady;
+    private Trap _trapInFront;
+
+    [Space] [SerializeField] private GameObject characterPrefab;
+
+    private GameObject lastObjectInFront;
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
+
+    [Space] [SerializeField] private float maxDistanceToInteractWithTrap = 10;
+
+    [Space] [SerializeField] private PlayerGuiManager playerGui;
+
+    private PlayerInput playerInput;
+    public Character character { get; private set; }
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 50 / MatchManager.Instance.players.Count;
-    private Trap trapInFront {
+
+    private Trap trapInFront
+    {
         get => _trapInFront;
-        set { _trapInFront = value; playerGui.ShowInteractionText(value != null && 
-            (MatchManager.Instance.currentPhase is TrapUp || MatchManager.Instance.currentPhase is FinishingTrapUp));}}
-    private Trap _trapInFront;
-    private GameObject lastObjectInFront;
-    
-    private PlayerInput playerInput;
-    public ThirdPersonCamera playerCamera { get; private set;  }
-    
-    public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
-    private Color _color;
-    public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
-    private bool _isReady;
+        set
+        {
+            _trapInFront = value;
+            playerGui.ShowInteractionText(value != null &&
+                                          (MatchManager.Instance.currentPhase is TrapUp ||
+                                           MatchManager.Instance.currentPhase is FinishingTrapUp));
+        }
+    }
+
+    public ThirdPersonCamera playerCamera { get; private set; }
+
+    public Color color
+    {
+        get => _color;
+        private set
+        {
+            _color = value;
+            playerGui.SetColor(_color);
+        }
+    }
+
+    public bool isReady
+    {
+        get => _isReady;
+        set
+        {
+            _isReady = value;
+            playerGui.ShowReadiness(isReady);
+        }
+    }
 
     public void Setup(Color color)
     {
         ownedTraps = new TrapManager();
-        
+
         playerInput = GetComponent<PlayerInput>();
         playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
         this.color = color;
@@ -43,7 +68,7 @@ public class Player : MonoBehaviour
 
         SpawnNewCharacter();
     }
-    
+
     private void Update()
     {
         UpdateObjectsInFront();
@@ -53,14 +78,17 @@ public class Player : MonoBehaviour
 
     private void UpdateRadarTraps()
     {
-        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = ownedTraps.GetCharactersInEachTrapRadar(this);
+        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport =
+            ownedTraps.GetCharactersInEachTrapRadar(this);
         playerGui.ReportInRadar(radarReport);
     }
 
     private void UpdateObjectsInFront()
     {
         Ray ray = new Ray(character.cameraTarget.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions)) {
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap,
+            layersThatCanInterfereWithInteractions))
+        {
             if (lastObjectInFront != hit.collider.gameObject)
             {
                 lastObjectInFront = hit.collider.gameObject;
@@ -76,9 +104,27 @@ public class Player : MonoBehaviour
 
     public void SpawnNewCharacter()
     {
-        this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
-        this.character.owner = this;
-        playerCamera.Setup(this.character.cameraTarget);
+        character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
+        character.owner = this;
+        playerCamera.Setup(character.cameraTarget);
+    }
+
+    private void SetUpTrapInFront()
+    {
+        if (trapInFront == null)
+            return;
+
+        if (!ownedTraps.Remove(trapInFront))
+            ownedTraps.Add(trapInFront);
+
+        playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
+        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
+            gameObject);
+    }
+
+    public void SetupForCurrentPhase()
+    {
+        playerGui.SetupForCurrentPhase(this);
     }
 
     #region Input
@@ -96,7 +142,7 @@ public class Player : MonoBehaviour
     private void OnTrap()
     {
         State currentState = MatchManager.Instance.currentPhase;
-        
+
         switch (currentState)
         {
             case Battle battle:
@@ -117,28 +163,11 @@ public class Player : MonoBehaviour
     {
         character.Suicide();
     }
-    
+
     private void OnJump(InputValue value)
     {
         character.movementControllerController.jumping = value.isPressed;
     }
-    
-    #endregion
-    
-    private void SetUpTrapInFront()
-    {
-        if (trapInFront == null)
-            return;
 
-        if (!ownedTraps.Remove(trapInFront))
-            ownedTraps.Add(trapInFront);
-        
-        playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
-        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
-    }
-    
-    public void SetupForCurrentPhase()
-    {
-        playerGui.SetupForCurrentPhase(this);
-    }
+    #endregion
 }

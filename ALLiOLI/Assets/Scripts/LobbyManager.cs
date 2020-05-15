@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager singleton;
 
+    [Space] [SerializeField] private GameObject clientsPanel;
+
+    [SerializeField] private GameObject clientVisualizationPrefab;
+
     [SerializeField] private string matchScene;
     [SerializeField] private GameObject startMatchButton;
-    [Space]
-    [SerializeField] private GameObject clientsPanel;
-    [SerializeField] private GameObject clientVisualizationPrefab;
-    
+
     private void Awake()
     {
         if (singleton == null)
@@ -28,20 +25,21 @@ public class LobbyManager : NetworkBehaviour
     public void SetupLobby()
     {
         startMatchButton.SetActive(isServer);
-        
+
         clientsPanel.transform.DestroyAllChildren();
 
         List<Client> clients = GameManager.singleton.clients;
-        
+
         if (clients != null)
             foreach (Client client in clients)
             {
-                GameObject go = Instantiate(clientVisualizationPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+                GameObject go = Instantiate(clientVisualizationPrefab, transform.position + new Vector3(0, 1, 0),
+                    Quaternion.identity);
                 go.transform.SetParent(clientsPanel.transform, false);
                 go.GetComponent<Image>().color = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
             }
     }
-    
+
     //[Server] // Allows only the server to start a match 
     public void StartMatch()
     {
@@ -55,5 +53,4 @@ public class LobbyManager : NetworkBehaviour
         MatchManager.Instance.SetNewMatchPhase(new WaitingForPlayers());
         gameObject.SetActive(false);
     }
-
 }

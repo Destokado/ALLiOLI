@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PendulumTrap : Trap
 {
@@ -20,8 +17,7 @@ public class PendulumTrap : Trap
     public override void Activate()
     {
         base.Activate();
-        
+
         ball.useSpring = false;
     }
-    
 }

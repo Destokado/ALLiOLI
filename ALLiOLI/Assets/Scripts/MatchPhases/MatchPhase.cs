@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class MatchPhase : State
+﻿public abstract class MatchPhase : State
 {
-    public MatchPhase() { }
     public abstract string informativeText { get; protected set; }
     public abstract bool showTrapsCounter { get; protected set; }
     public abstract bool showReadiness { get; protected set; }

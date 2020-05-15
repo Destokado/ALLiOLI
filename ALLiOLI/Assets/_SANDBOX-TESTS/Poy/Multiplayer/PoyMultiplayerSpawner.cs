@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 
 public class PoyMultiplayerSpawner : NetworkBehaviour
 {
-    
     [SerializeField] private GameObject otherPrefab;
 
     private void Start()
@@ -15,10 +11,9 @@ public class PoyMultiplayerSpawner : NetworkBehaviour
     }
 
     [Command]
-    void CmdSpawn()
+    private void CmdSpawn()
     {
-        GameObject go = Instantiate(otherPrefab, transform.position + new Vector3(0,1,0), Quaternion.identity);
+        GameObject go = Instantiate(otherPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         NetworkServer.Spawn(go, connectionToClient);
     }
-    
 }

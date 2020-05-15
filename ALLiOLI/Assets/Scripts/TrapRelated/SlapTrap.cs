@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SlapTrap : Trap
 {
@@ -8,20 +6,19 @@ public class SlapTrap : Trap
     [SerializeField] private HingeJoint joint;
     [SerializeField] private float startAngle;
     [SerializeField] private float targetAngle;
+
     protected override void Reload()
     {
-        var jointSpring = joint.spring;
+        JointSpring jointSpring = joint.spring;
         jointSpring.targetPosition = startAngle;
         joint.spring = jointSpring;
-       
     }
 
     public override void Activate()
     {
         base.Activate();
-        var jointSpring = joint.spring;
+        JointSpring jointSpring = joint.spring;
         jointSpring.targetPosition = targetAngle;
         joint.spring = jointSpring;
-        
     }
 }

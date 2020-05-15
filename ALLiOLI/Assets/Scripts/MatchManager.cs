@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,23 +5,30 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class MatchManager : NetworkBehaviour
 {
-    [SyncVar] public MatchPhase currentPhase;// { get; private set; }
+    private float _matchTimer;
+    [SyncVar] public MatchPhase currentPhase; // { get; private set; }
+    [SerializeField] public MatchGuiManager guiManager;
     public PlayerInputManager playerInputManager { get; private set; }
 
-    public float matchTimer { get => _matchTimer;
-        set { _matchTimer = value; Instance.guiManager.SetTimer(_matchTimer);  } }
-    private float _matchTimer;
+    public float matchTimer
+    {
+        get => _matchTimer;
+        set
+        {
+            _matchTimer = value;
+            Instance.guiManager.SetTimer(_matchTimer);
+        }
+    }
 
     public static MatchManager Instance { get; private set; }
     public Player winnerPlayer { get; private set; }
-    [SerializeField] public MatchGuiManager guiManager;
-    [SerializeField] public Color[] playerColors;
 
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name, gameObject);
+            Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
+                gameObject);
             Destroy(this);
         }
         else
@@ -62,31 +67,6 @@ public class MatchManager : NetworkBehaviour
             player.SetupForCurrentPhase();
     }
 
-    private void OnPlayerJoined(PlayerInput playerInput)
-    {
-        Player player = playerInput.GetComponent<Player>();
-        players.Add(player);
-        player.Setup(playerColors[playerInput.playerIndex]);
-
-        SetAllPlayersAsNotReady();
-
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
-            playerInput.gameObject);
-
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
-            playerInput.gameObject);
-    }
-
-    private void OnPlayerLeft(PlayerInput playerInput)
-    {
-        Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
-        players.Remove(playerInput.gameObject.GetComponent<Player>());
-    }
-
-    public bool IsAnyPlayerReady()
-    {
-        return players.Any(player => player.isReady);
-    }
 
     public bool AreAllPlayersReady()
     {
@@ -94,11 +74,6 @@ public class MatchManager : NetworkBehaviour
         return players.All(player => player.isReady);
     }
 
-    public void SetAllPlayersAsNotReady()
-    {
-        foreach (Player player in players)
-            player.isReady = false;
-    }
 
     public void MatchFinished(Player winner)
     {
@@ -109,9 +84,6 @@ public class MatchManager : NetworkBehaviour
 
     public void KillPlayers()
     {
-        foreach (Player p in players)
-        {
-            p.character.Suicide();
-        }
+        foreach (Player p in players) p.character.Suicide();
     }
 }

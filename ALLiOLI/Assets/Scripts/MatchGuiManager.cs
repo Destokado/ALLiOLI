@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class MatchGuiManager : MonoBehaviour
 {
+    [Space] [SerializeField] private GameObject endScreen;
+
+    [SerializeField] private TMP_Text endScreenText;
+
+    [Space] [SerializeField] private TMP_Text matchInformativeText;
+
+    [SerializeField] private TMP_Text matchTimer;
 
     [SerializeField] private GameObject matchTimerGameObject;
-    [SerializeField] private TMP_Text matchTimer;
-    [Space]
-    [SerializeField] private TMP_Text matchInformativeText;
-    [Space]
-    [SerializeField] private GameObject endScreen;
-    [SerializeField] private TMP_Text endScreenText;
 
     public void SetTimer(float timeInSeconds)
     {
@@ -22,7 +21,7 @@ public class MatchGuiManager : MonoBehaviour
 
         matchTimer.text = time;
     }
-    
+
     public void SetupForCurrentPhase()
     {
         MatchPhase curPhase = MatchManager.Instance.currentPhase;

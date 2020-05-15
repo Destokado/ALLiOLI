@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class Shield : Trap
 {
     private SimpleAnimationsManager animManager;
     [SerializeField] private Rigidbody shield;
-    private Vector3 throwDirection => radarTrigger.transform.forward;
     [SerializeField] private float throwSpeed;
+    private Vector3 throwDirection => radarTrigger.transform.forward;
 
-    public void Awake() 
+    public void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
     protected override void Reload()
     {
-        ((TransformAnimation)animManager.GetAnimation(0)).originTransform.SetProperties(shield.transform);
+        ((TransformAnimation) animManager.GetAnimation(0)).originTransform.SetProperties(shield.transform);
         shield.isKinematic = true;
         animManager.Play(0);
     }
@@ -27,7 +24,7 @@ public class Shield : Trap
     public override void Activate()
     {
         base.Activate();
-        
+
         animManager.Stop(0);
         shield.isKinematic = false;
         StartCoroutine(Impulse());
@@ -35,7 +32,7 @@ public class Shield : Trap
 
     private IEnumerator Impulse()
     {
-        yield return new WaitForFixedUpdate(); 
+        yield return new WaitForFixedUpdate();
         shield.velocity = throwDirection.normalized * throwSpeed;
     }
 

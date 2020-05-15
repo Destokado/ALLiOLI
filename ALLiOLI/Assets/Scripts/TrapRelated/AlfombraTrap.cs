@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
+
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class AlfombraTrap : Trap
 {
-    
     private SimpleAnimationsManager animManager;
 
     private void Awake()
@@ -18,9 +18,8 @@ public class AlfombraTrap : Trap
 
     public override void Activate()
     {
-       base.Activate();
-       animManager.GetAnimation(0).mirror = false;
-       animManager.Play(0);
+        base.Activate();
+        animManager.GetAnimation(0).mirror = false;
+        animManager.Play(0);
     }
-    
 }

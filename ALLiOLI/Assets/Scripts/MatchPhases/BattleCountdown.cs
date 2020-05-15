@@ -2,11 +2,29 @@
 
 public class BattleCountdown : MatchPhase
 {
-    
-    public override string informativeText { get => "The battle will start soon"; protected set {} }
-    public override bool showTrapsCounter{ get => false; protected set { }}
-    public override bool showReadiness{ get => false; protected set { }}
-    public override bool showMatchTimer{ get => true; protected set { }}
+    public override string informativeText
+    {
+        get => "The battle will start soon";
+        protected set { }
+    }
+
+    public override bool showTrapsCounter
+    {
+        get => false;
+        protected set { }
+    }
+
+    public override bool showReadiness
+    {
+        get => false;
+        protected set { }
+    }
+
+    public override bool showMatchTimer
+    {
+        get => true;
+        protected set { }
+    }
 
     public override void StartState()
     {

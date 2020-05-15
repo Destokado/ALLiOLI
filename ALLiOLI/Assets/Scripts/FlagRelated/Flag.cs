@@ -5,7 +5,7 @@ public class Flag : MonoBehaviour
     private Collider flagCollider;
     public Player owner { get; private set; } //Last player that carried the flag
     public Character carrier { get; private set; } //Currently carrying the flag
-    
+
     private void Start()
     {
         flagCollider = GetComponent<Collider>();
@@ -13,8 +13,6 @@ public class Flag : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-
         if (carrier) return;
 
 

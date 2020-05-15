@@ -2,10 +2,10 @@
 
 public class FlagSpawner : MonoBehaviour
 {
-    public static FlagSpawner Instance { get; private set; }
-    [SerializeField] private GameObject flagPrefab;
     [SerializeField] private Transform[] flagPositions;
+    [SerializeField] private GameObject flagPrefab;
     private EasyRandom rng;
+    public static FlagSpawner Instance { get; private set; }
     public GameObject flag { get; private set; }
 
     private void Awake()

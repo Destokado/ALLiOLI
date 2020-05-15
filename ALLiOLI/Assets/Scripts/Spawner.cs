@@ -1,15 +1,15 @@
-﻿
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     public static Spawner Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple Spawners have been created. Destroying the script of " + gameObject.name, gameObject);
+            Debug.LogWarning("Multiple Spawners have been created. Destroying the script of " + gameObject.name,
+                gameObject);
             Destroy(this);
         }
         else
@@ -29,8 +29,8 @@ public class Spawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var character = other.GetComponent<Character>();
-        if(character && character.flag)
+        Character character = other.GetComponent<Character>();
+        if (character && character.flag)
             MatchManager.Instance.MatchFinished(character.owner);
     }
 }

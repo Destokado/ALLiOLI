@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager singleton;
 
     public List<Client> clients = new List<Client>();
-    
-    public static GameManager singleton;
+    [SerializeField] public Color[] playerColors;
 
     private void Awake()
     {
@@ -18,7 +15,14 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Multiple GameManagers have been created", this);
             return;
         }
-        
+
         singleton = this;
+    }
+
+    public void SetAllPlayersAsNotReady()
+    {
+        foreach (Client client in clients)
+            foreach (Player player in players)
+                player.isReady = false;
     }
 }

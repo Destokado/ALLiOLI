@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-[RequireComponent(typeof(SimpleAnimationsManager))]
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SimpleAnimationsManager))]
 public class DragonTrap : Trap
 {
     private SimpleAnimationsManager animManager;
+
     private void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();

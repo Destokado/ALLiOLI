@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using System.Collections.Generic;
 
 public class TrapManager : List<Trap>
 {
     public Trap GetBestTrapToActivate(Player playerToAvoid)
     {
-        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = GetCharactersInEachTrapRadar(playerToAvoid);
+        List<KeyValuePair<Trap, SortedList<float, Character>>>
+            radarReport = GetCharactersInEachTrapRadar(playerToAvoid);
         if (radarReport.Count > 0)
             return radarReport[0].Key;
-        
+
         SortedList<float, Trap> trapsByDistance = GetTrapsSortedByDistance();
         if (trapsByDistance.Count <= 0) return null;
         return trapsByDistance.Values[0];
@@ -38,27 +36,29 @@ public class TrapManager : List<Trap>
         return trapsByDistance;
     }
 
-    public List< KeyValuePair<Trap, SortedList<float, Character>> > GetCharactersInEachTrapRadar(Player exception)
+    public List<KeyValuePair<Trap, SortedList<float, Character>>> GetCharactersInEachTrapRadar(Player exception)
     {
         // Returns a List of Traps (sorted by the closes character to the trap) related with a
         // sorted list of the characters in each trap and the distance from them to it.
-        
+
         // Order the traps by the distance to the closest character
         // chInTrapsSorted = new SortedList<distanceToClosestChar, KeyValuePair<Trap, sortedListOfTheDistToAllChars>>();
-        var chInTrapsSorted = new SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>>();
+        SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>> chInTrapsSorted =
+            new SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>>();
         foreach (Trap trap in this)
         {
             SortedList<float, Character> t = trap.GetCharactersInTrapRadar(exception); // sortedListOfTheDistToAllChars
             if (t.Count > 0)
                 chInTrapsSorted.Add(t.Keys[0], new KeyValuePair<Trap, SortedList<float, Character>>(trap, t));
         }
-        
+
         //Convert to more readable list
-        var charactersInEachTrapRadar = new List< KeyValuePair<Trap, SortedList<float, Character>> >();
+        List<KeyValuePair<Trap, SortedList<float, Character>>> charactersInEachTrapRadar =
+            new List<KeyValuePair<Trap, SortedList<float, Character>>>();
         foreach (KeyValuePair<float, KeyValuePair<Trap, SortedList<float, Character>>> t in chInTrapsSorted)
-            charactersInEachTrapRadar.Add(new KeyValuePair<Trap, SortedList<float, Character>>(t.Value.Key, t.Value.Value));
-        
+            charactersInEachTrapRadar.Add(
+                new KeyValuePair<Trap, SortedList<float, Character>>(t.Value.Key, t.Value.Value));
+
         return charactersInEachTrapRadar;
     }
-
 }

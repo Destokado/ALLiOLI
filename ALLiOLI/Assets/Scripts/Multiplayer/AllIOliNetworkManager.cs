@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Mirror;
-using UnityEngine;
+﻿using Mirror;
 
 public class AllIOliNetworkManager : NetworkManager
 {
-    
     // When a player/client is connected
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
-        
+
         /* // Same as base method
         Transform startPos = GetStartPosition();
         GameObject clientGo = startPos != null ? Instantiate(playerPrefab, startPos.position, startPos.rotation) : Instantiate(playerPrefab);
@@ -27,5 +23,4 @@ public class AllIOliNetworkManager : NetworkManager
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
     }
-    
 }
