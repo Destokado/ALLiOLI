@@ -411,11 +411,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  matchScene: Prototype
-  startMatchButton: {fileID: 6916004550656065413}
   clientsPanel: {fileID: 6916004551659547029}
   clientVisualizationPrefab: {fileID: 2589384488249223762, guid: 105b8d0ea5cb6ea4bb29fc7629a0e8a5,
     type: 3}
+  matchScene: Prototype
+  startMatchButton: {fileID: 6916004550656065413}
 --- !u!114 &6916004550684667934
 MonoBehaviour:
   m_ObjectHideFlags: 0

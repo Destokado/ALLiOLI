@@ -668,9 +668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3653955649973999062}
   - component: {fileID: 198512975}
-  - component: {fileID: 4597509817002724976}
   - component: {fileID: 4370554710211659511}
-  - component: {fileID: 6105114381733012457}
   m_Layer: 2
   m_Name: MatchManager
   m_TagString: Untagged
@@ -708,14 +706,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   guiManager: {fileID: 7240563388403644552}
---- !u!81 &4597509817002724976
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8971644055343109699}
-  m_Enabled: 0
 --- !u!114 &4370554710211659511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,21 +722,3 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &6105114381733012457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8971644055343109699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.025
-  clientAuthority: 0
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
