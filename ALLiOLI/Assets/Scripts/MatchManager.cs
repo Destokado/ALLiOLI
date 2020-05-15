@@ -68,14 +68,7 @@ public class MatchManager : NetworkBehaviour
         if (currentPhase != nextPhase)
             BroadcastNewMatchPhase((MatchPhase) nextPhase);
     }
-
-    [ClientRpc]
-    public void RpcSetAllPlayersAsNotReady()
-    {
-        foreach (Client client in GameManager.singleton.clients)
-            foreach (Player player in client.playerManager.players)
-                player.isReady = false;
-    }
+    
     
     [Server]
     public void BroadcastNewMatchPhase(MatchPhase newPhase)
@@ -86,7 +79,7 @@ public class MatchManager : NetworkBehaviour
     [Client]
     private void SetNewMatchPhase(MatchPhase newPhase)
     {
-        RpcSetAllPlayersAsNotReady();
+        SetAllPlayersAsNotReady();
 
         currentPhase?.EndState();
         currentPhase = newPhase;
@@ -97,6 +90,13 @@ public class MatchManager : NetworkBehaviour
         foreach (Client client in GameManager.singleton.clients)
         foreach (Player player in client.playerManager.players)
             player.SetupForCurrentPhase();
+    }
+    
+    public void SetAllPlayersAsNotReady()
+    {
+        foreach (Client client in GameManager.singleton.clients)
+        foreach (Player player in client.playerManager.players)
+            player.isReady = false;
     }
 
 
