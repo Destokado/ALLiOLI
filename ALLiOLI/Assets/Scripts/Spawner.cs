@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
     {
         Character character = other.GetComponent<Character>();
         if (character && character.flag)
-            MatchManager.Instance.MatchFinished(character.owner);
+            return; // TODO: finish match
+            //MatchManager.Instance.MatchFinished(character.owner);
     }
 }

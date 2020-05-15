@@ -47,7 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clients: []
-  playerColors: []
+  playerColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0.025200844, g: 0, b: 1, a: 0}
+  - {r: 0, g: 1, b: 0.07986307, a: 0}
+  - {r: 1, g: 0, b: 0.96657753, a: 0}
 --- !u!1001 &539598258044908811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,6 +353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MatchManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971644055343109699, guid: 17db44679e28ec2478a6e5e982e5c651,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3188254500061783513, guid: 17db44679e28ec2478a6e5e982e5c651, type: 3}

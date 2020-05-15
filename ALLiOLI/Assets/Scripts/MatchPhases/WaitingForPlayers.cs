@@ -38,13 +38,12 @@ public class WaitingForPlayers : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (
-            MatchManager.Instance
-                .AreAllPlayersReady() /*|| MatchManager.Instance.playerInputManager.playerCount >= MatchManager.Instance.playerInputManager.maxPlayerCount*/
+        if ( true // TODO: change for players being redy
+            /*MatchManager.Instance.AreAllPlayersReady()*/ /*|| MatchManager.Instance.playerInputManager.playerCount >= MatchManager.Instance.playerInputManager.maxPlayerCount*/
         )
             return new StartCountdown();
 
-        return this;
+        //return this;
     }
 
     public override void EndState()

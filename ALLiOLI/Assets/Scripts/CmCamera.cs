@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class CmCamera : MonoBehaviour
 {
-    [Space]
+    /*[Space]
     [SerializeField] private float yawRotationalSpeed = 200;
     [SerializeField] private float pitchRotationalSpeed = 200;
     [Space]
@@ -19,7 +19,7 @@ public class CmCamera : MonoBehaviour
     [SerializeField] private float distanceToTarget = 10;
     [Space]
     [SerializeField] private LayerMask layersThatCanClipCamera;
-    [SerializeField] private float offsetOnCollision = 0.5f;
+    [SerializeField] private float offsetOnCollision = 0.5f;*/
 
     private PlayerInput playerInput;
     private Vector2 LookDelta;

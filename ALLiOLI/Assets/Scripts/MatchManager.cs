@@ -7,9 +7,13 @@ using UnityEngine.InputSystem;
 public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
-    [SyncVar] public MatchPhase currentPhase; // { get; private set; }
+    
+    [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId;
+    public void SetNewPhaseById(int oldVal, int newVal)
+    { currentPhase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId); }
+    public MatchPhase currentPhase { get; private set; }
+    
     [SerializeField] public MatchGuiManager guiManager;
-
     public float matchTimer
     {
         get => _matchTimer;
@@ -34,37 +38,50 @@ public class MatchManager : NetworkBehaviour
         else
         {
             Instance = this;
-
         }
     }
-
-    private void Start()
+    
+    public override void OnStartServer()
     {
-        //SetNewMatchPhase(new WaitingForPlayers());
+        base.OnStartServer();
+        
         SetNewMatchPhase(null);
     }
 
+    
     private void Update()
     {
-        State nextPhase = currentPhase?.GetCurrentState();
-        if (currentPhase != nextPhase)
-            SetNewMatchPhase((MatchPhase) nextPhase);
+        if (isServer)
+            UpdateServer();
+        
         currentPhase?.UpdateState(Time.deltaTime);
     }
 
-    public void SetAllPlayersAsNotReady()
+    [Server]
+    private void UpdateServer()
+    {
+        State nextPhase = currentPhase?.GetCurrentState();
+        
+        if (currentPhase != nextPhase)
+            SetNewMatchPhase((MatchPhase) nextPhase);
+    }
+
+    [ClientRpc]
+    public void RpcSetAllPlayersAsNotReady()
     {
         foreach (Client client in GameManager.singleton.clients)
             foreach (Player player in client.playerManager.players)
                 player.isReady = false;
     }
     
+    [Server]
     public void SetNewMatchPhase(MatchPhase nextPhase)
     {
-        SetAllPlayersAsNotReady();
+        RpcSetAllPlayersAsNotReady();
 
         currentPhase?.EndState();
-        currentPhase = nextPhase;
+        //currentPhase = nextPhase;
+        currentPhaseId = MatchPhaseManager.GetPhaseId(nextPhase);
         currentPhase?.StartState();
 
         guiManager.SetupForCurrentPhase();
@@ -75,7 +92,7 @@ public class MatchManager : NetworkBehaviour
     }
 
 
-    public bool AreAllPlayersReady()
+    /*public bool AreAllPlayersReady()
     {
         foreach (Client client in GameManager.singleton.clients)
         {
@@ -85,19 +102,19 @@ public class MatchManager : NetworkBehaviour
         }
 
         return true;
-    }
+    }*/
     
-    public void MatchFinished(Player winner)
+    /*public void MatchFinished(Player winner)
     {
         winnerPlayer = winner;
         Debug.Log(winner.gameObject.name + "won");
         guiManager.ShowEndScreen(winner.gameObject.name);
-    }
+    }*/
 
-    public void KillActiveCharacters()
+    /*public void KillActiveCharacters()
     {
         foreach (Client client in GameManager.singleton.clients)
             foreach (Player player in client.playerManager.players)
                 player.character.Suicide();
-    }
+    }*/
 }
