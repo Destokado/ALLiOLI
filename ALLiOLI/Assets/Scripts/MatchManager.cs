@@ -95,8 +95,8 @@ public class MatchManager : NetworkBehaviour
     public void SetAllPlayersAsNotReady()
     {
         foreach (Client client in GameManager.singleton.clients)
-        foreach (Player player in client.playerManager.players)
-            player.isReady = false;
+            foreach (Player player in client.playerManager.players)
+                player.isReady = false;
     }
 
 

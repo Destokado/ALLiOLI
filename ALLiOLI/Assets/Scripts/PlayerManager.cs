@@ -16,7 +16,7 @@ public class PlayerManager : NetworkBehaviour
     }
     
 
-    /*private void OnPlayerJoined(PlayerInput playerInput)
+    private void OnPlayerJoined(PlayerInput playerInput)
     {
         Player player = playerInput.GetComponent<Player>();
         players.Add(player);
@@ -26,14 +26,11 @@ public class PlayerManager : NetworkBehaviour
 
         Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
             playerInput.gameObject);
-
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0],
-            playerInput.gameObject);
     }
 
     private void OnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("Player left with input device: " + playerInput.devices[0], playerInput.gameObject);
         players.Remove(playerInput.gameObject.GetComponent<Player>());
-    }*/
+    }
 }

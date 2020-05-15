@@ -11,14 +11,14 @@ public class Client : NetworkBehaviour
     public PlayerManager playerManager { get; private set; }
     public PlayerInputManager playerInputManager { get; private set; }
 
-    // Called on the server (when this player object is network-ready)
+    // Called on the server (when this NetworkBehaviour is network-ready)
     public override void OnStartServer()
     {
         base.OnStartServer();
         clientId = connectionToClient.connectionId;
     }
 
-    // Called on all clients (when this player object is network-ready)
+    // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -29,12 +29,14 @@ public class Client : NetworkBehaviour
         if (LobbyManager.singleton.gameObject.activeSelf)
             LobbyManager.singleton.SetupLobby();
 
+        gameObject.name = "Client " + clientId;
+        
         playerManager = GetComponent<PlayerManager>();
         playerInputManager = GetComponent<PlayerInputManager>();
         playerInputManager.enabled = false;
     }
 
-    // Called on the local client (when this player object is network-ready)
+    // Called on the local client (when this NetworkBehaviour is network-ready)
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();

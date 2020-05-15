@@ -30,6 +30,7 @@ public class WaitingForPlayers : MatchPhase
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
         Client.localClient.playerInputManager.enabled = true;
+        Debug.Log("Local client is " + Client.localClient + "with PIM "  + Client.localClient.playerInputManager + " that is enabled? " + Client.localClient.playerInputManager.enabled);
     }
 
     public override void UpdateState(float deltaTime)
@@ -48,6 +49,6 @@ public class WaitingForPlayers : MatchPhase
 
     public override void EndState()
     {
-        Client.localClient.playerInputManager.enabled = false;
+        
     }
 }
