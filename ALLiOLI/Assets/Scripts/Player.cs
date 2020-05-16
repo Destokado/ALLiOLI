@@ -39,7 +39,7 @@ public class Player : NetworkBehaviour
 
         string customName = "Player " + GameManager.singleton.totalPlayers;
         
-        // Setup depending on if the player is controlled by the local client or if it isn't
+        // SetTarget depending on if the player is controlled by the local client or if it isn't
         CustomPlayerInput customPlayerInput = CustomPlayerInput.inputsWaitingForPlayers.Count > 0
             ? CustomPlayerInput.inputsWaitingForPlayers[0]
             : null;
@@ -58,7 +58,7 @@ public class Player : NetworkBehaviour
         
         //this.color = color;
 
-        //SpawnNewCharacter();
+        SpawnNewCharacter();
     }
 
     /*private void Update()
@@ -95,8 +95,8 @@ public class Player : NetworkBehaviour
     {
         this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
         this.character.owner = this;
-       // playerCamera.Setup(this.character.cameraTarget);
-        playerCamera.Setup(this.character.cameraTarget,this.character.cameraTarget);
+       // playerCamera.SetTarget(this.character.cameraTarget);
+        playerCamera.SetTarget(this.character.cameraTarget,this.character.cameraTarget);
     }
 
 

@@ -14,12 +14,12 @@ public class Character : MonoBehaviour
     public bool isDead { get; private set; }
 
     //private Rigidbody rb { get; set; }
-    public CharacterMovementController movementControllerController { get; private set; }
+    public CharacterMovementController movementController { get; private set; }
 
     private void Awake()
     {
         //rb = GetComponent<Rigidbody>();
-        movementControllerController = GetComponent<CharacterMovementController>();
+        movementController = GetComponent<CharacterMovementController>();
     }
 
     public void Die(Vector3 impact, Vector3 impactPoint)
@@ -32,10 +32,10 @@ public class Character : MonoBehaviour
     {
         isDead = true;
         if (flag != null) flag.Detach();
-        movementControllerController.enabled = false;
+        movementController.enabled = false;
 
-        movementControllerController.enabled = false;
-        movementControllerController.characterController.enabled = false;
+        movementController.enabled = false;
+        movementController.characterController.enabled = false;
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
