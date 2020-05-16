@@ -31,9 +31,11 @@ public class CustomPlayerInput : MonoBehaviour
         
         if (playerInput == null)
             playerInput = GetComponent<PlayerInput>();
-
+        int layer = Client.localClient.PlayersManager.players.Count + 10;
+        playerInput.camera.GetComponent<CmCamera>().SetLayer(layer,playerInput.camera);
         SetDynamicName();
     }
+    
 
     private void SetDynamicName()
     {
@@ -73,7 +75,7 @@ public class CustomPlayerInput : MonoBehaviour
     {
         if (player == null) return;
         
-        player.character.movementControllerController.horizontalMovementInput = value.Get<Vector2>();
+        player.character.movementController.horizontalMovementInput = value.Get<Vector2>();
     }
 
     private void OnTrap()
@@ -108,7 +110,7 @@ public class CustomPlayerInput : MonoBehaviour
     private void OnJump(InputValue value)
     {
         if (player == null) return;
-        player.character.movementControllerController.jumping = value.isPressed;
+        player.character.movementController.jumping = value.isPressed;
     }
     
 

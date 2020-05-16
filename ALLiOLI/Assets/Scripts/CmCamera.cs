@@ -6,16 +6,22 @@ using UnityEngine.InputSystem;
 
 public class CmCamera : MonoBehaviour
 {
-
+    
     private PlayerInput playerInput;
     private Vector2 LookDelta;
     [SerializeField] private CinemachineFreeLook freeLook;
-  
+   
 
-    public void Setup(Transform target, Transform follow)
+    public void SetTarget(Transform target, Transform follow)
     {
         freeLook.Follow = follow;
         freeLook.LookAt = target;
     }
-    
+
+    public void SetLayer(int layer, Camera camera)
+    {
+        
+        camera.gameObject.SetLayerRecursively(layer); 
+        camera.cullingMask |= 1 << layer;
+    }
 }
