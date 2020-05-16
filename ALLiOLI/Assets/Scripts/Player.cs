@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     [Space]
     [SerializeField] private PlayerGuiManager playerGui;
@@ -24,32 +24,44 @@ public class Player : MonoBehaviour
             (MatchManager.Instance.currentPhase is TrapUp || MatchManager.Instance.currentPhase is FinishingTrapUp));}}
     private Trap _trapInFront;
     private GameObject lastObjectInFront;
-    
-    private PlayerInput playerInput;
-    //public ThirdPersonCamera playerCamera { get; private set;  }
-    public CmCamera playerCamera{ get; private set;  }
-    private Vector2 cameraMovement;
+
+    [HideInInspector] public CmCamera playerCamera;
     public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
     private Color _color;
     public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
     private bool _isReady;
 
-    public void Setup(Color color)
+    // Called on all clients (when this NetworkBehaviour is network-ready)
+    public override void OnStartClient()
     {
+        Client.localClient.PlayersManager.players.Add(this);
         ownedTraps = new TrapManager();
-        
-        playerInput = GetComponent<PlayerInput>();
-       // playerCamera = playerInput.camera.gameObject.GetComponent<ThirdPersonCamera>();
-        playerCamera = playerInput.camera.gameObject.GetComponent<CmCamera>();
-        CinemachineCore.GetInputAxis = GetAxisCustom;
-      
-        this.color = color;
-        gameObject.name = "Player " + playerInput.playerIndex + " - " + playerInput.user.controlScheme;
 
-        SpawnNewCharacter();
+        string customName = "Player " + GameManager.singleton.totalPlayers;
+        
+        // Setup depending on if the player is controlled by the local client or if it isn't
+        CustomPlayerInput customPlayerInput = CustomPlayerInput.inputsWaitingForPlayers.Count > 0
+            ? CustomPlayerInput.inputsWaitingForPlayers[0]
+            : null;
+        if (customPlayerInput != null)
+        {
+            CinemachineCore.GetInputAxis = customPlayerInput.GetAxisCustom;
+            playerCamera = customPlayerInput.playerInput.camera.GetComponent<CmCamera>();
+            gameObject.name = customName + " - Input by " + customPlayerInput.playerInput.user.controlScheme;
+            
+            customPlayerInput.player = this;
+        }
+        else // Shouldn't be controlled by the local client
+        {
+            gameObject.name = customName + " - No Input stream";
+        }
+        
+        //this.color = color;
+
+        //SpawnNewCharacter();
     }
-    
-    private void Update()
+
+    /*private void Update()
     {
         UpdateObjectsInFront();
         //TODO: highlight the 'trapInFront'
@@ -77,7 +89,7 @@ public class Player : MonoBehaviour
             lastObjectInFront = null;
             trapInFront = null;
         }
-    }
+    }*/
 
     public void SpawnNewCharacter()
     {
@@ -87,67 +99,8 @@ public class Player : MonoBehaviour
         playerCamera.Setup(this.character.cameraTarget,this.character.cameraTarget);
     }
 
-    #region Input
 
-    private void OnCameraMove(InputValue value)
-    {
-        //playerCamera.movement = value.Get<Vector2>();
-        cameraMovement = value.Get<Vector2>();
-    }
-    public float GetAxisCustom(string axisName)
-    {
-        var LookDelta = cameraMovement;
-        LookDelta.Normalize();
- 
-        if (axisName == "Mouse X")
-        {
-            return LookDelta.x;
-        }
-        else if (axisName == "Mouse Y")
-        {
-            return LookDelta.y;
-        }
-        return 0;
-    }
-
-    private void OnCharacterMove(InputValue value)
-    {
-        character.movementControllerController.horizontalMovementInput = value.Get<Vector2>();
-    }
-
-    private void OnTrap()
-    {
-        State currentState = MatchManager.Instance.currentPhase;
-        
-        switch (currentState)
-        {
-            case Battle battle:
-                ownedTraps.GetBestTrapToActivate(this)?.Activate();
-                break;
-            case TrapUp trapUp:
-                SetUpTrapInFront();
-                break;
-        }
-    }
-
-    private void OnReady()
-    {
-        isReady = !isReady;
-    }
-
-    private void OnSuicide()
-    {
-        character.Suicide();
-    }
-    
-    private void OnJump(InputValue value)
-    {
-        character.movementControllerController.jumping = value.isPressed;
-    }
-    
-    #endregion
-    
-    private void SetUpTrapInFront()
+    public void SetUpTrapInFront()
     {
         if (trapInFront == null)
             return;

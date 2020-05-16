@@ -88,14 +88,14 @@ public class MatchManager : NetworkBehaviour
         guiManager.SetupForCurrentPhase();
 
         foreach (Client client in GameManager.singleton.clients)
-        foreach (Player player in client.playerManager.players)
+        foreach (Player player in client.PlayersManager.players)
             player.SetupForCurrentPhase();
     }
     
     public void SetAllPlayersAsNotReady()
     {
         foreach (Client client in GameManager.singleton.clients)
-            foreach (Player player in client.playerManager.players)
+            foreach (Player player in client.PlayersManager.players)
                 player.isReady = false;
     }
 

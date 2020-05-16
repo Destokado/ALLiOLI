@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 2227929221931529453}
   - component: {fileID: 5156374976643075046}
   - component: {fileID: 2985370262938075103}
+  - component: {fileID: 6902906126621896612}
   m_Layer: 0
   m_Name: CineMachineCamera
   m_TagString: Untagged
@@ -100,14 +101,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: -0.06759671, y: 0.9203646, z: -0.33496454, w: -0.1901539}
+  m_LocalRotation: {x: 0.06759973, y: -0.92036366, z: 0.33496785, w: 0.19015118}
   m_LocalPosition: {x: -85.22201, y: -22.766869, z: 157.96143}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 39.963, y: -156.57301, z: 0.22100002}
 --- !u!20 &2227929221931529453
 Camera:
   m_ObjectHideFlags: 0
@@ -216,6 +217,19 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6902906126621896612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603928358129318467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c72657f968cfc45b49d83562f3fe87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freeLook: {fileID: 3397914554968537729}
 --- !u!1 &2721110667293758037
 GameObject:
   m_ObjectHideFlags: 0

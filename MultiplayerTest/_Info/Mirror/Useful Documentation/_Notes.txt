@@ -1,0 +1,23 @@
+ATTRIBUTES
+[Server] / [Client] tags can be used for the server-only and client-only parts.
+[Command] called from the client and run on the server
+[ClientRpc] called on the server and run on clients
+[SyncVar]s and SyncLists are used to automatically synchronize state. They will only sync if the server modifies them.
+
+
+
+
+Network Context Properties ( https://github.com/vis2k/Mirror/blob/master/doc/Guides/Authority.md#network-context-properties )
+
+isServer: true if the game object is on a server and has been spawned.
+isClient: true if the game object is on a client, and was created by the server.
+isLocalPlayer: true if the game object is a player game object for this client.
+hasAuthority: true if the game object is owned by this client.
+
+
+
+
+NetworkBehaviour
+OnStartServer // Called on the server (when this player object is network-ready)
+OnStartClient // Called on all clients (when this player object is network-ready)
+OnStartLocalPlayer // Called on the local client (when this player object is network-ready)

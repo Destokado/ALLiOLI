@@ -2,14 +2,13 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(PlayersManager))]
 [RequireComponent(typeof(PlayerInputManager))]
 public class Client : NetworkBehaviour
 {
     [SyncVar] public int clientId;
     public static Client localClient { get; private set; }
-    public PlayerManager playerManager { get; private set; }
-    public PlayerInputManager playerInputManager { get; private set; }
+    public PlayersManager PlayersManager { get; private set; }
 
     // Called on the server (when this NetworkBehaviour is network-ready)
     public override void OnStartServer()
@@ -31,9 +30,7 @@ public class Client : NetworkBehaviour
 
         gameObject.name = "Client " + clientId;
         
-        playerManager = GetComponent<PlayerManager>();
-        playerInputManager = GetComponent<PlayerInputManager>();
-        playerInputManager.enabled = false;
+        PlayersManager = GetComponent<PlayersManager>();
     }
 
     // Called on the local client (when this NetworkBehaviour is network-ready)
@@ -49,4 +46,5 @@ public class Client : NetworkBehaviour
         base.OnStopClient();
         GameManager.singleton.clients.Remove(this);
     }
+    
 }
