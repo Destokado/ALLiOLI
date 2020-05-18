@@ -144,7 +144,6 @@ public class HumanLocalPlayer : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction, Color.green);
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions))
         {
-            Debug.Log("SOMETHING HI. IF = " + (lastObjectInFront != hit.collider.gameObject));
             if (lastObjectInFront != hit.collider.gameObject)
             {
                 lastObjectInFront = hit.collider.gameObject;
@@ -153,7 +152,6 @@ public class HumanLocalPlayer : MonoBehaviour
         }
         else
         {
-            Debug.Log("NOTING HIT");
             lastObjectInFront = null;
             trapInFront = null;
         }

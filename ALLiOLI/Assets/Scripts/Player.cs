@@ -88,8 +88,6 @@ public class Player : NetworkBehaviour
     // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
-        Debug.Log("OnStartClient, Joined player.");
-
         Client.localClient.PlayersManager.players.Add(this);
 
         string customName = "Player " + GameManager.TotalPlayers;

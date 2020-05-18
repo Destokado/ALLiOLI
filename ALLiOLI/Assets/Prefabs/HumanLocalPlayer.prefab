@@ -81,7 +81,7 @@ MonoBehaviour:
   maxDistanceToInteractWithTrap: 7
   layersThatCanInterfereWithInteractions:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 513
 --- !u!1001 &2431221060315985796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,17 +97,17 @@ PrefabInstance:
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -333.70593
+      value: -371.9342
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -112.89913
+      value: -126.76563
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 536.94867
+      value: 595.25446
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
@@ -339,6 +339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129473780773334717, guid: d7eda40c19506424f889fc7aaf05af20,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7eda40c19506424f889fc7aaf05af20, type: 3}
