@@ -13,8 +13,12 @@ public class Cheats
             
             foreach (Player player in Client.localClient.PlayersManager.players)
             {
+                if (player.HumanLocalPlayer == null)
+                    continue;
+                
                 foreach (Trap trap in allTraps)
                     player.HumanLocalPlayer.ownedTraps.Add(trap);
+                
                 Debug.Log("Player " + player.name + " owns " + player.HumanLocalPlayer.ownedTraps.Count + " traps.");
             }
         }
