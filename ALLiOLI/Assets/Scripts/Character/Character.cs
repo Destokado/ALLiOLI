@@ -70,6 +70,6 @@ public class Character : NetworkBehaviour
 
     public void Suicide()
     {
-        Die(Vector3.up * 2, transform.position);
+        Die(Vector3.up+transform.forward*2, transform.position+Vector3.up);
     }
 }
