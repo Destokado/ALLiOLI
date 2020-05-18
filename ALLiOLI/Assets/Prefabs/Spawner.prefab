@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1143415914890369000}
   - component: {fileID: 6121862427029547728}
   - component: {fileID: 3994605209763926974}
+  - component: {fileID: 2653340140756376281}
   m_Layer: 2
   m_Name: Spawner
   m_TagString: Untagged
@@ -45,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5da1a723f43cbc44953a8c3674bfca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!135 &6121862427029547728
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -119,3 +122,19 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2653340140756376281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3834243065996644357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0

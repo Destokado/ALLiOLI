@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
@@ -10,7 +11,30 @@ public class CmCamera : MonoBehaviour
     private PlayerInput playerInput;
     private Vector2 LookDelta;
     [SerializeField] private CinemachineFreeLook freeLook;
-   
+    public Vector2 cameraMovement;
+
+    private void Awake()
+    {
+        CinemachineCore.GetInputAxis = GetAxisCustom;
+    }
+
+    private float GetAxisCustom(string axisName)
+    {
+        Vector2 lookDelta = cameraMovement;
+        
+        lookDelta.Normalize(); //TODO: needed?
+ 
+        switch (axisName)
+        {
+            case "Mouse X":
+                return lookDelta.x;
+            case "Mouse Y":
+                return lookDelta.y;
+        }
+        
+        return 0;
+    }
+
 
     public void SetTarget(Transform target, Transform follow)
     {

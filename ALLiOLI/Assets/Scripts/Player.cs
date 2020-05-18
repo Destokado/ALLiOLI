@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cinemachine;
 using Mirror;
 using UnityEngine;
@@ -6,115 +7,134 @@ using UnityEngine.InputSystem;
 
 public class Player : NetworkBehaviour
 {
-    [Space]
-    [SerializeField] private PlayerGuiManager playerGui;
-    
-    [Space] 
-    [SerializeField] private GameObject characterPrefab;
-    public Character character { get; private set; }
-    
-    [Space] 
-    [SerializeField] private float maxDistanceToInteractWithTrap = 10;
-    [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
-    public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / GameManager.singleton.totalPlayers;
-    private Trap trapInFront {
-        get => _trapInFront;
-        set { _trapInFront = value; playerGui.ShowInteractionText(value != null && 
-            (MatchManager.Instance.currentPhase is TrapUp || MatchManager.Instance.currentPhase is FinishingTrapUp));}}
-    private Trap _trapInFront;
-    private GameObject lastObjectInFront;
+    /// <summary>
+    /// The prefab of the character that whe player will use to play.
+    /// </summary>
+    [Space] [SerializeField] private GameObject characterPrefab;
 
-    [HideInInspector] public CmCamera playerCamera;
-    public Color color { get { return _color; } private set { _color = value; playerGui.SetColor(_color); } }
-    private Color _color;
-    public bool isReady { get { return _isReady; } set { _isReady = value;  playerGui.ShowReadiness(isReady); } }
-    private bool _isReady;
+    /// <summary>
+    /// A reference to the current active character for the player
+    /// </summary>
+    public Character Character
+    {
+        get => _character;
+        set {
+            _character = value;
+            if (IsControlledLocally)
+                HumanLocalPlayer.Camera.SetTarget(value.cameraTarget,value.cameraTarget);
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private Character _character;
+
+    /// <summary>
+    /// The color that identifies the character.
+    /// </summary>
+    [field: SyncVar(hook = nameof(SetColor))]
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    public Color Color { get; private set; }
+
+    /// <summary>
+    /// Updates the color in the playerGUI if it is a player with a humanLocalPlayer.
+    /// </summary>
+    /// <param name="oldColor">The old color.</param>
+    /// <param name="newColor">The new color.</param>
+    private void SetColor(Color oldColor, Color newColor)
+    {
+        if (humanLocalPlayer)
+            humanLocalPlayer.playerGui.SetColor(newColor);
+    }
+
+    /// <summary>
+    /// If the player is "ready" or if it is not.
+    /// </summary>
+    [field: SyncVar(hook = nameof(SetReady))]
+    public bool IsReady { get; private set; }
+
+    /// <summary>
+    /// Updates the color in the playerGUI if it is a player with a humanLocalPlayer.
+    /// </summary>
+    /// <param name="oldValue">The old state of readiness for the player.</param>
+    /// <param name="newValue">The new state of readiness for the player.</param>
+    private void SetReady(bool oldValue, bool newValue)
+    {
+        if (humanLocalPlayer)
+            humanLocalPlayer.playerGui.ShowReadiness(newValue);
+    }
+
+    /// <summary>
+    /// A reference to the HumanLocalPlayer in charge of controlling this player.
+    /// <para>If it is null, it means that this player is controlled and synchronized trough network, not locally.</para>
+    /// <para>Giving it a value will set the the value as the referenced/controled player in the "HumanLocalPlayer".</para>
+    /// </summary>
+    public HumanLocalPlayer HumanLocalPlayer
+    {
+        get => humanLocalPlayer;
+        private set
+        {
+            humanLocalPlayer = value;
+            if (value != null)
+                humanLocalPlayer.Player = this;
+        }
+    }
+
+    private HumanLocalPlayer humanLocalPlayer;
+
+    /// <summary>
+    /// If the player is controlled by a human in this machine (locally).
+    /// </summary>
+    private bool IsControlledLocally => HumanLocalPlayer != null;
 
     // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
+        Debug.Log("OnStartClient, Joined player.");
+
         Client.localClient.PlayersManager.players.Add(this);
-        ownedTraps = new TrapManager();
 
-        string customName = "Player " + GameManager.singleton.totalPlayers;
-        
-        // SetTarget depending on if the player is controlled by the local client or if it isn't
-        CustomPlayerInput customPlayerInput = CustomPlayerInput.inputsWaitingForPlayers.Count > 0
-            ? CustomPlayerInput.inputsWaitingForPlayers[0]
+        string customName = "Player " + GameManager.TotalPlayers;
+
+        // Is any human waiting for a player to be available? If it is, set the player as their property
+        HumanLocalPlayer = HumanLocalPlayer.inputsWaitingForPlayers.Count > 0
+            ? HumanLocalPlayer.inputsWaitingForPlayers[0]
             : null;
-        if (customPlayerInput != null)
+
+        if (IsControlledLocally)
         {
-            CinemachineCore.GetInputAxis = customPlayerInput.GetAxisCustom;
-            playerCamera = customPlayerInput.playerInput.camera.GetComponent<CmCamera>();
-            gameObject.name = customName + " - Input by " + customPlayerInput.playerInput.user.controlScheme;
-            
-            customPlayerInput.player = this;
-        }
-        else // Shouldn't be controlled by the local client
-        {
-            gameObject.name = customName + " - No Input stream";
-        }
-        
-        //this.color = color;
-
-        SpawnNewCharacter();
-    }
-
-    /*private void Update()
-    {
-        UpdateObjectsInFront();
-        //TODO: highlight the 'trapInFront'
-        UpdateRadarTraps();
-    }
-
-    private void UpdateRadarTraps()
-    {
-        List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport = ownedTraps.GetCharactersInEachTrapRadar(this);
-        playerGui.ReportInRadar(radarReport);
-    }
-
-    private void UpdateObjectsInFront()
-    {
-        Ray ray = new Ray(character.cameraTarget.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions)) {
-            if (lastObjectInFront != hit.collider.gameObject)
-            {
-                lastObjectInFront = hit.collider.gameObject;
-                trapInFront = hit.transform.GetComponentInParent<Trap>();
-            }
+            gameObject.name = customName + " - Input by " + HumanLocalPlayer.PlayerInput.user.controlScheme;
         }
         else
         {
-            lastObjectInFront = null;
-            trapInFront = null;
+            gameObject.name = customName + " - No Input stream";
         }
-    }*/
 
-    public void SpawnNewCharacter()
-    {
-        this.character = Spawner.Instance.Spawn(characterPrefab).GetComponent<Character>();
-        this.character.owner = this;
-       // playerCamera.SetTarget(this.character.cameraTarget);
-        playerCamera.SetTarget(this.character.cameraTarget,this.character.cameraTarget);
+        if (hasAuthority)
+        {
+            CmdSetupPlayerOnServer();
+            CmdSpawnNewCharacter();
+        }
     }
 
-
-    public void SetUpTrapInFront()
+    [Command]
+    private void CmdSetupPlayerOnServer()
     {
-        if (trapInFront == null)
-            return;
-
-        if (!ownedTraps.Remove(trapInFront))
-            ownedTraps.Add(trapInFront);
-        
-        playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
-        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
+        Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
     }
-    
+
+    [Command]
+    public void CmdSpawnNewCharacter()
+    {
+        Spawner.Instance.Spawn(characterPrefab, this.netId, connectionToClient);
+    }
+
     public void SetupForCurrentPhase()
     {
-        playerGui.SetupForCurrentPhase(this);
+        humanLocalPlayer.SetupForCurrentPhase();
     }
-    
+
+    [Command]
+    public void CmdSetReady(bool newValue)
+    {
+        IsReady = newValue;
+    }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using Mirror;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Character))]
-public class CharacterMovementController : MonoBehaviour
+public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
 
@@ -18,16 +19,22 @@ public class CharacterMovementController : MonoBehaviour
 
     public bool jumping { get; set; }
 
-    public CharacterController characterController { get; private set; }
-    public Character character { get; private set; }
+    public CharacterController CharacterController { get; private set; }
+    public Character Character { get; private set; }
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        character = GetComponent<Character>();
+        CharacterController = gameObject.GetComponentRequired<CharacterController>();
+        Character = gameObject.GetComponentRequired<Character>();
     }
 
     private void Update()
+    {
+        if (hasAuthority)
+            AuthorityUpdate();
+    }
+
+    private void AuthorityUpdate()
     {
         Vector3 direction = GetDirectionRelativeToTheCamera();
 
@@ -42,11 +49,11 @@ public class CharacterMovementController : MonoBehaviour
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         displacement.y = verticalSpeed * Time.deltaTime;
 
-        if (Math.Abs(displacement.y) < characterController.minMoveDistance)
+        if (Math.Abs(displacement.y) < CharacterController.minMoveDistance)
             Debug.LogWarning("WAT displacement.y = " + displacement.y);
 
         // Apply Movement to Player
-        CollisionFlags collisionFlags = characterController.Move(displacement);
+        CollisionFlags collisionFlags = CharacterController.Move(displacement);
 
         //Apply rotation to Player
         if (Math.Abs(direction.x) > 0.001f || Math.Abs(direction.y) > 0.001f)
@@ -78,7 +85,7 @@ public class CharacterMovementController : MonoBehaviour
     private Vector3 GetDirectionRelativeToTheCamera()
     {
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
-        targetDirection = character.owner.playerCamera.gameObject.transform.TransformDirection(targetDirection);
+        targetDirection = Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         return targetDirection.normalized;
     }

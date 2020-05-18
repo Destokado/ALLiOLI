@@ -2,7 +2,7 @@ ATTRIBUTES
 [Server] / [Client] tags can be used for the server-only and client-only parts.
 [Command] called from the client and run on the server
 [ClientRpc] called on the server and run on clients
-[SyncVar]s and SyncLists are used to automatically synchronize state. They will only sync if the server modifies them.
+[SyncVar]s and [SyncList]s are used to automatically synchronize state. They will only sync if the server modifies them.
 
 
 

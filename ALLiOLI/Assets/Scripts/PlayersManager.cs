@@ -64,7 +64,7 @@ public class PlayersManager : NetworkBehaviour
     private void CmdSpawnNewPlayer()
     {
         GameObject player = Instantiate(playerPrefab);
-        NetworkServer.Spawn(player);
+        NetworkServer.Spawn(player, connectionToClient); //connectionToClient = The player calling this command
     }
 
     /// <summary>

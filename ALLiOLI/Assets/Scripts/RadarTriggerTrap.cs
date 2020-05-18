@@ -13,7 +13,7 @@ public class RadarTriggerTrap : MonoBehaviour
         SortedList<float, Character> playersInTrapRadar = new SortedList<float, Character>();
 
         foreach (Character character in charactersInRadar)
-            if (!character.isDead && character.owner != exception)
+            if (!character.isDead && character.Owner != exception)
                 playersInTrapRadar.Add(GetRadarDistanceTo(character), character);
 
         return playersInTrapRadar;

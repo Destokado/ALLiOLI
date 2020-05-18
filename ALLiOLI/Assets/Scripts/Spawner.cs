@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : NetworkBehaviour
 {
     public static Spawner Instance { get; private set; }
 
@@ -8,7 +9,7 @@ public class Spawner : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple Spawners have been created. Destroying the script of " + gameObject.name,
+            Debug.LogWarning("Multiple Spawns have been created. Destroying the script of " + gameObject.name,
                 gameObject);
             Destroy(this);
         }
@@ -18,13 +19,21 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public GameObject Spawn(GameObject prefab)
+    /*public void Spawn(GameObject prefab, uint netId)
     {
-        //TODO: Maybe it should be a pool?
+        CmdSpawn(prefab, netId);
+    }*/
+
+
+    public void Spawn(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
+    {
         EasyRandom random = new EasyRandom();
         Vector3 spawnPoint = new Vector3(transform.position.x + random.GetRandomFloat(-2, 2), transform.position.y,
             transform.position.z + random.GetRandomFloat(-2, 2));
-        return Instantiate(prefab, spawnPoint, Quaternion.identity);
+        
+        GameObject character = Instantiate(prefab, spawnPoint, Quaternion.identity);
+        character.GetComponent<Character>().PlayerSpawnerNetId = playerOwnerNetId;
+        NetworkServer.Spawn(character, playerOwnerConnectionToClient);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,6 +41,6 @@ public class Spawner : MonoBehaviour
         Character character = other.GetComponent<Character>();
         if (character && character.flag)
             return; // TODO: finish match
-            //MatchManager.Instance.MatchFinished(character.owner);
+        //MatchManager.Instance.MatchFinished(character.owner);
     }
 }

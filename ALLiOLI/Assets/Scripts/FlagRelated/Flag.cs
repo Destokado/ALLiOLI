@@ -23,7 +23,7 @@ public class Flag : MonoBehaviour
         Debug.Log("FLAG BY " + other.gameObject.name);
 
         character.flag = this;
-        owner = character.owner;
+        owner = character.Owner;
         carrier = character;
         flagCollider.enabled = false;
 

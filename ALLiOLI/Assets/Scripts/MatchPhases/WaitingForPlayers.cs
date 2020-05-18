@@ -4,7 +4,7 @@ public class WaitingForPlayers : MatchPhase
 {
     public override string informativeText
     {
-        get => "Waiting for all players to be ready.";
+        get => "Waiting for all players to join and to be ready.";
         protected set { }
     }
 
@@ -29,7 +29,7 @@ public class WaitingForPlayers : MatchPhase
     public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
-        MatchManager.Instance.matchTimer = 5;
+        MatchManager.Instance.matchTimer = 1;
         Client.localClient.PlayersManager.playerInputManager.enabled = true;
     }
 
@@ -41,15 +41,13 @@ public class WaitingForPlayers : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.matchTimer > 0)
+        if (GameManager.TotalPlayers <= 0 || MatchManager.Instance.matchTimer > 0)
             return this;
         
-        if ( true // TODO: all players must be ready
-                  // /*MatchManager.Instance.AreAllPlayersReady()*/ /*|| MatchManager.Instance.playerInputManager.playerCount >= MatchManager.Instance.playerInputManager.maxPlayerCount*/
-        )
+        if ( GameManager.singleton.AreAllPlayersReady() || GameManager.TotalPlayers >= GameManager.maxPlayerCount)
             return new StartCountdown();
 
-        //return this;
+        return this;
     }
 
     public override void EndState()

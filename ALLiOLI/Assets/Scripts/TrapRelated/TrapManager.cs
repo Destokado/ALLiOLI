@@ -26,7 +26,7 @@ public class TrapManager : List<Trap>
             foreach (Client client in GameManager.singleton.clients)
                 foreach (Player player in client.PlayersManager.players)
                 {
-                    float trapDistance = trap.GetDistanceTo(player.character);
+                    float trapDistance = trap.GetDistanceTo(player.Character);
                     if (trapDistance < distance)
                         distance = trapDistance;
                 }

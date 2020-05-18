@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 3916815057974936622}
   - component: {fileID: 2090334162427195722}
   - component: {fileID: 6994346500892704524}
+  - component: {fileID: 6996449674966496680}
+  - component: {fileID: 4178481085364268620}
   m_Layer: 8
   m_Name: Character
   m_TagString: Untagged
@@ -96,10 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a47f26f3cff5f448bd26c2722ba145d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalMovementInput: {x: 0, y: 0}
-  walkSpeed: 6
-  jumpSpeed: 3.5
+  syncMode: 0
+  syncInterval: 0.1
   animator: {fileID: 2109401773116520401}
+  horizontalMovementInput: {x: 0, y: 0}
+  jumpSpeed: 3.5
+  walkSpeed: 6
 --- !u!114 &2090334162427195722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47989ef6ab59a64ba520190d000d5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   cameraTarget: {fileID: 5481762455361671841}
-  flagPosition: {fileID: 8905692259442087517}
   flag: {fileID: 0}
-  owner: {fileID: 0}
+  flagPosition: {fileID: 8905692259442087517}
 --- !u!114 &6994346500892704524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +135,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushPower: 3
   weight: 1
+--- !u!114 &6996449674966496680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170785821846641001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &4178481085364268620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170785821846641001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &4898391324916063605
 GameObject:
   m_ObjectHideFlags: 0

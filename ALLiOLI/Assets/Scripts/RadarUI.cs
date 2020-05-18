@@ -23,7 +23,7 @@ public class RadarUI : MonoBehaviour
         {
             KeyValuePair<Trap, SortedList<float, Character>> rep = report[t];
             float clampedValue = Mathf.Clamp(rep.Value.Keys[c], 0f, 1f);
-            radarIndicator[radarIndicatorId].color = rep.Value.Values[c].owner.color;
+            radarIndicator[radarIndicatorId].color = rep.Value.Values[c].Owner.Color;
             radarIndicator[radarIndicatorId].rectTransform.anchorMax =
                 new Vector2(clampedValue, radarIndicator[t].rectTransform.anchorMax.y);
             radarIndicator[radarIndicatorId].rectTransform.anchorMin =

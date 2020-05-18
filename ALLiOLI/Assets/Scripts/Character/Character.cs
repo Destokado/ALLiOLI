@@ -1,25 +1,48 @@
 ﻿using System.Collections;
+using Mirror;
 using UnityEngine;
 
 //[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterMovementController))]
-public class Character : MonoBehaviour
+public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
 
     [HideInInspector] public Flag flag;
     [SerializeField] public Transform flagPosition;
-    [HideInInspector] public Player owner;
+    public Player Owner
+    {
+        get => _owner;
+        private set
+        {
+            _owner = value;
+            value.Character = this;
+            gameObject.name = "Character owned by " + value.gameObject.name;
+        }
+    }
+    private Player _owner;
+
+    [field: SyncVar(hook = nameof(SetPlayerSpawnerAsOwner))]
+    public uint PlayerSpawnerNetId { get; set; }
 
     public bool isDead { get; private set; }
-
-    //private Rigidbody rb { get; set; }
+    
     public CharacterMovementController movementController { get; private set; }
+
+    private void SetPlayerSpawnerAsOwner(uint oldPlayerNetId, uint newPlayerNetId)
+    {
+        if (!NetworkIdentity.spawned.ContainsKey(newPlayerNetId))
+        {
+            Debug.LogWarning("Player spawner with NetId " + newPlayerNetId + " not found.");
+            return;
+        }
+        
+        Owner = NetworkIdentity.spawned[newPlayerNetId].gameObject.GetComponent<Player>();
+    }
 
     private void Awake()
     {
-        //rb = GetComponent<Rigidbody>();
-        movementController = GetComponent<CharacterMovementController>();
+        movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
 
     public void Die(Vector3 impact, Vector3 impactPoint)
@@ -35,13 +58,14 @@ public class Character : MonoBehaviour
         movementController.enabled = false;
 
         movementController.enabled = false;
-        movementController.characterController.enabled = false;
+        movementController.CharacterController.enabled = false;
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.5f);
 
-        owner.SpawnNewCharacter();
+        //TODO: Respawn
+        //Owner.CmdSpawnNewCharacter();
     }
 
     public void Suicide()

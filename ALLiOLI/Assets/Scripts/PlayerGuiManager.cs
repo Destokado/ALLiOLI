@@ -24,8 +24,8 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void SetupForCurrentPhase(Player player)
     {
-        ShowNumberOfTraps(player.ownedTraps.Count, player.maxOwnableTraps);
-        ShowReadiness(player.isReady);
+        ShowNumberOfTraps(player.HumanLocalPlayer.ownedTraps.Count, player.HumanLocalPlayer.maxOwnableTraps);
+        ShowReadiness(player.IsReady);
     }
 
     public void ShowNumberOfTraps(int currentTraps, int maxNumberOfTraps)

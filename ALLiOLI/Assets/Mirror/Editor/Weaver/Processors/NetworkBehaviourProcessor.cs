@@ -787,7 +787,7 @@ namespace Mirror.Weaver
                 if (p.ParameterType.FullName == Weaver.NetworkConnectionType.FullName &&
                     !(ca.AttributeType.FullName == Weaver.TargetRpcType.FullName && i == 0))
                 {
-                    Weaver.Error($"{md.Name} has invalid parameer {p}. Cannot pass NeworkConnections", md);
+                    Weaver.Error($"{md.Name} has invalid parameter {p}. Cannot pass NetworkConnections", md);
                     return false;
                 }
             }

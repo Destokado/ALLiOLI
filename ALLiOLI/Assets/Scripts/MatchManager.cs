@@ -79,7 +79,8 @@ public class MatchManager : NetworkBehaviour
     [Client]
     private void SetNewMatchPhase(MatchPhase newPhase)
     {
-        SetAllPlayersAsNotReady();
+        if (isServer)
+            SetAllPlayersAsNotReady();
 
         currentPhase?.EndState();
         currentPhase = newPhase;
@@ -92,11 +93,12 @@ public class MatchManager : NetworkBehaviour
             player.SetupForCurrentPhase();
     }
     
+    [Server]
     public void SetAllPlayersAsNotReady()
     {
         foreach (Client client in GameManager.singleton.clients)
             foreach (Player player in client.PlayersManager.players)
-                player.isReady = false;
+                player.CmdSetReady(false);
     }
 
 
