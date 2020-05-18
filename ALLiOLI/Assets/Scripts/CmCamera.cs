@@ -8,10 +8,31 @@ using UnityEngine.InputSystem;
 public class CmCamera : MonoBehaviour
 {
     
-    private PlayerInput playerInput;
     private Vector2 LookDelta;
     [SerializeField] private CinemachineFreeLook freeLook;
-    public Vector2 cameraMovement;
+
+    public HumanLocalPlayer HumanLocalPlayer {
+        get => _humanLocalPlayer;
+        set
+        {
+            if (_humanLocalPlayer != null)
+                axisNameToHumanInput.Remove(_humanLocalPlayer.gameObject.name);
+            
+            _humanLocalPlayer = value;
+
+            if (value != null)
+            {
+                GameObject humanGameObject = value.gameObject;
+                freeLook.m_XAxis.m_InputAxisName = humanGameObject.name + "X";
+                freeLook.m_YAxis.m_InputAxisName = humanGameObject.name + "Y";
+                axisNameToHumanInput.Add(humanGameObject.name, value);
+            }
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private HumanLocalPlayer _humanLocalPlayer;
+
+    private static readonly Dictionary<string, HumanLocalPlayer> axisNameToHumanInput = new Dictionary<string, HumanLocalPlayer>();
 
     private void Awake()
     {
@@ -22,15 +43,18 @@ public class CmCamera : MonoBehaviour
 
     private float GetAxisCustom(string axisName)
     {
-        Vector2 lookDelta = cameraMovement;
+        if (axisNameToHumanInput.Count <= 0)
+            return 0;
+        
+        Vector2 lookDelta = axisNameToHumanInput[axisName.Remove(axisName.Length - 1)].cameraMovement;
         
         lookDelta.Normalize(); //TODO: needed?
  
-        switch (axisName)
+        switch (axisName.Substring(axisName.Length - 1))
         {
-            case "Mouse X":
+            case "X":
                 return lookDelta.x;
-            case "Mouse Y":
+            case "Y":
                 return lookDelta.y;
         }
         
@@ -44,10 +68,9 @@ public class CmCamera : MonoBehaviour
         freeLook.LookAt = target;
     }
 
-    public void SetLayer(int layer, Camera camera)
+    public void SetLayer(int layer, Camera cameraComponent)
     {
-        
-        camera.gameObject.SetLayerRecursively(layer); 
-        camera.cullingMask |= 1 << layer;
+        cameraComponent.gameObject.SetLayerRecursively(layer); 
+        cameraComponent.cullingMask |= 1 << layer;
     }
 }

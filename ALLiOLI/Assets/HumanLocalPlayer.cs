@@ -63,6 +63,7 @@ public class HumanLocalPlayer : MonoBehaviour
             {
                 _camera = PlayerInput.camera.gameObject.GetComponentRequired<CmCamera>();
                 _camera.HumanLocalPlayer = this;
+                _camera.SetLayer(localPlayerNumber + 10, PlayerInput.camera);
             }
 
             return _camera;
@@ -98,16 +99,16 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private Trap _trapInFront;
     private GameObject lastObjectInFront;
-    
+    public int localPlayerNumber;
+
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 50 / GameManager.TotalPlayers;
 
     private void Awake()
     {
         inputsWaitingForPlayers.Add(this);
-        Camera.SetLayer(Client.localClient.PlayersManager.players.Count + 10, PlayerInput.camera);
         ownedTraps = new TrapManager();
-        SetDynamicName();
+        // SetDynamicName();
     }
 
     private void SetDynamicName()

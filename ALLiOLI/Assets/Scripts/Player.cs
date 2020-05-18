@@ -72,9 +72,18 @@ public class Player : NetworkBehaviour
         get => humanLocalPlayer;
         private set
         {
+            if (HumanLocalPlayer != null) // TODO: add whenever is needed to ensure consistency
+            {
+                Debug.LogWarning("Trying to change the humanLocalPlayer of a Player. Operation cancelled");
+                return;
+            }
+            
             humanLocalPlayer = value;
             if (value != null)
+            {
                 humanLocalPlayer.Player = this;
+                HumanLocalPlayer.localPlayerNumber = Client.localClient.PlayersManager.players.Count;
+            }
         }
     }
 
@@ -93,18 +102,20 @@ public class Player : NetworkBehaviour
         string customName = "Player " + GameManager.TotalPlayers;
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
-        HumanLocalPlayer = HumanLocalPlayer.inputsWaitingForPlayers.Count > 0
+        var tempHumanLocalPlayer = HumanLocalPlayer.inputsWaitingForPlayers.Count > 0
             ? HumanLocalPlayer.inputsWaitingForPlayers[0]
             : null;
 
-        if (IsControlledLocally)
+        if (tempHumanLocalPlayer != null) // If the player is controller locally
         {
-            gameObject.name = customName + " - Input by " + HumanLocalPlayer.PlayerInput.user.controlScheme;
+            gameObject.name = customName + " - Input by " + tempHumanLocalPlayer.PlayerInput.user.controlScheme;
         }
         else
         {
             gameObject.name = customName + " - No Input stream";
         }
+
+        HumanLocalPlayer = tempHumanLocalPlayer;
 
         if (hasAuthority)
         {

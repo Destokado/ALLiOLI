@@ -78,10 +78,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGui: {fileID: 6906532411119983743}
+  cameraMovement: {x: 0, y: 0}
   maxDistanceToInteractWithTrap: 7
   layersThatCanInterfereWithInteractions:
     serializedVersion: 2
     m_Bits: 513
+  localPlayerNumber: 0
 --- !u!1001 &2431221060315985796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,17 +99,17 @@ PrefabInstance:
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -371.9342
+      value: -543.9614
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -126.76563
+      value: -189.16495
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 595.25446
+      value: 857.6305
       objectReference: {fileID: 0}
     - target: {fileID: 4022047033612215265, guid: 2bbae1883f081da45928d33f7e0262cd,
         type: 3}
@@ -215,6 +217,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7426633349960952564, guid: d7eda40c19506424f889fc7aaf05af20,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 4563940269697123177}
     - target: {fileID: 8541561457806399734, guid: d7eda40c19506424f889fc7aaf05af20,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -343,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 9129473780773334717, guid: d7eda40c19506424f889fc7aaf05af20,
         type: 3}
       propertyPath: m_fontSize
-      value: 50
+      value: 39.55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7eda40c19506424f889fc7aaf05af20, type: 3}
