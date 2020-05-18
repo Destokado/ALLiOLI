@@ -40,7 +40,7 @@ public abstract class Trap : NetworkBehaviour
     [Server]
     public virtual void Activate()
     {
-        Debug.Log("The trap '" + gameObject.name + "' has been activated.", this);
+        Debug.Log("The trap '" + gameObject.name + "' has been activated.", this.gameObject);
 
         cdTimer = cooldownTime;
         activatedTimer = durationTime;

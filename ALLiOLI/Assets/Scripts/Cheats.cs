@@ -135,5 +135,20 @@ public class Cheats
     }
 
     #endregion
+    
+    [MenuItem("ALLiOLI/Cheats/Server/Activate all traps")]
+    public static void ActivateAllTraps()
+    {
+        if (Application.isPlaying)
+        {
+            Trap[] allTraps = Object.FindObjectsOfType<Trap>();
+            foreach (Trap trap in allTraps)
+                trap.Activate();
+        }
+        else
+        {
+            Debug.LogError("Not in play mode.");
+        }
+    }
 }
 #endif
