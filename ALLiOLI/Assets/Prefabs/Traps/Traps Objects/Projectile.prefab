@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7330276342546414343}
   - component: {fileID: 4065448976374553839}
   - component: {fileID: 6154291572642663003}
+  - component: {fileID: 5246945420772882984}
+  - component: {fileID: 8030752205181606881}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -63,6 +65,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 4065448976374553839}
   minimumVelocityToKill: 0.75
+--- !u!114 &5246945420772882984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219826507680822496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &8030752205181606881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219826507680822496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
 --- !u!1 &8240883769062653398
 GameObject:
   m_ObjectHideFlags: 0

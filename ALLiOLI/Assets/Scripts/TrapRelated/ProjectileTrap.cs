@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkPool))]
 public class ProjectileTrap : Trap
 {
     [SerializeField] private float explosionForce;
     [SerializeField] private Transform explosionPos;
     [SerializeField] private float explosionRadius;
-    private Pool pool;
+    private NetworkPool pool;
 
     [SerializeField] private List<Transform> projectilePos;
-    [SerializeField] private GameObject projectilePrefab;
 
     private void Awake()
     {
-        pool = new Pool(projectilePrefab, projectilePos.Count, transform.position, Quaternion.identity);
+        pool = gameObject.GetComponentRequired<NetworkPool>();
     }
 
     protected override void Reload()
@@ -27,7 +28,7 @@ public class ProjectileTrap : Trap
 
         foreach (Transform trans in projectilePos)
         {
-            GameObject projectile = pool.Spawn(trans.position, Quaternion.identity, Vector3.one);
+            GameObject projectile = pool.Spawn();
             StartCoroutine(AddForce(projectile));
         }
     }

@@ -23,6 +23,25 @@ MonoBehaviour:
   tubePrefab: {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79,
     type: 3}
   tubeSpeed: 20
+--- !u!114 &2738038188317941685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3759599144844901141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89328ced10512fd408083517771a2ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  baseObject: {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79,
+    type: 3}
+  instantiationTransform: {fileID: 1543691916284427649}
+  size: 10
+  spawnOnStart: 0
 --- !u!1 &4138392776361908775
 GameObject:
   m_ObjectHideFlags: 0
