@@ -11,40 +11,64 @@ public class HumanLocalPlayer : MonoBehaviour
     /// Gui that displays the information that is only useful to the player itself.
     /// </summary>
     [SerializeField] public PlayerGuiManager playerGui;
-    
+
     public static readonly List<HumanLocalPlayer> inputsWaitingForPlayers = new List<HumanLocalPlayer>();
-    public Player Player {
+
+    public Player Player
+    {
         get => _player;
-        set {
+        set
+        {
             if (_player != null && value != null)
-                Debug.LogWarning("Trying to assign a player to a HumanLocalPlayer with a Player already assigned. Operation Cancelled.", this);
-            else {
+                Debug.LogWarning(
+                    "Trying to assign a player to a HumanLocalPlayer with a Player already assigned. Operation Cancelled.",
+                    this);
+            else
+            {
                 _player = value;
-                if (value == null) inputsWaitingForPlayers.Add(this); 
+                if (value == null) inputsWaitingForPlayers.Add(this);
                 else inputsWaitingForPlayers.Remove(this);
             }
+
             SetDynamicName();
         }
     }
+
     // ReSharper disable once InconsistentNaming
     private Player _player;
-    
-    public PlayerInput PlayerInput { 
-        get {
-            if (_playerInput == null) { _playerInput = gameObject.GetComponentRequired<PlayerInput>(); }
-            return _playerInput; }
+
+    public PlayerInput PlayerInput
+    {
+        get
+        {
+            if (_playerInput == null)
+            {
+                _playerInput = gameObject.GetComponentRequired<PlayerInput>();
+            }
+
+            return _playerInput;
+        }
         private set => _playerInput = value;
     }
+
     // ReSharper disable once InconsistentNaming
     private PlayerInput _playerInput;
 
 
-    public CmCamera Camera { 
-        get {
-            if (_camera == null) { _camera = PlayerInput.camera.gameObject.GetComponentRequired<CmCamera>(); }
-            return _camera; }
+    public CmCamera Camera
+    {
+        get
+        {
+            if (_camera == null)
+            {
+                _camera = PlayerInput.camera.gameObject.GetComponentRequired<CmCamera>();
+            }
+
+            return _camera;
+        }
         private set => _camera = value;
     }
+
     // ReSharper disable once InconsistentNaming
     private CmCamera _camera;
 
@@ -52,22 +76,34 @@ public class HumanLocalPlayer : MonoBehaviour
     /// The maximum distance at which a trap can be to the character so the player can interact with it. // TODO: ensure if the distance id from the character or the camera
     /// </summary>
     [Space] [SerializeField] private float maxDistanceToInteractWithTrap = 7;
-    //TODO: Documentation...
+    
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
-    private Trap trapInFront { get => _trapInFront;
-        set { _trapInFront = value; playerGui.ShowInteractionText(value != null && 
-                                                                                    (MatchManager.Instance.currentPhase is TrapUp || MatchManager.Instance.currentPhase is FinishingTrapUp));}}
+
+    private Trap trapInFront
+    {
+        get => _trapInFront;
+        set
+        {
+            
+            //if (value != _trapInFront)
+                playerGui.ShowInteractionText(value != null &&
+                                          (MatchManager.Instance.currentPhase is TrapUp ||
+                                           MatchManager.Instance.currentPhase is FinishingTrapUp));
+            _trapInFront = value;
+        }
+    }
+
     private Trap _trapInFront;
     private GameObject lastObjectInFront;
-    
+
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 50 / GameManager.TotalPlayers;
-    
+
     private void Awake()
     {
         inputsWaitingForPlayers.Add(this);
         int layer = Client.localClient.PlayersManager.players.Count + 10;
-        Camera.SetLayer(layer,PlayerInput.camera);
+        Camera.SetLayer(layer, PlayerInput.camera);
         ownedTraps = new TrapManager();
         SetDynamicName();
     }
@@ -77,7 +113,7 @@ public class HumanLocalPlayer : MonoBehaviour
         string newName;
         if (Player == null)
             newName = "HumanLocalPlayer of Unknown Player";
-        else 
+        else
             newName = "HumanLocalPlayer of " + Player.name;
 
         gameObject.name = newName;
@@ -87,11 +123,11 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null)
             return;
-        
+
         if (Player.Character != null)
+            //TODO: highlight the 'trapInFront'
             UpdateObjectsInFront();
-        
-        //TODO: highlight the 'trapInFront'
+
         UpdateRadarTraps();
     }
 
@@ -104,10 +140,11 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private void UpdateObjectsInFront()
     {
-        Ray ray = new Ray(Player.Character.cameraTarget.position, Camera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap,
-            layersThatCanInterfereWithInteractions))
+        Ray ray = new Ray(Player.Character.interactionRayOrigin.position, Camera.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction, Color.green);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions))
         {
+            Debug.Log("SOMETHING HI. IF = " + (lastObjectInFront != hit.collider.gameObject));
             if (lastObjectInFront != hit.collider.gameObject)
             {
                 lastObjectInFront = hit.collider.gameObject;
@@ -116,11 +153,12 @@ public class HumanLocalPlayer : MonoBehaviour
         }
         else
         {
+            Debug.Log("NOTING HIT");
             lastObjectInFront = null;
             trapInFront = null;
         }
     }
-    
+
     public void SetUpTrapInFront()
     {
         if (trapInFront == null)
@@ -128,9 +166,10 @@ public class HumanLocalPlayer : MonoBehaviour
 
         if (!ownedTraps.Remove(trapInFront))
             ownedTraps.Add(trapInFront);
-        
+
         playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
-        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name +" are: ", gameObject);
+        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
+            gameObject);
     }
 
     #region input
@@ -144,16 +183,16 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnCharacterMove(InputValue value)
     {
         if (Player == null) return;
-        
+
         Player.Character.movementController.horizontalMovementInput = value.Get<Vector2>();
     }
 
     private void OnTrap()
     {
         if (Player == null) return;
-        
+
         State currentState = MatchManager.Instance.currentPhase;
-        
+
         switch (currentState)
         {
             case Battle battle:
@@ -178,19 +217,17 @@ public class HumanLocalPlayer : MonoBehaviour
         if (Player == null) return;
         Player.Character.Suicide();
     }
-    
+
     private void OnJump(InputValue value)
     {
         if (Player == null) return;
         Player.Character.movementController.jumping = value.isPressed;
     }
-    
+
     #endregion
-    
+
     public void SetupForCurrentPhase()
     {
         playerGui.SetupForCurrentPhase(Player);
     }
-    
-
 }

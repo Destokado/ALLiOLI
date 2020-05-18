@@ -7,6 +7,7 @@ using UnityEngine;
 public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
+    [SerializeField] public Transform interactionRayOrigin;
 
     [HideInInspector] public Flag flag;
     [SerializeField] public Transform flagPosition;

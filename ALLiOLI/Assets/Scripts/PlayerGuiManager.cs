@@ -50,5 +50,6 @@ public class PlayerGuiManager : MonoBehaviour
     public void ShowInteractionText(bool show)
     {
         interactionText.SetActive(show);
+        Debug.Log("SHOW INTERACTION: " + show);
     }
 }
