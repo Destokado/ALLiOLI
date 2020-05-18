@@ -84,6 +84,16 @@ public class CharacterMovementController : NetworkBehaviour
 
     private Vector3 GetDirectionRelativeToTheCamera()
     {
+        //TODO: Remove if no errors are detected in a lon-term testing
+        if (Character == null)
+            Debug.LogWarning("Character is null");
+        if (Character.Owner == null)
+            Debug.LogWarning("Character.Owner");
+        if (Character.Owner.HumanLocalPlayer == null)
+            Debug.LogWarning("Character.Owner.HumanLocalPlayer");
+        if (Character.Owner.HumanLocalPlayer.Camera == null)
+            Debug.LogWarning("Character.Owner.HumanLocalPlayer.Camera is null");
+        
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection = Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
