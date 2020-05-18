@@ -16,6 +16,8 @@ public class CmCamera : MonoBehaviour
     private void Awake()
     {
         CinemachineCore.GetInputAxis = GetAxisCustom;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private float GetAxisCustom(string axisName)
