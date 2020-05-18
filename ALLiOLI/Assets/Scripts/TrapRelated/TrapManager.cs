@@ -2,6 +2,11 @@
 
 public class TrapManager : List<Trap>
 {
+    /*public TrapManager(List<Trap> trapsInManager)
+    {
+        this.AddRange(trapsInManager);
+    }*/
+
     public Trap GetBestTrapToActivate(Player playerToAvoid)
     {
         List<KeyValuePair<Trap, SortedList<float, Character>>>

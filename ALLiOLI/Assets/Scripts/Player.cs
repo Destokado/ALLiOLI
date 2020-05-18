@@ -49,7 +49,7 @@ public class Player : NetworkBehaviour
     /// If the player is "ready" or if it is not.
     /// </summary>
     [field: SyncVar(hook = nameof(SetReady))]
-    public bool IsReady { get; private set; }
+    public bool isReady;
 
     /// <summary>
     /// Updates the color in the playerGUI if it is a player with a humanLocalPlayer.
@@ -129,12 +129,25 @@ public class Player : NetworkBehaviour
 
     public void SetupForCurrentPhase()
     {
-        humanLocalPlayer.SetupForCurrentPhase();
+        if (humanLocalPlayer != null)
+            humanLocalPlayer.SetupForCurrentPhase();
     }
 
     [Command]
     public void CmdSetReady(bool newValue)
     {
-        IsReady = newValue;
+        isReady = newValue;
+    }
+    
+    [Command]
+    public void CmdActivateTrap(uint trapNetId)
+    {
+        if (!NetworkIdentity.spawned.ContainsKey(trapNetId))
+        {
+            Debug.LogWarning("The trap with NetId " + trapNetId + " not found.");
+            return;
+        }
+        
+        NetworkIdentity.spawned[trapNetId].gameObject.GetComponent<Trap>().RpcActivate();
     }
 }

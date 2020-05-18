@@ -16,9 +16,9 @@ public class WindowTrap : Trap
         animManager.Play(0);
     }
 
-    public override void Activate()
+    public override void RpcActivate()
     {
-        base.Activate();
+        base.RpcActivate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
     }

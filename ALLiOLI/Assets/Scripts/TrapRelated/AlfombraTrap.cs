@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class AlfombraTrap : Trap
@@ -16,9 +17,10 @@ public class AlfombraTrap : Trap
         animManager.Play(0);
     }
 
-    public override void Activate()
+    [ClientRpc]
+    public override void RpcActivate()
     {
-        base.Activate();
+        base.RpcActivate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
     }

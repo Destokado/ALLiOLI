@@ -11,11 +11,10 @@ public class MatchManager : NetworkBehaviour
     [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId = -420;
     public void SetNewPhaseById(int oldVal, int newVal)
     {
-        SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId)); 
-        Debug.Log("new Phase ID = " + newVal);
+        SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
     public MatchPhase currentPhase { get; private set; }
-    
+    private TrapManager allTraps = new TrapManager();
     [SerializeField] public MatchGuiManager guiManager;
     public float matchTimer
     {
@@ -47,7 +46,7 @@ public class MatchManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        
+        //allTraps.AddRange(FindObjectsOfType<Trap>().ToList());
         BroadcastNewMatchPhase(null);
     }
 
@@ -89,17 +88,26 @@ public class MatchManager : NetworkBehaviour
         guiManager.SetupForCurrentPhase();
 
         foreach (Client client in GameManager.singleton.clients)
-        foreach (Player player in client.PlayersManager.players)
-            player.SetupForCurrentPhase();
+            foreach (Player player in client.PlayersManager.players)
+                player.SetupForCurrentPhase();
     }
     
     [Server]
     public void SetAllPlayersAsNotReady()
     {
         foreach (Client client in GameManager.singleton.clients)
-            foreach (Player player in client.PlayersManager.players)
-                player.CmdSetReady(false);
+        foreach (Player player in client.PlayersManager.players)
+        {
+            //player.CmdSetReady(false);
+            player.isReady = false;
+        }
     }
+
+    /*[Command]
+    public void CmdActivateTrap(Trap trap)
+    {
+        trap.RpcActivate();
+    }*/
 
 
     /*public bool AreAllPlayersReady()

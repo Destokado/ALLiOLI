@@ -19,9 +19,9 @@ public class SwordsTrap : SlapTrap
         //secondKillZone.enabled = false;
     }
 
-    public override void Activate()
+    public override void RpcActivate()
     {
-        base.Activate();
+        base.RpcActivate();
         JointSpring jointSpring = secondJoint.spring;
         jointSpring.targetPosition = secondTargetAngle;
         secondJoint.spring = jointSpring;

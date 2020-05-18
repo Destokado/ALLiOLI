@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public abstract class Trap : MonoBehaviour
+public abstract class Trap : NetworkBehaviour
 {
-    //[SerializeField] protected KillZone myKillZone;
-
     [SerializeField] private float cooldownTime = 5f;
 
     [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
@@ -25,15 +24,12 @@ public abstract class Trap : MonoBehaviour
         }
     }
 
-    protected virtual void Reload()
-    {
-        //if (myKillZone) myKillZone.enabled = false;
-    }
+    protected virtual void Reload() { }
 
-    public virtual void Activate()
+    [ClientRpc]
+    public virtual void RpcActivate()
     {
-        Debug.Log("The trap " + gameObject.name + " has been activated.");
-        //if (myKillZone) myKillZone.enabled = true;
+        Debug.Log("The trap '" + gameObject.name + "' has been activated.", this);
 
         cdTimer = cooldownTime;
         activatedTimer = durationTime;

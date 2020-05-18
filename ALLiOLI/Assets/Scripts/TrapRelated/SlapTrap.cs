@@ -14,9 +14,9 @@ public class SlapTrap : Trap
         joint.spring = jointSpring;
     }
 
-    public override void Activate()
+    public override void RpcActivate()
     {
-        base.Activate();
+        base.RpcActivate();
         JointSpring jointSpring = joint.spring;
         jointSpring.targetPosition = targetAngle;
         joint.spring = jointSpring;

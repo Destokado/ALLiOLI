@@ -19,7 +19,7 @@ public class Cheats
                 foreach (Trap trap in allTraps)
                     player.HumanLocalPlayer.ownedTraps.Add(trap);
                 
-                Debug.Log("Player " + player.name + " owns " + player.HumanLocalPlayer.ownedTraps.Count + " traps.");
+                Debug.Log("Player '" + player.name + "' owns " + player.HumanLocalPlayer.ownedTraps.Count + " traps.");
             }
         }
         else

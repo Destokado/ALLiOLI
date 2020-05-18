@@ -14,10 +14,9 @@ public class PendulumTrap : Trap
         ball.useSpring = true;
     }
 
-    public override void Activate()
+    public override void RpcActivate()
     {
-        base.Activate();
-
+        base.RpcActivate();
         ball.useSpring = false;
     }
 }

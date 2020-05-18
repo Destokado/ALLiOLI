@@ -157,7 +157,7 @@ public class HumanLocalPlayer : MonoBehaviour
         switch (currentState)
         {
             case Battle battle:
-                ownedTraps.GetBestTrapToActivate(Player)?.Activate();
+                Player.CmdActivateTrap(ownedTraps.GetBestTrapToActivate(Player).netId);
                 break;
             case TrapUp trapUp:
                 SetUpTrapInFront();
@@ -168,7 +168,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnReady()
     {
         if (Player == null) return;
-        Player.CmdSetReady(!Player.IsReady);
+        Player.CmdSetReady(!Player.isReady);
     }
 
     private void OnSuicide()
@@ -184,11 +184,11 @@ public class HumanLocalPlayer : MonoBehaviour
     }
     
     #endregion
-
-    
     
     public void SetupForCurrentPhase()
     {
         playerGui.SetupForCurrentPhase(Player);
     }
+    
+
 }

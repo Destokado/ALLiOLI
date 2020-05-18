@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (Client client in clients)
             foreach (Player player in client.PlayersManager.players)
-                if (!player.IsReady)
+                if (!player.isReady)
                     return false;
 
         return true;
