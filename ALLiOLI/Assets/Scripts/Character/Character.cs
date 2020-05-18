@@ -64,9 +64,9 @@ public class Character : NetworkBehaviour
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.5f);
-
-        //TODO: Respawn
-        //Owner.CmdSpawnNewCharacter();
+        
+        if (hasAuthority)
+            Owner.CmdSpawnNewCharacter();
     }
 
     public void Suicide()
