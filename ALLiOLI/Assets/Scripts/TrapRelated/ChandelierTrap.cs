@@ -18,9 +18,9 @@ public class ChandelierTrap : Trap
         animManager.Play(0);
     }
 
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
 
         animManager.Stop(0);
         chandelier.isKinematic = false;

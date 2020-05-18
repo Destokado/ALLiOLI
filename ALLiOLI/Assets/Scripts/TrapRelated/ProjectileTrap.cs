@@ -21,9 +21,9 @@ public class ProjectileTrap : Trap
     {
     }
 
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
 
         foreach (Transform trans in projectilePos)
         {

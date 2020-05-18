@@ -174,9 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880e99490d5f2924da8a6bc042a95779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 4536463949945530679}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 3
   durationTime: 3
+  radarTrigger: {fileID: 4536463949945530679}
   joint: {fileID: 2344755119013367316}
   startAngle: 0
   targetAngle: -120
@@ -1281,6 +1283,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 907876820047023907, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Layer
@@ -1371,6 +1378,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.949005
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2241186004563217642}
     - target: {fileID: 4477662088469983864, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalScale.y

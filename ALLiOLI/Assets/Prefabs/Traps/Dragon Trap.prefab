@@ -81,9 +81,6 @@ MonoBehaviour:
         transformToAnimate: {fileID: 4470873371129345934}
         originTransform: {fileID: 1425615728735481725}
         destinationTransform: {fileID: 6247599105469716315}
-        move: 1
-        rotate: 1
-        scale: 1
 --- !u!114 &3582562796472526906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,9 +93,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333d145648c47824eb27fa8337ef1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 8512261324401487773}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 5
   durationTime: 3
+  radarTrigger: {fileID: 8512261324401487773}
 --- !u!1 &3011598331204655218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,6 +1593,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1629,6 +1633,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dragon Trap
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 4470873371129345934}
     - target: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -16,9 +16,9 @@ public class DragonTrap : Trap
         animManager.Play(0);
     }
 
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
     }

@@ -298,9 +298,6 @@ MonoBehaviour:
         transformToAnimate: {fileID: 8692238219176492067}
         originTransform: {fileID: 1929061616504888898}
         destinationTransform: {fileID: 5780530738768634694}
-        move: 1
-        rotate: 1
-        scale: 1
 --- !u!114 &6021522258413716316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,9 +310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaa8bcc6f35fcc46983e4c65518eb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 780347212550539120}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 5
   durationTime: 3
+  radarTrigger: {fileID: 780347212550539120}
   shield: {fileID: 7502491066875957140}
   throwSpeed: 10
 --- !u!1 &8006959543027255377
@@ -377,6 +376,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,6 +401,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Trap
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 8692238219176492067}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.x

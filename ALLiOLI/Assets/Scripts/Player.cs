@@ -148,6 +148,6 @@ public class Player : NetworkBehaviour
             return;
         }
         
-        NetworkIdentity.spawned[trapNetId].gameObject.GetComponent<Trap>().RpcActivate();
+        NetworkIdentity.spawned[trapNetId].gameObject.GetComponent<Trap>().Activate();
     }
 }

@@ -20,9 +20,9 @@ public class RollingTubes : Trap
     {
     }
 
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
 
         StartCoroutine(SpawnTubes());
     }

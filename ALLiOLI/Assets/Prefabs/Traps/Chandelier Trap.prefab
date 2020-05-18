@@ -51,9 +51,6 @@ MonoBehaviour:
         transformToAnimate: {fileID: 2364808968783550032}
         originTransform: {fileID: 537199129719278290}
         destinationTransform: {fileID: 7908058749606430703}
-        move: 1
-        rotate: 1
-        scale: 1
 --- !u!114 &6974990953753060762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +63,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cf8b5a5d17bac458f904792a0234c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 7516821138722849392}
-  myKillZone: {fileID: 0}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 5
   durationTime: 3
+  radarTrigger: {fileID: 7516821138722849392}
   chandelier: {fileID: 2988053982552728797}
 --- !u!64 &2869317665045943798
 MeshCollider:
@@ -3467,6 +3465,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.9
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3487,6 +3490,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2364808968783550032}
     - target: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x

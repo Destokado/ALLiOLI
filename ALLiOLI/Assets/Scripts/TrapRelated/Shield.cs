@@ -21,9 +21,9 @@ public class Shield : Trap
         animManager.Play(0);
     }
 
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
 
         animManager.Stop(0);
         shield.isKinematic = false;

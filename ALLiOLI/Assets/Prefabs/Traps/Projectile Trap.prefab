@@ -132,10 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e036a47f9f6bb4aa7937ec351f8121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 6478924803434540297}
-  myKillZone: {fileID: 0}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 5
   durationTime: 3
+  radarTrigger: {fileID: 6478924803434540297}
+  explosionForce: 15
+  explosionPos: {fileID: 801131595405873476}
+  explosionRadius: 3
   projectilePos:
   - {fileID: 2623276466465209901}
   - {fileID: 2742353835684753671}
@@ -146,9 +150,6 @@ MonoBehaviour:
   - {fileID: 6447925388501994539}
   projectilePrefab: {fileID: 4219826507680822496, guid: 4155765c86707e9409d804204fe92455,
     type: 3}
-  explosionRadius: 3
-  explosionForce: 15
-  explosionPos: {fileID: 801131595405873476}
 --- !u!1 &4407710880807509189
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +759,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,6 +783,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Projectile Trap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -843,7 +854,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c6f1e609c6ac64f4a8a460f8fb2f956a, type: 3}
 --- !u!1 &294765198857436210 stripped
 GameObject:

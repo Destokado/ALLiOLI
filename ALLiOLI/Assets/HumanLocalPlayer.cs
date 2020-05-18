@@ -157,7 +157,9 @@ public class HumanLocalPlayer : MonoBehaviour
         switch (currentState)
         {
             case Battle battle:
-                Player.CmdActivateTrap(ownedTraps.GetBestTrapToActivate(Player).netId);
+                Trap bestTrapToActivate = ownedTraps.GetBestTrapToActivate(Player);
+                if (bestTrapToActivate != null)
+                    Player.CmdActivateTrap(bestTrapToActivate.netId);
                 break;
             case TrapUp trapUp:
                 SetUpTrapInFront();

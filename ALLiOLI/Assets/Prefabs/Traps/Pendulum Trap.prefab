@@ -345,9 +345,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f0a44a9549f8f4ca4062524b289b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 4638663025538229398}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 10
   durationTime: 3
+  radarTrigger: {fileID: 4638663025538229398}
   ball: {fileID: 7724252859047401175}
 --- !u!1 &5151589921574834449
 GameObject:
@@ -467,6 +469,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -477,6 +484,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pendulum Trap
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 216278908659032404}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.x

@@ -17,10 +17,9 @@ public class AlfombraTrap : Trap
         animManager.Play(0);
     }
 
-    [ClientRpc]
-    public override void RpcActivate()
+    public override void Activate()
     {
-        base.RpcActivate();
+        base.Activate();
         animManager.GetAnimation(0).mirror = false;
         animManager.Play(0);
     }

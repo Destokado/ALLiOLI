@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b769d2a774c206e4caf3de374e50af21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 7625213374966671918}
-  myKillZone: {fileID: 0}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 5
   durationTime: 3
+  radarTrigger: {fileID: 7625213374966671918}
   numberOfTubes: 10
-  timeBetweenTubeSpanws: 0.25
-  tubeSpeed: 20
   spawnPos: {fileID: 1543691916284427649}
+  timeBetweenTubeSpanws: 0.25
   tubePrefab: {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79,
     type: 3}
+  tubeSpeed: 20
 --- !u!1 &4138392776361908775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,6 +1150,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1169,6 +1175,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RollingTubes Trap
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 8440405799783379036}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.x

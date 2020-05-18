@@ -568,9 +568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbbf12fbe6dcc144925509736dd8169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radarTrigger: {fileID: 2109852728291271529}
+  syncMode: 0
+  syncInterval: 0.1
   cooldownTime: 2
   durationTime: 3
+  radarTrigger: {fileID: 2109852728291271529}
 --- !u!114 &7080646428410072636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,9 +624,6 @@ MonoBehaviour:
         transformToAnimate: {fileID: 7396058972905197443}
         originTransform: {fileID: 4687059831284954676}
         destinationTransform: {fileID: 3717879021502984916}
-        move: 1
-        rotate: 1
-        scale: 1
 --- !u!1 &8978109305051019208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,6 +1743,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 336801222149163571, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1764,6 +1768,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Window Trap
       objectReference: {fileID: 0}
+    - target: {fileID: 4321196041237724576, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 7396058972905197443}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.z
