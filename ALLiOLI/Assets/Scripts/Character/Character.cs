@@ -7,6 +7,7 @@ using UnityEngine;
 public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
+    [SerializeField] public Transform interactionRayOrigin;
 
     [HideInInspector] public Flag flag;
     [SerializeField] public Transform flagPosition;
@@ -45,7 +46,8 @@ public class Character : NetworkBehaviour
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
 
-    public void Die(Vector3 impact, Vector3 impactPoint)
+    [ClientRpc]
+    public void RpcDie(Vector3 impact, Vector3 impactPoint)
     {
         if (!isDead)
             StartCoroutine(DieCoroutine(impact, impactPoint));
@@ -53,6 +55,7 @@ public class Character : NetworkBehaviour
 
     private IEnumerator DieCoroutine(Vector3 impact, Vector3 impactPoint)
     {
+        Debug.Log("CHAR DYING: " + gameObject.name);
         isDead = true;
         if (flag != null) flag.Detach();
         movementController.enabled = false;
@@ -63,13 +66,13 @@ public class Character : NetworkBehaviour
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.5f);
-
-        //TODO: Respawn
-        //Owner.CmdSpawnNewCharacter();
+        
+        if (hasAuthority)
+            Owner.CmdSpawnNewCharacter();
     }
 
     public void Suicide()
     {
-        Die(Vector3.up+transform.forward*2, transform.position+Vector3.up);
+        RpcDie(Vector3.up+transform.forward*2, transform.position+Vector3.up);
     }
 }
