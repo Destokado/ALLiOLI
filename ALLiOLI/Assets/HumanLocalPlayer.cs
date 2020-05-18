@@ -62,6 +62,7 @@ public class HumanLocalPlayer : MonoBehaviour
             if (_camera == null)
             {
                 _camera = PlayerInput.camera.gameObject.GetComponentRequired<CmCamera>();
+                _camera.HumanLocalPlayer = this;
             }
 
             return _camera;
@@ -71,6 +72,8 @@ public class HumanLocalPlayer : MonoBehaviour
 
     // ReSharper disable once InconsistentNaming
     private CmCamera _camera;
+    
+    public Vector2 cameraMovement;
 
     /// <summary>
     /// The maximum distance at which a trap can be to the character so the player can interact with it. // TODO: ensure if the distance id from the character or the camera
@@ -95,15 +98,14 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private Trap _trapInFront;
     private GameObject lastObjectInFront;
-
+    
     public TrapManager ownedTraps { get; private set; }
     public int maxOwnableTraps => 50 / GameManager.TotalPlayers;
 
     private void Awake()
     {
         inputsWaitingForPlayers.Add(this);
-        int layer = Client.localClient.PlayersManager.players.Count + 10;
-        Camera.SetLayer(layer, PlayerInput.camera);
+        Camera.SetLayer(Client.localClient.PlayersManager.players.Count + 10, PlayerInput.camera);
         ownedTraps = new TrapManager();
         SetDynamicName();
     }
@@ -175,7 +177,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnCameraMove(InputValue value)
     {
         if (Player == null) return;
-        Camera.cameraMovement = value.Get<Vector2>();
+        cameraMovement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
