@@ -12,25 +12,25 @@ public class KillZone : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-//        Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
-        
-        if (rigidbody)
-        {
-            if (rigidbody.velocity.magnitude < minimumVelocityToKill)
-            {
-                Character chr = other.collider.GetComponentInParent<Character>();
-                if (!chr || chr.isDead)  return;
-                Debug.Log(chr.name + " avoided being killed by" + transform.gameObject.name + "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)", gameObject);
-                return;
-            }
-        }
+        // Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
 
         Character character = other.collider.GetComponentInParent<Character>();
         if (!character || character.isDead) 
             return;
-        
-        character.Die(other.impulse, other.GetContact(0).point);
 
+        if (rigidbody)
+        {
+            if (rigidbody.velocity.magnitude < minimumVelocityToKill)
+            {
+                if (!character || character.isDead)  return;
+                Debug.Log(character.name + " avoided being killed by" + transform.gameObject.name + "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)", gameObject);
+                return;
+            }
+        }
+
+        character.RpcDie(other.impulse, other.GetContact(0).point);
+
+        // Print log of the kill
         string additionalReport = rigidbody? "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)" : "";
         Debug.Log(character.name + " was killed by" + transform.gameObject.name + additionalReport, gameObject);
     }
