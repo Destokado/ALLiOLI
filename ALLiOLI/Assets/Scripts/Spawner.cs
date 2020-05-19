@@ -39,9 +39,11 @@ public class Spawner : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isServer)
+            return;
+        
         Character character = other.GetComponent<Character>();
         if (character && character.flag)
-            return; // TODO: finish match
-        //MatchManager.Instance.MatchFinished(character.owner);
+            MatchManager.Instance.FlagAtSpawn(character.Owner);
     }
 }

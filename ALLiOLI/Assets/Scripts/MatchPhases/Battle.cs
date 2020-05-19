@@ -2,6 +2,8 @@
 
 public class Battle : MatchPhase
 {
+    private MatchPhase matchPhaseImplementation;
+
     public override string informativeText
     {
         get => "Bring the flag to the spawn point.";
@@ -30,6 +32,10 @@ public class Battle : MatchPhase
     {
         Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");
         //MatchManager.Instance.KillActiveCharacters();
+    }
+
+    public override void ServerStartState()
+    {
         FlagSpawner.Instance.Spawn();
     }
 
@@ -39,8 +45,9 @@ public class Battle : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.winnerPlayer == null)
+        if (!MatchManager.Instance.ThereIsWinner)
             return this;
+        
         return new End();
     }
 

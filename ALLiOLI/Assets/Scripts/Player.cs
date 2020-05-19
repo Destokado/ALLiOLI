@@ -112,7 +112,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            gameObject.name = customName + " - No Input stream";
+            gameObject.name = customName + " - Controlled remotely";
         }
 
         HumanLocalPlayer = tempHumanLocalPlayer;

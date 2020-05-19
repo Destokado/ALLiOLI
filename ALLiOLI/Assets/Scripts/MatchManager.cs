@@ -13,10 +13,12 @@ public class MatchManager : NetworkBehaviour
     {
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
-    public MatchPhase currentPhase { get; private set; }
+    public MatchPhase CurrentPhase { get; private set; }
     private TrapManager allTraps = new TrapManager();
-    [SerializeField] public MatchGuiManager guiManager;
-    public float matchTimer
+    [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
+
+
+    public float MatchTimer
     {
         get => _matchTimer;
         set
@@ -27,7 +29,14 @@ public class MatchManager : NetworkBehaviour
     }
 
     public static MatchManager Instance { get; private set; }
-    public Player winnerPlayer { get; private set; }
+    
+    public bool ThereIsWinner => WinnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
+    [field: SyncVar(hook = nameof(UpdatedWinner))] public uint WinnerPlayerNetId { get; private set; }
+    private void UpdatedWinner(uint oldId, uint newId) {
+        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newId);
+        Debug.Log("Got the winner id: " + WinnerPlayerNetId + ". So, is there a winner? " + ThereIsWinner + ", and it is " + (winner != null? winner.gameObject.name : "NULL"));
+        guiManager.UpdateEndScreen();
+    }
 
     private void Awake()
     {
@@ -56,15 +65,15 @@ public class MatchManager : NetworkBehaviour
         if (isServer)
             UpdateServer();
         
-        currentPhase?.UpdateState(Time.deltaTime);
+        CurrentPhase?.UpdateState(Time.deltaTime);
     }
 
     [Server]
     private void UpdateServer()
     {
-        State nextPhase = currentPhase?.GetCurrentState();
+        State nextPhase = CurrentPhase?.GetCurrentState();
         
-        if (currentPhase != nextPhase)
+        if (CurrentPhase != nextPhase)
             BroadcastNewMatchPhase((MatchPhase) nextPhase);
     }
     
@@ -81,15 +90,21 @@ public class MatchManager : NetworkBehaviour
         if (isServer)
             SetAllPlayersAsNotReady();
 
-        currentPhase?.EndState();
-        currentPhase = newPhase;
-        currentPhase?.StartState();
+        CurrentPhase?.EndState();
+        
+        CurrentPhase = newPhase;
+        
+        if (CurrentPhase == null)
+            return;
+        
+        CurrentPhase.StartState();
+        if (isServer) CurrentPhase.ServerStartState();
 
-        guiManager.SetupForCurrentPhase();
+        guiManager.SetupForCurrentPhase(); // General GUI
 
         foreach (Client client in GameManager.singleton.clients)
             foreach (Player player in client.PlayersManager.players)
-                player.SetupForCurrentPhase();
+                player.SetupForCurrentPhase(); // Player's UI
     }
     
     [Server]
@@ -102,31 +117,20 @@ public class MatchManager : NetworkBehaviour
             player.isReady = false;
         }
     }
+    
+    [Server]
+    public void FlagAtSpawn(Player carrier)
+    {
+        if (ThereIsWinner)
+            return;
+        
+        WinnerPlayerNetId = carrier.netId;
+    }
 
     /*[Command]
     public void CmdActivateTrap(Trap trap)
     {
         trap.RpcActivate();
-    }*/
-
-
-    /*public bool AreAllPlayersReady()
-    {
-        foreach (Client client in GameManager.singleton.clients)
-        {
-            HashSet<Player> players = client.playerManager.players;
-            if (players == null || players.Count <= 0) return false;
-            if (!players.All(player => player.isReady)) return false;
-        }
-
-        return true;
-    }*/
-    
-    /*public void MatchFinished(Player winner)
-    {
-        winnerPlayer = winner;
-        Debug.Log(winner.gameObject.name + "won");
-        guiManager.ShowEndScreen(winner.gameObject.name);
     }*/
 
     /*public void KillActiveCharacters()

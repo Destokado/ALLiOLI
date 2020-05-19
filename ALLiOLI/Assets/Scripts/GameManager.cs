@@ -33,4 +33,10 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
+
+    public void SetCursorMode(bool inGame)
+    {
+        Cursor.visible = !inGame;
+        Cursor.lockState = inGame? CursorLockMode.Locked : CursorLockMode.None;
+    }
 }

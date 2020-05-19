@@ -86,13 +86,13 @@ public class CharacterMovementController : NetworkBehaviour
     {
         //TODO: Remove if no errors are detected in a lon-term testing
         if (Character == null)
-            Debug.LogWarning("Character is null");
+            Debug.LogWarning("Character is null for " + gameObject.name, gameObject);
         if (Character.Owner == null)
-            Debug.LogWarning("Character.Owner");
+            Debug.LogWarning("Character.Owner is null for " + gameObject.name, gameObject);
         if (Character.Owner.HumanLocalPlayer == null)
-            Debug.LogWarning("Character.Owner.HumanLocalPlayer");
+            Debug.LogWarning("Character.Owner.HumanLocalPlayer is null for " + gameObject.name, gameObject);
         if (Character.Owner.HumanLocalPlayer.Camera == null)
-            Debug.LogWarning("Character.Owner.HumanLocalPlayer.Camera is null");
+            Debug.LogWarning("Character.Owner.HumanLocalPlayer.Camera is null is null for " + gameObject.name, gameObject);
         
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection = Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);

@@ -1,7 +1,11 @@
-﻿public abstract class MatchPhase : State
+﻿using Mirror;
+
+public abstract class MatchPhase : State
 {
     public abstract string informativeText { get; protected set; }
     public abstract bool showTrapsCounter { get; protected set; }
     public abstract bool showReadiness { get; protected set; }
     public abstract bool showMatchTimer { get; protected set; }
+    [Server]
+    public abstract void ServerStartState();
 }

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Mirror;
+using TMPro;
 using UnityEngine;
 
 public class MatchGuiManager : MonoBehaviour
@@ -24,14 +25,18 @@ public class MatchGuiManager : MonoBehaviour
 
     public void SetupForCurrentPhase()
     {
-        MatchPhase curPhase = MatchManager.Instance.currentPhase;
+        MatchPhase curPhase = MatchManager.Instance.CurrentPhase;
         matchTimerGameObject.SetActive(curPhase != null && curPhase.showMatchTimer);
         matchInformativeText.SetText(curPhase != null ? curPhase.informativeText : "");
     }
 
-    public void ShowEndScreen(string winner)
+    public void UpdateEndScreen(bool forceSetActive = false)
     {
-        endScreen.SetActive(true);
-        endScreenText.SetText("The winner is" + winner + "!");
+        if (forceSetActive)
+            endScreen.SetActive(true);
+        
+        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(MatchManager.Instance.WinnerPlayerNetId);
+        string winnerName = winner != null ? winner.gameObject.name : "NULL";
+        endScreenText.SetText("The winner is" + winnerName + "!");
     }
 }

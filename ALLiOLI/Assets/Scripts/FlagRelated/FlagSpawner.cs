@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class FlagSpawner : MonoBehaviour
+public class FlagSpawner : NetworkBehaviour
 {
     [SerializeField] private Transform[] flagPositions;
     [SerializeField] private GameObject flagPrefab;
@@ -32,6 +33,7 @@ public class FlagSpawner : MonoBehaviour
         if (flag != null) Destroy(flag);
         Vector3 spawnPos = flagPositions[rng.GetRandomInt(0, flagPositions.Length)].position;
         flag = Instantiate(flagPrefab, spawnPos, Quaternion.identity);
-        Debug.Log("The flag has spawn at:" + spawnPos);
+        NetworkServer.Spawn(flag);
+        Debug.Log("The flag has spawn at:" + spawnPos, flag);
     }
 }

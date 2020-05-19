@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using UnityEngine;
 
 public class AllIOliNetworkManager : NetworkManager
 {
@@ -22,5 +23,14 @@ public class AllIOliNetworkManager : NetworkManager
     {
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
+    }
+    
+    public Player GetPlayer(uint playerNetId)
+    {
+        if (NetworkIdentity.spawned.ContainsKey(playerNetId))
+            return NetworkIdentity.spawned[playerNetId].gameObject.GetComponent<Player>();
+        
+        Debug.LogWarning("Player with NetId " + playerNetId + " not found.");
+        return null;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 public class End : MatchPhase
 {
@@ -25,11 +26,14 @@ public class End : MatchPhase
         get => false;
         protected set { }
     }
-
+    
     public override void StartState()
     {
-        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished");
+        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished.\nThe winner is " + MatchManager.Instance.WinnerPlayerNetId);
+        MatchManager.Instance.guiManager.UpdateEndScreen(true);
     }
+    
+    public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
