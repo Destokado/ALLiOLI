@@ -30,7 +30,7 @@ public class Spawner : NetworkBehaviour
         EasyRandom random = new EasyRandom();
         Vector3 spawnPoint = new Vector3(transform.position.x + random.GetRandomFloat(-2, 2), transform.position.y,
             transform.position.z + random.GetRandomFloat(-2, 2));
-        
+
         GameObject character = Instantiate(prefab, spawnPoint, Quaternion.identity);
         character.GetComponent<Character>().PlayerSpawnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);

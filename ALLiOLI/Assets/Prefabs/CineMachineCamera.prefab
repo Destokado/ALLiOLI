@@ -101,8 +101,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: -0.827068, y: -0.115974516, z: 0.11184626, w: 0.5385155}
-  m_LocalPosition: {x: -5550.4917, y: -11119.909, z: -93511.664}
+  m_LocalRotation: {x: 0.10531206, y: -0.009944801, z: 0.0010532177, w: 0.99438894}
+  m_LocalPosition: {x: 1671.8733, y: -863.2505, z: -753.2385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeLook: {fileID: 3397914554968537729}
+  cinemachineBrain: {fileID: 2985370262938075103}
 --- !u!1 &2721110667293758037
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +884,7 @@ MonoBehaviour:
   m_YAxisRecentering:
     m_enabled: 1
     m_WaitTime: 1
-    m_RecenteringTime: 2
+    m_RecenteringTime: 1
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
@@ -911,7 +912,7 @@ MonoBehaviour:
   m_RecenterToTargetHeading:
     m_enabled: 1
     m_WaitTime: 1
-    m_RecenteringTime: 2
+    m_RecenteringTime: 1
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_BindingMode: 4
