@@ -19,26 +19,19 @@ public class Character : NetworkBehaviour
             _owner = value;
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
+            transform.SetParent(value.transform);
         }
     }
     private Player _owner;
-
-    [field: SyncVar(hook = nameof(SetPlayerSpawnerAsOwner))]
-    public uint PlayerSpawnerNetId { get; set; }
 
     public bool isDead { get; private set; }
     
     public CharacterMovementController movementController { get; private set; }
 
-    private void SetPlayerSpawnerAsOwner(uint oldPlayerNetId, uint newPlayerNetId)
-    {
-        if (!NetworkIdentity.spawned.ContainsKey(newPlayerNetId))
-        {
-            Debug.LogWarning("Player spawner with NetId " + newPlayerNetId + " not found.");
-            return;
-        }
-        
-        Owner = NetworkIdentity.spawned[newPlayerNetId].gameObject.GetComponent<Player>();
+    [field: SyncVar(hook = nameof(SetNewPlayerOwner))]
+    public uint OwnerNetId { get; set; }
+    private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId) {
+        Owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
     }
 
     private void Awake()

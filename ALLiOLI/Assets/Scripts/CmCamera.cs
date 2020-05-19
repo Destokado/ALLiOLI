@@ -72,7 +72,7 @@ public class CmCamera : MonoBehaviour
     }
 
 
-    public void SetTarget(Transform target, Transform follow)
+    public void SetTargetWithCinematics(Transform target, Transform follow)
     {
         if (!initialized)
         {

@@ -20,12 +20,8 @@ public class Spawner : NetworkBehaviour
         }
     }
 
-    /*public void Spawn(GameObject prefab, uint netId)
-    {
-        CmdSpawn(prefab, netId);
-    }*/
 
-
+    [Server]
     public void Spawn(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
     {
         EasyRandom random = new EasyRandom();
@@ -33,7 +29,7 @@ public class Spawner : NetworkBehaviour
             transform.position.z + random.GetRandomFloat(-2, 2));
 
         GameObject character = Instantiate(prefab, spawnPoint, spawnRotation.rotation);
-        character.GetComponent<Character>().PlayerSpawnerNetId = playerOwnerNetId;
+        character.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);
     }
 

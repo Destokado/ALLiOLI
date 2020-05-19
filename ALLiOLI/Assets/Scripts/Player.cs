@@ -21,14 +21,14 @@ public class Player : NetworkBehaviour
         set {
             _character = value;
             if (IsControlledLocally)
-                HumanLocalPlayer.Camera.SetTarget(value.cameraTarget,value.cameraTarget);
+                HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget,value.cameraTarget);
         }
     }
     // ReSharper disable once InconsistentNaming
     private Character _character;
 
     /// <summary>
-    /// The color that identifies the character.
+    /// The color that identifies the player and their characters.
     /// </summary>
     [field: SyncVar(hook = nameof(SetColor))]
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
@@ -41,25 +41,25 @@ public class Player : NetworkBehaviour
     /// <param name="newColor">The new color.</param>
     private void SetColor(Color oldColor, Color newColor)
     {
-        if (humanLocalPlayer)
-            humanLocalPlayer.playerGui.SetColor(newColor);
+        if (HumanLocalPlayer)
+            HumanLocalPlayer.playerGui.SetColor(newColor);
     }
 
     /// <summary>
     /// If the player is "ready" or if it is not.
     /// </summary>
-    [field: SyncVar(hook = nameof(SetReady))]
+    [field: SyncVar(hook = nameof(SetReadyOnGUI))]
     public bool isReady;
 
     /// <summary>
-    /// Updates the color in the playerGUI if it is a player with a humanLocalPlayer.
+    /// Updates the playerGUI (if it is a player with a humanLocalPlayer).
     /// </summary>
     /// <param name="oldValue">The old state of readiness for the player.</param>
     /// <param name="newValue">The new state of readiness for the player.</param>
-    private void SetReady(bool oldValue, bool newValue)
+    private void SetReadyOnGUI(bool oldValue, bool newValue)
     {
-        if (humanLocalPlayer)
-            humanLocalPlayer.playerGui.ShowReadiness(newValue);
+        if (HumanLocalPlayer)
+            HumanLocalPlayer.playerGui.ShowReadiness(newValue);
     }
 
     /// <summary>
@@ -69,25 +69,33 @@ public class Player : NetworkBehaviour
     /// </summary>
     public HumanLocalPlayer HumanLocalPlayer
     {
-        get => humanLocalPlayer;
-        private set
+        get => _humanLocalPlayer;
+        /*private*/ set
         {
-            if (HumanLocalPlayer != null) // TODO: add whenever is needed to ensure consistency
+            if (HumanLocalPlayer != null) // TODO: add this same check (HumanLocalPlayer != null) whenever is needed to ensure consistency
             {
-                Debug.LogWarning("Trying to change the humanLocalPlayer of a Player. Operation cancelled");
+                Debug.LogWarning("Trying to change the humanLocalPlayer of a Player. Operation cancelled.");
                 return;
             }
             
-            humanLocalPlayer = value;
+            _humanLocalPlayer = value;
             if (value != null)
             {
-                humanLocalPlayer.Player = this;
+                _humanLocalPlayer.Player = this;
                 HumanLocalPlayer.localPlayerNumber = Client.localClient.PlayersManager.players.Count;
             }
         }
     }
+    private HumanLocalPlayer _humanLocalPlayer;
 
-    private HumanLocalPlayer humanLocalPlayer;
+
+    [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
+    public int idOfHumanLocalPlayer;
+    private void NewIdOfHumanLocalPlayer(int oldVal, int newVal)
+    {
+        if (oldVal != 0)
+            Debug.LogWarning("Trying to change the idOfHumanLocalPlayer of a Player. It shouldn't be done.");
+    }
 
     /// <summary>
     /// If the player is controlled by a human in this machine (locally).
@@ -102,18 +110,21 @@ public class Player : NetworkBehaviour
         string customName = "Player " + GameManager.TotalPlayers;
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
-        var tempHumanLocalPlayer = HumanLocalPlayer.inputsWaitingForPlayers.Count > 0
-            ? HumanLocalPlayer.inputsWaitingForPlayers[0]
-            : null;
+        HumanLocalPlayer tempHumanLocalPlayer = null;
+        
+        HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
+        foreach (HumanLocalPlayer human in allHumans)
+        {
+            if (human.id == idOfHumanLocalPlayer)
+                tempHumanLocalPlayer = human;
+            
+            // Debug.Log(GetInstanceID() + " SEARCHING HUMAN with id " + human.id + ". Player is looking for id " + idOfHumanLocalPlayer + ". Is it a match? " + (human.id == idOfHumanLocalPlayer));
+        }
 
         if (tempHumanLocalPlayer != null) // If the player is controller locally
-        {
             gameObject.name = customName + " - Input by " + tempHumanLocalPlayer.PlayerInput.user.controlScheme;
-        }
         else
-        {
             gameObject.name = customName + " - Controlled remotely";
-        }
 
         HumanLocalPlayer = tempHumanLocalPlayer;
 
@@ -138,8 +149,8 @@ public class Player : NetworkBehaviour
 
     public void SetupForCurrentPhase()
     {
-        if (humanLocalPlayer != null)
-            humanLocalPlayer.SetupForCurrentPhase();
+        if (HumanLocalPlayer != null)
+            HumanLocalPlayer.SetupForCurrentPhase();
     }
 
     [Command]

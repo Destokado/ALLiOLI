@@ -2,17 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
 public class HumanLocalPlayer : MonoBehaviour
 {
+    public int id
+    {
+        get
+        {
+            if (_id == 0)
+            {
+                _id = UnityEngine.Random.Range(0, int.MaxValue);
+            }
+            return _id;
+        }
+        private set { _id = value; }
+    }
+
+    private int _id = 0;
+
     /// <summary>
     /// Gui that displays the information that is only useful to the player itself.
     /// </summary>
     [SerializeField] public PlayerGuiManager playerGui;
 
-    public static readonly List<HumanLocalPlayer> inputsWaitingForPlayers = new List<HumanLocalPlayer>();
+    //public static readonly List<HumanLocalPlayer> inputsWaitingForPlayers = new List<HumanLocalPlayer>();
 
     public Player Player
     {
@@ -26,8 +42,8 @@ public class HumanLocalPlayer : MonoBehaviour
             else
             {
                 _player = value;
-                if (value == null) inputsWaitingForPlayers.Add(this);
-                else inputsWaitingForPlayers.Remove(this);
+                //if (value == null) inputsWaitingForPlayers.Add(this);
+                //else inputsWaitingForPlayers.Remove(this);
             }
 
             SetDynamicName();
@@ -106,7 +122,7 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private void Awake()
     {
-        inputsWaitingForPlayers.Add(this);
+        //inputsWaitingForPlayers.Add(this);
         ownedTraps = new TrapManager();
         // SetDynamicName();
     }
@@ -115,9 +131,12 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         string newName;
         if (Player == null)
-            newName = "HumanLocalPlayer of Unknown Player";
+            newName = "HumanLocalPlayer " + id + " of Unknown Player - ERROR";
         else
-            newName = "HumanLocalPlayer of " + Player.name;
+        {
+            newName = "HumanLocalPlayer " + id + " of " + Player.name;
+            transform.SetParent(Player.transform);
+        }
 
         gameObject.name = newName;
     }

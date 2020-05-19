@@ -38,21 +38,12 @@ public class PlayersManager : NetworkBehaviour
     /// <summary>
     /// New input/player detected in the local client.
     /// </summary>
-    /// <param name="playerInput">The PlayerInput component of the new player/input instantiated.</param>
+    /// <param name="playerInput">The PlayerInput component of the new HumanLocalPlayer gameObject automatically instantiated.</param>
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        Debug.Log("Player " + playerInput.playerIndex + " joined with input device: " + playerInput.devices[0], playerInput.gameObject);
-        
-        /*Player player = playerInput.GetComponent<Player>();
-        players.Add(player);
-        player.Setup(GameManager.singleton.playerColors[playerInput.playerIndex]);
-
-        MatchManager.Instance.SetAllPlayersAsNotReady();*/
-
-        //playerInput.GetComponent<Player>().ownerNetId = Client.localClient.netId;
-        //NetworkServer.Spawn(playerInput.gameObject, Client.localClient.connectionToClient);
-        
-        CmdSpawnNewPlayer();
+        int id = playerInput.GetComponent<HumanLocalPlayer>().id;
+        Debug.Log("Local player with local number " + playerInput.playerIndex + " and HumanLocalPlayer id '" + id + "' joined with input device: " + playerInput.devices[0], playerInput.gameObject);
+        CmdSpawnNewPlayer(id);
     }
 
     /// <summary>
@@ -60,11 +51,12 @@ public class PlayersManager : NetworkBehaviour
     /// <para>Command: Called from a client and run on the server.</para>
     /// </summary>
     /// <param name="playerPrefab">The prefab to spawn on all clients.</param>
-    [Command]
-    private void CmdSpawnNewPlayer()
+    [Command] // Called form a client, run on the SERVER
+    private void CmdSpawnNewPlayer(int HumanLocalPlayerId)
     {
-        GameObject player = Instantiate(playerPrefab);
-        NetworkServer.Spawn(player, connectionToClient); //connectionToClient = The player calling this command
+        GameObject instantiatedPlayer = Instantiate(playerPrefab);
+        instantiatedPlayer.GetComponentRequired<Player>().idOfHumanLocalPlayer = HumanLocalPlayerId;
+        NetworkServer.Spawn(instantiatedPlayer, connectionToClient); //connectionToClient = The player calling this command
     }
 
     /// <summary>
