@@ -77,20 +77,22 @@ public class CmCamera : MonoBehaviour
         }
         else
         {
-            freeLook.Priority = 9;
-            StartCoroutine(Wait(target, follow));
+            StartCoroutine(ReSetCamera(target, follow));
         }
     }
 
-    private IEnumerator Wait(Transform target, Transform follow)
+    private IEnumerator ReSetCamera(Transform target, Transform follow)
     {
+        freeLook.Priority = 1;
+        
         yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
-        freeLook.Priority = 10;
-
+        
         freeLook.Follow = follow;
         freeLook.LookAt = target;
-        freeLook.m_YAxisRecentering
-            .RecenterNow(); //TODO: DoRecenter instead? so the recenter time in the inspector is separated from this one
+        freeLook.Priority = 10;
+        
+        //TODO: DoRecenter instead? so the recenter time in the inspector is separated from this one
+        freeLook.m_YAxisRecentering.RecenterNow(); 
         freeLook.m_RecenterToTargetHeading.RecenterNow();
     }
 

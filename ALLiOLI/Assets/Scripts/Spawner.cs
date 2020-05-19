@@ -4,6 +4,7 @@ using UnityEngine;
 public class Spawner : NetworkBehaviour
 {
     public static Spawner Instance { get; private set; }
+    [SerializeField] private Transform spawnRotation;
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class Spawner : NetworkBehaviour
         Vector3 spawnPoint = new Vector3(transform.position.x + random.GetRandomFloat(-2, 2), transform.position.y,
             transform.position.z + random.GetRandomFloat(-2, 2));
 
-        GameObject character = Instantiate(prefab, spawnPoint, Quaternion.identity);
+        GameObject character = Instantiate(prefab, spawnPoint, spawnRotation.rotation);
         character.GetComponent<Character>().PlayerSpawnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);
     }
