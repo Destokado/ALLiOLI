@@ -1,8 +1,12 @@
 ﻿using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AllIOliNetworkManager : NetworkManager
 {
+    
+    [SerializeField] private Object disconnectionFromServerScene;
+    
     // When a player/client is connected
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -24,7 +28,16 @@ public class AllIOliNetworkManager : NetworkManager
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
     }
-    
+
+    // Called on clients when disconnected form a server
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        base.OnClientDisconnect(conn);
+        
+        Debug.Log("Loading scene " + disconnectionFromServerScene.name);
+        SceneManager.LoadScene(disconnectionFromServerScene.name, LoadSceneMode.Single);
+    }
+
     // Be aware: can return null if "Player" component is not found or if the GameObject with given NetId is not found
     public Player GetPlayer(uint playerNetId)
     {
