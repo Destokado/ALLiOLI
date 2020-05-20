@@ -9,7 +9,7 @@ public class KillZone : MonoBehaviour
     [SerializeField] public new Rigidbody rigidbody;
     [Tooltip("Not mandatory")]
     [SerializeField] private float minimumVelocityToKill = 0.75f;
-
+    
     private void OnCollisionEnter(Collision other)
     {
         // Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);

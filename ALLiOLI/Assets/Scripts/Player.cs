@@ -21,7 +21,11 @@ public class Player : NetworkBehaviour
         set {
             _character = value;
             if (IsControlledLocally)
-                HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget,value.cameraTarget);
+            {
+                float blendingTime = HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget,value.cameraTarget);
+                HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
+            }
+                
         }
     }
     // ReSharper disable once InconsistentNaming

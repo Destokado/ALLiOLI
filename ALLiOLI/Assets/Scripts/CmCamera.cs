@@ -72,25 +72,28 @@ public class CmCamera : MonoBehaviour
     }
 
 
-    public void SetTargetWithCinematics(Transform target, Transform follow)
+    public float SetTargetWithCinematics(Transform target, Transform follow)
     {
         if (!initialized)
         {
             freeLook.Follow = follow;
             freeLook.LookAt = target;
             initialized = true;
+            return 0f;
         }
         else
         {
-            StartCoroutine(ReSetCamera(target, follow));
+            float blendingTime = cinemachineBrain.m_DefaultBlend.m_Time;
+            StartCoroutine(ReSetCamera(target, follow, blendingTime));
+            return blendingTime;
         }
     }
 
-    private IEnumerator ReSetCamera(Transform target, Transform follow)
+    private IEnumerator ReSetCamera(Transform target, Transform follow, float blendingTime)
     {
         freeLook.Priority = 1;
         
-        yield return new WaitForSeconds(cinemachineBrain.m_DefaultBlend.m_Time);
+        yield return new WaitForSeconds(blendingTime);
         
         freeLook.Follow = follow;
         freeLook.LookAt = target;

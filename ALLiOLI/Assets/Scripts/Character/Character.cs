@@ -64,8 +64,15 @@ public class Character : NetworkBehaviour
             Owner.CmdSpawnNewCharacter();
     }
 
+    [Client]
     public void Suicide()
     {
-        RpcDie(Vector3.up+transform.forward*2, transform.position+Vector3.up);
+        CmdServerSuicide();
+    }
+
+    [Command]
+    private void CmdServerSuicide()
+    {
+        RpcDie(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
     }
 }

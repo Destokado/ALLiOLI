@@ -193,6 +193,24 @@ public class HumanLocalPlayer : MonoBehaviour
 
     #region input
 
+    public void DisablePlayerInputDuring(float time)
+    {
+        CancelInvoke(nameof(EnablePlayerInput));
+        if (time <= 0)
+        {
+            EnablePlayerInput();
+            return;
+        }
+        PlayerInput.DeactivateInput();
+        Invoke(nameof(EnablePlayerInput), time);
+    }
+
+    public void EnablePlayerInput()
+    {
+        PlayerInput.ActivateInput();
+        CancelInvoke(nameof(EnablePlayerInput));
+    }
+
     private void OnCameraMove(InputValue value)
     {
         if (Player == null) return;
