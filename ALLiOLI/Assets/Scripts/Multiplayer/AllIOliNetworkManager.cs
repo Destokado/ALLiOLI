@@ -6,7 +6,8 @@ public class AllIOliNetworkManager : NetworkManager
 {
     
     [SerializeField] private Object disconnectionFromServerScene;
-    
+    public string nameOfDisconnectionFromServerScene => disconnectionFromServerScene.name;
+
     // When a player/client is connected
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -34,8 +35,7 @@ public class AllIOliNetworkManager : NetworkManager
     {
         base.OnClientDisconnect(conn);
         
-        Debug.Log("Loading scene " + disconnectionFromServerScene.name);
-        SceneManager.LoadScene(disconnectionFromServerScene.name, LoadSceneMode.Single);
+        GameManager.singleton.ExitGame();
     }
 
     // Be aware: can return null if "Player" component is not found or if the GameObject with given NetId is not found

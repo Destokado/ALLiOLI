@@ -47,6 +47,7 @@ public class LobbyManager : NetworkBehaviour
     [Server]
     public void StartMatch()
     {
+        //Client.localClient
         isVisible = false;
         MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }

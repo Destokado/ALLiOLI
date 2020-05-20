@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchGuiManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MatchGuiManager : MonoBehaviour
     [SerializeField] private TMP_Text matchTimer;
 
     [SerializeField] private GameObject matchTimerGameObject;
+    
+    [SerializeField] private Object landingScene;
 
     public void SetTimer(float timeInSeconds)
     {
@@ -37,6 +40,12 @@ public class MatchGuiManager : MonoBehaviour
         
         Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(MatchManager.Instance.WinnerPlayerNetId);
         string winnerName = winner != null ? winner.gameObject.name : "NULL";
-        endScreenText.SetText("The winner is" + winnerName + "!");
+        endScreenText.SetText("The winner is " + winnerName + "!");
     }
+
+    public void GoToLandingScene()
+    {
+        GameManager.singleton.ExitGame();
+    }
+    
 }

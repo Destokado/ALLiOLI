@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuManager : MonoBehaviour
+public class LandingSceneManager : MonoBehaviour
 {
-    public static MainMenuManager singleton { get; private set; }
+    public static LandingSceneManager singleton { get; private set; }
     [SerializeField] private Object matchScene;
 
     private void Awake()
