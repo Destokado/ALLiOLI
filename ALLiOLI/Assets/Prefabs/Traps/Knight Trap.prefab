@@ -50,6 +50,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6780891685123019070
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058953009525080396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4751271, y: 0.4468472, z: 1.4140637}
+  m_Center: {x: -0.06109619, y: 1.1069206, z: 0.2214328}
+--- !u!65 &8835192782584610970
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058953009525080396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21888323, y: 2.0205667, z: 0.17239274}
+  m_Center: {x: -0.046375833, y: -0.13128531, z: 0.0091597475}
 --- !u!59 &7119677910924965065
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -99,32 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 4412940234503031929}
   minimumVelocityToKill: 0.7
---- !u!65 &8835192782584610970
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058953009525080396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.21888323, y: 2.0205667, z: 0.17239274}
-  m_Center: {x: -0.046375833, y: -0.13128531, z: 0.0091597475}
---- !u!65 &6780891685123019070
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058953009525080396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4751271, y: 0.4468472, z: 1.4140637}
-  m_Center: {x: -0.06109619, y: 1.1069206, z: 0.2214328}
 --- !u!1001 &6272939685545358129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -491,6 +491,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: b91f5f669e3034d429f9ee200bcc0495,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cd71291c91c8cce499cb663b5db9970e, type: 2}
     - target: {fileID: -927199367670048503, guid: b91f5f669e3034d429f9ee200bcc0495,
         type: 3}
       propertyPath: m_Name
@@ -581,6 +586,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: f1cb97ac52997824cba5017af5eb0e71,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0427cf339e5891468d5f2b433b2d44a, type: 2}
     - target: {fileID: -927199367670048503, guid: f1cb97ac52997824cba5017af5eb0e71,
         type: 3}
       propertyPath: m_Name
