@@ -133,6 +133,8 @@ public class Player : NetworkBehaviour
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
         }
+        
+        SetupForCurrentPhase();
     }
 
     [Command]

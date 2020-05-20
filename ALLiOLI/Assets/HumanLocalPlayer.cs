@@ -43,8 +43,6 @@ public class HumanLocalPlayer : MonoBehaviour
             else
             {
                 _player = value;
-                //if (value == null) inputsWaitingForPlayers.Add(this);
-                //else inputsWaitingForPlayers.Remove(this);
             }
 
             SetDynamicName();

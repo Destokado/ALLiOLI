@@ -44,7 +44,7 @@ public class TrapUp : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.MatchTimer > 0 /*|| !MatchManager.Instance.AreAllPlayersReady()*/)
+        if (MatchManager.Instance.MatchTimer > 0 || !GameManager.singleton.AreAllPlayersReady())
             return this;
 
         return new FinishingTrapUp();
