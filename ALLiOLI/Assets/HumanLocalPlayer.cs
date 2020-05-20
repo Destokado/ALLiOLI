@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -250,4 +251,22 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         playerGui.SetupForCurrentPhase(Player);
     }
+    
+    #if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            foreach (Trap trap in ownedTraps)
+            {
+                Vector3 characterPosition = Player.Character.transform.position;
+                Vector3 trapPos = trap.transform.position;
+                //float halfHeight = (characterPosition.y-trapPos.y)*0.5f;
+                //Vector3 offset = Vector3.up * halfHeight;
+             
+                Handles.DrawBezier(
+                    characterPosition, trapPos, 
+                    characterPosition + Vector3.up, trap.transform.position + trap.transform.forward + Vector3.up, 
+                    Player.Color, EditorGUIUtility.whiteTexture, 1f);
+            }
+        }
+    #endif
 }
