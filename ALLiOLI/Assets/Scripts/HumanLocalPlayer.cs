@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -106,8 +106,8 @@ public class HumanLocalPlayer : MonoBehaviour
             
             //if (value != _trapInFront)
                 playerGui.ShowInteractionText(value != null &&
-                                          (MatchManager.Instance.CurrentPhase is TrapUp ||
-                                           MatchManager.Instance.CurrentPhase is FinishingTrapUp));
+                                          (MatchManager.instance.CurrentPhase is TrapUp ||
+                                           MatchManager.instance.CurrentPhase is FinishingTrapUp));
             _trapInFront = value;
         }
     }
@@ -117,7 +117,7 @@ public class HumanLocalPlayer : MonoBehaviour
     public int localPlayerNumber;
 
     public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / GameManager.TotalCurrentPlayers;
+    public int maxOwnableTraps => 50 / MatchManager.TotalCurrentPlayers;
 
     private void Awake()
     {
@@ -228,7 +228,7 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null) return;
 
-        State currentState = MatchManager.Instance.CurrentPhase;
+        State currentState = MatchManager.instance.CurrentPhase;
 
         switch (currentState)
         {
@@ -259,6 +259,11 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null || Player.Character == null) return;
         Player.Character.movementController.jumping = value.isPressed;
+    }
+    
+    private void OnPause()
+    {
+        
     }
 
     #endregion

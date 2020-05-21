@@ -28,9 +28,9 @@ public class TrapUp : MatchPhase
 
     public override void StartState()
     {
-        MatchManager.Instance.MatchTimer = 30;
+        MatchManager.instance.MatchTimer = 30;
         //MatchManager.Instance.KillActiveCharacters();
-        Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + MatchManager.Instance.MatchTimer +
+        Debug.Log("STAGE 1 - Starting phase 'TrapUp'. The 1st stage just started. " + MatchManager.instance.MatchTimer +
                   "s remaining.");
     }
     
@@ -38,13 +38,13 @@ public class TrapUp : MatchPhase
 
     public override void UpdateState(float deltaTime)
     {
-        if (MatchManager.Instance.MatchTimer > 0)
-            MatchManager.Instance.MatchTimer -= deltaTime;
+        if (MatchManager.instance.MatchTimer > 0)
+            MatchManager.instance.MatchTimer -= deltaTime;
     }
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.MatchTimer > 0 || !GameManager.singleton.AreAllPlayersReady())
+        if (MatchManager.instance.MatchTimer > 0 || !MatchManager.instance.AreAllPlayersReady())
             return this;
 
         return new FinishingTrapUp();

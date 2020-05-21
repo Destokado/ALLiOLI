@@ -32,7 +32,7 @@ public class LobbyManager : NetworkBehaviour
 
         clientsPanel.transform.DestroyAllChildren();
 
-        List<Client> clients = GameManager.singleton.clients;
+        List<Client> clients = MatchManager.instance.Clients;
 
         if (clients != null)
             foreach (Client client in clients)
@@ -49,7 +49,7 @@ public class LobbyManager : NetworkBehaviour
     {
         //Client.localClient
         isVisible = false;
-        MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+        MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }
     
 }
