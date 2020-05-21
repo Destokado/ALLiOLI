@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
 
     public List<Client> clients = new List<Client>();
 
-    public static int TotalPlayers => singleton.clients.Sum(client => client.PlayersManager.players.Count);
+    public static int TotalCurrentPlayers => singleton.clients.Sum(client => client.PlayersManager.players.Count);
+    public static int indexOfLastPlayer = -1;
 
-    [SerializeField] public Color[] playerColors;
-    public const int maxPlayerCount = 16;
+    [SerializeField] private Color[] playerColors;
 
     private void Awake()
     {
@@ -67,5 +67,28 @@ public class GameManager : MonoBehaviour
         string sceneName = (NetworkManager.singleton as AllIOliNetworkManager)?.nameOfDisconnectionFromServerScene;
         Debug.Log("Loading scene " + sceneName);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    public Color GetColor(int playerIndex)
+    {
+        if (playerIndex < playerColors.Length)
+            return playerColors[playerIndex];
+        
+        EasyRandom rnd = new EasyRandom(playerIndex);
+
+        float hueMin = 0f;
+        float hueMax = 1f;
+
+        float saturationMin = 0.7f;
+        float saturationMax = 0.9f;
+
+        float valueMin = 1f;
+        float valueMax = 1f;
+        
+        Color rgb = Color.HSVToRGB(Mathf.Lerp(hueMin, hueMax, rnd.GetRandomFloat()), Mathf.Lerp(saturationMin, saturationMax, rnd.GetRandomFloat()), Mathf.Lerp(valueMin, valueMax, rnd.GetRandomFloat()), true);
+        rgb.a = 1f;
+
+        //Random.ColorHSV(0, 1f, 0.7f, 0.9f, 1f, 1f);
+        return rgb;
     }
 }

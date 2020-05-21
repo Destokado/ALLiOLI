@@ -95,6 +95,9 @@ public class Player : NetworkBehaviour
 
     [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
     public int idOfHumanLocalPlayer;
+
+    private int playerIndex = -1;
+
     private void NewIdOfHumanLocalPlayer(int oldVal, int newVal)
     {
         if (oldVal != 0)
@@ -111,7 +114,10 @@ public class Player : NetworkBehaviour
     {
         Client.localClient.PlayersManager.players.Add(this);
 
-        string customName = "Player " + GameManager.TotalPlayers;
+        GameManager.indexOfLastPlayer++;
+        playerIndex = GameManager.indexOfLastPlayer;
+        
+        string customName = "Player " + playerIndex;
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer tempHumanLocalPlayer = null;
@@ -144,7 +150,8 @@ public class Player : NetworkBehaviour
     [Command]
     private void CmdSetupPlayerOnServer()
     {
-        Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
+        //Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
+        Color = GameManager.singleton.GetColor(playerIndex);
     }
 
     [Command]

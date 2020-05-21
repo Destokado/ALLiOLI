@@ -43,10 +43,10 @@ public class WaitingForPlayers : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (GameManager.TotalPlayers <= 0 || MatchManager.Instance.MatchTimer > 0)
+        if (GameManager.TotalCurrentPlayers <= 0 || MatchManager.Instance.MatchTimer > 0)
             return this;
         
-        if ( GameManager.singleton.AreAllPlayersReady() || GameManager.TotalPlayers >= GameManager.maxPlayerCount)
+        if ( GameManager.singleton.AreAllPlayersReady())
             return new StartCountdown();
 
         return this;

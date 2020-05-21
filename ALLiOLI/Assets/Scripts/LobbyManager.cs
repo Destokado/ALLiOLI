@@ -40,7 +40,7 @@ public class LobbyManager : NetworkBehaviour
                 GameObject go = Instantiate(clientVisualizationPrefab, transform.position + new Vector3(0, 1, 0),
                     Quaternion.identity);
                 go.transform.SetParent(clientsPanel.transform, false);
-                go.GetComponent<Image>().color = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
+                go.GetComponent<Image>().color = Random.ColorHSV(0f, 1f, 0.7f, 0.9f, 1f, 1f);
             }
     }
 

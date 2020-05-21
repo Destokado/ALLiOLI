@@ -117,7 +117,7 @@ public class HumanLocalPlayer : MonoBehaviour
     public int localPlayerNumber;
 
     public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / GameManager.TotalPlayers;
+    public int maxOwnableTraps => 50 / GameManager.TotalCurrentPlayers;
 
     private void Awake()
     {
@@ -213,13 +213,13 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private void OnCameraMove(InputValue value)
     {
-        if (Player == null) return;
+        if (Player == null || Player.Character == null) return; // Maybe not necessary
         cameraMovement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
     {
-        if (Player == null) return;
+        if (Player == null || Player.Character == null) return;
 
         Player.Character.movementController.horizontalMovementInput = value.Get<Vector2>();
     }
@@ -245,19 +245,19 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private void OnReady()
     {
-        if (Player == null) return;
+        if (Player == null || Player.Character == null) return;
         Player.CmdSetReady(!Player.isReady);
     }
 
     private void OnSuicide()
     {
-        if (Player == null) return;
+        if (Player == null || Player.Character == null) return;
         Player.Character.Suicide();
     }
 
     private void OnJump(InputValue value)
     {
-        if (Player == null) return;
+        if (Player == null || Player.Character == null) return;
         Player.Character.movementController.jumping = value.isPressed;
     }
 
