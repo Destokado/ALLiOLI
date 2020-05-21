@@ -3,30 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SimpleAnimationsManager))]
 public class PendulumTrap : Trap
 {
-    private SimpleAnimationsManager animManager;
-    [SerializeField] private Rigidbody ball;
-
-    public void Awake() 
-    {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
-    }
+    [SerializeField] private HingeJoint ball;
 
     protected override void Reload()
     {
-        ((TransformAnimation)animManager.GetAnimation(0)).originTransform.SetProperties(ball.transform);
-        ball.isKinematic = true;
-        animManager.Play(0);
+        JointSpring hingeSpring = ball.spring;
+        hingeSpring.spring = 2500;
+        hingeSpring.damper = 0;
+        hingeSpring.targetPosition = 85;
+        ball.spring = hingeSpring;
+        ball.useSpring = true;
     }
 
     public override void Activate()
     {
         base.Activate();
         
-        animManager.Stop(0);
-        ball.isKinematic = false;
+        ball.useSpring = false;
     }
     
 }

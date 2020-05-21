@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
     public void Die()
     {
         if (!isDead)
-            StartCoroutine(nameof(DieCoroutine));
+            StartCoroutine(DieCoroutine());
     }
     
     private IEnumerator DieCoroutine()
@@ -35,7 +35,10 @@ public class Character : MonoBehaviour
         isDead = true;
         if (flag != null) flag.Detach();
         movementControllerController.enabled = false;
-        //TODO: Character becomes ragdoll
+
+        movementControllerController.enabled = false;
+        movementControllerController.characterController.enabled = false;
+        gameObject.AddComponent<Rigidbody>();
         
         yield return new WaitForSeconds(1.5f);
         

@@ -36,6 +36,6 @@ public class ProjectileTrap : Trap
     private IEnumerator AddForce(GameObject projectile)
     {
         yield return new WaitForFixedUpdate();
-        projectile.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionPos.position, explosionRadius,0.1f, ForceMode.Impulse);
+        projectile.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionPos.position, explosionRadius,0.03f, ForceMode.Impulse);
     }
 }

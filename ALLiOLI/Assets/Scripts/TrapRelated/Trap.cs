@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Trap : MonoBehaviour
 {
-    [SerializeField] private float cooldownTime;
+    [SerializeField] private float cooldownTime = 5f;
     [SerializeField] private RadarTriggerTrap radarTrigger;
     public bool OnCd => cdTimer > 0;
     public float cdTimer { get; private set; }

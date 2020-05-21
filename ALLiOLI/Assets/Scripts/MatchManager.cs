@@ -103,7 +103,7 @@ public class MatchManager : MonoBehaviour
     public void MatchFinished(Player winner)
     {
         winnerPlayer = winner;
-        Debug.Log("The winner is" + winner.gameObject.name);
-        //TODO: Win screen w/ statistics
+        Debug.Log(winner.gameObject.name + "won");
+        guiManager.ShowEndScreen(winner.gameObject.name);
     }
 }
