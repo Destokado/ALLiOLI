@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Mirror;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ public class Character : NetworkBehaviour
 
     [HideInInspector] public Flag flag;
     [SerializeField] public Transform flagPosition;
+
+
+    [SerializeField] private MeshRenderer[] meshRenderersToColor;
+
     public Player Owner
     {
         get => _owner;
@@ -20,17 +25,29 @@ public class Character : NetworkBehaviour
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
             transform.SetParent(value.transform);
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+
+            foreach (MeshRenderer mr in meshRenderersToColor)
+            {
+                block.SetColor(BaseColor, Owner.Color);
+                mr.SetPropertyBlock(block);
+            }
         }
     }
+
+
     private Player _owner;
+    private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
 
     public bool isDead { get; private set; }
-    
+
     public CharacterMovementController movementController { get; private set; }
 
     [field: SyncVar(hook = nameof(SetNewPlayerOwner))]
     public uint OwnerNetId { get; set; }
-    private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId) {
+
+    private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId)
+    {
         Owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
     }
 
@@ -59,7 +76,7 @@ public class Character : NetworkBehaviour
         rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1.5f);
-        
+
         if (hasAuthority)
             Owner.CmdSpawnNewCharacter();
     }

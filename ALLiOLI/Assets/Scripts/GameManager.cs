@@ -6,45 +6,56 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager singleton;
+    public static GameManager Instance { get; private set; }
 
-    public List<Client> clients = new List<Client>();
-
-    public static int TotalCurrentPlayers => singleton.clients.Sum(client => client.PlayersManager.players.Count);
-    public static int indexOfLastPlayer = -1;
-
-    [SerializeField] private Color[] playerColors;
+    [SerializeField] public GameGuiManager GUI;
+    
+    public bool PauseMenuShowing
+    {
+        get => _pauseMenuShowing;
+        private set
+        {
+            Debug.Log($"Setting {value} on {_pauseMenuShowing}");
+            if (_pauseMenuShowing == value)
+                return;
+            
+            _pauseMenuShowing = value;
+            GUI.ShowPauseMenu(_pauseMenuShowing);
+            UpdateCursorMode();
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private bool _pauseMenuShowing = false;
 
     private void Awake()
     {
-        if (singleton != null)
+        if (Instance != null)
         {
             Debug.LogWarning("Multiple GameManagers have been created", this);
             return;
         }
 
-        singleton = this;
+        Instance = this;
     }
 
-    public bool AreAllPlayersReady()
+    private void OnApplicationFocus(bool hasFocus)
     {
-        foreach (Client client in clients)
-            foreach (Player player in client.PlayersManager.players)
-                if (!player.isReady)
-                    return false;
-
-        return true;
+        UpdateCursorMode();
     }
 
-    public void SetCursorMode(bool inGame)
+    public void UpdateCursorMode()
     {
-        Cursor.visible = !inGame;
-        Cursor.lockState = inGame? CursorLockMode.Locked : CursorLockMode.None;
+        bool gamingMode = (MatchManager.instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused);
+        
+        Debug.Log($"Hide and lock cursor (gamingMode)? {gamingMode}");
+        
+        Cursor.visible = !gamingMode;
+        Cursor.lockState = gamingMode? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     public void ExitGame()
     {
-        Debug.Log("Exiting the game. Client?" + Client.localClient.isClient + " - Server?" + Client.localClient.isServer);
+        Debug.Log($"Exiting the game. Client? {Client.localClient.isClient} - Server? {Client.localClient.isServer}");
 
         if (Client.localClient.isClient && Client.localClient.isServer)
         {
@@ -65,30 +76,17 @@ public class GameManager : MonoBehaviour
         }
 
         string sceneName = (NetworkManager.singleton as AllIOliNetworkManager)?.nameOfDisconnectionFromServerScene;
-        Debug.Log("Loading scene " + sceneName);
+        Debug.Log($"Loading scene {sceneName}");
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    public Color GetColor(int playerIndex)
+    public void PauseButtonPressed()
     {
-        if (playerIndex < playerColors.Length)
-            return playerColors[playerIndex];
-        
-        EasyRandom rnd = new EasyRandom(playerIndex);
-
-        float hueMin = 0f;
-        float hueMax = 1f;
-
-        float saturationMin = 0.7f;
-        float saturationMax = 0.9f;
-
-        float valueMin = 1f;
-        float valueMax = 1f;
-        
-        Color rgb = Color.HSVToRGB(Mathf.Lerp(hueMin, hueMax, rnd.GetRandomFloat()), Mathf.Lerp(saturationMin, saturationMax, rnd.GetRandomFloat()), Mathf.Lerp(valueMin, valueMax, rnd.GetRandomFloat()), true);
-        rgb.a = 1f;
-
-        //Random.ColorHSV(0, 1f, 0.7f, 0.9f, 1f, 1f);
-        return rgb;
+        PauseMenuShowing = !PauseMenuShowing;
+    }
+    
+    public void SetPause(bool val)
+    {
+        PauseMenuShowing = val;
     }
 }

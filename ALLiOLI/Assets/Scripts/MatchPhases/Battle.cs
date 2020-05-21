@@ -45,7 +45,7 @@ public class Battle : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (!MatchManager.Instance.ThereIsWinner)
+        if (!MatchManager.instance.ThereIsWinner)
             return this;
         
         return new End();

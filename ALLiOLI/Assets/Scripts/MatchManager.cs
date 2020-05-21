@@ -8,13 +8,16 @@ public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
     
+    public List<Client> Clients { get; private set; }
+    [SerializeField] private Color[] playerColors;
+    
     [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId = -420;
     public void SetNewPhaseById(int oldVal, int newVal)
     {
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
     public MatchPhase CurrentPhase { get; private set; }
-    private TrapManager allTraps = new TrapManager();
+    public bool IsMatchRunning => (instance.CurrentPhase != null && instance.CurrentPhase.Id() >= 0);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
 
@@ -24,11 +27,11 @@ public class MatchManager : NetworkBehaviour
         set
         {
             _matchTimer = value;
-            Instance.guiManager.SetTimer(_matchTimer);
+            instance.guiManager.SetTimer(_matchTimer);
         }
     }
 
-    public static MatchManager Instance { get; private set; }
+    public static MatchManager instance { get; private set; }
     
     public bool ThereIsWinner => WinnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
     [field: SyncVar(hook = nameof(UpdatedWinner))] public uint WinnerPlayerNetId { get; private set; }
@@ -40,7 +43,7 @@ public class MatchManager : NetworkBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (instance != null)
         {
             Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
                 gameObject);
@@ -48,7 +51,8 @@ public class MatchManager : NetworkBehaviour
         }
         else
         {
-            Instance = this;
+            instance = this;
+            Clients = new List<Client>();
         }
     }
     
@@ -102,7 +106,7 @@ public class MatchManager : NetworkBehaviour
 
         guiManager.SetupForCurrentPhase(); // General GUI
 
-        foreach (Client client in GameManager.singleton.clients)
+        foreach (Client client in instance.Clients)
             foreach (Player player in client.PlayersManager.players)
                 player.SetupForCurrentPhase(); // Player's UI
     }
@@ -110,7 +114,7 @@ public class MatchManager : NetworkBehaviour
     [Server]
     public void SetAllPlayersAsNotReady()
     {
-        foreach (Client client in GameManager.singleton.clients)
+        foreach (Client client in instance.Clients)
         foreach (Player player in client.PlayersManager.players)
         {
             //player.CmdSetReady(false);
@@ -126,17 +130,46 @@ public class MatchManager : NetworkBehaviour
         
         WinnerPlayerNetId = carrier.netId;
     }
-
-    /*[Command]
-    public void CmdActivateTrap(Trap trap)
+    
+    public bool AreAllPlayersReady()
     {
-        trap.RpcActivate();
-    }*/
+        foreach (Client client in Clients)
+        foreach (Player player in client.PlayersManager.players)
+            if (!player.isReady)
+                return false;
 
-    /*public void KillActiveCharacters()
+        return true;
+    }
+    
+    
+    public static int TotalCurrentPlayers => instance.Clients.Sum(client => client.PlayersManager.players.Count);
+    public static int indexOfLastPlayer = -1;
+    
+    public Color GetColor(int playerIndex)
     {
-        foreach (Client client in GameManager.singleton.clients)
-            foreach (Player player in client.playerManager.players)
-                player.character.Suicide();
-    }*/
+        if (playerIndex < playerColors.Length)
+            return playerColors[playerIndex];
+        
+        EasyRandom rnd = new EasyRandom(playerIndex);
+
+        const float hueMin = 0f;
+        const float hueMax = 1f;
+
+        const float saturationMin = 0.7f;
+        const float saturationMax = 0.9f;
+
+        const float valueMin = 1f;
+        const float valueMax = 1f;
+        
+        Color rgb = Color.HSVToRGB(Mathf.Lerp(hueMin, hueMax, rnd.GetRandomFloat()), Mathf.Lerp(saturationMin, saturationMax, rnd.GetRandomFloat()), Mathf.Lerp(valueMin, valueMax, rnd.GetRandomFloat()), true);
+        rgb.a = 1f;
+
+        //Random.ColorHSV(0, 1f, 0.7f, 0.9f, 1f, 1f);
+        return rgb;
+    }
+
+    public void StartMatch()
+    {
+        MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+    }
 }

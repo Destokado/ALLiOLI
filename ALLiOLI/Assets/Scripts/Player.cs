@@ -114,8 +114,8 @@ public class Player : NetworkBehaviour
     {
         Client.localClient.PlayersManager.players.Add(this);
 
-        GameManager.indexOfLastPlayer++;
-        playerIndex = GameManager.indexOfLastPlayer;
+        MatchManager.indexOfLastPlayer++;
+        playerIndex = MatchManager.indexOfLastPlayer;
         
         string customName = "Player " + playerIndex;
 
@@ -151,7 +151,7 @@ public class Player : NetworkBehaviour
     private void CmdSetupPlayerOnServer()
     {
         //Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
-        Color = GameManager.singleton.GetColor(playerIndex);
+        Color = MatchManager.instance.GetColor(playerIndex);
     }
 
     [Command]

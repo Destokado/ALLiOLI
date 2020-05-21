@@ -23,10 +23,10 @@ public class Client : NetworkBehaviour
         base.OnStartClient();
 
         transform.SetParent(NetworkManager.singleton.transform, false);
-        GameManager.singleton.clients.Add(this);
+        MatchManager.instance.Clients.Add(this);
 
-        if (LobbyManager.singleton.gameObject.activeSelf)
-            LobbyManager.singleton.SetupLobby();
+        
+        GameManager.Instance.GUI.UpdateOnlineLobby();
 
         gameObject.name = "Client " + clientId;
         
@@ -38,13 +38,14 @@ public class Client : NetworkBehaviour
     {
         base.OnStartLocalPlayer();
         localClient = this;
+        GameManager.Instance.GUI.UpdateOnlineLobby();
     }
 
     //Called on remaining clients, when a client disconnects
     public override void OnStopClient()
     {
         base.OnStopClient();
-        GameManager.singleton.clients.Remove(this);
+        MatchManager.instance.Clients.Remove(this);
     }
     
 }

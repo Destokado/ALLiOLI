@@ -41,22 +41,14 @@ public class CmCamera : MonoBehaviour
     private void Awake()
     {
         CinemachineCore.GetInputAxis = GetAxisCustom;
-        GameManager.singleton.SetCursorMode(true);
     }
-
     
-    // Will only be called if there is a camera controlled by mouse/keyboard. Otherwise, this GameObject/MonoBehaviour wouldn't exist.
-    private void OnApplicationFocus(bool hasFocus) 
-    {
-        GameManager.singleton.SetCursorMode(hasFocus);
-    }
-
     private float GetAxisCustom(string axisName)
     {
         if (axisNameToHumanInput.Count <= 0 || HumanLocalPlayer == null)
             return 0;
 
-        Vector2 lookDelta = axisNameToHumanInput[axisName.Remove(axisName.Length - 1)].cameraMovement;
+        Vector2 lookDelta = axisNameToHumanInput[axisName.Remove(axisName.Length - 1)].CameraMovement;
 
         lookDelta.Normalize(); //TODO: needed?
 

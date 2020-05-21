@@ -35,7 +35,7 @@ public class AllIOliNetworkManager : NetworkManager
     {
         base.OnClientDisconnect(conn);
         
-        GameManager.singleton.ExitGame();
+        GameManager.Instance.ExitGame();
     }
 
     // Be aware: can return null if "Player" component is not found or if the GameObject with given NetId is not found

@@ -28,7 +28,7 @@ public class TrapManager : List<Trap>
             if (!trap.IsActivatable()) continue;
 
             float distance = float.MaxValue;
-            foreach (Client client in GameManager.singleton.clients)
+            foreach (Client client in MatchManager.instance.Clients)
                 foreach (Player player in client.PlayersManager.players)
                 {
                     float trapDistance = trap.GetDistanceTo(player.Character);

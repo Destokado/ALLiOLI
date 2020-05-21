@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -88,8 +88,14 @@ public class HumanLocalPlayer : MonoBehaviour
 
     // ReSharper disable once InconsistentNaming
     private CmCamera _camera;
-    
-    public Vector2 cameraMovement;
+
+    public Vector2 CameraMovement
+    {
+        get => GameManager.Instance.PauseMenuShowing? Vector2.zero : _cameraMovement;
+        private set => _cameraMovement = value;
+    }
+    // ReSharper disable once InconsistentNaming
+    private Vector2 _cameraMovement;
 
     /// <summary>
     /// The maximum distance at which a trap can be to the character so the player can interact with it. // TODO: ensure if the distance id from the character or the camera
@@ -106,8 +112,8 @@ public class HumanLocalPlayer : MonoBehaviour
             
             //if (value != _trapInFront)
                 playerGui.ShowInteractionText(value != null &&
-                                          (MatchManager.Instance.CurrentPhase is TrapUp ||
-                                           MatchManager.Instance.CurrentPhase is FinishingTrapUp));
+                                          (MatchManager.instance.CurrentPhase is TrapUp ||
+                                           MatchManager.instance.CurrentPhase is FinishingTrapUp));
             _trapInFront = value;
         }
     }
@@ -117,13 +123,12 @@ public class HumanLocalPlayer : MonoBehaviour
     public int localPlayerNumber;
 
     public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / GameManager.TotalCurrentPlayers;
+    public int maxOwnableTraps => 50 / MatchManager.TotalCurrentPlayers;
 
     private void Awake()
     {
-        //inputsWaitingForPlayers.Add(this);
         ownedTraps = new TrapManager();
-        // SetDynamicName();
+        GameManager.Instance.UpdateCursorMode();
     }
 
     private void SetDynamicName()
@@ -214,7 +219,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnCameraMove(InputValue value)
     {
         if (Player == null || Player.Character == null) return; // Maybe not necessary
-        cameraMovement = value.Get<Vector2>();
+        CameraMovement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
@@ -228,7 +233,7 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null) return;
 
-        State currentState = MatchManager.Instance.CurrentPhase;
+        State currentState = MatchManager.instance.CurrentPhase;
 
         switch (currentState)
         {
@@ -259,6 +264,11 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null || Player.Character == null) return;
         Player.Character.movementController.jumping = value.isPressed;
+    }
+    
+    private void OnPause()
+    {
+        GameManager.Instance.PauseButtonPressed();
     }
 
     #endregion

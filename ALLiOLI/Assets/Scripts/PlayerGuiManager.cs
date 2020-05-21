@@ -30,14 +30,14 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void ShowNumberOfTraps(int currentTraps, int maxNumberOfTraps)
     {
-        trapsCounterGameobject.SetActive(MatchManager.Instance.CurrentPhase.showTrapsCounter);
+        trapsCounterGameobject.SetActive(MatchManager.instance.CurrentPhase.showTrapsCounter);
         trapsCounter.SetText(currentTraps + "/" + maxNumberOfTraps);
     }
 
 
     public void ShowReadiness(bool isReady)
     {
-        readinessGameObject.SetActive(MatchManager.Instance.CurrentPhase.showReadiness);
+        readinessGameObject.SetActive(MatchManager.instance.CurrentPhase.showReadiness);
         readinessText.SetText(isReady ? "READY" : "Waiting");
     }
 
