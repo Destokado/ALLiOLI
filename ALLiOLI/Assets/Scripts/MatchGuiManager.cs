@@ -1,21 +1,24 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MatchGuiManager : MonoBehaviour
 {
-    [Space] [SerializeField] private GameObject endScreen;
+    [Header("In-game content")] [SerializeField] private TMP_Text matchInformativeText;
+    [SerializeField] private TMP_Text matchTimer;
+    [SerializeField] private GameObject matchTimerGameObject;
 
+    [Header("End screen")] 
+    [SerializeField] private GameObject endScreen;
     [SerializeField] private TMP_Text endScreenText;
 
-    [Space] [SerializeField] private TMP_Text matchInformativeText;
-
-    [SerializeField] private TMP_Text matchTimer;
-
-    [SerializeField] private GameObject matchTimerGameObject;
-    
-    [SerializeField] private Object landingScene;
+    private void Awake()
+    {
+        endScreen.SetActive(false);
+        SetupForCurrentPhase();
+    }
 
     public void SetTimer(float timeInSeconds)
     {
@@ -28,7 +31,9 @@ public class MatchGuiManager : MonoBehaviour
 
     public void SetupForCurrentPhase()
     {
-        MatchPhase curPhase = MatchManager.instance.CurrentPhase;
+        MatchPhase curPhase = null;
+        if (MatchManager.instance != null)
+            curPhase = MatchManager.instance.CurrentPhase;
         matchTimerGameObject.SetActive(curPhase != null && curPhase.showMatchTimer);
         matchInformativeText.SetText(curPhase != null ? curPhase.informativeText : "");
     }
@@ -45,7 +50,7 @@ public class MatchGuiManager : MonoBehaviour
 
     public void GoToLandingScene()
     {
-        GameManager.instance.ExitGame();
+        GameManager.Instance.ExitGame();
     }
-    
+
 }

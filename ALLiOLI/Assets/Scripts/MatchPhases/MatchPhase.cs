@@ -8,4 +8,9 @@ public abstract class MatchPhase : State
     public abstract bool showMatchTimer { get; protected set; }
     [Server]
     public abstract void ServerStartState();
+
+    public int Id()
+    {
+        return MatchPhaseManager.GetPhaseId(this);
+    }
 }

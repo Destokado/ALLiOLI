@@ -17,7 +17,7 @@ public class MatchManager : NetworkBehaviour
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
     public MatchPhase CurrentPhase { get; private set; }
-    private TrapManager allTraps = new TrapManager();
+    public bool IsMatchRunning => (instance.CurrentPhase != null && instance.CurrentPhase.Id() >= 0);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
 

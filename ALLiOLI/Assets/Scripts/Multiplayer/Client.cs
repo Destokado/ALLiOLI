@@ -25,8 +25,8 @@ public class Client : NetworkBehaviour
         transform.SetParent(NetworkManager.singleton.transform, false);
         MatchManager.instance.Clients.Add(this);
 
-        if (GameManager.instance.GUI.gameObject.activeSelf)
-            GameManager.instance.GUI.SetupOnlineLobby();
+        
+        GameManager.Instance.GUI.UpdateOnlineLobby();
 
         gameObject.name = "Client " + clientId;
         
@@ -38,6 +38,7 @@ public class Client : NetworkBehaviour
     {
         base.OnStartLocalPlayer();
         localClient = this;
+        GameManager.Instance.GUI.UpdateOnlineLobby();
     }
 
     //Called on remaining clients, when a client disconnects
