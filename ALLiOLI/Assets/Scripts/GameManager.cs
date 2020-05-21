@@ -6,21 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
 
     [SerializeField] public GameGuiManager GUI;
     
-    private bool PauseMenuShowing
+    public bool PauseMenuShowing
     {
         get => _pauseMenuShowing;
-        set
+        private set
         {
+            Debug.Log($"Setting {value} on {_pauseMenuShowing}");
             if (_pauseMenuShowing == value)
                 return;
             
             _pauseMenuShowing = value;
-
             GUI.ShowPauseMenu(_pauseMenuShowing);
+            UpdateCursorMode();
         }
     }
     // ReSharper disable once InconsistentNaming
@@ -28,24 +29,33 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogWarning("Multiple GameManagers have been created", this);
             return;
         }
 
-        instance = this;
+        Instance = this;
     }
 
-    public void SetCursorMode(bool inGame)
+    private void OnApplicationFocus(bool hasFocus)
     {
-        Cursor.visible = !inGame;
-        Cursor.lockState = inGame? CursorLockMode.Locked : CursorLockMode.None;
+        UpdateCursorMode();
+    }
+
+    public void UpdateCursorMode()
+    {
+        bool gamingMode = (MatchManager.instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused);
+        
+        Debug.Log($"Hide and lock cursor (gamingMode)? {gamingMode}");
+        
+        Cursor.visible = !gamingMode;
+        Cursor.lockState = gamingMode? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     public void ExitGame()
     {
-        Debug.Log("Exiting the game. Client?" + Client.localClient.isClient + " - Server?" + Client.localClient.isServer);
+        Debug.Log($"Exiting the game. Client? {Client.localClient.isClient} - Server? {Client.localClient.isServer}");
 
         if (Client.localClient.isClient && Client.localClient.isServer)
         {
@@ -66,12 +76,17 @@ public class GameManager : MonoBehaviour
         }
 
         string sceneName = (NetworkManager.singleton as AllIOliNetworkManager)?.nameOfDisconnectionFromServerScene;
-        Debug.Log("Loading scene " + sceneName);
+        Debug.Log($"Loading scene {sceneName}");
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    public void OnPause()
+    public void PauseButtonPressed()
     {
         PauseMenuShowing = !PauseMenuShowing;
+    }
+    
+    public void SetPause(bool val)
+    {
+        PauseMenuShowing = val;
     }
 }

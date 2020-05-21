@@ -88,8 +88,14 @@ public class HumanLocalPlayer : MonoBehaviour
 
     // ReSharper disable once InconsistentNaming
     private CmCamera _camera;
-    
-    public Vector2 cameraMovement;
+
+    public Vector2 CameraMovement
+    {
+        get => GameManager.Instance.PauseMenuShowing? Vector2.zero : _cameraMovement;
+        private set => _cameraMovement = value;
+    }
+    // ReSharper disable once InconsistentNaming
+    private Vector2 _cameraMovement;
 
     /// <summary>
     /// The maximum distance at which a trap can be to the character so the player can interact with it. // TODO: ensure if the distance id from the character or the camera
@@ -121,9 +127,8 @@ public class HumanLocalPlayer : MonoBehaviour
 
     private void Awake()
     {
-        //inputsWaitingForPlayers.Add(this);
         ownedTraps = new TrapManager();
-        // SetDynamicName();
+        GameManager.Instance.UpdateCursorMode();
     }
 
     private void SetDynamicName()
@@ -214,7 +219,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnCameraMove(InputValue value)
     {
         if (Player == null || Player.Character == null) return; // Maybe not necessary
-        cameraMovement = value.Get<Vector2>();
+        CameraMovement = value.Get<Vector2>();
     }
 
     private void OnCharacterMove(InputValue value)
@@ -263,7 +268,7 @@ public class HumanLocalPlayer : MonoBehaviour
     
     private void OnPause()
     {
-        GameManager.instance.OnPause();
+        GameManager.Instance.PauseButtonPressed();
     }
 
     #endregion
