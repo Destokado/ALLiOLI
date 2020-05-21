@@ -263,7 +263,7 @@ public class HumanLocalPlayer : MonoBehaviour
     
     private void OnPause()
     {
-        
+        GameManager.instance.OnPause();
     }
 
     #endregion
