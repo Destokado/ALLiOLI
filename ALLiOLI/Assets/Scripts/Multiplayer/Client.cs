@@ -25,8 +25,8 @@ public class Client : NetworkBehaviour
         transform.SetParent(NetworkManager.singleton.transform, false);
         MatchManager.instance.Clients.Add(this);
 
-        if (LobbyManager.singleton.gameObject.activeSelf)
-            LobbyManager.singleton.SetupLobby();
+        if (GameManager.instance.GUI.gameObject.activeSelf)
+            GameManager.instance.GUI.SetupOnlineLobby();
 
         gameObject.name = "Client " + clientId;
         

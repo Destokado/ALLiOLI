@@ -8,6 +8,24 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] public GameGuiManager GUI;
+    
+    private bool PauseMenuShowing
+    {
+        get => _pauseMenuShowing;
+        set
+        {
+            if (_pauseMenuShowing == value)
+                return;
+            
+            _pauseMenuShowing = value;
+
+            GUI.ShowPauseMenu(_pauseMenuShowing);
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private bool _pauseMenuShowing = false;
+
     private void Awake()
     {
         if (instance != null)
@@ -18,8 +36,6 @@ public class GameManager : MonoBehaviour
 
         instance = this;
     }
-
-
 
     public void SetCursorMode(bool inGame)
     {
@@ -53,5 +69,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loading scene " + sceneName);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
-    
+
+    public void OnPause()
+    {
+        PauseMenuShowing = !PauseMenuShowing;
+    }
 }

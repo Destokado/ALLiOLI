@@ -167,4 +167,9 @@ public class MatchManager : NetworkBehaviour
         //Random.ColorHSV(0, 1f, 0.7f, 0.9f, 1f, 1f);
         return rgb;
     }
+
+    public void StartMatch()
+    {
+        MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+    }
 }
