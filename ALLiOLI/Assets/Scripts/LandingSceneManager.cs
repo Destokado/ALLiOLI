@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class LandingSceneManager : MonoBehaviour
 {
     public static LandingSceneManager singleton { get; private set; }
-    [SerializeField] private Object matchScene;
+    //[SerializeField] private Object matchScene;
+    [SerializeField] private string matchSceneName;
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class LandingSceneManager : MonoBehaviour
 
     public void StartMatch()
     {
-        Debug.Log("Loading scene " + matchScene.name);
-        SceneManager.LoadScene(matchScene.name, LoadSceneMode.Single);
+        Debug.Log("Loading scene " + matchSceneName);
+        SceneManager.LoadScene(matchSceneName, LoadSceneMode.Single);
     }
 }

@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 public class AllIOliNetworkManager : NetworkManager
 {
     
-    [SerializeField] private Object disconnectionFromServerScene;
-    public string nameOfDisconnectionFromServerScene => disconnectionFromServerScene.name;
+    [SerializeField] public string nameOfDisconnectionFromServerScene;
 
     // When a player/client is connected
     public override void OnServerAddPlayer(NetworkConnection conn)
