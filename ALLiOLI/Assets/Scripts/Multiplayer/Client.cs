@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputManager))]
 public class Client : NetworkBehaviour
 {
-    [SyncVar] public int clientId;
+    [field: SyncVar] public int clientId { get; private set; }
     public static Client localClient { get; private set; }
     public PlayersManager PlayersManager { get; private set; }
 
