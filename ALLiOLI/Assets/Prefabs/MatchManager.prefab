@@ -452,12 +452,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fcc88fb17536b94494d11dce9040d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endScreen: {fileID: 8066166005072802260}
-  endScreenText: {fileID: 960678942953287406}
   matchInformativeText: {fileID: 7007408861646856652}
   matchTimer: {fileID: 6102750973453410633}
   matchTimerGameObject: {fileID: 5813654976486266409}
-  landingScene: {fileID: 102900000, guid: 6a21a97c5a255e64e94901efc9814275, type: 3}
+  endScreen: {fileID: 8066166005072802260}
+  endScreenText: {fileID: 960678942953287406}
 --- !u!1 &5676662003551059849
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &121625351200640796
 RectTransform:
   m_ObjectHideFlags: 0
