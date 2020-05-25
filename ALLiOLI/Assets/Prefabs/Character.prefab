@@ -106,6 +106,8 @@ MonoBehaviour:
   horizontalMovementInput: {x: 0, y: 0}
   jumpSpeed: 3.5
   walkSpeed: 6
+  turnSmoothTime: 0.1
+  turnSmoothVelocity: 0
 --- !u!114 &2090334162427195722
 MonoBehaviour:
   m_ObjectHideFlags: 0
