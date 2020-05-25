@@ -3,6 +3,7 @@ using Mirror;
 using Telepathy;
 using UnityEngine;
 
+[SelectionBase]
 public abstract class Trap : NetworkBehaviour
 {
     [SerializeField] private float cooldownTime = 5f;
