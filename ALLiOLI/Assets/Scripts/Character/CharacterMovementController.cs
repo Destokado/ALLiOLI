@@ -7,7 +7,7 @@ using UnityEngine;
 public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
-
+    
     [HideInInspector] public Vector2 horizontalMovementInput;
     [SerializeField] private float jumpSpeed;
 
@@ -21,6 +21,9 @@ public class CharacterMovementController : NetworkBehaviour
 
     public CharacterController CharacterController { get; private set; }
     public Character Character { get; private set; }
+    [Header("Rotation")]
+    [SerializeField] private float turnSmoothTime = .1f;
+    [SerializeField] private float turnSmoothVelocity;
 
     private void Awake()
     {
@@ -52,12 +55,19 @@ public class CharacterMovementController : NetworkBehaviour
         if (Math.Abs(displacement.y) < CharacterController.minMoveDistance)
             Debug.LogWarning("WAT displacement.y = " + displacement.y);
 
+        
+        
         // Apply Movement to Player
         CollisionFlags collisionFlags = CharacterController.Move(displacement);
 
         //Apply rotation to Player
-        if (Math.Abs(direction.x) > 0.001f || Math.Abs(direction.y) > 0.001f)
-            transform.rotation = Quaternion.LookRotation(direction);
+        if (direction.magnitude >= .1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
+                turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f,angle,0f);
+        }
 
         // Process vertical collisions
         if ((collisionFlags & CollisionFlags.Below) != 0)
