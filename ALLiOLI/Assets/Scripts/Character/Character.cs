@@ -21,6 +21,12 @@ public class Character : NetworkBehaviour
         get => _owner;
         private set
         {
+            if (_owner != null)
+            {
+                Debug.LogError("Trying to change the owner of a Character. Operation cancelled.");
+                return;
+            }
+            
             _owner = value;
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,7 +18,7 @@ public class PlayersManager : NetworkBehaviour
     /// <summary>
     /// The prefab of the player (the one shared across clients, NOT the PlayerInputReader)
     /// </summary>
-    [Tooltip("The prefab of the player (the one shared across clients, NOT the PlayerInputReader)")]
+    [Tooltip("The prefab of the player (the one shared across clients, NOT the HumanLocalPlayer)")]
     [SerializeField] private GameObject playerPrefab;
     
     /// <summary>

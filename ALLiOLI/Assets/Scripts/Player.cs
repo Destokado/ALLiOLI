@@ -76,7 +76,7 @@ public class Player : NetworkBehaviour
         get => _humanLocalPlayer;
         /*private*/ set
         {
-            if (HumanLocalPlayer != null) // TODO: add this same check (HumanLocalPlayer != null) whenever is needed to ensure consistency
+            if (HumanLocalPlayer != null)
             {
                 Debug.LogWarning("Trying to change the humanLocalPlayer of a Player. Operation cancelled.");
                 return;

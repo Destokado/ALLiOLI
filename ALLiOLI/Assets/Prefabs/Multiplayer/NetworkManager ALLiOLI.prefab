@@ -21,7 +21,7 @@ MonoBehaviour:
   onlineScene: 
   transport: {fileID: 8486767287859903383}
   networkAddress: 37.14.82.177
-  maxConnections: 4
+  maxConnections: 16
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
