@@ -50,8 +50,6 @@ public class CmCamera : MonoBehaviour
 
         Vector2 lookDelta = axisNameToHumanInput[axisName.Remove(axisName.Length - 1)].CameraMovement;
 
-        lookDelta.Normalize(); //TODO: needed?
-
         switch (axisName.Substring(axisName.Length - 1))
         {
             case "X":
