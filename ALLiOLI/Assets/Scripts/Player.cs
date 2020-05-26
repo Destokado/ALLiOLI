@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using Mirror;
 using UnityEngine;
@@ -109,10 +110,20 @@ public class Player : NetworkBehaviour
             Debug.LogWarning("Trying to change the idOfClient of a Player. It shouldn't be done.");
     }
 
+    public Client Client {
+        get {
+            if (!_client)
+                foreach (Client client in MatchManager.Instance.Clients.Where(client => client.clientId == idOfClient))
+                    _client = client;
+
+            return _client;
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private Client _client;
+    
     private int playerIndex = -1;
-
-
-
+    
     /// <summary>
     /// If the player is controlled by a human in this machine (locally).
     /// </summary>
@@ -132,24 +143,8 @@ public class Player : NetworkBehaviour
         
         playerIndex = MatchManager.TotalCurrentPlayers + 1;
         
-        if (IsControlledLocally)
-        {
-            Client.localClient.PlayersManager.players.Add(this);
-            gameObject.name = $"Player {playerIndex} - Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}";
-        }
-        else
-        {
-            foreach (Client client in MatchManager.Instance.Clients)
-            {
-                if (client.clientId == idOfClient)
-                {
-                    client.PlayersManager.players.Add(this);
-                    break;
-                }
-            }
-            
-            gameObject.name = $"Player {playerIndex} - Controlled remotely";
-        }
+        Client.PlayersManager.players.Add(this);
+        gameObject.name = $"Player {playerIndex} - { ( IsControlledLocally? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely") }";
         
         if (hasAuthority)
         {
