@@ -185,6 +185,8 @@ public class MatchManager : NetworkBehaviour
 
         int steps = 6;
         float hue = 1f / (steps+1f/steps) * (playerIndex-1);
+        while (hue > 1)
+            hue -= 1;
         Debug.Log($"HUE {hue}");
         
         const float saturation = 0.85f;
