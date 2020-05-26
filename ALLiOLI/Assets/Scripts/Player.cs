@@ -63,7 +63,7 @@ public class Player : NetworkBehaviour
     private void SetReadyOnGUI(bool oldValue, bool newValue)
     {
         if (HumanLocalPlayer)
-            HumanLocalPlayer.playerGui.ShowReadiness(newValue);
+            HumanLocalPlayer.playerGui.ShowReadiness(this);
     }
 
     /// <summary>
@@ -112,12 +112,18 @@ public class Player : NetworkBehaviour
     // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
-        Client.localClient.PlayersManager.players.Add(this);
-
-        MatchManager.indexOfLastPlayer++;
-        playerIndex = MatchManager.indexOfLastPlayer;
-        
-        string customName = "Player " + playerIndex;
+        string customName = "Player numUnknown";
+        if (IsControlledLocally)
+        {
+            Client.localClient.PlayersManager.players.Add(this);
+            playerIndex = MatchManager.TotalCurrentPlayers + 1;
+             customName = "Player " + playerIndex;
+        }
+        else
+        {
+            // TODO: know the player index of those players not controlled/added locally
+            playerIndex = -1; // PlaceHolder
+        }
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer tempHumanLocalPlayer = null;
@@ -151,7 +157,7 @@ public class Player : NetworkBehaviour
     private void CmdSetupPlayerOnServer()
     {
         //Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
-        Color = MatchManager.instance.GetColor(playerIndex);
+        Color = MatchManager.Instance.GetColor(playerIndex);
     }
 
     [Command]

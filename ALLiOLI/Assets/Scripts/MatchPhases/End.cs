@@ -29,8 +29,8 @@ public class End : MatchPhase
     
     public override void StartState()
     {
-        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished.\nThe winner is " + MatchManager.instance.WinnerPlayerNetId);
-        MatchManager.instance.guiManager.UpdateEndScreen(true);
+        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished.\nThe winner is " + MatchManager.Instance.WinnerPlayerNetId);
+        MatchManager.Instance.guiManager.UpdateEndScreen(true);
     }
     
     public override void ServerStartState() {}

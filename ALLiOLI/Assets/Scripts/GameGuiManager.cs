@@ -35,19 +35,16 @@ public class GameGuiManager : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    public void UpdateOnlineLobby()
+    public void UpdateOnlineLobby(bool showLobby)
     {
         if (Client.localClient == null)
             return;
-        
-        lobby.SetActive(!MatchManager.instance.IsMatchRunning);
-        if (MatchManager.instance.IsMatchRunning) return;
 
         startMatchButton.SetActive(Client.localClient.isServer);
 
         clientsPanel.transform.DestroyAllChildren();
 
-        List<Client> clients = MatchManager.instance.Clients;
+        List<Client> clients = MatchManager.Instance.Clients;
 
         if (clients != null)
             foreach (Client client in clients)
@@ -57,12 +54,14 @@ public class GameGuiManager : MonoBehaviour
                 go.transform.SetParent(clientsPanel.transform, false);
                 go.GetComponent<Image>().color = UnityEngine.Random.ColorHSV(0f, 1f, 0.7f, 0.9f, 1f, 1f);
             }
+        
+        lobby.SetActive(showLobby);
     }
     
     public void StartMatch()
     {
         lobby.SetActive(false);
-        MatchManager.instance.StartMatch();
+        MatchManager.Instance.StartMatch();
     }
 
     public void ShowPauseMenu(bool show)
@@ -73,6 +72,12 @@ public class GameGuiManager : MonoBehaviour
     public void Resume()
     {
         GameManager.Instance.SetPause(false);
+    }
+    
+    public void ShowLobbyMenu(bool show)
+    {
+        //TODO: Implement lobby open/close
+        Debug.LogWarning("lobby in pause not implemented yet");
     }
     
     public void ShowPlayersMenu(bool show)

@@ -112,8 +112,8 @@ public class HumanLocalPlayer : MonoBehaviour
             
             //if (value != _trapInFront)
                 playerGui.ShowInteractionText(value != null &&
-                                          (MatchManager.instance.CurrentPhase is TrapUp ||
-                                           MatchManager.instance.CurrentPhase is FinishingTrapUp));
+                                          (MatchManager.Instance.CurrentPhase is TrapUp ||
+                                           MatchManager.Instance.CurrentPhase is FinishingTrapUp));
             _trapInFront = value;
         }
     }
@@ -191,7 +191,7 @@ public class HumanLocalPlayer : MonoBehaviour
         if (!ownedTraps.Remove(trapInFront))
             ownedTraps.Add(trapInFront);
 
-        playerGui.ShowNumberOfTraps(ownedTraps.Count, maxOwnableTraps);
+        playerGui.ShowNumberOfTraps(Player);
         DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
             gameObject);
     }
@@ -233,7 +233,7 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null) return;
 
-        State currentState = MatchManager.instance.CurrentPhase;
+        State currentState = MatchManager.Instance.CurrentPhase;
 
         switch (currentState)
         {

@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientId: 0
+  _playersManager: {fileID: 6237856009097576416}
 --- !u!1001 &4787383483567815386
 PrefabInstance:
   m_ObjectHideFlags: 0

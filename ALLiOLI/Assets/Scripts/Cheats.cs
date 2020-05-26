@@ -35,7 +35,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(null);
+            MatchManager.Instance.BroadcastNewMatchPhase(null);
         }
         else
         {
@@ -48,7 +48,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+            MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
         }
         else
         {
@@ -61,7 +61,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new StartCountdown());
+            MatchManager.Instance.BroadcastNewMatchPhase(new StartCountdown());
         }
         else
         {
@@ -74,7 +74,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new TrapUp());
+            MatchManager.Instance.BroadcastNewMatchPhase(new TrapUp());
         }
         else
         {
@@ -87,7 +87,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new FinishingTrapUp());
+            MatchManager.Instance.BroadcastNewMatchPhase(new FinishingTrapUp());
         }
         else
         {
@@ -100,7 +100,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new BattleCountdown());
+            MatchManager.Instance.BroadcastNewMatchPhase(new BattleCountdown());
         }
         else
         {
@@ -113,7 +113,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new Battle());
+            MatchManager.Instance.BroadcastNewMatchPhase(new Battle());
         }
         else
         {
@@ -126,7 +126,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.instance.BroadcastNewMatchPhase(new End());
+            MatchManager.Instance.BroadcastNewMatchPhase(new End());
         }
         else
         {

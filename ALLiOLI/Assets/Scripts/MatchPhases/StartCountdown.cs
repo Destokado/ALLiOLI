@@ -28,22 +28,22 @@ public class StartCountdown : MatchPhase
 
     public override void StartState()
     {
-        MatchManager.instance.MatchTimer = 10;
+        MatchManager.Instance.MatchTimer = 10;
         Debug.Log("STAGE 0 - Starting phase 'StartCountdown'. The 1st stage will start in " +
-                  MatchManager.instance.MatchTimer + "s.");
+                  MatchManager.Instance.MatchTimer + "s.");
     }
     
     public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
-        if (MatchManager.instance.MatchTimer > 0)
-            MatchManager.instance.MatchTimer -= deltaTime;
+        if (MatchManager.Instance.MatchTimer > 0)
+            MatchManager.Instance.MatchTimer -= deltaTime;
     }
 
     public override State GetCurrentState()
     {
-        if (MatchManager.instance.MatchTimer > 0)
+        if (MatchManager.Instance.MatchTimer > 0)
             return this;
         return new TrapUp();
     }

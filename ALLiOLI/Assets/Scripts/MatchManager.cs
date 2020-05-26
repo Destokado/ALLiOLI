@@ -10,14 +10,16 @@ public class MatchManager : NetworkBehaviour
     
     public List<Client> Clients { get; private set; }
     [SerializeField] private Color[] playerColors;
-    
-    [SyncVar(hook = nameof(SetNewPhaseById))] private int currentPhaseId = -420;
+
+    [SyncVar(hook = nameof(SetNewPhaseById))]
+    private int currentPhaseId = MatchPhaseManager.GetPhaseId(new WaitingForPlayers()); // -420; // Dummy value
     public void SetNewPhaseById(int oldVal, int newVal)
     {
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
-    public MatchPhase CurrentPhase { get; private set; }
-    public bool IsMatchRunning => (instance.CurrentPhase != null && instance.CurrentPhase.Id() >= 0);
+    public MatchPhase CurrentPhase { get; private set ; }
+    
+    public bool IsMatchRunning => (Instance.CurrentPhase != null && Instance.CurrentPhase.Id() >= 0);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
 
@@ -27,11 +29,11 @@ public class MatchManager : NetworkBehaviour
         set
         {
             _matchTimer = value;
-            instance.guiManager.SetTimer(_matchTimer);
+            Instance.guiManager.SetTimer(_matchTimer);
         }
     }
 
-    public static MatchManager instance { get; private set; }
+    public static MatchManager Instance { get; private set; }
     
     public bool ThereIsWinner => WinnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
     [field: SyncVar(hook = nameof(UpdatedWinner))] public uint WinnerPlayerNetId { get; private set; }
@@ -43,7 +45,7 @@ public class MatchManager : NetworkBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
                 gameObject);
@@ -51,7 +53,7 @@ public class MatchManager : NetworkBehaviour
         }
         else
         {
-            instance = this;
+            Instance = this;
             Clients = new List<Client>();
         }
     }
@@ -59,8 +61,8 @@ public class MatchManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        //allTraps.AddRange(FindObjectsOfType<Trap>().ToList());
-        BroadcastNewMatchPhase(null);
+        
+        //BroadcastNewMatchPhase(new WaitingForPlayers());
     }
 
     
@@ -89,8 +91,31 @@ public class MatchManager : NetworkBehaviour
     }
 
     [Client]
+    public void FinishAndRestartCurrentPhase()
+    {
+        MatchPhase phase = CurrentPhase;
+        
+        if (phase == null)
+        {
+            phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
+            Debug.Log( $"Restarting the CurrentPhase obtained from the currentPhaseId '{currentPhaseId}' ({(phase!=null?phase.GetType().Name:"null")}) as a MatchPhase object.");
+        } 
+        else
+        {
+            Debug.Log($"Restarting the CurrentPhase. ({phase.GetType().Name})");
+        }
+
+        SetNewMatchPhase(phase);
+    }
+    
+    [Client]
     private void SetNewMatchPhase(MatchPhase newPhase)
     {
+        if (newPhase != null)
+            Debug.Log($"Setting new phase {newPhase.GetType().Name}");
+        else
+            Debug.Log("Setting NULL phase");
+        
         if (isServer)
             SetAllPlayersAsNotReady();
 
@@ -106,19 +131,23 @@ public class MatchManager : NetworkBehaviour
 
         guiManager.SetupForCurrentPhase(); // General GUI
 
-        foreach (Client client in instance.Clients)
-            foreach (Player player in client.PlayersManager.players)
-                player.SetupForCurrentPhase(); // Player's UI
+        foreach (Client client in Instance.Clients)
+            if (client.PlayersManager != null)
+                foreach (Player player in client.PlayersManager.players)
+                    player.SetupForCurrentPhase(); // Player's UI
     }
     
     [Server]
     public void SetAllPlayersAsNotReady()
     {
-        foreach (Client client in instance.Clients)
-        foreach (Player player in client.PlayersManager.players)
+        foreach (Client client in Instance.Clients)
         {
-            //player.CmdSetReady(false);
-            player.isReady = false;
+            if (client.PlayersManager != null)
+                foreach (Player player in client.PlayersManager.players)
+                {
+                    //player.CmdSetReady(false);
+                    player.isReady = false;
+                }
         }
     }
     
@@ -142,12 +171,12 @@ public class MatchManager : NetworkBehaviour
     }
     
     
-    public static int TotalCurrentPlayers => instance.Clients.Sum(client => client.PlayersManager.players.Count);
-    public static int indexOfLastPlayer = -1;
+    public static int TotalCurrentPlayers => Instance.Clients.Sum(client => client.PlayersManager.players.Count);
+    //public static int indexOfLastPlayer = -1;
     
     public Color GetColor(int playerIndex)
     {
-        if (playerIndex < playerColors.Length)
+        if (playerIndex >= 0 && playerIndex < playerColors.Length)
             return playerColors[playerIndex];
         
         EasyRandom rnd = new EasyRandom(playerIndex);
@@ -170,6 +199,8 @@ public class MatchManager : NetworkBehaviour
 
     public void StartMatch()
     {
-        MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+        //MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }
+
+
 }

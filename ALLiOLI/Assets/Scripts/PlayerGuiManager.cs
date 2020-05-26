@@ -24,21 +24,33 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void SetupForCurrentPhase(Player player)
     {
-        ShowNumberOfTraps(player.HumanLocalPlayer.ownedTraps.Count, player.HumanLocalPlayer.maxOwnableTraps);
-        ShowReadiness(player.isReady);
+        ShowNumberOfTraps(player);
+        ShowReadiness(player);
     }
 
-    public void ShowNumberOfTraps(int currentTraps, int maxNumberOfTraps)
+    public void ShowNumberOfTraps(Player player)
     {
-        trapsCounterGameobject.SetActive(MatchManager.instance.CurrentPhase.showTrapsCounter);
+        bool show = MatchManager.Instance.CurrentPhase.showTrapsCounter;
+        trapsCounterGameobject.SetActive(show);
+        
+        if (!show)
+            return;
+        
+        int currentTraps = player.HumanLocalPlayer.ownedTraps.Count;
+        int maxNumberOfTraps = player.HumanLocalPlayer.maxOwnableTraps;
         trapsCounter.SetText(currentTraps + "/" + maxNumberOfTraps);
     }
 
 
-    public void ShowReadiness(bool isReady)
+    public void ShowReadiness(Player player)
     {
-        readinessGameObject.SetActive(MatchManager.instance.CurrentPhase.showReadiness);
-        readinessText.SetText(isReady ? "READY" : "Waiting");
+        bool show = MatchManager.Instance.CurrentPhase.showReadiness;
+        readinessGameObject.SetActive(show);
+        
+        if (!show)
+            return;
+
+        readinessText.SetText(player.isReady ? "READY" : "Waiting");
     }
 
 

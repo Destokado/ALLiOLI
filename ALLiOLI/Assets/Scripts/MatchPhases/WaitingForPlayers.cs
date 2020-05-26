@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WaitingForPlayers : MatchPhase
 {
@@ -29,8 +30,8 @@ public class WaitingForPlayers : MatchPhase
     public override void StartState()
     {
         Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
-        MatchManager.instance.MatchTimer = 1;
-        Client.localClient.PlayersManager.playerInputManager.enabled = true;
+        MatchManager.Instance.MatchTimer = 1; // Securing timing, can not end instantly
+
         GameManager.Instance.GUI.SetStartMatchConfiguration();
     }
     
@@ -38,16 +39,18 @@ public class WaitingForPlayers : MatchPhase
 
     public override void UpdateState(float deltaTime)
     {
-        if (MatchManager.instance.MatchTimer > 0)
-            MatchManager.instance.MatchTimer -= deltaTime;
+        if (MatchManager.Instance.MatchTimer > 0)
+            MatchManager.Instance.MatchTimer -= deltaTime;
     }
 
     public override State GetCurrentState()
     {
-        if (MatchManager.TotalCurrentPlayers <= 0 || MatchManager.instance.MatchTimer > 0)
+        Debug.Log($"TotalCurrentPlayers = {MatchManager.TotalCurrentPlayers}, MatchTimer = {MatchManager.Instance.MatchTimer}");
+        
+        if (MatchManager.TotalCurrentPlayers <= 0 || MatchManager.Instance.MatchTimer > 0)
             return this;
         
-        if ( MatchManager.instance.AreAllPlayersReady())
+        if ( MatchManager.Instance.AreAllPlayersReady())
             return new StartCountdown();
 
         return this;

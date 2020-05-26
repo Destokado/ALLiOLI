@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
         get => _pauseMenuShowing;
         private set
         {
-            Debug.Log($"Setting {value} on {_pauseMenuShowing}");
             if (_pauseMenuShowing == value)
                 return;
             
@@ -40,12 +39,12 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        UpdateCursorMode();
+        //UpdateCursorMode();
     }
 
     public void UpdateCursorMode()
     {
-        bool gamingMode = (MatchManager.instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused);
+        bool gamingMode = (MatchManager.Instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused);
         
         Debug.Log($"Hide and lock cursor (gamingMode)? {gamingMode}");
         

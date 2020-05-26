@@ -2,13 +2,15 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayersManager))]
 [RequireComponent(typeof(PlayerInputManager))]
 public class Client : NetworkBehaviour
 {
     [field: SyncVar] public int clientId { get; private set; }
     public static Client localClient { get; private set; }
-    public PlayersManager PlayersManager { get; private set; }
+
+    public PlayersManager PlayersManager => _playersManager;
+    // ReSharper disable once InconsistentNaming
+    [SerializeField] private PlayersManager _playersManager;
 
     // Called on the server (when this NetworkBehaviour is network-ready)
     public override void OnStartServer()
@@ -23,14 +25,14 @@ public class Client : NetworkBehaviour
         base.OnStartClient();
 
         transform.SetParent(NetworkManager.singleton.transform, false);
-        MatchManager.instance.Clients.Add(this);
+        MatchManager.Instance.Clients.Add(this);
 
         
-        GameManager.Instance.GUI.UpdateOnlineLobby();
+        // GameManager.Instance.GUI.UpdateOnlineLobby(false);
+
+        MatchManager.Instance.FinishAndRestartCurrentPhase();
 
         gameObject.name = "Client " + clientId;
-        
-        PlayersManager = GetComponent<PlayersManager>();
     }
 
     // Called on the local client (when this NetworkBehaviour is network-ready)
@@ -38,14 +40,15 @@ public class Client : NetworkBehaviour
     {
         base.OnStartLocalPlayer();
         localClient = this;
-        GameManager.Instance.GUI.UpdateOnlineLobby();
+        PlayersManager.playerInputManager.enabled = true;
+        // GameManager.Instance.GUI.UpdateOnlineLobby(false);
     }
 
     //Called on remaining clients, when a client disconnects
     public override void OnStopClient()
     {
         base.OnStopClient();
-        MatchManager.instance.Clients.Remove(this);
+        MatchManager.Instance.Clients.Remove(this);
     }
     
 }
