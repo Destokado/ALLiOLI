@@ -179,7 +179,7 @@ public class MatchManager : NetworkBehaviour
         if (playerIndex >= 0 && playerIndex < playerColors.Length)
             return playerColors[playerIndex];
         
-        EasyRandom rnd = new EasyRandom(playerIndex);
+        EasyRandom rnd = new EasyRandom(100+playerIndex*42);
 
         const float hueMin = 0f;
         const float hueMax = 1f;

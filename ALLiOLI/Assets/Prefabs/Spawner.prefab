@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 223876501486742232}
   m_Layer: 2
-  m_Name: SpawnRotation
+  m_Name: SpawnCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  spawnRotation: {fileID: 223876501486742232}
+  spawnCenter: {fileID: 223876501486742232}
+  spawnSize: {x: 3, y: 3}
 --- !u!135 &6121862427029547728
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -199,7 +200,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.19092464, a: 1}
+  m_Color: {r: 0.7244571, g: 0.8037558, b: 0.8301887, a: 1}
   m_Intensity: 50
   m_Range: 4.54
   m_SpotAngle: 30

@@ -1,10 +1,14 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
+using UnityEditor;
 using UnityEngine;
 
 public class Spawner : NetworkBehaviour
 {
     public static Spawner Instance { get; private set; }
-    [SerializeField] private Transform spawnRotation;
+    [SerializeField] private Transform spawnCenter;
+    [SerializeField] private Vector2 spawnSize = Vector2.one;
+    
 
     private void Awake()
     {
@@ -24,11 +28,13 @@ public class Spawner : NetworkBehaviour
     [Server]
     public void Spawn(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
     {
-        EasyRandom random = new EasyRandom();
-        Vector3 spawnPoint = new Vector3(transform.position.x + random.GetRandomFloat(-2, 2), transform.position.y,
-            transform.position.z + random.GetRandomFloat(-2, 2));
+        float deltaX = UnityEngine.Random.Range(-spawnSize.x / 2f, spawnSize.x / 2f);
+        float deltaY = UnityEngine.Random.Range(-spawnSize.y / 2f, spawnSize.y / 2f);
 
-        GameObject character = Instantiate(prefab, spawnPoint, spawnRotation.rotation);
+        Vector3 centerPos = spawnCenter.position;
+        Vector3 spawnPoint = new Vector3(centerPos.x + deltaX, centerPos.y, centerPos.z + deltaY);
+
+        GameObject character = Instantiate(prefab, spawnPoint, spawnCenter.rotation);
         character.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);
     }
@@ -41,5 +47,11 @@ public class Spawner : NetworkBehaviour
         Character character = other.GetComponent<Character>();
         if (character && character.flag)
             MatchManager.Instance.FlagAtSpawn(character.Owner);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.cyan;
+        Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
 }

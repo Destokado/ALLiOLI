@@ -48,6 +48,8 @@ public class Player : NetworkBehaviour
     {
         if (HumanLocalPlayer)
             HumanLocalPlayer.playerGui.SetColor(newColor);
+        if (Character != null)
+            Character.UpdateColor();
     }
 
     /// <summary>
@@ -122,7 +124,17 @@ public class Player : NetworkBehaviour
     // ReSharper disable once InconsistentNaming
     private Client _client;
     
+    [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
+    private void NewPlayerIndex(int oldVal, int newVal)
+    {
+        if (oldVal != -1)
+            Debug.LogWarning("Trying to change the playerIndex of a Player. It shouldn't be done.");
+        
+        gameObject.name = $"Player {playerIndex} | { ( IsControlledLocally? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely") }";
+        Color = MatchManager.Instance.GetColor(playerIndex);
+        Debug.Log("Setting index " + newVal);
+    }
     
     /// <summary>
     /// If the player is controlled by a human in this machine (locally).
@@ -132,6 +144,8 @@ public class Player : NetworkBehaviour
     // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
+        Client.PlayersManager.players.Add(this);
+        
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
         foreach (HumanLocalPlayer human in allHumans)
@@ -141,25 +155,20 @@ public class Player : NetworkBehaviour
                 break;
             }
         
-        playerIndex = MatchManager.TotalCurrentPlayers + 1;
-        
-        Client.PlayersManager.players.Add(this);
-        gameObject.name = $"Player {playerIndex} - { ( IsControlledLocally? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely") }";
-        
         if (hasAuthority)
         {
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
+            Debug.LogWarning($"Client that hasAuthority called 'CmdSetupPlayerOnServer' and 'CmdSpawnNewCharacter'");
         }
-        
+
         SetupForCurrentPhase();
     }
 
-    [Command]
+    [Command] //Only executed on server after being called by client with authority
     private void CmdSetupPlayerOnServer()
     {
-        //Color = GameManager.singleton.playerColors[GameManager.TotalPlayers - 1];
-        Color = MatchManager.Instance.GetColor(playerIndex);
+        playerIndex = MatchManager.TotalCurrentPlayers;
     }
 
     [Command]

@@ -31,19 +31,26 @@ public class Character : NetworkBehaviour
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
             transform.SetParent(value.transform);
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
-
-            foreach (MeshRenderer mr in meshRenderersToColor)
-            {
-                block.SetColor(BaseColor, Owner.Color);
-                mr.SetPropertyBlock(block);
-            }
+            UpdateColor();
         }
     }
 
+    public void UpdateColor()
+    {
+        if (block == null)
+            block = new MaterialPropertyBlock();
+        
+        foreach (MeshRenderer mr in meshRenderersToColor)
+        {
+            block.SetColor(baseColor, Owner.Color);
+            mr.SetPropertyBlock(block);
+        }
+    }
 
     private Player _owner;
-    private static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
+    
+    private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
+    private MaterialPropertyBlock block;
 
     public bool isDead { get; private set; }
 
