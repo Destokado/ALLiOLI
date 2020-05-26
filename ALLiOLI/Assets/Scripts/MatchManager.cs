@@ -184,7 +184,7 @@ public class MatchManager : NetworkBehaviour
         //const float hueMax = 1f;
 
         int steps = 6;
-        float hue = 1f / (steps+1f/(steps+1)) * (playerIndex-1);
+        float hue = 1f / (steps+1f/(steps-1)) * (playerIndex-1);
         while (hue > 1)
             hue -= 1;
         Debug.Log($"HUE {hue}");
