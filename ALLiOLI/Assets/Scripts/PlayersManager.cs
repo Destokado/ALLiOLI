@@ -42,19 +42,23 @@ public class PlayersManager : NetworkBehaviour
     {
         int id = playerInput.GetComponent<HumanLocalPlayer>().id;
         Debug.Log("Local player with local number " + playerInput.playerIndex + " and HumanLocalPlayer id '" + id + "' joined with input device: " + playerInput.devices[0], playerInput.gameObject);
-        CmdSpawnNewPlayer(id);
+        CmdSpawnNewPlayer(Client.localClient.clientId, id);
     }
 
     /// <summary>
     /// Spawn the player in all clients
     /// <para>Command: Called from a client and run on the server.</para>
     /// </summary>
+    /// <param name="localClientClientId"></param>
+    /// <param name="HumanLocalPlayerId"></param>
     /// <param name="playerPrefab">The prefab to spawn on all clients.</param>
     [Command] // Called form a client, run on the SERVER
-    private void CmdSpawnNewPlayer(int HumanLocalPlayerId)
+    private void CmdSpawnNewPlayer(int clientId, int HumanLocalPlayerId)
     {
         GameObject instantiatedPlayer = Instantiate(playerPrefab);
-        instantiatedPlayer.GetComponentRequired<Player>().idOfHumanLocalPlayer = HumanLocalPlayerId;
+        Player player = instantiatedPlayer.GetComponentRequired<Player>();
+        player.idOfHumanLocalPlayer = HumanLocalPlayerId;
+        player.idOfClient = clientId;
         NetworkServer.Spawn(instantiatedPlayer, connectionToClient); //connectionToClient = The player calling this command
     }
 

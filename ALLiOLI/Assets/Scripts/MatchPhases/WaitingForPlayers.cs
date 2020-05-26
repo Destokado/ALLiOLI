@@ -45,7 +45,7 @@ public class WaitingForPlayers : MatchPhase
 
     public override State GetCurrentState()
     {
-        Debug.Log($"TotalCurrentPlayers = {MatchManager.TotalCurrentPlayers}, MatchTimer = {MatchManager.Instance.MatchTimer}");
+        //Debug.Log($"TotalCurrentPlayers = {MatchManager.TotalCurrentPlayers}, MatchTimer = {MatchManager.Instance.MatchTimer}");
         
         if (MatchManager.TotalCurrentPlayers <= 0 || MatchManager.Instance.MatchTimer > 0)
             return this;

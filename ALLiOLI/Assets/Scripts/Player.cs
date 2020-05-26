@@ -95,14 +95,23 @@ public class Player : NetworkBehaviour
 
     [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
     public int idOfHumanLocalPlayer;
-
-    private int playerIndex = -1;
-
     private void NewIdOfHumanLocalPlayer(int oldVal, int newVal)
     {
         if (oldVal != 0)
             Debug.LogWarning("Trying to change the idOfHumanLocalPlayer of a Player. It shouldn't be done.");
     }
+    
+    [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
+    public int idOfClient;
+    private void NewIidOfClient(int oldVal, int newVal)
+    {
+        if (oldVal != 0)
+            Debug.LogWarning("Trying to change the idOfClient of a Player. It shouldn't be done.");
+    }
+
+    private int playerIndex = -1;
+
+
 
     /// <summary>
     /// If the player is controlled by a human in this machine (locally).
@@ -112,38 +121,36 @@ public class Player : NetworkBehaviour
     // Called on all clients (when this NetworkBehaviour is network-ready)
     public override void OnStartClient()
     {
-        string customName = "Player numUnknown";
+        // Is any human waiting for a player to be available? If it is, set the player as their property
+        HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
+        foreach (HumanLocalPlayer human in allHumans)
+            if (human.id == idOfHumanLocalPlayer)
+            {
+                HumanLocalPlayer = human;
+                break;
+            }
+        
+        playerIndex = MatchManager.TotalCurrentPlayers + 1;
+        
         if (IsControlledLocally)
         {
             Client.localClient.PlayersManager.players.Add(this);
-            playerIndex = MatchManager.TotalCurrentPlayers + 1;
-             customName = "Player " + playerIndex;
+            gameObject.name = $"Player {playerIndex} - Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}";
         }
         else
         {
-            // TODO: know the player index of those players not controlled/added locally
-            playerIndex = -1; // PlaceHolder
-        }
-
-        // Is any human waiting for a player to be available? If it is, set the player as their property
-        HumanLocalPlayer tempHumanLocalPlayer = null;
-        
-        HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
-        foreach (HumanLocalPlayer human in allHumans)
-        {
-            if (human.id == idOfHumanLocalPlayer)
-                tempHumanLocalPlayer = human;
+            foreach (Client client in MatchManager.Instance.Clients)
+            {
+                if (client.clientId == idOfClient)
+                {
+                    client.PlayersManager.players.Add(this);
+                    break;
+                }
+            }
             
-            // Debug.Log(GetInstanceID() + " SEARCHING HUMAN with id " + human.id + ". Player is looking for id " + idOfHumanLocalPlayer + ". Is it a match? " + (human.id == idOfHumanLocalPlayer));
+            gameObject.name = $"Player {playerIndex} - Controlled remotely";
         }
-
-        if (tempHumanLocalPlayer != null) // If the player is controller locally
-            gameObject.name = customName + " - Input by " + tempHumanLocalPlayer.PlayerInput.user.controlScheme;
-        else
-            gameObject.name = customName + " - Controlled remotely";
-
-        HumanLocalPlayer = tempHumanLocalPlayer;
-
+        
         if (hasAuthority)
         {
             CmdSetupPlayerOnServer();
