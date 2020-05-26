@@ -179,18 +179,18 @@ public class MatchManager : NetworkBehaviour
         if (playerIndex >= 0 && playerIndex < playerColors.Length)
             return playerColors[playerIndex];
         
-        EasyRandom rnd = new EasyRandom(100+playerIndex*42);
+        //EasyRandom rnd = new EasyRandom(100+playerIndex*42);
+        //const float hueMin = 0f;
+        //const float hueMax = 1f;
 
-        const float hueMin = 0f;
-        const float hueMax = 1f;
-
-        const float saturationMin = 0.7f;
-        const float saturationMax = 0.9f;
-
-        const float valueMin = 1f;
-        const float valueMax = 1f;
+        int steps = 6;
+        float hue = 1f / (steps+1f/steps) * (playerIndex-1);
+        Debug.Log($"HUE {hue}");
         
-        Color rgb = Color.HSVToRGB(Mathf.Lerp(hueMin, hueMax, rnd.GetRandomFloat()), Mathf.Lerp(saturationMin, saturationMax, rnd.GetRandomFloat()), Mathf.Lerp(valueMin, valueMax, rnd.GetRandomFloat()), true);
+        const float saturation = 0.85f;
+        const float valueBrightness = 1f;
+
+        Color rgb = Color.HSVToRGB(hue, saturation, valueBrightness, true);
         rgb.a = 1f;
 
         //Random.ColorHSV(0, 1f, 0.7f, 0.9f, 1f, 1f);
