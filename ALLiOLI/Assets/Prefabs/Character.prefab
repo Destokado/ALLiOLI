@@ -797,6 +797,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a5c938d9b3e2d4e4b8d0a9c8574bf947, type: 2}
+    - target: {fileID: -8458366866451023835, guid: ca842de7d9572154da9c181349a66dfd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ca842de7d9572154da9c181349a66dfd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -881,6 +886,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Character_v2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: ca842de7d9572154da9c181349a66dfd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 850986740822906806, guid: ca842de7d9572154da9c181349a66dfd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca842de7d9572154da9c181349a66dfd, type: 3}

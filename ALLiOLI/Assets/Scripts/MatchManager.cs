@@ -204,12 +204,8 @@ public class MatchManager : NetworkBehaviour
     public void KillAllCharacters()
     {
         foreach (Client client in Clients)
-        {
             foreach (Player player in client.PlayersManager.players)
-            {
                 player.Character.ServerSuicide();
-            }
-        }
     }
 
 

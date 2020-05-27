@@ -35,7 +35,7 @@ public class BattleCountdown : MatchPhase
     public override void StartState()
     {
         base.StartState();
-        MatchManager.Instance.MatchTimer = 10;
+        MatchManager.Instance.MatchTimer = 3;
     }
 
     public override void UpdateState(float deltaTime)
