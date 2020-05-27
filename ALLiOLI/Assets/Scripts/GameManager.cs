@@ -48,8 +48,17 @@ public class GameManager : MonoBehaviour
         
         Debug.Log($"Hide and lock cursor (gamingMode)? {gamingMode}");
         
-        Cursor.visible = !gamingMode;
-        Cursor.lockState = gamingMode? CursorLockMode.Locked : CursorLockMode.None;
+        SetCursorMode(gamingMode);
+    }
+
+    /// <summary>
+    /// Sets the cursor to in-game or not in-game mode
+    /// </summary>
+    /// <param name="inGameMode">If true, the cursor is not visible and locked at the center of the screen. If false, the opposite.</param>
+    public static void SetCursorMode(bool inGameMode)
+    {
+        Cursor.visible = !inGameMode;
+        Cursor.lockState = inGameMode ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     public void ExitGame()

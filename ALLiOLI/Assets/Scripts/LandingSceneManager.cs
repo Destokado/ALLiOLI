@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class LandingSceneManager : MonoBehaviour
         }
 
         singleton = this;
+    }
+
+    private void Start()
+    {
+        GameManager.SetCursorMode(false);
     }
 
     public void ExitGame()
