@@ -38,7 +38,18 @@ public class TrapUp : MatchPhase
     {
         base.StartState();
         //MatchManager.Instance.MatchTimer = 30;
-        Cheats.OwnAllTraps();
+
+        // OWN ALL TRAPS
+        Trap[] allTraps = Object.FindObjectsOfType<Trap>();
+            
+        foreach (Player player in Client.LocalClient.PlayersManager.players)
+        {
+            if (player.HumanLocalPlayer == null)
+                continue;
+                
+            foreach (Trap trap in allTraps)
+                player.HumanLocalPlayer.OwnedTraps.Add(trap);
+        }
     }
 
     public override void UpdateState(float deltaTime)
