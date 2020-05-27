@@ -36,6 +36,7 @@ public class Battle : MatchPhase
     {
         base.ServerStartState();
         FlagSpawner.Instance.Spawn();
+        MatchManager.Instance.KillAllCharacters();
     }
 
     public override State GetCurrentState()

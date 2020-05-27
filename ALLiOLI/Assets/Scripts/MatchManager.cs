@@ -200,5 +200,17 @@ public class MatchManager : NetworkBehaviour
         //MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }
 
+    [Server]
+    public void KillAllCharacters()
+    {
+        foreach (Client client in Clients)
+        {
+            foreach (Player player in client.PlayersManager.players)
+            {
+                player.Character.ServerSuicide();
+            }
+        }
+    }
+
 
 }
