@@ -49,9 +49,11 @@ public class Spawner : NetworkBehaviour
             MatchManager.Instance.FlagAtSpawn(character.Owner);
     }
 
+    #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.cyan;
         Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
+    #endif
 }
