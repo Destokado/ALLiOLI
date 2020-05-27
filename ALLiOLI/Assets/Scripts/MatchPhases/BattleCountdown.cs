@@ -26,13 +26,17 @@ public class BattleCountdown : MatchPhase
         protected set { }
     }
 
+    public override bool inGamingMode
+    {
+        get => true; 
+        protected set{}
+    }
+
     public override void StartState()
     {
+        base.StartState();
         MatchManager.Instance.MatchTimer = 10;
-        Debug.Log("STAGE 2 - Starting phase 'BattleCountdown'. The battle will start in " + MatchManager.Instance.MatchTimer + "s.");
     }
-    
-    public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
@@ -45,9 +49,5 @@ public class BattleCountdown : MatchPhase
         if (MatchManager.Instance.MatchTimer > 0)
             return this;
         return new Battle();
-    }
-
-    public override void EndState()
-    {
     }
 }

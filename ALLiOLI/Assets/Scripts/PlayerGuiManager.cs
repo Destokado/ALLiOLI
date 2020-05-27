@@ -24,6 +24,7 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void SetupForCurrentPhase(Player player)
     {
+        GameManager.Instance.UpdateCursorMode();
         ShowNumberOfTraps(player);
         ShowReadiness(player);
     }
@@ -36,8 +37,8 @@ public class PlayerGuiManager : MonoBehaviour
         if (!show)
             return;
         
-        int currentTraps = player.HumanLocalPlayer.ownedTraps.Count;
-        int maxNumberOfTraps = player.HumanLocalPlayer.maxOwnableTraps;
+        int currentTraps = player.HumanLocalPlayer.OwnedTraps.Count;
+        int maxNumberOfTraps = player.HumanLocalPlayer.MaxOwnableTraps;
         trapsCounter.SetText(currentTraps + "/" + maxNumberOfTraps);
     }
 

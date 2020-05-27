@@ -19,7 +19,7 @@ public class MatchManager : NetworkBehaviour
     }
     public MatchPhase CurrentPhase { get; private set ; }
     
-    public bool IsMatchRunning => (Instance.CurrentPhase != null && Instance.CurrentPhase.Id() >= 0);
+    //public bool IsMatchRunning => Instance.CurrentPhase != null && Instance.CurrentPhase.Id() >= 0 && !(Instance.CurrentPhase is End);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
 
@@ -98,11 +98,11 @@ public class MatchManager : NetworkBehaviour
         if (phase == null)
         {
             phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
-            Debug.Log( $"Restarting the CurrentPhase obtained from the currentPhaseId '{currentPhaseId}' ({(phase!=null?phase.GetType().Name:"null")}) as a MatchPhase object.");
+            Debug.Log( $"Restarting the CurrentPhase - obtained from the currentPhaseId '{currentPhaseId}' ({(phase!=null?phase.GetType().Name:"null")}) as a MatchPhase object.");
         } 
         else
         {
-            Debug.Log($"Restarting the CurrentPhase. ({phase.GetType().Name})");
+            Debug.Log($"Restarting the CurrentPhase ({phase.GetType().Name}).");
         }
 
         SetNewMatchPhase(phase);
@@ -111,10 +111,7 @@ public class MatchManager : NetworkBehaviour
     [Client]
     private void SetNewMatchPhase(MatchPhase newPhase)
     {
-        if (newPhase != null)
-            Debug.Log($"Setting new phase {newPhase.GetType().Name}");
-        else
-            Debug.Log("Setting NULL phase");
+        Debug.Log($"Switching match phase. From '{(CurrentPhase != null?CurrentPhase.GetType().Name:"NULL")}' to '{(newPhase != null?newPhase.GetType().Name:"NULL")}'.");
         
         if (isServer)
             SetAllPlayersAsNotReady();
@@ -145,7 +142,6 @@ public class MatchManager : NetworkBehaviour
             if (client.PlayersManager != null)
                 foreach (Player player in client.PlayersManager.players)
                 {
-                    //player.CmdSetReady(false);
                     player.isReady = false;
                 }
         }
@@ -187,7 +183,7 @@ public class MatchManager : NetworkBehaviour
         float hue = 1f / (steps+1f/(steps-1)) * (playerIndex-1);
         while (hue > 1)
             hue -= 1;
-        Debug.Log($"HUE {hue}");
+        // Debug.Log($"HUE {hue}");
         
         const float saturation = 0.85f;
         const float valueBrightness = 1f;

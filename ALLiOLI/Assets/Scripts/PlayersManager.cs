@@ -41,8 +41,9 @@ public class PlayersManager : NetworkBehaviour
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         int id = playerInput.GetComponent<HumanLocalPlayer>().id;
-        Debug.Log("Local player with local number " + playerInput.playerIndex + " and HumanLocalPlayer id '" + id + "' joined with input device: " + playerInput.devices[0], playerInput.gameObject);
-        CmdSpawnNewPlayer(Client.localClient.clientId, id);
+        Debug.Log(
+            $"Local player with local index {playerInput.playerIndex} and HumanLocalPlayer id '{id}' joined with input device: '{playerInput.devices[0]}'", playerInput.gameObject);
+        CmdSpawnNewPlayer(Client.LocalClient.clientId, id);
     }
 
     /// <summary>

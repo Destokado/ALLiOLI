@@ -37,10 +37,10 @@ public class GameGuiManager : MonoBehaviour
 
     public void UpdateOnlineLobby(bool showLobby)
     {
-        if (Client.localClient == null)
+        if (Client.LocalClient == null)
             return;
 
-        startMatchButton.SetActive(Client.localClient.isServer);
+        startMatchButton.SetActive(Client.LocalClient.isServer);
 
         clientsPanel.transform.DestroyAllChildren();
 

@@ -26,25 +26,22 @@ public class End : MatchPhase
         get => false;
         protected set { }
     }
-    
+
+    public override bool inGamingMode
+    {
+        get => false; 
+        protected set{}
+    }
+
     public override void StartState()
     {
-        Debug.Log("STAGE 3 - Starting phase 'End'. The game has finished.\nThe winner is " + MatchManager.Instance.WinnerPlayerNetId);
+        base.StartState();
         MatchManager.Instance.guiManager.UpdateEndScreen(true);
-    }
-    
-    public override void ServerStartState() {}
-
-    public override void UpdateState(float deltaTime)
-    {
     }
 
     public override State GetCurrentState()
     {
         return this;
     }
-
-    public override void EndState()
-    {
-    }
+    
 }

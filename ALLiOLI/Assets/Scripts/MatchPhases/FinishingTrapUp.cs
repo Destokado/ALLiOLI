@@ -26,14 +26,17 @@ public class FinishingTrapUp : MatchPhase
         protected set { }
     }
 
+    public override bool inGamingMode
+    {
+        get => true; 
+        protected set{}
+    }
+
     public override void StartState()
     {
+        base.StartState();
         MatchManager.Instance.MatchTimer = 5;
-        Debug.Log("STAGE 1 - Starting phase 'FinishingTrapUp'. The 1st stage will end in " +
-                  MatchManager.Instance.MatchTimer + "s.");
     }
-    
-    public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
@@ -46,9 +49,5 @@ public class FinishingTrapUp : MatchPhase
         if (MatchManager.Instance.MatchTimer > 0)
             return this;
         return new BattleCountdown();
-    }
-
-    public override void EndState()
-    {
     }
 }

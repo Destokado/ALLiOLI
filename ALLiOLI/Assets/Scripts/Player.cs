@@ -89,7 +89,7 @@ public class Player : NetworkBehaviour
             if (value != null)
             {
                 _humanLocalPlayer.Player = this;
-                HumanLocalPlayer.localPlayerNumber = Client.localClient.PlayersManager.players.Count;
+                HumanLocalPlayer.localPlayerNumber = Client.LocalClient.PlayersManager.players.Count;
             }
         }
     }
@@ -131,8 +131,7 @@ public class Player : NetworkBehaviour
     {
         if (oldVal != -1)
             Debug.LogWarning("Trying to change the playerIndex of a Player. It shouldn't be done.");
-
-        Debug.Log("Setting index " + newVal);
+        
         gameObject.name =
             $"Player {playerIndex} | {(IsControlledLocally ? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely")}";
         Color = MatchManager.Instance.GetColor(playerIndex);
@@ -147,6 +146,8 @@ public class Player : NetworkBehaviour
     public override void OnStartClient()
     {
         Client.PlayersManager.players.Add(this);
+        transform.SetParent(Client.transform, true);
+        Debug.Log($"Added player to owner client's player list.");
         
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
@@ -161,7 +162,6 @@ public class Player : NetworkBehaviour
         {
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
-            Debug.LogWarning($"Client that hasAuthority called 'CmdSetupPlayerOnServer' and 'CmdSpawnNewCharacter'");
         }
 
         SetupForCurrentPhase();

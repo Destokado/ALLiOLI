@@ -11,15 +11,15 @@ public class Cheats
         {
             Trap[] allTraps = Object.FindObjectsOfType<Trap>();
             
-            foreach (Player player in Client.localClient.PlayersManager.players)
+            foreach (Player player in Client.LocalClient.PlayersManager.players)
             {
                 if (player.HumanLocalPlayer == null)
                     continue;
                 
                 foreach (Trap trap in allTraps)
-                    player.HumanLocalPlayer.ownedTraps.Add(trap);
+                    player.HumanLocalPlayer.OwnedTraps.Add(trap);
                 
-                Debug.Log("Player '" + player.name + "' owns " + player.HumanLocalPlayer.ownedTraps.Count + " traps.");
+                Debug.Log("Player '" + player.name + "' owns " + player.HumanLocalPlayer.OwnedTraps.Count + " traps.");
             }
         }
         else

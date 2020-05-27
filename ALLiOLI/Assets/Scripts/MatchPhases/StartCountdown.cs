@@ -26,14 +26,17 @@ public class StartCountdown : MatchPhase
         protected set { }
     }
 
+    public override bool inGamingMode
+    {
+        get => false; 
+        protected set{}
+    }
+
     public override void StartState()
     {
+        base.StartState();
         MatchManager.Instance.MatchTimer = 10;
-        Debug.Log("STAGE 0 - Starting phase 'StartCountdown'. The 1st stage will start in " +
-                  MatchManager.Instance.MatchTimer + "s.");
     }
-    
-    public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
@@ -46,9 +49,5 @@ public class StartCountdown : MatchPhase
         if (MatchManager.Instance.MatchTimer > 0)
             return this;
         return new TrapUp();
-    }
-
-    public override void EndState()
-    {
     }
 }

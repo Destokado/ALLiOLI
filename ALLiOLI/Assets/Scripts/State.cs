@@ -1,6 +1,4 @@
-﻿using Mirror;
-
-public abstract class State
+﻿public abstract class State
 {
     public abstract void StartState();
     public abstract void UpdateState(float deltaTime);

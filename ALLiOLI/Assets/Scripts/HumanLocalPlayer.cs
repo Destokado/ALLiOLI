@@ -104,12 +104,11 @@ public class HumanLocalPlayer : MonoBehaviour
     
     [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
 
-    private Trap trapInFront
+    private Trap TrapInFront
     {
         get => _trapInFront;
         set
         {
-            
             //if (value != _trapInFront)
                 playerGui.ShowInteractionText(value != null &&
                                           (MatchManager.Instance.CurrentPhase is TrapUp ||
@@ -117,18 +116,18 @@ public class HumanLocalPlayer : MonoBehaviour
             _trapInFront = value;
         }
     }
-
+    // ReSharper disable once InconsistentNaming
     private Trap _trapInFront;
+    
     private GameObject lastObjectInFront;
     public int localPlayerNumber;
 
-    public TrapManager ownedTraps { get; private set; }
-    public int maxOwnableTraps => 50 / MatchManager.TotalCurrentPlayers;
+    public TrapManager OwnedTraps { get; private set; }
+    public int MaxOwnableTraps => 50 / MatchManager.TotalCurrentPlayers;
 
     private void Awake()
     {
-        ownedTraps = new TrapManager();
-        GameManager.Instance.UpdateCursorMode();
+        OwnedTraps = new TrapManager();
     }
 
     private void SetDynamicName()
@@ -160,7 +159,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void UpdateRadarTraps()
     {
         List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport =
-            ownedTraps.GetCharactersInEachTrapRadar(Player);
+            OwnedTraps.GetCharactersInEachTrapRadar(Player);
         playerGui.ReportInRadar(radarReport);
     }
 
@@ -173,26 +172,26 @@ public class HumanLocalPlayer : MonoBehaviour
             if (lastObjectInFront != hit.collider.gameObject)
             {
                 lastObjectInFront = hit.collider.gameObject;
-                trapInFront = hit.transform.GetComponentInParent<Trap>();
+                TrapInFront = hit.transform.GetComponentInParent<Trap>();
             }
         }
         else
         {
             lastObjectInFront = null;
-            trapInFront = null;
+            TrapInFront = null;
         }
     }
 
     public void SetUpTrapInFront()
     {
-        if (trapInFront == null)
+        if (TrapInFront == null)
             return;
 
-        if (!ownedTraps.Remove(trapInFront))
-            ownedTraps.Add(trapInFront);
+        if (!OwnedTraps.Remove(TrapInFront))
+            OwnedTraps.Add(TrapInFront);
 
         playerGui.ShowNumberOfTraps(Player);
-        DebugPro.LogEnumerable(ownedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
+        DebugPro.LogEnumerable(OwnedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
             gameObject);
     }
 
@@ -238,7 +237,7 @@ public class HumanLocalPlayer : MonoBehaviour
         switch (currentState)
         {
             case Battle battle:
-                Trap bestTrapToActivate = ownedTraps.GetBestTrapToActivate(Player);
+                Trap bestTrapToActivate = OwnedTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
                     Player.CmdActivateTrap(bestTrapToActivate.netId);
                 break;
@@ -279,9 +278,9 @@ public class HumanLocalPlayer : MonoBehaviour
     }
     
     #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
-            foreach (Trap trap in ownedTraps)
+            foreach (Trap trap in OwnedTraps)
             {
                 Vector3 characterPosition = Player.Character.transform.position;
                 Vector3 trapPos = trap.transform.position;

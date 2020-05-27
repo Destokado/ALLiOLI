@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogWarning("Multiple GameManagers have been created", this);
+            Debug.LogWarning("Multiple GameManagers have been created!", this);
             return;
         }
 
@@ -39,16 +39,18 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        //UpdateCursorMode();
+        //UpdateCursorMode(); //TODO: Test if needed to update the cursor every time the app focus changes
     }
 
     public void UpdateCursorMode()
     {
-        bool gamingMode = (MatchManager.Instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused);
+        bool matchInGamingMode = MatchManager.Instance != null && MatchManager.Instance.CurrentPhase != null && MatchManager.Instance.CurrentPhase.inGamingMode;
+        //bool gamingMode = MatchManager.Instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused;
+
+        bool cursorGameMode = matchInGamingMode && Client.IsThereALocalPlayer() && !PauseMenuShowing && Application.isFocused;
+        //Debug.Log($"Is cursor in in-game mode? {cursorGameMode}");
         
-        Debug.Log($"Hide and lock cursor (gamingMode)? {gamingMode}");
-        
-        SetCursorMode(gamingMode);
+        SetCursorMode(cursorGameMode);
     }
 
     /// <summary>
@@ -63,21 +65,21 @@ public class GameManager : MonoBehaviour
 
     public void ExitGame()
     {
-        Debug.Log($"Exiting the game. Client? {Client.localClient.isClient} - Server? {Client.localClient.isServer}");
+        Debug.Log($"Exiting the game. Client? {Client.LocalClient.isClient} - Server? {Client.LocalClient.isServer}");
 
-        if (Client.localClient.isClient && Client.localClient.isServer)
+        if (Client.LocalClient.isClient && Client.LocalClient.isServer)
         {
             Debug.Log("STOPPING HOST");   
             NetworkManager.singleton.StopHost();
         }
         
-        if (Client.localClient.isClient)
+        if (Client.LocalClient.isClient)
         {
             Debug.Log("STOPPING CLIENT");            
             NetworkManager.singleton.StopClient();
         }
         
-        if (Client.localClient.isServer)
+        if (Client.LocalClient.isServer)
         {
             Debug.Log("STOPPING SERVER");
             NetworkManager.singleton.StopServer();

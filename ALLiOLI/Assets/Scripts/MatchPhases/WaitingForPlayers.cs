@@ -27,15 +27,19 @@ public class WaitingForPlayers : MatchPhase
         protected set { }
     }
 
+    public override bool inGamingMode
+    {
+        get => true; 
+        protected set{}
+    }
+
     public override void StartState()
     {
-        Debug.Log("STAGE 0 - Starting phase 'WaitingForPlayers'.");
+        base.StartState();
         MatchManager.Instance.MatchTimer = 1; // Securing timing, can not end instantly
-
         GameManager.Instance.GUI.SetStartMatchConfiguration();
     }
     
-    public override void ServerStartState() {}
 
     public override void UpdateState(float deltaTime)
     {
@@ -45,8 +49,6 @@ public class WaitingForPlayers : MatchPhase
 
     public override State GetCurrentState()
     {
-        //Debug.Log($"TotalCurrentPlayers = {MatchManager.TotalCurrentPlayers}, MatchTimer = {MatchManager.Instance.MatchTimer}");
-        
         if (MatchManager.TotalCurrentPlayers <= 0 || MatchManager.Instance.MatchTimer > 0)
             return this;
         
@@ -54,10 +56,5 @@ public class WaitingForPlayers : MatchPhase
             return new StartCountdown();
 
         return this;
-    }
-
-    public override void EndState()
-    {
-        
     }
 }

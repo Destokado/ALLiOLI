@@ -2,11 +2,9 @@
 
 public class Battle : MatchPhase
 {
-    private MatchPhase matchPhaseImplementation;
-
     public override string informativeText
     {
-        get => "Bring the flag to the spawn point.";
+        get => "Bring the flag to the spawn point";
         protected set { }
     }
 
@@ -28,19 +26,16 @@ public class Battle : MatchPhase
         protected set { }
     }
 
-    public override void StartState()
+    public override bool inGamingMode
     {
-        Debug.Log("STAGE 2 - Starting phase 'Battle'. The battle just started.");
-        //MatchManager.Instance.KillActiveCharacters();
+        get => true; 
+        protected set{}
     }
-
+    
     public override void ServerStartState()
     {
+        base.ServerStartState();
         FlagSpawner.Instance.Spawn();
-    }
-
-    public override void UpdateState(float deltaTime)
-    {
     }
 
     public override State GetCurrentState()
@@ -50,8 +45,5 @@ public class Battle : MatchPhase
         
         return new End();
     }
-
-    public override void EndState()
-    {
-    }
+    
 }
