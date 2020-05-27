@@ -16,13 +16,15 @@ public class TrapUp : MatchPhase
 
     public override bool showReadiness
     {
-        get => true;
+        //get => true;
+        get => false;
         protected set { }
     }
 
     public override bool showMatchTimer
     {
-        get => true;
+        //get => true;
+        get => false;
         protected set { }
     }
 
@@ -35,7 +37,8 @@ public class TrapUp : MatchPhase
     public override void StartState()
     {
         base.StartState();
-        MatchManager.Instance.MatchTimer = 30;
+        //MatchManager.Instance.MatchTimer = 30;
+        Cheats.OwnAllTraps();
     }
 
     public override void UpdateState(float deltaTime)
@@ -46,8 +49,8 @@ public class TrapUp : MatchPhase
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.MatchTimer > 0 || !MatchManager.Instance.AreAllPlayersReady())
-            return this;
+        //if (MatchManager.Instance.MatchTimer > 0 || !MatchManager.Instance.AreAllPlayersReady())
+        //    return this;
 
         return new FinishingTrapUp();
     }

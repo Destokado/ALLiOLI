@@ -6,6 +6,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[SelectionBase]
 public class Player : NetworkBehaviour
 {
     /// <summary>

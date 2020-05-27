@@ -3,7 +3,7 @@ using System.Collections;
 using Mirror;
 using UnityEngine;
 
-//[RequireComponent(typeof(Rigidbody))]
+[SelectionBase]
 [RequireComponent(typeof(CharacterMovementController))]
 public class Character : NetworkBehaviour
 {
