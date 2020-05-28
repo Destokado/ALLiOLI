@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        //UpdateCursorMode(); //TODO: Test if needed to update the cursor every time the app focus changes
+        UpdateCursorMode();
     }
 
     public void UpdateCursorMode()
