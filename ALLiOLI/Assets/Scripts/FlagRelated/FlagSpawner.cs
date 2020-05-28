@@ -28,12 +28,13 @@ public class FlagSpawner : NetworkBehaviour
         rng = new EasyRandom();
     }
 
+    [Server]
     public void Spawn()
     {
         if (flag != null) Destroy(flag);
         Vector3 spawnPos = flagPositions[rng.GetRandomInt(0, flagPositions.Length)].position;
         flag = Instantiate(flagPrefab, spawnPos, Quaternion.identity);
         NetworkServer.Spawn(flag);
-        Debug.Log("The flag has spawn at:" + spawnPos, flag);
+        Debug.Log($"The flag has spawn at: {spawnPos}", flag);
     }
 }

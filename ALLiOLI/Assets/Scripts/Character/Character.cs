@@ -10,9 +10,12 @@ public class Character : NetworkBehaviour
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public Transform interactionRayOrigin;
 
-    [HideInInspector] public Flag flag;
-    [SerializeField] public Transform flagPosition;
-
+    
+    [SyncVar(hook = nameof(newHasFlagValueeeee))] public bool hasFlag;
+    private void newHasFlagValue(bool oldVal, bool newVal)
+    {
+        
+    }
 
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
 
@@ -69,7 +72,7 @@ public class Character : NetworkBehaviour
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
 
-    [ClientRpc]
+    [ClientRpc] // Called on all clients
     public void RpcDie(Vector3 impact, Vector3 impactPoint)
     {
         if (!isDead)
@@ -78,7 +81,6 @@ public class Character : NetworkBehaviour
 
     private IEnumerator DieCoroutine(Vector3 impact, Vector3 impactPoint)
     {
-        Debug.Log("CHAR DYING: " + gameObject.name);
         isDead = true;
         if (flag != null) flag.Detach();
         movementController.enabled = false;

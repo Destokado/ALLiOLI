@@ -58,4 +58,5 @@ public class Spawner : NetworkBehaviour
         Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
     #endif
+
 }
