@@ -2,6 +2,7 @@
 using Mirror;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Spawner : NetworkBehaviour
 {
@@ -52,6 +53,7 @@ public class Spawner : NetworkBehaviour
     #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        Handles.zTest = CompareFunction.LessEqual;
         Handles.color = Color.cyan;
         Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }

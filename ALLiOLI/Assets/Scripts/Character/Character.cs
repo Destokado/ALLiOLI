@@ -30,7 +30,7 @@ public class Character : NetworkBehaviour
             _owner = value;
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
-            transform.SetParent(value.transform);
+            transform.SetParent(value.transform, true);
             UpdateColor();
         }
     }

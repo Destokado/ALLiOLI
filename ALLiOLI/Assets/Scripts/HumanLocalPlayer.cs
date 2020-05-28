@@ -138,7 +138,7 @@ public class HumanLocalPlayer : MonoBehaviour
         else
         {
             newName = "HumanLocalPlayer " + id + " of " + Player.name;
-            transform.SetParent(Player.transform);
+            transform.SetParent(Player.transform, true);
         }
 
         gameObject.name = newName;

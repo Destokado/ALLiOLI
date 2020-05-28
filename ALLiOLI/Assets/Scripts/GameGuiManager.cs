@@ -37,7 +37,7 @@ public class GameGuiManager : MonoBehaviour
 
     public void UpdateOnlineLobby(bool showLobby)
     {
-        if (Client.LocalClient == null)
+        /*if (Client.LocalClient == null)
             return;
 
         startMatchButton.SetActive(Client.LocalClient.isServer);
@@ -55,7 +55,7 @@ public class GameGuiManager : MonoBehaviour
                 go.GetComponent<Image>().color = UnityEngine.Random.ColorHSV(0f, 1f, 0.7f, 0.9f, 1f, 1f);
             }
         
-        lobby.SetActive(showLobby);
+        lobby.SetActive(showLobby);*/
     }
     
     public void StartMatch()

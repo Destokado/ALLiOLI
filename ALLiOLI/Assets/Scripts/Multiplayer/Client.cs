@@ -41,7 +41,7 @@ public class Client : NetworkBehaviour
         
         base.OnStartClient();
 
-        transform.SetParent(NetworkManager.singleton.transform, false);
+        transform.SetParent(NetworkManager.singleton.transform, true);
         MatchManager.Instance.Clients.Add(this);
 
         
