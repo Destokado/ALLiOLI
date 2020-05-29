@@ -55,7 +55,6 @@ public class FlagManager : NetworkBehaviour
         flag.gameObject.SetActive(false);
         
         flag.AttachTo(character);
-        character.hasFlag = true;
         Debug.Log($"Flag picked by: {character.gameObject.name}");
 }
     
@@ -63,8 +62,17 @@ public class FlagManager : NetworkBehaviour
     public void FlagDropped(Vector3 position)
     {
         SpawnFlagOnAllClients(position);
-        flag.carrier.hasFlag = false;
         flag.Detach();
         Debug.Log($"The flag has been dropped at: {position}", flag);
+    }
+
+    [Server]
+    public void ClearFlags()
+    {
+        if (!flag) return;
+        
+        flag.Reset();
+        NetworkServer.UnSpawn(flag.gameObject);
+        flag.gameObject.SetActive(false);
     }
 }

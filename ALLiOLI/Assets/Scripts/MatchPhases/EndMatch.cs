@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-public class End : MatchPhase
+public class EndMatch : MatchPhase
 {
     public override string informativeText
     {
@@ -9,7 +9,7 @@ public class End : MatchPhase
         protected set { }
     }
 
-    public override bool showTrapsCounter
+    public override bool allowMovement
     {
         get => false;
         protected set { }

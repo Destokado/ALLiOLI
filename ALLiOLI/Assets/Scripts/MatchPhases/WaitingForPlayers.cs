@@ -9,9 +9,9 @@ public class WaitingForPlayers : MatchPhase
         protected set { }
     }
 
-    public override bool showTrapsCounter
+    public override bool allowMovement
     {
-        get => false;
+        get => true;
         protected set { }
     }
 
@@ -53,7 +53,7 @@ public class WaitingForPlayers : MatchPhase
             return this;
         
         if ( MatchManager.instance.AreAllPlayersReady())
-            return new StartCountdown();
+            return new BattleCountdown();
 
         return this;
     }

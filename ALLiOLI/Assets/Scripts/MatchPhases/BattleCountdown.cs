@@ -8,9 +8,9 @@ public class BattleCountdown : MatchPhase
         protected set { }
     }
 
-    public override bool showTrapsCounter
+    public override bool allowMovement
     {
-        get => false;
+        get => true;
         protected set { }
     }
 

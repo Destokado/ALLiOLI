@@ -1,27 +1,47 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Object = UnityEngine.Object;
 
 public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
-    
+
     public List<Client> clients { get; private set; }
     [SerializeField] private Color[] playerColors;
 
     [SyncVar(hook = nameof(SetNewPhaseById))]
     private int currentPhaseId = MatchPhaseManager.GetPhaseId(new WaitingForPlayers()); // -420; // Dummy value
+
     public void SetNewPhaseById(int oldVal, int newVal)
     {
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
-    public MatchPhase currentPhase { get; private set ; }
-    
+
+    public MatchPhase currentPhase { get; private set; }
+
     //public bool IsMatchRunning => Instance.CurrentPhase != null && Instance.CurrentPhase.Id() >= 0 && !(Instance.CurrentPhase is End);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
+    public TrapsManager AllTraps
+    {
+        get
+        {
+            if (_allTraps == null)
+            {
+                _allTraps = new TrapsManager();
+                _allTraps.AddRange(Object.FindObjectsOfType<Trap>());
+            }
+
+            return _allTraps;
+        }
+    }
+
+    private TrapsManager _allTraps;
 
     public float matchTimer
     {
@@ -34,13 +54,28 @@ public class MatchManager : NetworkBehaviour
     }
 
     public static MatchManager instance { get; private set; }
-    
-    public bool thereIsWinner => winnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
-    [field: SyncVar(hook = nameof(newWinnerPlayerNetId))] public uint winnerPlayerNetId { get; private set; }
-    private void newWinnerPlayerNetId(uint oldId, uint newId) {
-        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newId);
-        Debug.Log("Got the winner id: " + winnerPlayerNetId + ". So, is there a winner? " + thereIsWinner + ", and it is " + (winner != null? winner.gameObject.name : "NULL"));
-        guiManager.UpdateEndScreen();
+
+    public bool thereIsWinner => roundWinnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
+
+    [field: SyncVar(hook = nameof(newRoundWinnerPlayerNetId))]
+    public uint roundWinnerPlayerNetId { get; private set; }
+    private void newRoundWinnerPlayerNetId(uint oldId, uint newId)
+    {
+        if (newRoundWinnerPlayerNetIdEvent != null) newRoundWinnerPlayerNetIdEvent();
+        guiManager.UpdateEndScreen(); // TODO Change to event subscription like in EndRound phase
+    }
+    public Action newRoundWinnerPlayerNetIdEvent;
+    public string roundWinnerName
+    {
+        get
+        {
+            Player winner = roundWinnerPlayer;
+            string winnerName = winner != null ? winner.gameObject.name : "NULL";
+            return winnerName;
+        }
+    }
+    public Player roundWinnerPlayer {
+        get => (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer( roundWinnerPlayerNetId);
     }
 
     private void Awake()
@@ -153,7 +188,13 @@ public class MatchManager : NetworkBehaviour
         if (thereIsWinner)
             return;
         
-        winnerPlayerNetId = carrier.netId;
+        roundWinnerPlayerNetId = carrier.netId;
+    }
+    
+    [Server]
+    public void ResetWinner()
+    {
+        roundWinnerPlayerNetId = 0u;
     }
     
     public bool AreAllPlayersReady()
@@ -207,5 +248,25 @@ public class MatchManager : NetworkBehaviour
             foreach (Player player in client.PlayersManager.players)
                 player.Character.ServerSuicide();
     }
+
+    
+        
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        foreach (Trap trap in AllTraps)
+        {
+            Vector3 characterPosition = transform.position;
+            Vector3 trapPos = trap.transform.position;
+            //float halfHeight = (characterPosition.y-trapPos.y)*0.5f;
+            //Vector3 offset = Vector3.up * halfHeight;
+             
+            Handles.DrawBezier(
+                characterPosition, trapPos, 
+                characterPosition + Vector3.up, trap.transform.position + trap.transform.forward + Vector3.up, 
+                Color.green, EditorGUIUtility.whiteTexture, 1f);
+        }
+    }
+#endif
 
 }

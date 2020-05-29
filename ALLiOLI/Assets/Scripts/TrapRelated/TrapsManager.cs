@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class TrapManager : List<Trap>
+public class TrapsManager : List<Trap>
 {
     /*public TrapManager(List<Trap> trapsInManager)
     {

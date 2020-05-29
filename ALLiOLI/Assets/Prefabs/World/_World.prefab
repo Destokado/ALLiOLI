@@ -53285,6 +53285,26 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2746720676477936126, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: flagPositions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640114150368244252, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640114150368244252, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.304
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640114150368244252, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.245
+      objectReference: {fileID: 0}
     - target: {fileID: 3640114151500773589, guid: 29aae8f061c20884e883287e69b059dc,
         type: 3}
       propertyPath: m_LocalPosition.x

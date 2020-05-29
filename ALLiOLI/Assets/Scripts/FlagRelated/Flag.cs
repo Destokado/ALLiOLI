@@ -7,7 +7,19 @@ public class Flag : NetworkBehaviour
 {
     public bool hasOwner => owner != null;
     public Player owner { get; private set; } //Last player that carried the flag
-    public Character carrier { get; private set; } //Currently carrying the flag
+    public Character carrier //Currently carrying the flag
+    {
+        get => _carrier;
+        private set
+        {
+            if (value == _carrier) return;
+            if (_carrier != null) _carrier.hasFlag = false;
+            _carrier = value;
+            if (_carrier != null) _carrier.hasFlag = true;
+        }
+    }
+    private Character _carrier;
+    
     [SyncVar] public bool canBePicked = true;
 
     private void OnTriggerEnter(Collider other)
@@ -37,5 +49,13 @@ public class Flag : NetworkBehaviour
         
         // The owner only changes one the flag is picked, so the flag can get into the spawn point by physics, ... and the last player that owned it would win
         // owner = null; 
+    }
+
+    [Server]
+    public void Reset()
+    {
+        canBePicked = true;
+        carrier = null;
+        owner = null;
     }
 }

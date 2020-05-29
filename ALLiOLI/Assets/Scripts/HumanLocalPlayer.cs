@@ -97,38 +97,11 @@ public class HumanLocalPlayer : MonoBehaviour
     // ReSharper disable once InconsistentNaming
     private Vector2 _cameraMovement;
 
-    /// <summary>
-    /// The maximum distance at which a trap can be to the character so the player can interact with it. // TODO: ensure if the distance id from the character or the camera
-    /// </summary>
-    [Space] [SerializeField] private float maxDistanceToInteractWithTrap = 7;
-    
-    [SerializeField] private LayerMask layersThatCanInterfereWithInteractions;
 
-    private Trap TrapInFront
-    {
-        get => _trapInFront;
-        set
-        {
-            //if (value != _trapInFront)
-                playerGui.ShowInteractionText(value != null &&
-                                          (MatchManager.instance.currentPhase is TrapUp ||
-                                           MatchManager.instance.currentPhase is FinishingTrapUp));
-            _trapInFront = value;
-        }
-    }
-    // ReSharper disable once InconsistentNaming
-    private Trap _trapInFront;
-    
-    private GameObject lastObjectInFront;
+
     public int localPlayerNumber;
-
-    public TrapManager OwnedTraps { get; private set; }
-    public int MaxOwnableTraps => 50 / MatchManager.TotalCurrentPlayers;
-
-    private void Awake()
-    {
-        OwnedTraps = new TrapManager();
-    }
+    
+    
 
     private void SetDynamicName()
     {
@@ -149,51 +122,16 @@ public class HumanLocalPlayer : MonoBehaviour
         if (Player == null)
             return;
 
-        if (Player.Character != null)
-            //TODO: highlight the 'trapInFront'
-            UpdateObjectsInFront();
-
         UpdateRadarTraps();
     }
 
     private void UpdateRadarTraps()
     {
         List<KeyValuePair<Trap, SortedList<float, Character>>> radarReport =
-            OwnedTraps.GetCharactersInEachTrapRadar(Player);
+            MatchManager.instance.AllTraps.GetCharactersInEachTrapRadar(Player);
         playerGui.ReportInRadar(radarReport);
     }
 
-    private void UpdateObjectsInFront()
-    {
-        Ray ray = new Ray(Player.Character.interactionRayOrigin.position, Camera.transform.forward);
-        Debug.DrawRay(ray.origin, ray.direction, Color.green);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteractWithTrap, layersThatCanInterfereWithInteractions))
-        {
-            if (lastObjectInFront != hit.collider.gameObject)
-            {
-                lastObjectInFront = hit.collider.gameObject;
-                TrapInFront = hit.transform.GetComponentInParent<Trap>();
-            }
-        }
-        else
-        {
-            lastObjectInFront = null;
-            TrapInFront = null;
-        }
-    }
-
-    public void SetUpTrapInFront()
-    {
-        if (TrapInFront == null)
-            return;
-
-        if (!OwnedTraps.Remove(TrapInFront))
-            OwnedTraps.Add(TrapInFront);
-
-        playerGui.ShowNumberOfTraps(Player);
-        DebugPro.LogEnumerable(OwnedTraps, ", ", "The current owned traps for the player " + gameObject.name + " are: ",
-            gameObject);
-    }
 
     #region input
 
@@ -237,12 +175,9 @@ public class HumanLocalPlayer : MonoBehaviour
         switch (currentState)
         {
             case Battle battle:
-                Trap bestTrapToActivate = OwnedTraps.GetBestTrapToActivate(Player);
+                Trap bestTrapToActivate = MatchManager.instance.AllTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
                     Player.CmdActivateTrap(bestTrapToActivate.netId);
-                break;
-            case TrapUp trapUp:
-                SetUpTrapInFront();
                 break;
         }
     }
@@ -276,22 +211,5 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         playerGui.SetupForCurrentPhase(Player);
     }
-    
-    #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            foreach (Trap trap in OwnedTraps)
-            {
-                Vector3 characterPosition = Player.Character.transform.position;
-                Vector3 trapPos = trap.transform.position;
-                //float halfHeight = (characterPosition.y-trapPos.y)*0.5f;
-                //Vector3 offset = Vector3.up * halfHeight;
-             
-                Handles.DrawBezier(
-                    characterPosition, trapPos, 
-                    characterPosition + Vector3.up, trap.transform.position + trap.transform.forward + Vector3.up, 
-                    Player.Color, EditorGUIUtility.whiteTexture, 1f);
-            }
-        }
-    #endif
+
 }

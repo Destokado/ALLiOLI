@@ -8,9 +8,9 @@ public class Battle : MatchPhase
         protected set { }
     }
 
-    public override bool showTrapsCounter
+    public override bool allowMovement
     {
-        get => false;
+        get => true;
         protected set { }
     }
 
@@ -37,6 +37,7 @@ public class Battle : MatchPhase
         base.ServerStartState();
         FlagManager.Instance.Spawn();
         MatchManager.instance.KillAllCharacters();
+        MatchManager.instance.ResetWinner();
     }
 
     public override State GetCurrentState()
@@ -44,7 +45,7 @@ public class Battle : MatchPhase
         if (!MatchManager.instance.thereIsWinner)
             return this;
         
-        return new End();
+        return new EndRound();
     }
     
 }
