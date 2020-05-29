@@ -35,18 +35,18 @@ public class FinishingTrapUp : MatchPhase
     public override void StartState()
     {
         base.StartState();
-        MatchManager.Instance.MatchTimer = 3;
+        MatchManager.instance.matchTimer = 3;
     }
 
     public override void UpdateState(float deltaTime)
     {
-        if (MatchManager.Instance.MatchTimer > 0)
-            MatchManager.Instance.MatchTimer -= deltaTime;
+        if (MatchManager.instance.matchTimer > 0)
+            MatchManager.instance.matchTimer -= deltaTime;
     }
 
     public override State GetCurrentState()
     {
-        if (MatchManager.Instance.MatchTimer > 0)
+        if (MatchManager.instance.matchTimer > 0)
             return this;
         return new BattleCountdown();
     }

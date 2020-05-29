@@ -54,8 +54,8 @@ public class TrapUp : MatchPhase
 
     public override void UpdateState(float deltaTime)
     {
-        if (MatchManager.Instance.MatchTimer > 0)
-            MatchManager.Instance.MatchTimer -= deltaTime;
+        if (MatchManager.instance.matchTimer > 0)
+            MatchManager.instance.matchTimer -= deltaTime;
     }
 
     public override State GetCurrentState()

@@ -61,7 +61,7 @@ public class GameGuiManager : MonoBehaviour
     public void StartMatch()
     {
         lobby.SetActive(false);
-        MatchManager.Instance.StartMatch();
+        MatchManager.instance.StartMatch();
     }
 
     public void ShowPauseMenu(bool show)

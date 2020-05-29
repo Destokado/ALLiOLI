@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateCursorMode()
     {
-        bool matchInGamingMode = MatchManager.Instance != null && MatchManager.Instance.CurrentPhase != null && MatchManager.Instance.CurrentPhase.inGamingMode;
+        bool matchInGamingMode = MatchManager.instance != null && MatchManager.instance.currentPhase != null && MatchManager.instance.currentPhase.inGamingMode;
         //bool gamingMode = MatchManager.Instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused;
 
         bool cursorGameMode = matchInGamingMode && Client.IsThereALocalPlayer() && !PauseMenuShowing && Application.isFocused;

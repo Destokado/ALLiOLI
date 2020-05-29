@@ -36,7 +36,7 @@ public class End : MatchPhase
     public override void StartState()
     {
         base.StartState();
-        MatchManager.Instance.guiManager.UpdateEndScreen(true);
+        MatchManager.instance.guiManager.UpdateEndScreen(true);
     }
 
     public override State GetCurrentState()

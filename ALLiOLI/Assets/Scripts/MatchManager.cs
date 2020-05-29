@@ -8,7 +8,7 @@ public class MatchManager : NetworkBehaviour
 {
     private float _matchTimer;
     
-    public List<Client> Clients { get; private set; }
+    public List<Client> clients { get; private set; }
     [SerializeField] private Color[] playerColors;
 
     [SyncVar(hook = nameof(SetNewPhaseById))]
@@ -17,35 +17,35 @@ public class MatchManager : NetworkBehaviour
     {
         SetNewMatchPhase(MatchPhaseManager.GetNewMatchPhase(currentPhaseId));
     }
-    public MatchPhase CurrentPhase { get; private set ; }
+    public MatchPhase currentPhase { get; private set ; }
     
     //public bool IsMatchRunning => Instance.CurrentPhase != null && Instance.CurrentPhase.Id() >= 0 && !(Instance.CurrentPhase is End);
     [SerializeField] public MatchGuiManager guiManager; // General GUI (not the player specific one)
 
 
-    public float MatchTimer
+    public float matchTimer
     {
         get => _matchTimer;
         set
         {
             _matchTimer = value;
-            Instance.guiManager.SetTimer(_matchTimer);
+            instance.guiManager.SetTimer(_matchTimer);
         }
     }
 
-    public static MatchManager Instance { get; private set; }
+    public static MatchManager instance { get; private set; }
     
-    public bool ThereIsWinner => WinnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
-    [field: SyncVar(hook = nameof(UpdatedWinner))] public uint WinnerPlayerNetId { get; private set; }
-    private void UpdatedWinner(uint oldId, uint newId) {
+    public bool thereIsWinner => winnerPlayerNetId != 0u; // '0u' is the default value for 'uint' type
+    [field: SyncVar(hook = nameof(newWinnerPlayerNetId))] public uint winnerPlayerNetId { get; private set; }
+    private void newWinnerPlayerNetId(uint oldId, uint newId) {
         Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newId);
-        Debug.Log("Got the winner id: " + WinnerPlayerNetId + ". So, is there a winner? " + ThereIsWinner + ", and it is " + (winner != null? winner.gameObject.name : "NULL"));
+        Debug.Log("Got the winner id: " + winnerPlayerNetId + ". So, is there a winner? " + thereIsWinner + ", and it is " + (winner != null? winner.gameObject.name : "NULL"));
         guiManager.UpdateEndScreen();
     }
 
     private void Awake()
     {
-        if (Instance != null)
+        if (instance != null)
         {
             Debug.LogWarning("Multiple MatchManager have been created. Destroying the script of " + gameObject.name,
                 gameObject);
@@ -53,8 +53,8 @@ public class MatchManager : NetworkBehaviour
         }
         else
         {
-            Instance = this;
-            Clients = new List<Client>();
+            instance = this;
+            clients = new List<Client>();
         }
     }
     
@@ -71,15 +71,15 @@ public class MatchManager : NetworkBehaviour
         if (isServer)
             UpdateServer();
         
-        CurrentPhase?.UpdateState(Time.deltaTime);
+        currentPhase?.UpdateState(Time.deltaTime);
     }
 
     [Server]
     private void UpdateServer()
     {
-        State nextPhase = CurrentPhase?.GetCurrentState();
+        State nextPhase = currentPhase?.GetCurrentState();
         
-        if (CurrentPhase != nextPhase)
+        if (currentPhase != nextPhase)
             BroadcastNewMatchPhase((MatchPhase) nextPhase);
     }
     
@@ -93,7 +93,7 @@ public class MatchManager : NetworkBehaviour
     [Client]
     public void FinishAndRestartCurrentPhase()
     {
-        MatchPhase phase = CurrentPhase;
+        MatchPhase phase = currentPhase;
         
         if (phase == null)
         {
@@ -111,24 +111,24 @@ public class MatchManager : NetworkBehaviour
     [Client]
     private void SetNewMatchPhase(MatchPhase newPhase)
     {
-        Debug.Log($"Switching match phase. From '{(CurrentPhase != null?CurrentPhase.GetType().Name:"NULL")}' to '{(newPhase != null?newPhase.GetType().Name:"NULL")}'.");
+        Debug.Log($"Switching match phase. From '{(currentPhase != null?currentPhase.GetType().Name:"NULL")}' to '{(newPhase != null?newPhase.GetType().Name:"NULL")}'.");
         
         if (isServer)
             SetAllPlayersAsNotReady();
 
-        CurrentPhase?.EndState();
+        currentPhase?.EndState();
         
-        CurrentPhase = newPhase;
+        currentPhase = newPhase;
         
-        if (CurrentPhase == null)
+        if (currentPhase == null)
             return;
         
-        CurrentPhase.StartState();
-        if (isServer) CurrentPhase.ServerStartState();
+        currentPhase.StartState();
+        if (isServer) currentPhase.ServerStartState();
 
         guiManager.SetupForCurrentPhase(); // General GUI
 
-        foreach (Client client in Instance.Clients)
+        foreach (Client client in instance.clients)
             if (client.PlayersManager != null)
                 foreach (Player player in client.PlayersManager.players)
                     player.SetupForCurrentPhase(); // Player's UI
@@ -137,7 +137,7 @@ public class MatchManager : NetworkBehaviour
     [Server]
     public void SetAllPlayersAsNotReady()
     {
-        foreach (Client client in Instance.Clients)
+        foreach (Client client in instance.clients)
         {
             if (client.PlayersManager != null)
                 foreach (Player player in client.PlayersManager.players)
@@ -150,15 +150,15 @@ public class MatchManager : NetworkBehaviour
     [Server]
     public void FlagAtSpawn(Player carrier)
     {
-        if (ThereIsWinner)
+        if (thereIsWinner)
             return;
         
-        WinnerPlayerNetId = carrier.netId;
+        winnerPlayerNetId = carrier.netId;
     }
     
     public bool AreAllPlayersReady()
     {
-        foreach (Client client in Clients)
+        foreach (Client client in clients)
         foreach (Player player in client.PlayersManager.players)
             if (!player.isReady)
                 return false;
@@ -167,7 +167,7 @@ public class MatchManager : NetworkBehaviour
     }
     
     
-    public static int TotalCurrentPlayers => Instance.Clients.Sum(client => client.PlayersManager.players.Count);
+    public static int TotalCurrentPlayers => instance.clients.Sum(client => client.PlayersManager.players.Count);
     //public static int indexOfLastPlayer = -1;
     
     public Color GetColor(int playerIndex)
@@ -203,10 +203,9 @@ public class MatchManager : NetworkBehaviour
     [Server]
     public void KillAllCharacters()
     {
-        foreach (Client client in Clients)
+        foreach (Client client in clients)
             foreach (Player player in client.PlayersManager.players)
                 player.Character.ServerSuicide();
     }
-
 
 }

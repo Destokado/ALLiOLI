@@ -31,7 +31,7 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void ShowNumberOfTraps(Player player)
     {
-        bool show = MatchManager.Instance.CurrentPhase.showTrapsCounter;
+        bool show = MatchManager.instance.currentPhase.showTrapsCounter;
         trapsCounterGameobject.SetActive(show);
         
         if (!show)
@@ -45,7 +45,7 @@ public class PlayerGuiManager : MonoBehaviour
 
     public void ShowReadiness(Player player)
     {
-        bool show = MatchManager.Instance.CurrentPhase.showReadiness;
+        bool show = MatchManager.instance.currentPhase.showReadiness;
         readinessGameObject.SetActive(show);
         
         if (!show)

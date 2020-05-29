@@ -32,8 +32,8 @@ public class MatchGuiManager : MonoBehaviour
     public void SetupForCurrentPhase()
     {
         MatchPhase curPhase = null;
-        if (MatchManager.Instance != null)
-            curPhase = MatchManager.Instance.CurrentPhase;
+        if (MatchManager.instance != null)
+            curPhase = MatchManager.instance.currentPhase;
         matchTimerGameObject.SetActive(curPhase != null && curPhase.showMatchTimer);
         matchInformativeText.SetText(curPhase != null ? curPhase.informativeText : "");
     }
@@ -43,7 +43,7 @@ public class MatchGuiManager : MonoBehaviour
         if (forceSetActive)
             endScreen.SetActive(true);
         
-        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(MatchManager.Instance.WinnerPlayerNetId);
+        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(MatchManager.instance.winnerPlayerNetId);
         string winnerName = winner != null ? winner.gameObject.name : "NULL";
         endScreenText.SetText("The winner is " + winnerName + "!");
     }

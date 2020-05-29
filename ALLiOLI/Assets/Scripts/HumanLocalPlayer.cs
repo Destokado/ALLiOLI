@@ -111,8 +111,8 @@ public class HumanLocalPlayer : MonoBehaviour
         {
             //if (value != _trapInFront)
                 playerGui.ShowInteractionText(value != null &&
-                                          (MatchManager.Instance.CurrentPhase is TrapUp ||
-                                           MatchManager.Instance.CurrentPhase is FinishingTrapUp));
+                                          (MatchManager.instance.currentPhase is TrapUp ||
+                                           MatchManager.instance.currentPhase is FinishingTrapUp));
             _trapInFront = value;
         }
     }
@@ -232,7 +232,7 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null) return;
 
-        State currentState = MatchManager.Instance.CurrentPhase;
+        State currentState = MatchManager.instance.currentPhase;
 
         switch (currentState)
         {

@@ -46,8 +46,16 @@ public class Spawner : NetworkBehaviour
             return;
         
         Character character = other.GetComponent<Character>();
-        if (character && character.flag)
-            MatchManager.Instance.FlagAtSpawn(character.Owner);
+        if (character && character.hasFlag)
+            MatchManager.instance.FlagAtSpawn(character.Owner);
+
+        else
+        {
+            Flag flag = other.GetComponent<Flag>();
+            
+            if (flag && flag.hasOwner)
+                MatchManager.instance.FlagAtSpawn(flag.owner);
+        }
     }
 
     #if UNITY_EDITOR

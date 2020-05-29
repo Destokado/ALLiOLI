@@ -35,13 +35,13 @@ public class Battle : MatchPhase
     public override void ServerStartState()
     {
         base.ServerStartState();
-        FlagSpawner.Instance.Spawn();
-        MatchManager.Instance.KillAllCharacters();
+        FlagManager.Instance.Spawn();
+        MatchManager.instance.KillAllCharacters();
     }
 
     public override State GetCurrentState()
     {
-        if (!MatchManager.Instance.ThereIsWinner)
+        if (!MatchManager.instance.thereIsWinner)
             return this;
         
         return new End();

@@ -10,6 +10,7 @@ public class KillZone : MonoBehaviour
     [Tooltip("Not mandatory")]
     [SerializeField] private float minimumVelocityToKill = 0.75f;
     
+    // Should only be called on the server
     private void OnCollisionEnter(Collision other)
     {
         // Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
@@ -28,7 +29,7 @@ public class KillZone : MonoBehaviour
             }
         }
 
-        character.RpcDie(other.impulse, other.GetContact(0).point);
+        character.ServerDie(other.impulse, other.GetContact(0).point);
 
         // Print log of the kill
         string additionalReport = rigidbody? "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)" : "";
