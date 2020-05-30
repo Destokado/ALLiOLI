@@ -22,15 +22,13 @@ public class CharacterMovement : MonoBehaviour
     private Quaternion freeRotation;
     private Camera mainCamera;
     private float velocity;
-
-	// Use this for initialization
+    
 	void Start ()
 	{
 	    anim = GetComponent<Animator>();
 	    mainCamera = Camera.main;
 	}
-
-	// Update is called once per frame
+	
 	void FixedUpdate ()
 	{
 	    input.x = Input.GetAxis("Horizontal");
@@ -63,11 +61,11 @@ public class CharacterMovement : MonoBehaviour
         {
             Vector3 lookDirection = targetDirection.normalized;
             freeRotation = Quaternion.LookRotation(lookDirection, transform.up);
-            var diferenceRotation = freeRotation.eulerAngles.y - transform.eulerAngles.y;
-            var eulerY = transform.eulerAngles.y;
+            float diferenceRotation = freeRotation.eulerAngles.y - transform.eulerAngles.y;
+            float eulerY = transform.eulerAngles.y;
 
             if (diferenceRotation < 0 || diferenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
-            var euler = new Vector3(0, eulerY, 0);
+            Vector3 euler = new Vector3(0, eulerY, 0);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(euler), turnSpeed * turnSpeedMultiplier * Time.deltaTime);
         }

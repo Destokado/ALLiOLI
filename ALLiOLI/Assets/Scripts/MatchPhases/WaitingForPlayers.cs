@@ -9,7 +9,7 @@ public class WaitingForPlayers : MatchPhase
         protected set { }
     }
 
-    public override bool allowMovement
+    public override bool allowMovementAndCameraRotation
     {
         get => true;
         protected set { }

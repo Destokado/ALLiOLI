@@ -8,7 +8,7 @@ public class BattleCountdown : MatchPhase
         protected set { }
     }
 
-    public override bool allowMovement
+    public override bool allowMovementAndCameraRotation
     {
         get => true;
         protected set { }

@@ -91,17 +91,15 @@ public class HumanLocalPlayer : MonoBehaviour
 
     public Vector2 CameraMovement
     {
-        get => GameManager.Instance.PauseMenuShowing? Vector2.zero : _cameraMovement;
+        get => !HasControl? Vector2.zero : _cameraMovement;
         private set => _cameraMovement = value;
     }
     // ReSharper disable once InconsistentNaming
     private Vector2 _cameraMovement;
-
-
-
+    
     public int localPlayerNumber;
     
-    
+    private bool HasControl => !GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation;
 
     private void SetDynamicName()
     {
@@ -163,7 +161,7 @@ public class HumanLocalPlayer : MonoBehaviour
     {
         if (Player == null || Player.Character == null) return;
 
-        Player.Character.movementController.horizontalMovementInput = value.Get<Vector2>();
+        Player.Character.movementController.horizontalMovementInput = HasControl ? value.Get<Vector2>() : Vector2.zero;
     }
 
     private void OnTrap()

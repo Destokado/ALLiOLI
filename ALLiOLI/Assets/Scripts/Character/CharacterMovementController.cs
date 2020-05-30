@@ -8,7 +8,7 @@ public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
     
-    [HideInInspector] public Vector2 horizontalMovementInput;
+    [NonSerialized] public Vector2 horizontalMovementInput;
     [SerializeField] private float jumpSpeed;
 
     private bool onGround;
@@ -55,8 +55,6 @@ public class CharacterMovementController : NetworkBehaviour
         if (Math.Abs(displacement.y) < CharacterController.minMoveDistance)
             Debug.LogWarning("WAT displacement.y = " + displacement.y);
 
-        
-        
         // Apply Movement to Player
         CollisionFlags collisionFlags = CharacterController.Move(displacement);
 
@@ -94,16 +92,6 @@ public class CharacterMovementController : NetworkBehaviour
 
     private Vector3 GetDirectionRelativeToTheCamera()
     {
-        //TODO: Remove if no errors are detected in a lon-term testing
-        if (Character == null)
-            Debug.LogWarning("Character is null for " + gameObject.name, gameObject);
-        if (Character.Owner == null)
-            Debug.LogWarning("Character.Owner is null for " + gameObject.name, gameObject);
-        if (Character.Owner.HumanLocalPlayer == null)
-            Debug.LogWarning("Character.Owner.HumanLocalPlayer is null for " + gameObject.name, gameObject);
-        if (Character.Owner.HumanLocalPlayer.Camera == null)
-            Debug.LogWarning("Character.Owner.HumanLocalPlayer.Camera is null is null for " + gameObject.name, gameObject);
-        
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection = Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
