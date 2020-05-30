@@ -14,8 +14,6 @@ public class PlayerGuiManager : MonoBehaviour
     [Space] [SerializeField] private GameObject readinessGameObject;
 
     [SerializeField] private TMP_Text readinessText;
-    [SerializeField] private TMP_Text trapsCounter;
-    [SerializeField] private GameObject trapsCounterGameobject;
 
     public void SetColor(Color color)
     {
@@ -25,27 +23,13 @@ public class PlayerGuiManager : MonoBehaviour
     public void SetupForCurrentPhase(Player player)
     {
         GameManager.Instance.UpdateCursorMode();
-        ShowNumberOfTraps(player);
         ShowReadiness(player);
-    }
-
-    public void ShowNumberOfTraps(Player player)
-    {
-        bool show = MatchManager.Instance.CurrentPhase.showTrapsCounter;
-        trapsCounterGameobject.SetActive(show);
-        
-        if (!show)
-            return;
-        
-        int currentTraps = player.HumanLocalPlayer.OwnedTraps.Count;
-        int maxNumberOfTraps = player.HumanLocalPlayer.MaxOwnableTraps;
-        trapsCounter.SetText(currentTraps + "/" + maxNumberOfTraps);
     }
 
 
     public void ShowReadiness(Player player)
     {
-        bool show = MatchManager.Instance.CurrentPhase.showReadiness;
+        bool show = MatchManager.instance.currentPhase.showReadiness;
         readinessGameObject.SetActive(show);
         
         if (!show)

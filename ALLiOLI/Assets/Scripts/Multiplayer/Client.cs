@@ -41,13 +41,13 @@ public class Client : NetworkBehaviour
         
         base.OnStartClient();
 
-        transform.SetParent(NetworkManager.singleton.transform, false);
-        MatchManager.Instance.Clients.Add(this);
+        transform.SetParent(NetworkManager.singleton.transform, true);
+        MatchManager.instance.clients.Add(this);
 
         
         // GameManager.Instance.GUI.UpdateOnlineLobby(false);
 
-        MatchManager.Instance.FinishAndRestartCurrentPhase();
+        MatchManager.instance.FinishAndRestartCurrentPhase();
 
         gameObject.name = "Client " + clientId;
     }
@@ -65,7 +65,7 @@ public class Client : NetworkBehaviour
     public override void OnStopClient()
     {
         base.OnStopClient();
-        MatchManager.Instance.Clients.Remove(this);
+        MatchManager.instance.clients.Remove(this);
     }
 
     public static bool IsThereALocalPlayer()

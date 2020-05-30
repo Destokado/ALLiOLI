@@ -11,12 +11,12 @@ public class MatchGuiManager : MonoBehaviour
     [SerializeField] private GameObject matchTimerGameObject;
 
     [Header("End screen")] 
-    [SerializeField] private GameObject endScreen;
-    [SerializeField] private TMP_Text endScreenText;
+    [SerializeField] private GameObject endOfMatchScreen;
+    [SerializeField] private TMP_Text endOfMatchScreenText;
 
     private void Awake()
     {
-        endScreen.SetActive(false);
+        endOfMatchScreen.SetActive(false);
         SetupForCurrentPhase();
     }
 
@@ -32,20 +32,23 @@ public class MatchGuiManager : MonoBehaviour
     public void SetupForCurrentPhase()
     {
         MatchPhase curPhase = null;
-        if (MatchManager.Instance != null)
-            curPhase = MatchManager.Instance.CurrentPhase;
+        if (MatchManager.instance != null)
+            curPhase = MatchManager.instance.currentPhase;
         matchTimerGameObject.SetActive(curPhase != null && curPhase.showMatchTimer);
-        matchInformativeText.SetText(curPhase != null ? curPhase.informativeText : "");
+        UpdateInformativeText(curPhase != null ? curPhase.informativeText : "");
+    }
+
+    public void UpdateInformativeText(string text)
+    {
+        matchInformativeText.SetText(text);
     }
 
     public void UpdateEndScreen(bool forceSetActive = false)
     {
         if (forceSetActive)
-            endScreen.SetActive(true);
+            endOfMatchScreen.SetActive(true);
         
-        Player winner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(MatchManager.Instance.WinnerPlayerNetId);
-        string winnerName = winner != null ? winner.gameObject.name : "NULL";
-        endScreenText.SetText("The winner is " + winnerName + "!");
+        endOfMatchScreenText.SetText($"The winner is {MatchManager.instance.roundWinnerName}!");
     }
 
     public void GoToLandingScene()

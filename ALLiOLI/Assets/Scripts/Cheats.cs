@@ -4,30 +4,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 public class Cheats
 {
-    [MenuItem("ALLiOLI/Cheats/Client/Own all traps")]
-    public static void OwnAllTraps()
-    {
-        if (Application.isPlaying)
-        {
-            Trap[] allTraps = Object.FindObjectsOfType<Trap>();
-            
-            foreach (Player player in Client.LocalClient.PlayersManager.players)
-            {
-                if (player.HumanLocalPlayer == null)
-                    continue;
-                
-                foreach (Trap trap in allTraps)
-                    player.HumanLocalPlayer.OwnedTraps.Add(trap);
-                
-                Debug.Log("Player '" + player.name + "' owns " + player.HumanLocalPlayer.OwnedTraps.Count + " traps.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Not in play mode.");
-        }
-    }
-
+    
     #region Forced phases
 
     [MenuItem("ALLiOLI/Cheats/Server/Set phase/-1 - None")]
@@ -35,7 +12,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(null);
+            MatchManager.instance.BroadcastNewMatchPhase(null);
         }
         else
         {
@@ -48,7 +25,7 @@ public class Cheats
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(new WaitingForPlayers());
+            MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
         }
         else
         {
@@ -56,12 +33,12 @@ public class Cheats
         }
     }
 
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/1 - StartCountdown")]
+    [MenuItem("ALLiOLI/Cheats/Server/Set phase/1 - BattleCountdown")]
     public static void SetPhaseStartCountdown()
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(new StartCountdown());
+            MatchManager.instance.BroadcastNewMatchPhase(new BattleCountdown());
         }
         else
         {
@@ -69,12 +46,12 @@ public class Cheats
         }
     }
 
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/2 - TrapUp")]
+    [MenuItem("ALLiOLI/Cheats/Server/Set phase/2 - Battle")]
     public static void SetPhaseTrapUp()
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(new TrapUp());
+            MatchManager.instance.BroadcastNewMatchPhase(new Battle());
         }
         else
         {
@@ -82,12 +59,12 @@ public class Cheats
         }
     }
 
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/3 - FinishingTrapUp")]
+    [MenuItem("ALLiOLI/Cheats/Server/Set phase/3 - EndRound")]
     public static void SetPhaseFinishingTrapUp()
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(new FinishingTrapUp());
+            MatchManager.instance.BroadcastNewMatchPhase(new EndRound());
         }
         else
         {
@@ -95,38 +72,12 @@ public class Cheats
         }
     }
 
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/4 - BattleCountdown")]
+    [MenuItem("ALLiOLI/Cheats/Server/Set phase/4 - EndMatch")]
     public static void SetPhaseBattleCountdown()
     {
         if (Application.isPlaying)
         {
-            MatchManager.Instance.BroadcastNewMatchPhase(new BattleCountdown());
-        }
-        else
-        {
-            Debug.LogError("Not in play mode.");
-        }
-    }
-
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/5 - Battle")]
-    public static void SetPhaseBattle()
-    {
-        if (Application.isPlaying)
-        {
-            MatchManager.Instance.BroadcastNewMatchPhase(new Battle());
-        }
-        else
-        {
-            Debug.LogError("Not in play mode.");
-        }
-    }
-
-    [MenuItem("ALLiOLI/Cheats/Server/Set phase/6 - End")]
-    public static void SetPhaseEnd()
-    {
-        if (Application.isPlaying)
-        {
-            MatchManager.Instance.BroadcastNewMatchPhase(new End());
+            MatchManager.instance.BroadcastNewMatchPhase(new EndMatch());
         }
         else
         {
@@ -150,5 +101,6 @@ public class Cheats
             Debug.LogError("Not in play mode.");
         }
     }
+    
 }
 #endif

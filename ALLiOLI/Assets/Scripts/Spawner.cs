@@ -2,6 +2,7 @@
 using Mirror;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Spawner : NetworkBehaviour
 {
@@ -45,15 +46,25 @@ public class Spawner : NetworkBehaviour
             return;
         
         Character character = other.GetComponent<Character>();
-        if (character && character.flag)
-            MatchManager.Instance.FlagAtSpawn(character.Owner);
+        if (character && character.hasFlag)
+            MatchManager.instance.FlagAtSpawn(character.Owner);
+
+        else
+        {
+            Flag flag = other.GetComponent<Flag>();
+            
+            if (flag && flag.hasOwner)
+                MatchManager.instance.FlagAtSpawn(flag.owner);
+        }
     }
 
     #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        Handles.zTest = CompareFunction.LessEqual;
         Handles.color = Color.cyan;
         Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
     #endif
+
 }

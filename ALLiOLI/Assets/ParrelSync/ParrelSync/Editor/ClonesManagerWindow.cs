@@ -28,10 +28,6 @@ namespace ParrelSync
         }
 
         /// <summary>
-        /// Helper link about using custom argument
-        /// </summary>
-        const string CustomArgumentHelpLink = "https://github.com/314pies/ParrelSync/wiki/Argument";
-        /// <summary>
         /// For storing the scroll position of clones list
         /// </summary>
         Vector2 clonesScrollPos;
@@ -46,7 +42,7 @@ namespace ParrelSync
                        MessageType.Info);
                 if (GUILayout.Button("Open GitHub issue Page"))
                 {
-                    Application.OpenURL("https://github.com/314pies/ParrelSync/issues");
+                    Application.OpenURL(ExternalLinks.GitHubIssue);
                 }
                 return;
             }
@@ -76,7 +72,7 @@ namespace ParrelSync
                 EditorGUILayout.LabelField("Arguments", GUILayout.Width(70));
                 if (GUILayout.Button("?", GUILayout.Width(20)))
                 {
-                    Application.OpenURL(CustomArgumentHelpLink);
+                    Application.OpenURL(ExternalLinks.CustomArgumentHelpLink);
                 }
                 GUILayout.EndHorizontal();
 
@@ -118,19 +114,30 @@ namespace ParrelSync
                         string cloneProjectPath = cloneProjectsPath[i];
 
                         //Determine whether it is opened in another instance by checking the UnityLockFile 
-                        bool isOpenInAnotherInstance = File.Exists(Path.Combine(cloneProjectPath, "Temp", "UnityLockfile"));
+
+                        string UnityLockFilePath = Path.Combine(cloneProjectPath, "Temp", "UnityLockfile");
+
+                        bool isOpenInAnotherInstance = File.Exists(UnityLockFilePath) && FileUtilities.IsFileLocked(UnityLockFilePath);
+
                         if (isOpenInAnotherInstance)
                             EditorGUILayout.LabelField("Clone " + i + " (Running)", EditorStyles.boldLabel);
                         else
                             EditorGUILayout.LabelField("Clone " + i);
 
+
+                        GUILayout.BeginHorizontal();
                         EditorGUILayout.TextField("Clone project path", cloneProjectPath, EditorStyles.textField);
+                        if (GUILayout.Button("View Folder", GUILayout.Width(80)))
+                        {
+                            ClonesManager.OpenProjectInFileExplorer(cloneProjectPath);                           
+                        }
+                        GUILayout.EndHorizontal();
 
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField("Arguments", GUILayout.Width(70));
                         if (GUILayout.Button("?", GUILayout.Width(20)))
                         {
-                            Application.OpenURL(CustomArgumentHelpLink);
+                            Application.OpenURL(ExternalLinks.CustomArgumentHelpLink);
                         }
                         GUILayout.EndHorizontal();
 
@@ -154,7 +161,10 @@ namespace ParrelSync
                             EditorGUILayout.LabelField("No argument file found.");
                         }
 
-                        EditorGUILayout.Space(10);
+                        EditorGUILayout.Space();
+                        EditorGUILayout.Space();
+                        EditorGUILayout.Space();
+
                         EditorGUI.BeginDisabledGroup(isOpenInAnotherInstance);
                         if (GUILayout.Button("Open in New Editor"))
                         {
@@ -175,17 +185,6 @@ namespace ParrelSync
                             }
                         }
                        
-                        ////Offer a solution to user in-case they are stuck with deleting project
-                        //if (GUILayout.Button("?", GUILayout.Width(20)))
-                        //{
-                        //    var openUrl = EditorUtility.DisplayDialog("Can't delete clone?",
-                        //    "Sometime clone can't be deleted due to it's still being opened by another unity instance running in the background." +
-                        //    "\nYou can read this answer from ServerFault on how to find and kill the process.", "Open Answer");
-                        //    if (openUrl)
-                        //    {
-                        //        Application.OpenURL("https://serverfault.com/a/537762");
-                        //    }
-                        //}
                         GUILayout.EndHorizontal();
                         EditorGUI.EndDisabledGroup();
                         GUILayout.EndVertical();

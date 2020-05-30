@@ -9,10 +9,10 @@ public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public Transform interactionRayOrigin;
-
-    [HideInInspector] public Flag flag;
-    [SerializeField] public Transform flagPosition;
-
+    [SerializeField] public GameObject flagGameObject;
+    
+    [SyncVar(hook = nameof(NewHasFlagValue))] public bool hasFlag = false;
+    private void NewHasFlagValue(bool oldVal, bool newVal) { flagGameObject.SetActive(newVal); }
 
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
 
@@ -30,7 +30,7 @@ public class Character : NetworkBehaviour
             _owner = value;
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
-            transform.SetParent(value.transform);
+            transform.SetParent(value.transform, true);
             UpdateColor();
         }
     }
@@ -52,7 +52,7 @@ public class Character : NetworkBehaviour
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
 
-    public bool isDead { get; private set; }
+    [field: SyncVar] public bool isDead { get; private set; }
 
     public CharacterMovementController movementController { get; private set; }
 
@@ -69,40 +69,50 @@ public class Character : NetworkBehaviour
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
 
-    [ClientRpc]
-    public void RpcDie(Vector3 impact, Vector3 impactPoint)
-    {
-        if (!isDead)
-            StartCoroutine(DieCoroutine(impact, impactPoint));
-    }
-
-    private IEnumerator DieCoroutine(Vector3 impact, Vector3 impactPoint)
-    {
-        Debug.Log("CHAR DYING: " + gameObject.name);
-        isDead = true;
-        if (flag != null) flag.Detach();
-        movementController.enabled = false;
-
-        movementController.enabled = false;
-        movementController.CharacterController.enabled = false;
-        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-        rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(1.5f);
-
-        if (hasAuthority)
-            Owner.CmdSpawnNewCharacter();
-    }
-
     [Command] // From a client to the server
     public void CmdServerSuicide()
     {
         ServerSuicide();
     }
 
-    [Server]
+    [Server] // On the server
     public void ServerSuicide()
     {
-        RpcDie(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
+        ServerDie(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
     }
+    
+    [Server]
+    public void ServerDie(Vector3 impact, Vector3 impactPoint)
+    {
+        if (isDead)
+            return;
+        
+        isDead = true;
+        if (hasFlag) 
+            FlagManager.Instance.FlagDropped(flagGameObject.transform.position);
+        
+        RpcDie(impact, impactPoint);
+    }
+
+    [ClientRpc] // Called on all clients
+    private void RpcDie(Vector3 impact, Vector3 impactPoint)
+    {
+        StartCoroutine(DieCoroutine());
+
+        IEnumerator DieCoroutine()
+        {
+            movementController.enabled = false;
+            movementController.CharacterController.enabled = false;
+        
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
+
+            yield return new WaitForSeconds(1.5f);
+
+            if (hasAuthority)
+                Owner.CmdSpawnNewCharacter();
+        }
+    }
+
+
 }

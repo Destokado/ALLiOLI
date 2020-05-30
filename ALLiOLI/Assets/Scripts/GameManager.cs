@@ -39,12 +39,12 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        //UpdateCursorMode(); //TODO: Test if needed to update the cursor every time the app focus changes
+        UpdateCursorMode();
     }
 
     public void UpdateCursorMode()
     {
-        bool matchInGamingMode = MatchManager.Instance != null && MatchManager.Instance.CurrentPhase != null && MatchManager.Instance.CurrentPhase.inGamingMode;
+        bool matchInGamingMode = MatchManager.instance != null && MatchManager.instance.currentPhase != null && MatchManager.instance.currentPhase.inGamingMode;
         //bool gamingMode = MatchManager.Instance.IsMatchRunning && !PauseMenuShowing && Application.isFocused;
 
         bool cursorGameMode = matchInGamingMode && Client.IsThereALocalPlayer() && !PauseMenuShowing && Application.isFocused;

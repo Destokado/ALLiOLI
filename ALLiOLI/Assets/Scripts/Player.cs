@@ -116,7 +116,7 @@ public class Player : NetworkBehaviour
     public Client Client {
         get {
             if (!_client)
-                foreach (Client client in MatchManager.Instance.Clients.Where(client => client.clientId == idOfClient))
+                foreach (Client client in MatchManager.instance.clients.Where(client => client.clientId == idOfClient))
                     _client = client;
 
             return _client;
@@ -135,7 +135,7 @@ public class Player : NetworkBehaviour
         
         gameObject.name =
             $"Player {playerIndex} | {(IsControlledLocally ? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely")}";
-        Color = MatchManager.Instance.GetColor(playerIndex);
+        Color = MatchManager.instance.GetColor(playerIndex);
     }
 
     /// <summary>
