@@ -399,13 +399,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745825936533896638}
-  m_LocalRotation: {x: 0.50043076, y: -0.51296675, z: 0.4915035, w: 0.4948317}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 1.606}
-  m_LocalScale: {x: 0.77445203, y: 0.77445203, z: 0.77445203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 858000967751490024}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 91.797, y: 30.115997, z: 120.643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1274907871440732075
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,13 +743,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874345726352792159}
-  m_LocalRotation: {x: 0.4337367, y: -0.5702233, z: 0.57264215, w: 0.3984957}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -0.18261}
-  m_LocalScale: {x: 0.110355385, y: 0.110355385, z: 0.110355385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 858000967751490024}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 92.86301, y: -57.863983, z: 50.010986}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986662574639847821
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,27 +4700,36 @@ MonoBehaviour:
       type: {class: TransformAnimation, ns: UnityEngine, asm: UnityEssentials}
       data:
         mirror: 0
-        duration: 1
+        duration: 0.2
         curve:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
             time: 0
             value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
             inSlope: 2
             outSlope: 2
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.35686955
+            value: 0.8508803
+            inSlope: 0.8558161
+            outSlope: 0.8558161
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.09960353
+          - serializedVersion: 3
+            time: 0.9956453
+            value: 0.9191914
+            inSlope: -0.4881586
+            outSlope: -0.4881586
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.23778865
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
