@@ -12108,6 +12108,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 5.6099997
       objectReference: {fileID: 0}
+    - target: {fileID: 1289874931760622753, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1328937948231810357, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
         type: 3}
       propertyPath: m_Mesh
@@ -12868,6 +12873,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 6.88
       objectReference: {fileID: 0}
+    - target: {fileID: 4437624230118578745, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
+        type: 3}
+      propertyPath: sceneId
+      value: 2870872566
+      objectReference: {fileID: 0}
     - target: {fileID: 4864717445384713204, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
         type: 3}
       propertyPath: m_Mesh
@@ -12928,5 +12938,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2120300133}
+    - target: {fileID: 7033384794927129587, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
+        type: 3}
+      propertyPath: sceneId
+      value: 722319610
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c, type: 3}
