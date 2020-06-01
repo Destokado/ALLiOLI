@@ -63,10 +63,16 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = inGameMode ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
-    public void ExitGame()
+    public void QuitClient()
     {
-        Debug.Log($"Exiting the game. Client? {Client.LocalClient.isClient} - Server? {Client.LocalClient.isServer}");
-
+        if (Client.LocalClient == null)
+        {
+            Debug.Log("Exiting the game (not the scene) before the reference to the localClient is set. Expected if the initial connection to a server failed.");
+            return;
+        }
+        
+        Debug.Log($"Exiting the game. User exiting is client? {Client.LocalClient.isClient} - User exiting is server? {Client.LocalClient.isServer}");
+        
         if (Client.LocalClient.isClient && Client.LocalClient.isServer)
         {
             Debug.Log("STOPPING HOST");   
@@ -85,6 +91,11 @@ public class GameManager : MonoBehaviour
             NetworkManager.singleton.StopServer();
         }
 
+        ExitScene();
+    }
+
+    public void ExitScene()
+    {
         string sceneName = (NetworkManager.singleton as AllIOliNetworkManager)?.nameOfDisconnectionFromServerScene;
         Debug.Log($"Loading scene {sceneName}");
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);

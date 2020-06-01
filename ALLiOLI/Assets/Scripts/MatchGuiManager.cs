@@ -53,7 +53,7 @@ public class MatchGuiManager : MonoBehaviour
 
     public void GoToLandingScene()
     {
-        GameManager.Instance.ExitGame();
+        GameManager.Instance.QuitClient();
     }
 
 }

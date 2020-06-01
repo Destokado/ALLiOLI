@@ -84,7 +84,12 @@ public class GameGuiManager : MonoBehaviour
     
     public void Quit()
     {
-        GameManager.Instance.ExitGame();
+        GameManager.Instance.QuitClient();
+    }
+
+    public void ExitScene()
+    {
+        GameManager.Instance.ExitScene();
     }
     
     public void ShowSettingsMenu(bool show)

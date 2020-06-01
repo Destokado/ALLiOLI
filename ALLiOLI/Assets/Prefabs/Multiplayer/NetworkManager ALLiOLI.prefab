@@ -37,21 +37,6 @@ MonoBehaviour:
   - {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79, type: 3}
   - {fileID: 3340262825248851560, guid: ee82e7269e3ad884ebfa67ea22a7b89e, type: 3}
   nameOfDisconnectionFromServerScene: Landing
---- !u!114 &5879728327626107442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8486767287859903381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showGUI: 1
-  offsetX: 0
-  offsetY: 0
 --- !u!1001 &2607284947241923845
 PrefabInstance:
   m_ObjectHideFlags: 0
