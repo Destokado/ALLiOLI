@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class ChandelierTrap : Trap
+public class BirdTrap : Trap
 {
     private SimpleAnimationsManager animManager;
-    [SerializeField] private Rigidbody chandelier;
+    [SerializeField] private Rigidbody poo;
+    [SerializeField] private float shitForce = 100;
 
     public void Awake()
     {
@@ -13,8 +14,8 @@ public class ChandelierTrap : Trap
 
     protected override void Reload()
     {
-        ((TransformAnimation) animManager.GetAnimation(0)).originTransform.SetProperties(chandelier.transform);
-        chandelier.isKinematic = true;
+        ((TransformAnimation) animManager.GetAnimation(0)).originTransform.SetProperties(poo.transform);
+        poo.isKinematic = true;
         animManager.Play(0);
     }
 
@@ -23,6 +24,7 @@ public class ChandelierTrap : Trap
         base.Activate();
 
         animManager.Stop(0);
-        chandelier.isKinematic = false;
+        poo.isKinematic = false;
+        poo.AddForce(Vector3.down*shitForce, ForceMode.Impulse);
     }
 }
