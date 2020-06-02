@@ -1,6 +1,8 @@
 ﻿using System;
+using FMOD;
 using Mirror;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Character))]
@@ -46,7 +48,12 @@ public class CharacterMovementController : NetworkBehaviour
 
         //Jump
         if (onGround && jumping)
+        {
             verticalSpeed = jumpSpeed;
+            //TODO: Play jump sound event
+            var instance = SoundManager.instance;
+            instance.PlayOneShotAllClients(SoundEventPaths.jumpPath,this.transform.position,null);
+        }
 
         // Apply gravity
         verticalSpeed += Physics.gravity.y * Time.deltaTime;

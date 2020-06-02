@@ -41,15 +41,12 @@ public class SoundManager : NetworkBehaviour
     {
         if ((instance != null && instance != this))
         {
-            Destroy(this.gameObject);
-            return;
+            Debug.LogWarning("More than one SoundManager created. Deleting the previous one.", this);
+            Destroy(instance);
         }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-            Init();
-        }
+
+        instance = this;
+        Init();
     }
 
     void Update()
@@ -461,7 +458,7 @@ class SoundManagerMovingSound
 
 public static class SoundEventPaths
 {
-    public static string jumpPath;
+    public static string jumpPath = "event:/Jump";
     public static string runPath;
     public static string activateTrapPath;
     public static string landPath;
