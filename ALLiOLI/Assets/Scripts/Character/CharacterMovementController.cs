@@ -23,6 +23,34 @@ public class CharacterMovementController : NetworkBehaviour
 
     public bool jumping { get; set; }
 
+    private EventInstance runningEvent;
+    private bool running
+    {
+        get => running;
+        set
+        {
+            if (!runningEvent.isValid())
+            {
+                runningEvent =
+                    Client.LocalClient.SoundManager.PlayEventMovingAllClients(SoundEventPaths.runPath, transform);
+            }
+            if (value)
+            {
+                PLAYBACK_STATE state;
+                runningEvent.getPlaybackState(out state);
+                if (state == PLAYBACK_STATE.STOPPED)
+                {
+                    runningEvent.start();
+                }
+            }
+            else
+            {
+                runningEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+            }
+        }
+    }
+
     public CharacterController CharacterController { get; private set; }
     public Character Character { get; private set; }
     [Header("Rotation")]
@@ -66,9 +94,11 @@ public class CharacterMovementController : NetworkBehaviour
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         displacement.y = verticalSpeed * Time.deltaTime;
 
-        if (Math.Abs(displacement.y) < CharacterController.minMoveDistance)
-            Debug.LogWarning("WAT displacement.y = " + displacement.y);
-
+        
+        Vector3 horDisplacement = displacement.WithY(0);
+        bool walking = onGround && horDisplacement.magnitude > CharacterController.minMoveDistance;
+        running = walking;
+        
         // Apply Movement to Player
         CollisionFlags collisionFlags = CharacterController.Move(displacement);
 

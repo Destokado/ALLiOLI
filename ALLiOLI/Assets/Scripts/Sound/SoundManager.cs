@@ -246,7 +246,7 @@ public class SoundManager : NetworkBehaviour
 
     public void StopEventAllClients(String path, bool fadeout)
     {
-        StopEventLocal(path, fadeout);
+        CmdStopEvent(path, fadeout);
     }
 
 
