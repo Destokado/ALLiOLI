@@ -7,6 +7,7 @@ using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Character))]
+
 public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
@@ -28,9 +29,11 @@ public class CharacterMovementController : NetworkBehaviour
     [SerializeField] private float turnSmoothTime = .1f;
     [SerializeField] private float turnSmoothVelocity;
 
+  
     private void Awake()
     {
         CharacterController = gameObject.GetComponentRequired<CharacterController>();
+      
         Character = gameObject.GetComponentRequired<Character>();
     }
 
@@ -53,8 +56,8 @@ public class CharacterMovementController : NetworkBehaviour
         if (onGround && jumping)
         {
             verticalSpeed = jumpSpeed;
-            var instance = SoundManager.instance;
-            instance.PlayOneShotMovingAllClients(SoundEventPaths.jumpPath,this.transform);
+            
+            Client.LocalClient.SoundManager.PlayOneShotMovingAllClients(SoundEventPaths.jumpPath,this.transform);
             fallingDistance= transform.position.y;
 
         }

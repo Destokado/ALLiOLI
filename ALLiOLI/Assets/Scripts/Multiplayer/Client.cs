@@ -12,10 +12,12 @@ public class Client : NetworkBehaviour
         get => _localClient;
         private set
         {
+            Debug.Log(value);
             if (_localClient != null)
                 Debug.LogWarning("Reseting the local client.");
             else
                 Debug.Log("Saving the reference to the local client.");
+           
             _localClient = value;
         }
     }
@@ -23,7 +25,13 @@ public class Client : NetworkBehaviour
     // ReSharper disable once InconsistentNaming
     private static Client _localClient;
 
+    public SoundManager SoundManager => _soundManager;
+  
+
+    [SerializeField] private  SoundManager _soundManager;
+
     public PlayersManager PlayersManager => _playersManager;
+
     // ReSharper disable once InconsistentNaming
     [SerializeField] private PlayersManager _playersManager;
 
@@ -38,13 +46,13 @@ public class Client : NetworkBehaviour
     public override void OnStartClient()
     {
         Debug.Log("Client ready to be used in the network. Starting client.");
-        
+
         base.OnStartClient();
 
         transform.SetParent(NetworkManager.singleton.transform, true);
         MatchManager.instance.clients.Add(this);
 
-        
+
         // GameManager.Instance.GUI.UpdateOnlineLobby(false);
 
         MatchManager.instance.FinishAndRestartCurrentPhase();

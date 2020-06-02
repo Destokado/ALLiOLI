@@ -9,8 +9,7 @@ public class SoundManager : NetworkBehaviour
 {
     #region Parameters
 
-    public static SoundManager instance { get; private set; }
-
+   
     private Dictionary<String, EventInstance> eventsList;
 
     private EventInstance music;
@@ -21,32 +20,12 @@ public class SoundManager : NetworkBehaviour
 
     #region Initialization
 
-    /* public static SoundManager Instance
-     {
-         get
-         {
-             if (instance == null)
-             {
-                 Debug.Log("getinstance called (null)");
-                 GameObject go = new GameObject();
-                 instance = go.AddComponent<SoundManager>();
-                 instance.name = "SoundManager";
-             }
-             Debug.Log("getInstance called (NOT NULL)");
-             return instance;
-         }
-     }*/
+ 
 
     private void Awake()
     {
-        if ((instance != null && instance != this))
-        {
-            Debug.LogWarning("More than one SoundManager created. Deleting the previous one.", this);
-            Destroy(instance);
-        }
-
-        instance = this;
-        Init();
+        eventsList = new Dictionary<string, EventInstance>();
+        positionEvents = new List<SoundManagerMovingSound>();
     }
 
     void Update()
@@ -69,12 +48,6 @@ public class SoundManager : NetworkBehaviour
                 }
             }
         }
-    }
-
-    private void Init()
-    {
-        eventsList = new Dictionary<string, EventInstance>();
-        positionEvents = new List<SoundManagerMovingSound>();
     }
 
     #endregion Initialization
