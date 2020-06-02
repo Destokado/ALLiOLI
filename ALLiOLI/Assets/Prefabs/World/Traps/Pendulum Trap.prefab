@@ -67,7 +67,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 027cb3d3d7dc79d41ad763e01759de07, type: 2}
+  - {fileID: 2100000, guid: 4dad30bbe2213eb4d8312f7bb6190866, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -619,6 +619,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: wreckingball Bien
       objectReference: {fileID: 0}
+    - target: {fileID: 4593363088872002670, guid: a6593cb7e6d3b524385cd7e7a49be4cb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ba5908a6b7b778849b13217002cd05b0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6593cb7e6d3b524385cd7e7a49be4cb, type: 3}
 --- !u!4 &7706113639224463022 stripped
