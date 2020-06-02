@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     }
     // ReSharper disable once InconsistentNaming
     private bool _pauseMenuShowing = false;
+    public bool escapeOnEditor;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
         UpdateCursorMode();
+        escapeOnEditor = false;
     }
 
     public void UpdateCursorMode()
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
     public static void SetCursorMode(bool inGameMode)
     {
         Cursor.visible = !inGameMode;
+        Cursor.lockState = CursorLockMode.None; // Maybe bug fixing: http://answers.unity.com/answers/1119750/view.html
         Cursor.lockState = inGameMode ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
