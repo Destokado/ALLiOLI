@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AnimationTrap : Trap
 {
-    [SerializeField] private Animation animation;
+    [SerializeField] private Animation trapAnimation;
 
     public override void Activate()
     {
         base.Activate();
-        //animation.
+        trapAnimation.Play();
     }
 }
