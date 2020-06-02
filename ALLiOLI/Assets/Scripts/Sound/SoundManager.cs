@@ -9,8 +9,7 @@ public class SoundManager : NetworkBehaviour
 {
     #region Parameters
 
-    public static SoundManager instance { get; private set; }
-
+   
     private Dictionary<String, EventInstance> eventsList;
 
     private EventInstance music;
@@ -21,32 +20,12 @@ public class SoundManager : NetworkBehaviour
 
     #region Initialization
 
-    /* public static SoundManager Instance
-     {
-         get
-         {
-             if (instance == null)
-             {
-                 Debug.Log("getinstance called (null)");
-                 GameObject go = new GameObject();
-                 instance = go.AddComponent<SoundManager>();
-                 instance.name = "SoundManager";
-             }
-             Debug.Log("getInstance called (NOT NULL)");
-             return instance;
-         }
-     }*/
+ 
 
     private void Awake()
     {
-        if ((instance != null && instance != this))
-        {
-            Debug.LogWarning("More than one SoundManager created. Deleting the previous one.", this);
-            Destroy(instance);
-        }
-
-        instance = this;
-        Init();
+        eventsList = new Dictionary<string, EventInstance>();
+        positionEvents = new List<SoundManagerMovingSound>();
     }
 
     void Update()
@@ -71,12 +50,6 @@ public class SoundManager : NetworkBehaviour
         }
     }
 
-    private void Init()
-    {
-        eventsList = new Dictionary<string, EventInstance>();
-        positionEvents = new List<SoundManagerMovingSound>();
-    }
-
     #endregion Initialization
 
 
@@ -93,8 +66,6 @@ public class SoundManager : NetworkBehaviour
             if (parameters != null)
                 for (int i = 0; i < parameters.Length; i++)
                 {
-                    Debug.Log(parameters[i].name);
-
                     soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
                 }
 
@@ -275,7 +246,7 @@ public class SoundManager : NetworkBehaviour
 
     public void StopEventAllClients(String path, bool fadeout)
     {
-        StopEventLocal(path, fadeout);
+        CmdStopEvent(path, fadeout);
     }
 
 
@@ -407,32 +378,13 @@ public class SoundManager : NetworkBehaviour
 
 public readonly struct SoundManagerParameter
 {
-    public string name { get; }
-    public float value { get; }
+    public readonly string name;
+    public readonly float value;
 
     public SoundManagerParameter(string name, float value)
     {
         this.name = name;
         this.value = value;
-    }
-
-
-    public bool Equals(SoundManagerParameter other)
-    {
-        return name == other.name && value.Equals(other.value);
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is SoundManagerParameter other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            return ((name != null ? name.GetHashCode() : 0) * 397) ^ value.GetHashCode();
-        }
     }
 }
 
