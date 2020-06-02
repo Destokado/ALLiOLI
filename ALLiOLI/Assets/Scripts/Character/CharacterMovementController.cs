@@ -83,14 +83,14 @@ public class CharacterMovementController : NetworkBehaviour
 
         // Process vertical collisions
         if ((collisionFlags & CollisionFlags.Below) != 0)
-        {/*
+        {
             SoundManagerParameter[] parameters = new SoundManagerParameter[1];
             //Calculates de distance of the fall
             fallingDistance = fallingDistance + transform.position.y;
             //The Max in the Clamp must be the Max range of the Event in FMOD.
             fallingDistance=Mathf.Clamp(fallingDistance, 0, 2);
             parameters[0]= new SoundManagerParameter("Height", fallingDistance);
-            if(onGround==false) SoundManager.instance.PlayOneShotAllClients(SoundEventPaths.landPath,transform.position,parameters);*/
+            if(onGround==false) Client.LocalClient.SoundManager.PlayOneShotAllClients(SoundEventPaths.landPath,transform.position,parameters);
             onGround = true;
             verticalSpeed = 0.0f;
         }

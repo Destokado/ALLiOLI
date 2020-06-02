@@ -66,8 +66,6 @@ public class SoundManager : NetworkBehaviour
             if (parameters != null)
                 for (int i = 0; i < parameters.Length; i++)
                 {
-                    Debug.Log(parameters[i].name);
-
                     soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
                 }
 
@@ -380,32 +378,13 @@ public class SoundManager : NetworkBehaviour
 
 public readonly struct SoundManagerParameter
 {
-    public string name { get; }
-    public float value { get; }
+    public readonly string name;
+    public readonly float value;
 
     public SoundManagerParameter(string name, float value)
     {
         this.name = name;
         this.value = value;
-    }
-
-
-    public bool Equals(SoundManagerParameter other)
-    {
-        return name == other.name && value.Equals(other.value);
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is SoundManagerParameter other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            return ((name != null ? name.GetHashCode() : 0) * 397) ^ value.GetHashCode();
-        }
     }
 }
 
