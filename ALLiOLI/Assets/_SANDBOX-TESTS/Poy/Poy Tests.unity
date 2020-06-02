@@ -4034,6 +4034,95 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &1412269473
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6552181
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.9813402
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.010527
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 764576785111941117, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026233590788913410, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: sceneId
+      value: 583523605
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119677910924965065, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.31418845
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119677910924965065, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -2.7925816
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119677910924965065, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -21.386467
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136575141567002636, guid: c24323b27e0db7049b5485d27b1ec5fd,
+        type: 3}
+      propertyPath: m_Name
+      value: Knight Trap (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c24323b27e0db7049b5485d27b1ec5fd, type: 3}
 --- !u!43 &1542203054
 Mesh:
   m_ObjectHideFlags: 0
@@ -5791,7 +5880,7 @@ PrefabInstance:
     - target: {fileID: 1865134923729171557, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1865134923729171557, guid: 64fc08bc6be7dfc4fbeab0b915db4c0c,
         type: 3}
