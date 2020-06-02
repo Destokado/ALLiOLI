@@ -1,5 +1,6 @@
 ﻿using System;
 using FMOD;
+using FMOD.Studio;
 using Mirror;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -46,13 +47,16 @@ public class CharacterMovementController : NetworkBehaviour
         // Calculate walking the distance
         Vector3 displacement = direction * (walkSpeed * Time.deltaTime);
 
+        float fallingDistance=0f; 
+
         //Jump
         if (onGround && jumping)
         {
             verticalSpeed = jumpSpeed;
-            //TODO: Play jump sound event
             var instance = SoundManager.instance;
-            instance.PlayOneShotAllClients(SoundEventPaths.jumpPath,this.transform.position,null);
+            instance.PlayOneShotMovingAllClients(SoundEventPaths.jumpPath,this.transform);
+            fallingDistance= transform.position.y;
+
         }
 
         // Apply gravity
@@ -76,7 +80,14 @@ public class CharacterMovementController : NetworkBehaviour
 
         // Process vertical collisions
         if ((collisionFlags & CollisionFlags.Below) != 0)
-        {
+        {/*
+            SoundManagerParameter[] parameters = new SoundManagerParameter[1];
+            //Calculates de distance of the fall
+            fallingDistance = fallingDistance + transform.position.y;
+            //The Max in the Clamp must be the Max range of the Event in FMOD.
+            fallingDistance=Mathf.Clamp(fallingDistance, 0, 2);
+            parameters[0]= new SoundManagerParameter("Height", fallingDistance);
+            if(onGround==false) SoundManager.instance.PlayOneShotAllClients(SoundEventPaths.landPath,transform.position,parameters);*/
             onGround = true;
             verticalSpeed = 0.0f;
         }

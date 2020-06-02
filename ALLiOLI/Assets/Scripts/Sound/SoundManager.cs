@@ -21,21 +21,21 @@ public class SoundManager : NetworkBehaviour
 
     #region Initialization
 
-   /* public static SoundManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                Debug.Log("getinstance called (null)");
-                GameObject go = new GameObject();
-                instance = go.AddComponent<SoundManager>();
-                instance.name = "SoundManager";
-            }
-            Debug.Log("getInstance called (NOT NULL)");
-            return instance;
-        }
-    }*/
+    /* public static SoundManager Instance
+     {
+         get
+         {
+             if (instance == null)
+             {
+                 Debug.Log("getinstance called (null)");
+                 GameObject go = new GameObject();
+                 instance = go.AddComponent<SoundManager>();
+                 instance.name = "SoundManager";
+             }
+             Debug.Log("getInstance called (NOT NULL)");
+             return instance;
+         }
+     }*/
 
     private void Awake()
     {
@@ -92,7 +92,11 @@ public class SoundManager : NetworkBehaviour
         {
             if (parameters != null)
                 for (int i = 0; i < parameters.Length; i++)
+                {
+                    Debug.Log(parameters[i].name);
+
                     soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
+                }
 
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
             soundEvent.start();
@@ -401,7 +405,7 @@ public class SoundManager : NetworkBehaviour
 
 //Parametro genérico de FMOD para pasar a los eventos
 
-public readonly struct SoundManagerParameter 
+public readonly struct SoundManagerParameter
 {
     public string name { get; }
     public float value { get; }
@@ -412,7 +416,7 @@ public readonly struct SoundManagerParameter
         this.value = value;
     }
 
-/*
+
     public bool Equals(SoundManagerParameter other)
     {
         return name == other.name && value.Equals(other.value);
@@ -429,7 +433,7 @@ public readonly struct SoundManagerParameter
         {
             return ((name != null ? name.GetHashCode() : 0) * 397) ^ value.GetHashCode();
         }
-    }*/
+    }
 }
 
 
@@ -459,9 +463,9 @@ class SoundManagerMovingSound
 public static class SoundEventPaths
 {
     public static string jumpPath = "event:/Jump";
-    public static string runPath;
+    public static string runPath = "event:/Run";
     public static string activateTrapPath;
-    public static string landPath;
+    public static string landPath = "event:/Land";
     public static string deathPath;
     public static string punchPath;
     public static string wallHitPath;
@@ -470,10 +474,11 @@ public static class SoundEventPaths
     public static string defeatPath;
     public static string finishPath;
     public static string buttonCooldownPath;
-    public static string pickUpPath;
+    public static string pickUpPath = "event:/FlagPickup";
     public static string flagAnnouncePath;
     public static string playButtonPath = "event:/PlayButton";
     public static string buttonHoverPath = "event:/ButtonHover";
+    public static string buttonPath = "event:/Button";
 }
 
 #endregion ExtraClasses

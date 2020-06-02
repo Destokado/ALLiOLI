@@ -39,6 +39,7 @@ public class Flag : NetworkBehaviour
         owner = character.Owner;
         carrier = character;
         canBePicked = false;
+        SoundManager.instance.PlayOneShotAllClients(SoundEventPaths.pickUpPath,transform.position,null);
     }
 
     [Server]

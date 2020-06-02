@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 5156374976643075046}
   - component: {fileID: 2985370262938075103}
   - component: {fileID: 6902906126621896612}
+  - component: {fileID: 6538428542913284359}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: Untagged
@@ -227,8 +228,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: -0.7055839, y: 0.06662908, z: -0.0070569078, w: -0.7054518}
-  m_LocalPosition: {x: 1706243.5, y: -164505.38, z: -37400.125}
+  m_LocalRotation: {x: -0.60264474, y: 0.056908254, z: -0.0060268724, w: 0.7959551}
+  m_LocalPosition: {x: 3132041.8, y: -249065.47, z: 34591.016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
@@ -357,6 +358,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   freeLook: {fileID: 3397914554968537729}
   cinemachineBrain: {fileID: 2985370262938075103}
+--- !u!114 &6538428542913284359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603928358129318467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: -1
 --- !u!1 &3326752935096650794
 GameObject:
   m_ObjectHideFlags: 0
