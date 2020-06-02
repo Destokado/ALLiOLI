@@ -17,7 +17,16 @@ public class Client : NetworkBehaviour
                 Debug.LogWarning("Reseting the local client.");
             else
                 Debug.Log("Saving the reference to the local client.");
-           
+            if (value != _localClient)
+            {
+                if (_localClient != null) _localClient.GetComponent<SoundManager>().enabled = false;
+                if (value != null)
+                {
+                    Debug.Log("SoundManager component added to localclient");
+                    value.gameObject.GetComponent<SoundManager>().enabled = true;
+                }
+            }
+
             _localClient = value;
         }
     }
@@ -26,9 +35,8 @@ public class Client : NetworkBehaviour
     private static Client _localClient;
 
     public SoundManager SoundManager => _soundManager;
-  
 
-    [SerializeField] private  SoundManager _soundManager;
+    [SerializeField] private SoundManager _soundManager;
 
     public PlayersManager PlayersManager => _playersManager;
 
