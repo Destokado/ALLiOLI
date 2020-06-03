@@ -25,24 +25,28 @@ public class CharacterMovementController : NetworkBehaviour
     private EventInstance runningEvent;
     private bool running
     {
-        get => running;
+        get => _running;
         set
         {
            
-            if (value)
+            if (value&& !_running)
             {
                
                     Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
                 
             }
-            else
+            else if( !value && _running)
             {
                     Debug.Log("Should stop Run Sound");
                     Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
 
             }
+
+            _running = value;
         }
     }
+
+    private bool _running;
 
     public CharacterController CharacterController { get; private set; }
     public Character Character { get; private set; }

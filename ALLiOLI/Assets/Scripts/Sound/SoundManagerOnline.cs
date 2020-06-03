@@ -147,7 +147,7 @@ public class SoundManagerOnline : NetworkBehaviour
 
     public void StopEventOnGameObjectAllClients(uint netId, string path)
     {
-        CmdPlayEventOnGameObject(netId,path);
+        CmdStopEventOnGameObject(netId,path);
     }
     
     
