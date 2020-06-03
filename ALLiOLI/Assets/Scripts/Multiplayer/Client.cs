@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInputManager))]
 public class Client : NetworkBehaviour
@@ -19,11 +20,11 @@ public class Client : NetworkBehaviour
                 Debug.Log("Saving the reference to the local client.");
             if (value != _localClient)
             {
-                if (_localClient != null) _localClient.GetComponent<SoundManager>().enabled = false;
+                if (_localClient != null) _localClient.GetComponent<SoundManagerOnline>().enabled = false;
                 if (value != null)
                 {
-                    Debug.Log("SoundManager component added to localclient");
-                    value.gameObject.GetComponent<SoundManager>().enabled = true;
+                    Debug.Log("SoundManagerOnline component added to localclient");
+                    value.gameObject.GetComponent<SoundManagerOnline>().enabled = true;
                 }
             }
 
@@ -34,9 +35,9 @@ public class Client : NetworkBehaviour
     // ReSharper disable once InconsistentNaming
     private static Client _localClient;
 
-    public SoundManager SoundManager => _soundManager;
+    public SoundManagerOnline SoundManagerOnline => soundManagerOnline;
 
-    [SerializeField] private SoundManager _soundManager;
+    [FormerlySerializedAs("_soundManager")] [SerializeField] private SoundManagerOnline soundManagerOnline;
 
     public PlayersManager PlayersManager => _playersManager;
 

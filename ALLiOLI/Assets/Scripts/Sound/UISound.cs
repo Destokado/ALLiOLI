@@ -6,22 +6,26 @@ using UnityEngine;
 
 public class UISound : MonoBehaviour
 {
- [SerializeField]private SoundManager soundManager;
+ private SoundManager soundManager;
     // Start is called before the first frame update
-    
+
+    private void Awake()
+    {
+        soundManager=SoundManager.Instance;
+    }
 
     public void OnMouseEnter()
     {
-        var path = SoundEventPaths.buttonHoverPath;
+        var path = SoundManager.SoundEventPaths.buttonHoverPath;
         soundManager.PlayOneShotLocal(path, Vector3.zero, null);
     }
 
     public void OnButtonPressed()
     {
-        soundManager.PlayOneShotLocal(SoundEventPaths.buttonPath,Vector3.zero, null);
+        soundManager.PlayOneShotLocal(SoundManager.SoundEventPaths.buttonPath,Vector3.zero, null);
     }
     public void OnPlayButtonPressed()
     {
-        soundManager.PlayOneShotLocal(SoundEventPaths.playButtonPath,Vector3.zero, null);
+        soundManager.PlayOneShotLocal(SoundManager.SoundEventPaths.playButtonPath,Vector3.zero, null);
     }
 }
