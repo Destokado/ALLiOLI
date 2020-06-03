@@ -80,6 +80,17 @@ public class Character : NetworkBehaviour
     {
         ServerDie(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
     }
+
+    public void SafeServerDie(Vector3 impact, Vector3 impactPoint)
+    {
+        if (!isServer)
+        {
+            string callingMethod = (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name;
+            Debug.LogError($"Calling 'SafeServerDie' from an object that is not in a server. Called from method {callingMethod}. Dead impact happened at {impactPoint}.");
+        }
+        
+        ServerDie(impact, impactPoint);
+    }
     
     [Server]
     public void ServerDie(Vector3 impact, Vector3 impactPoint)
@@ -94,7 +105,7 @@ public class Character : NetworkBehaviour
         RpcDie(impact, impactPoint);
     }
 
-    [ClientRpc] // Called on all clients
+    [ClientRpc] // Called on server, executed on all clients
     private void RpcDie(Vector3 impact, Vector3 impactPoint)
     {
         StartCoroutine(DieCoroutine());
