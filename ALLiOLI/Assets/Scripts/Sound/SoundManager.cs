@@ -149,11 +149,10 @@ public class SoundManager : MonoBehaviour
 
     public void StopEventLocal(string path, bool fadeout)
     {
-        Debug.LogWarning(path);
+       
 
         //TODO: PASS A WAY TO FIND THE EVENT, NOT THE EVENT (MIRROR UNSUPORTED)
         EventInstance soundEvent = eventsList[path];
-        Debug.LogWarning(soundEvent);
         if (eventsList.Remove(path))
         {
             if (fadeout)
