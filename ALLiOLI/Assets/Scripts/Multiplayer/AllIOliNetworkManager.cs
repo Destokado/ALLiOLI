@@ -40,10 +40,23 @@ public class AllIOliNetworkManager : NetworkManager
     // Be aware: can return null if "Player" component is not found or if the GameObject with given NetId is not found
     public Player GetPlayer(uint playerNetId)
     {
-        if (NetworkIdentity.spawned.ContainsKey(playerNetId))
-            return NetworkIdentity.spawned[playerNetId].gameObject.GetComponent<Player>(); 
+        Player player = null;
         
-        Debug.LogWarning("GameObject with NetId " + playerNetId + " not found.");
+        GameObject go = GetGameObject(playerNetId);
+
+        if (go != null)
+            player = go.GetComponent<Player>();
+        
+        return player;
+    }
+    
+    // Be aware: can return null if "Player" component is not found or if the GameObject with given NetId is not found
+    public GameObject GetGameObject(uint netId)
+    {
+        if (NetworkIdentity.spawned.ContainsKey(netId))
+            return NetworkIdentity.spawned[netId].gameObject; 
+        
+        Debug.LogWarning($"GameObject with NetId {netId} not found.");
         return null;
     }
 }
