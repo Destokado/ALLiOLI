@@ -29,7 +29,7 @@ public class CharacterMovementController : NetworkBehaviour
         set
         {
            
-            if (value&& !_running)
+            if (value&& !_running  )
             {
                
                     Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
@@ -37,7 +37,7 @@ public class CharacterMovementController : NetworkBehaviour
             }
             else if( !value && _running)
             {
-                    Debug.Log("Should stop Run Sound");
+                
                     Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
 
             }
@@ -93,7 +93,7 @@ public class CharacterMovementController : NetworkBehaviour
 
         Vector3 horDisplacement = displacement.WithY(0);
         bool walking = onGround && horDisplacement.magnitude > CharacterController.minMoveDistance;
-        running = walking;
+        running = walking && !Character.isDead;
 
         // Apply Movement to Player
         CollisionFlags collisionFlags = CharacterController.Move(displacement);
@@ -146,5 +146,10 @@ public class CharacterMovementController : NetworkBehaviour
             Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         return targetDirection.normalized;
+    }
+
+    private void OnDisable()
+    {
+        running = false;
     }
 }
