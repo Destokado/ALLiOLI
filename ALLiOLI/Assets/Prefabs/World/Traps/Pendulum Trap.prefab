@@ -303,6 +303,7 @@ MonoBehaviour:
   cooldownTime: 10
   durationTime: 3
   radarTrigger: {fileID: 4638663025538229398}
+  activateEmitter: {fileID: 0}
   ball: {fileID: 7724252859047401175}
 --- !u!114 &3913352919014463695
 MonoBehaviour:
@@ -316,7 +317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247a05db6ec0e72458cfec84225237ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmitter: {fileID: 8015484362026322773}
+  soundEmitter:
+  - {fileID: 0}
 --- !u!1 &3133778268787299750
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,9 +363,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/Run
-  PlayEvent: 11
-  StopEvent: 12
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
