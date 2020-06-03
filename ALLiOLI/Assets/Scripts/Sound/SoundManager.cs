@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -148,9 +149,11 @@ public class SoundManager : MonoBehaviour
 
     public void StopEventLocal(string path, bool fadeout)
     {
+        Debug.LogWarning(path);
+
         //TODO: PASS A WAY TO FIND THE EVENT, NOT THE EVENT (MIRROR UNSUPORTED)
-        //soundEvent.clearHandle();
         EventInstance soundEvent = eventsList[path];
+        Debug.LogWarning(soundEvent);
         if (eventsList.Remove(path))
         {
             if (fadeout)
@@ -204,11 +207,21 @@ public class SoundManager : MonoBehaviour
         eventsList.Clear();
     }
 
-    public bool isPlaying(EventInstance soundEvent)
+    public bool isPlaying(string path)
     {
-        PLAYBACK_STATE state;
-        soundEvent.getPlaybackState(out state);
-        return !state.Equals(PLAYBACK_STATE.STOPPED);
+        try
+        {
+            EventInstance soundEvent = eventsList[path];
+            PLAYBACK_STATE state;
+            soundEvent.getPlaybackState(out state);
+            return !state.Equals(PLAYBACK_STATE.STOPPED);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return false;
+           
+        }
+      
     }
 
     // #endregion Events

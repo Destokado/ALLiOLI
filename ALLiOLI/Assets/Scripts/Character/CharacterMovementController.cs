@@ -7,11 +7,10 @@ using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Character))]
-
 public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
-    
+
     [NonSerialized] public Vector2 horizontalMovementInput;
     [SerializeField] private float jumpSpeed;
 
@@ -29,23 +28,17 @@ public class CharacterMovementController : NetworkBehaviour
         get => running;
         set
         {
-            if (!runningEvent.isValid())
-            {
-                runningEvent =
-                    Client.LocalClient.SoundManagerOnline.PlayEventMovingAllClients(SoundManager.SoundEventPaths.runPath, transform);
-            }
+           
             if (value)
             {
-                PLAYBACK_STATE state;
-                runningEvent.getPlaybackState(out state);
-                if (state == PLAYBACK_STATE.STOPPED)
-                {
-                    runningEvent.start();
-                }
+                if(!SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
+                    Client.LocalClient.SoundManagerOnline.PlayEventMovingAllClients(SoundManager.SoundEventPaths.runPath, transform);
+                
             }
             else
             {
-                runningEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                if(SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
+                    Client.LocalClient.SoundManagerOnline.StopEventAllClients(SoundManager.SoundEventPaths.runPath,true);
 
             }
         }
@@ -78,27 +71,27 @@ public class CharacterMovementController : NetworkBehaviour
         // Calculate walking the distance
         Vector3 displacement = direction * (walkSpeed * Time.deltaTime);
 
-        float fallingDistance=0f; 
+        float fallingDistance = 0f;
 
         //Jump
         if (onGround && jumping)
         {
             verticalSpeed = jumpSpeed;
-            
-            Client.LocalClient.SoundManagerOnline.PlayOneShotMovingAllClients(SoundManager.SoundEventPaths.jumpPath,this.transform);
-            fallingDistance= transform.position.y;
 
+            Client.LocalClient.SoundManagerOnline.PlayOneShotMovingAllClients(SoundManager.SoundEventPaths.jumpPath,
+                this.transform);
+            fallingDistance = transform.position.y;
         }
 
         // Apply gravity
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         displacement.y = verticalSpeed * Time.deltaTime;
 
-        
+
         Vector3 horDisplacement = displacement.WithY(0);
         bool walking = onGround && horDisplacement.magnitude > CharacterController.minMoveDistance;
         running = walking;
-        
+
         // Apply Movement to Player
         CollisionFlags collisionFlags = CharacterController.Move(displacement);
 
@@ -108,7 +101,7 @@ public class CharacterMovementController : NetworkBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
                 turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f,angle,0f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
         // Process vertical collisions
@@ -118,9 +111,11 @@ public class CharacterMovementController : NetworkBehaviour
             //Calculates de distance of the fall
             fallingDistance = fallingDistance + transform.position.y;
             //The Max in the Clamp must be the Max range of the Event in FMOD.
-            fallingDistance=Mathf.Clamp(fallingDistance, 0, 2);
-            parameters[0]= new SoundManager.SoundManagerParameter("Height", fallingDistance);
-            if(onGround==false) Client.LocalClient.SoundManagerOnline.PlayOneShotAllClients(SoundManager.SoundEventPaths.landPath,transform.position,parameters);
+            fallingDistance = Mathf.Clamp(fallingDistance, 0, 2);
+            parameters[0] = new SoundManager.SoundManagerParameter("Height", fallingDistance);
+            if (onGround == false)
+                Client.LocalClient.SoundManagerOnline.PlayOneShotAllClients(SoundManager.SoundEventPaths.landPath,
+                    transform.position, parameters);
             onGround = true;
             verticalSpeed = 0.0f;
         }
@@ -144,7 +139,8 @@ public class CharacterMovementController : NetworkBehaviour
     private Vector3 GetDirectionRelativeToTheCamera()
     {
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
-        targetDirection = Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
+        targetDirection =
+            Character.Owner.HumanLocalPlayer.Camera.gameObject.transform.TransformDirection(targetDirection);
         targetDirection.y = 0.0f;
         return targetDirection.normalized;
     }

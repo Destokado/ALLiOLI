@@ -82,18 +82,18 @@ public class SoundManagerOnline : NetworkBehaviour
     [ClientRpc]
     public void RpcPlayEventMoving(string path, Transform transform)
     {
-        soundManager.PlayEventMovingLocal(path, transform);
+         soundManager.PlayEventMovingLocal(path, transform);
     }
 
     [Command]
     private void CmdPlayEventMoving(string path, Transform transform)
     {
-        RpcPlayEventMoving(path, transform);
+         RpcPlayEventMoving(path, transform);
     }
 
-    public EventInstance PlayEventMovingAllClients(string path, Transform transform)
+    public void PlayEventMovingAllClients(string path, Transform transform)
     {
-        return soundManager.PlayEventMovingLocal(path, transform);
+         CmdPlayEventMoving(path, transform);
     }
 
 
