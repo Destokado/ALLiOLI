@@ -99,7 +99,7 @@ public class HumanLocalPlayer : MonoBehaviour
     
     public int localPlayerNumber;
     
-    private bool HasControl => !GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation;
+    private bool HasControl => (!GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation && !GameManager.Instance.escapeOnEditor) || !Application.isFocused;
 
     private void SetDynamicName()
     {
@@ -201,6 +201,18 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnPause()
     {
         GameManager.Instance.PauseButtonPressed();
+    }
+    
+    private void OnEscape()
+    {
+        if (!Application.isEditor)
+            OnPause();
+        else
+        {
+            Debug.Log($"Esc key pressed while being in editor.");
+            //TODO: Program that the 'GameManager.Instance.escapeOnEditor' var set to false on regain focus again inside the editor and then uncomment the next line.
+            //GameManager.Instance.escapeOnEditor = true;
+        }
     }
 
     #endregion

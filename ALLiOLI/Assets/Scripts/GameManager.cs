@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     }
     // ReSharper disable once InconsistentNaming
     private bool _pauseMenuShowing = false;
+    public bool escapeOnEditor;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
         UpdateCursorMode();
+        escapeOnEditor = false;
     }
 
     public void UpdateCursorMode()
@@ -59,14 +61,22 @@ public class GameManager : MonoBehaviour
     /// <param name="inGameMode">If true, the cursor is not visible and locked at the center of the screen. If false, the opposite.</param>
     public static void SetCursorMode(bool inGameMode)
     {
+        Debug.Log("SETTING CURSOR AS " + inGameMode);
         Cursor.visible = !inGameMode;
+        Cursor.lockState = CursorLockMode.None; // Maybe bug fixing: http://answers.unity.com/answers/1119750/view.html
         Cursor.lockState = inGameMode ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
-    public void ExitGame()
+    public void QuitClient()
     {
-        Debug.Log($"Exiting the game. Client? {Client.LocalClient.isClient} - Server? {Client.LocalClient.isServer}");
-
+        if (Client.LocalClient == null)
+        {
+            Debug.Log("Exiting the game (not the scene) before the reference to the localClient is set. Expected if the initial connection to a server failed.");
+            return;
+        }
+        
+        Debug.Log($"Exiting the game. User exiting is client? {Client.LocalClient.isClient} - User exiting is server? {Client.LocalClient.isServer}");
+        
         if (Client.LocalClient.isClient && Client.LocalClient.isServer)
         {
             Debug.Log("STOPPING HOST");   
@@ -85,6 +95,11 @@ public class GameManager : MonoBehaviour
             NetworkManager.singleton.StopServer();
         }
 
+        ExitScene();
+    }
+
+    public void ExitScene()
+    {
         string sceneName = (NetworkManager.singleton as AllIOliNetworkManager)?.nameOfDisconnectionFromServerScene;
         Debug.Log($"Loading scene {sceneName}");
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);

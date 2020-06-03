@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FMODUnity;
 using Mirror;
 using Telepathy;
 using UnityEngine;
@@ -10,19 +11,21 @@ public abstract class Trap : NetworkBehaviour
 
     [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
     [SerializeField] protected RadarTriggerTrap radarTrigger;
-    
+
     public bool OnCd => cdTimer > 0;
     [field: SyncVar] public float cdTimer { get; private set; }
-    
+
     public bool active => activatedTimer > 0;
     [field: SyncVar] public float activatedTimer { get; private set; }
+
+    [SerializeField] protected StudioEventEmitter activateEmitter;
 
     private void Update()
     {
         if (isServer)
             ServerUpdate();
     }
-    
+
     [Server]
     private void ServerUpdate()
     {
@@ -36,13 +39,17 @@ public abstract class Trap : NetworkBehaviour
     }
 
     [Server]
-    protected virtual void Reload() { }
+    protected virtual void Reload()
+    {
+    }
 
     [Server]
     public virtual void Activate()
     {
         Debug.Log("The trap '" + gameObject.name + "' has been activated.", this.gameObject);
-
+        
+        if (activateEmitter != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, activateEmitter.Event);
         cdTimer = cooldownTime;
         activatedTimer = durationTime;
     }

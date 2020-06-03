@@ -1,8 +1,10 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using UnityEngine;
 
 // IMPORTANT NOTE: The flag class only stores information and does changes to his own information.
 // It is not meant to perform any operation or change in any other object
+
 public class Flag : NetworkBehaviour
 {
     public bool hasOwner => owner != null;
@@ -21,6 +23,9 @@ public class Flag : NetworkBehaviour
     private Character _carrier;
     
     [SyncVar] public bool canBePicked = true;
+   
+
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,6 +44,7 @@ public class Flag : NetworkBehaviour
         owner = character.Owner;
         carrier = character;
         canBePicked = false;
+        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,transform.position,null);
     }
 
     [Server]

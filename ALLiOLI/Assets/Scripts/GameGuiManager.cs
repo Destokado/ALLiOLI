@@ -15,23 +15,20 @@ public class GameGuiManager : MonoBehaviour
     [Header("Lobby")]
     [SerializeField] private GameObject clientVisualizationPrefab;
     [SerializeField] private GameObject startMatchButton;
-    [SerializeField] private GameObject lobby;
-    
+
     [Header("PauseMenu")]
     [SerializeField] private GameObject pauseMenu;
     
     private void Awake()
     {
         // Set start values
-        preLobby.SetActive(false);
-        lobby.SetActive(false);
+        preLobby.SetActive(true);
         pauseMenu.SetActive(false);
     }
 
     public void SetStartMatchConfiguration()
     {
         preLobby.SetActive(false);
-        lobby.SetActive(false);
         pauseMenu.SetActive(false);
     }
 
@@ -60,7 +57,6 @@ public class GameGuiManager : MonoBehaviour
     
     public void StartMatch()
     {
-        lobby.SetActive(false);
         MatchManager.instance.StartMatch();
     }
 
@@ -88,7 +84,12 @@ public class GameGuiManager : MonoBehaviour
     
     public void Quit()
     {
-        GameManager.Instance.ExitGame();
+        GameManager.Instance.QuitClient();
+    }
+
+    public void ExitScene()
+    {
+        GameManager.Instance.ExitScene();
     }
     
     public void ShowSettingsMenu(bool show)

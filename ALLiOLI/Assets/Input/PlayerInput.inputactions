@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "210cf807-fc1e-4a41-8803-7ac3a790c03c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -318,12 +326,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f4a303f6-04dc-4727-975f-b6b99e64fa65",
+                    "id": "3a57e1f2-fc1b-434c-b361-cd7d9ce39cbd",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pause",
+                    "groups": "Gamepad;Keyboard&Mouse",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
