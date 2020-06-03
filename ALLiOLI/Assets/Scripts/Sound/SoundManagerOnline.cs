@@ -43,69 +43,46 @@ public class SoundManagerOnline : NetworkBehaviour
         CmdPlayOneShotOnPos(path, pos, parameters);
     }
 
-
-    [ClientRpc]
-    private void RpcPlayOneShotOnGameObject(uint netId, int i)
-    {
-        var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-        gameObject.GetComponent<SoundEmitterHandler>().Play(i);
-    }
-
-    [Command]
-    private void CmdPlayOneShotOnGameObject(uint netId, int i)
-    {
-        RpcPlayOneShotOnGameObject(netId, i);
-    }
-
-    public void PlayOneShotOnGameObjectAllClients(uint netId, int i)
-    {
-        CmdPlayOneShotOnGameObject(netId, i);
-    }
+    
 
     #endregion
 
 
     #region PlayEvent
-
-    
-
-   
-    /*
     [ClientRpc]
-    private void RpcPlayEvent(string path, Vector3 pos)
+    private void RpcPlayEventInPos(string path, Vector3 pos)
     {
         soundManager.PlayEventLocal(path, pos);
     }
 
     [Command]
-    private void CmdPlayEvent(string path, Vector3 pos)
+    private void CmdPlayEventInPos(string path, Vector3 pos)
     {
-        RpcPlayEvent(path, pos);
+        RpcPlayEventInPos(path, pos);
     }
 
-    public EventInstance PlayEventAllClients(string path, Vector3 pos)
+    public EventInstance PlayEventInPosAllClients(string path, Vector3 pos)
     {
         return soundManager.PlayEventLocal(path, pos);
-    }*/
+    }
 
 
     [ClientRpc]
-    private void RpcPlayEventOnGameObject(uint netId, int i)
+    private void RpcPlayEventOnGameObject(uint netId, string path)
     {
-        
-       var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-       gameObject.GetComponent<SoundEmitterHandler>().Play(i);
+        SoundManager.Instance.PlayEventOnGameObjectLocal(netId,path);
+      
     }
 
     [Command]
-    private void CmdPlayEventOnGameObject(uint netId, int i)
+    private void CmdPlayEventOnGameObject(uint netId, string path)
     {
-         RpcPlayEventOnGameObject(netId, i);
+         RpcPlayEventOnGameObject(netId, path);
     }
 
-    public void PlayEventOnGameObjectAllClients(uint netId, int i)
+    public void PlayEventOnGameObjectAllClients(uint netId, string path)
     {
-         CmdPlayEventOnGameObject(netId, i);
+         CmdPlayEventOnGameObject(netId, path);
     }
     #endregion
 
@@ -156,21 +133,21 @@ public class SoundManagerOnline : NetworkBehaviour
 
     
     [ClientRpc]
-    private void RpcStopEventOnGameObject(uint netId, int i)
+    private void RpcStopEventOnGameObject(uint netId, string path)
     {
-        SoundManager.Instance.StopEventOnGameObjectLocal(netId, i);
+        SoundManager.Instance.StopEventOnGameObjectLocal(netId, path);
        
     }
 
     [Command]
-    private void CmdStopEventOnGameObject(uint netId, int i)
+    private void CmdStopEventOnGameObject(uint netId, string path)
     {
-        RpcStopEventOnGameObject(netId,i);
+        RpcStopEventOnGameObject(netId,path);
     }
 
-    public void StopEventOnGameObjectAllClients(uint netId, int i)
+    public void StopEventOnGameObjectAllClients(uint netId, string path)
     {
-        CmdPlayEventOnGameObject(netId,i);
+        CmdPlayEventOnGameObject(netId,path);
     }
     
     

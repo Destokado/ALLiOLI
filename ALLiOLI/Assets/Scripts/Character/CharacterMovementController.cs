@@ -31,14 +31,14 @@ public class CharacterMovementController : NetworkBehaviour
            
             if (value)
             {
-                if(!SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
-                    Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, 0);
+               
+                    Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
                 
             }
             else
             {
-               /if(SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
-                    Client.LocalClient.SoundManagerOnline.StopEventAllClients(SoundManager.SoundEventPaths.runPath,true);
+                    Debug.Log("Should stop Run Sound");
+                    Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
 
             }
         }
@@ -78,7 +78,7 @@ public class CharacterMovementController : NetworkBehaviour
         {
             verticalSpeed = jumpSpeed;
 
-            Client.LocalClient.SoundManagerOnline.PlayOneShotOnGameObjectAllClients(netId,1);
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
             fallingDistance = transform.position.y;
         }
 

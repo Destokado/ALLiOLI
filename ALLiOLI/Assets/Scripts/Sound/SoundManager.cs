@@ -217,6 +217,7 @@ public class SoundManager : MonoBehaviour
         }
         catch (KeyNotFoundException)
         {
+            Debug.Log(path+" evnet not found");
             return false;
         }
     }
@@ -298,9 +299,16 @@ public class SoundManager : MonoBehaviour
 
     #endregion ExtraClasses
 
-    public void StopEventOnGameObjectLocal(uint netId, int i)
+    public void StopEventOnGameObjectLocal(uint netId, string path)
     {
          var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-                gameObject.GetComponent<SoundEmitterHandler>().Stop(i);
+                gameObject.GetComponent<SoundEmitterHandler>().Stop(path);
     }
+
+    public void PlayEventOnGameObjectLocal(uint netId, string path)
+    {
+         var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+               gameObject.GetComponent<SoundEmitterHandler>().Play(path);
+    }
+    
 }
