@@ -36,7 +36,7 @@ public class SoundManager : MonoBehaviour
     {
         if ((instance != null && instance != this))
         {
-            DestroyObject(this.gameObject);
+            Destroy(this.gameObject);
             return;
         }
         else
@@ -215,10 +215,8 @@ public class SoundManager : MonoBehaviour
             soundEvent.getPlaybackState(out state);
             return !state.Equals(PLAYBACK_STATE.STOPPED);
         }
-        catch (KeyNotFoundException e)
-        {
+        catch (KeyNotFoundException) {
             return false;
-           
         }
       
     }
