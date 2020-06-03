@@ -32,12 +32,12 @@ public class CharacterMovementController : NetworkBehaviour
             if (value)
             {
                 if(!SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
-                    Client.LocalClient.SoundManagerOnline.PlayEventMovingAllClients(SoundManager.SoundEventPaths.runPath, transform);
+                    Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, 0);
                 
             }
             else
             {
-                if(SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
+               /if(SoundManager.Instance.isPlaying(SoundManager.SoundEventPaths.runPath))
                     Client.LocalClient.SoundManagerOnline.StopEventAllClients(SoundManager.SoundEventPaths.runPath,true);
 
             }
@@ -78,8 +78,7 @@ public class CharacterMovementController : NetworkBehaviour
         {
             verticalSpeed = jumpSpeed;
 
-            Client.LocalClient.SoundManagerOnline.PlayOneShotMovingAllClients(SoundManager.SoundEventPaths.jumpPath,
-                this.transform);
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnGameObjectAllClients(netId,1);
             fallingDistance = transform.position.y;
         }
 
@@ -114,7 +113,7 @@ public class CharacterMovementController : NetworkBehaviour
             fallingDistance = Mathf.Clamp(fallingDistance, 0, 2);
             parameters[0] = new SoundManager.SoundManagerParameter("Height", fallingDistance);
             if (onGround == false)
-                Client.LocalClient.SoundManagerOnline.PlayOneShotAllClients(SoundManager.SoundEventPaths.landPath,
+                Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.landPath,
                     transform.position, parameters);
             onGround = true;
             verticalSpeed = 0.0f;

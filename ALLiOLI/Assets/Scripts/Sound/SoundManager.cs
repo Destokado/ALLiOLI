@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
+using Mirror;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class SoundManager : MonoBehaviour
                 instance = go.AddComponent<SoundManager>();
                 instance.name = "SoundManagerOnline";
             }
+
             return instance;
         }
     }
@@ -74,7 +76,14 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
+    private EventInstance GetEventFromPath(string path)
+    {
+        if (eventsList.ContainsKey(path)) return eventsList[path];
 
+        //  Debug.LogWarning($"The event with path {path} wasn't found in the {eventsList} dictionary");
+        throw new KeyNotFoundException($"The event with path {path} wasn't found in the {eventsList} dictionary");
+    }
+    
     public void PlayOneShotLocal(string path, Vector3 pos, SoundManagerParameter[] parameters)
     {
         EventInstance soundEvent = RuntimeManager.CreateInstance(path);
@@ -149,11 +158,9 @@ public class SoundManager : MonoBehaviour
 
     public void StopEventLocal(string path, bool fadeout)
     {
-       
+        EventInstance soundEvent = GetEventFromPath(path);
 
-        //TODO: PASS A WAY TO FIND THE EVENT, NOT THE EVENT (MIRROR UNSUPORTED)
-        EventInstance soundEvent = eventsList[path];
-        //The run event is stopped by the other player (in local)
+
         if (eventsList.Remove(path))
         {
             if (fadeout)
@@ -163,35 +170,27 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("The event : " + soundEvent + " is null or is not on the list");
+            Debug.LogWarning("The event : " + soundEvent + " didn't stop");
         }
     }
 
+
+  
+
     public void PauseEventLocal(string path)
     {
-        if (eventsList.ContainsKey(path))
-        {
-            EventInstance soundEvent = eventsList[path];
+
+        EventInstance soundEvent = GetEventFromPath(path);
             soundEvent.setPaused(true);
-        }
-        else
-        {
-            Debug.LogWarning("The event : " + path + " is null or is not on the list");
-        }
+        
+        
     }
 
     public void ResumeEventLocal(string path)
     {
-        if (eventsList.ContainsKey(path))
-        {
-            EventInstance soundEvent = eventsList[path];
+        EventInstance soundEvent = GetEventFromPath(path);
+        soundEvent.setPaused(false);
 
-            soundEvent.setPaused(false);
-        }
-        else
-        {
-            Debug.LogWarning("The event : " + path + " is null or is not on the list");
-        }
     }
 
     public void StopAllEventsLocal(bool fadeout)
@@ -211,15 +210,15 @@ public class SoundManager : MonoBehaviour
     {
         try
         {
-            EventInstance soundEvent = eventsList[path];
+            EventInstance soundEvent = GetEventFromPath(path);
             PLAYBACK_STATE state;
             soundEvent.getPlaybackState(out state);
             return !state.Equals(PLAYBACK_STATE.STOPPED);
         }
-        catch (KeyNotFoundException) {
+        catch (KeyNotFoundException)
+        {
             return false;
         }
-      
     }
 
     // #endregion Events
@@ -298,4 +297,10 @@ public class SoundManager : MonoBehaviour
     }
 
     #endregion ExtraClasses
+
+    public void StopEventOnGameObjectLocal(uint netId, int i)
+    {
+         var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+                gameObject.GetComponent<SoundEmitterHandler>().Stop(i);
+    }
 }

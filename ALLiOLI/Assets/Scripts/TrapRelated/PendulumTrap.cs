@@ -18,5 +18,6 @@ public class PendulumTrap : Trap
     {
         base.Activate();
         ball.useSpring = false;
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,0);
     }
 }

@@ -44,7 +44,7 @@ public class Flag : NetworkBehaviour
         owner = character.Owner;
         carrier = character;
         canBePicked = false;
-        Client.LocalClient.SoundManagerOnline.PlayOneShotAllClients(SoundManager.SoundEventPaths.pickUpPath,transform.position,null);
+        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,transform.position,null);
     }
 
     [Server]

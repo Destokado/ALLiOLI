@@ -5,23 +5,22 @@ using UnityEngine;
 
 public class SoundEmitterHandler : MonoBehaviour
 {
-    [SerializeField] private StudioEventEmitter soundEmitter;
+    [SerializeField] private List< StudioEventEmitter> soundEmitter;
     
 
-    public void Play()
+    public void Play(int i)
     {
-       // soundEmitter.gameObject.SetActive(true);
-       if(!soundEmitter.IsPlaying()) soundEmitter.Play();
+        if(!soundEmitter[i].IsPlaying())  soundEmitter[i].Play();
+        
        
     }
 
-    public void Stop()
+    public void Stop(int i)
     {
-       // soundEmitter.gameObject.SetActive(false);
-       if (soundEmitter.IsPlaying())
+       
+       if (soundEmitter[i].IsPlaying())
        {
-           soundEmitter.Stop();
-           soundEmitter.AllowFadeout = true;
+           soundEmitter[i].Stop();
        }
 
     }

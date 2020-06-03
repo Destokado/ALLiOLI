@@ -24,51 +24,61 @@ public class SoundManagerOnline : NetworkBehaviour
 
     // Usamos esta para objetos con parámetros
 
+    #region OneShot
 
     [ClientRpc]
-    public void RpcPlayOneShot(string path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
+    private void RpcPlayOneShotOnPos(string path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
     {
         soundManager.PlayOneShotLocal(path, pos, parameters);
     }
 
     [Command]
-    private void CmdPlayOneShot(string path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
+    private void CmdPlayOneShotOnPos(string path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
     {
-        RpcPlayOneShot(path, pos, parameters);
+        RpcPlayOneShotOnPos(path, pos, parameters);
     }
-
-    public void PlayOneShotAllClients(String path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
+    
+    public void PlayOneShotOnPosAllClients(string path, Vector3 pos, SoundManager.SoundManagerParameter[] parameters)
     {
-        CmdPlayOneShot(path, pos, parameters);
+        CmdPlayOneShotOnPos(path, pos, parameters);
     }
 
 
     [ClientRpc]
-    public void RpcPlayOneShotMoving(string path, Transform transform)
+    private void RpcPlayOneShotOnGameObject(uint netId, int i)
     {
-        soundManager.PlayOneShotMovingLocal(path, transform);
+        var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+        gameObject.GetComponent<SoundEmitterHandler>().Play(i);
     }
 
     [Command]
-    public void CmdPlayOneShotMoving(string path, Transform transform)
+    private void CmdPlayOneShotOnGameObject(uint netId, int i)
     {
-        RpcPlayOneShotMoving(path, transform);
+        RpcPlayOneShotOnGameObject(netId, i);
     }
 
-    public void PlayOneShotMovingAllClients(String path, Transform transform)
+    public void PlayOneShotOnGameObjectAllClients(uint netId, int i)
     {
-        CmdPlayOneShotMoving(path, transform);
+        CmdPlayOneShotOnGameObject(netId, i);
     }
 
+    #endregion
 
+
+    #region PlayEvent
+
+    
+
+   
+    /*
     [ClientRpc]
-    public void RpcPlayEvent(string path, Vector3 pos)
+    private void RpcPlayEvent(string path, Vector3 pos)
     {
         soundManager.PlayEventLocal(path, pos);
     }
 
     [Command]
-    public void CmdPlayEvent(string path, Vector3 pos)
+    private void CmdPlayEvent(string path, Vector3 pos)
     {
         RpcPlayEvent(path, pos);
     }
@@ -76,43 +86,59 @@ public class SoundManagerOnline : NetworkBehaviour
     public EventInstance PlayEventAllClients(string path, Vector3 pos)
     {
         return soundManager.PlayEventLocal(path, pos);
-    }
+    }*/
 
 
     [ClientRpc]
-    public void RpcPlayEventMoving(string path, Transform transform)
+    private void RpcPlayEventOnGameObject(uint netId, int i)
     {
-         soundManager.PlayEventMovingLocal(path, transform);
+        
+       var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+       gameObject.GetComponent<SoundEmitterHandler>().Play(i);
     }
 
     [Command]
-    private void CmdPlayEventMoving(string path, Transform transform)
+    private void CmdPlayEventOnGameObject(uint netId, int i)
     {
-         RpcPlayEventMoving(path, transform);
+         RpcPlayEventOnGameObject(netId, i);
     }
 
-    public void PlayEventMovingAllClients(string path, Transform transform)
+    public void PlayEventOnGameObjectAllClients(uint netId, int i)
     {
-         CmdPlayEventMoving(path, transform);
+         CmdPlayEventOnGameObject(netId, i);
     }
+    #endregion
 
+    #region UpdateParameters
 
-    //TODO: Maybe also With CMD and RPC?
+    
+
+    
+    /// <summary>
+    /// Update the event parameter. //TODO: NOT TESTED
+    /// </summary>
+    /// <param name="soundEvent"> EventIstance to modify</param>
+    /// <param name="parameter"> SoundManagerParameter with the new values</param>
     public void UpdateEventParameter(EventInstance soundEvent, SoundManager.SoundManagerParameter parameter)
     {
         soundEvent.setParameterByName(parameter.name, parameter.value);
     }
-
+    /// <summary>
+    /// Update the event parameters. //TODO: NOT TESTED
+    /// </summary>
     public void UpdateEventParameters(EventInstance soundEvent,
         List<SoundManager.SoundManagerParameter> parameters)
     {
         for (int i = 0; i < parameters.Count; i++)
             soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
     }
+    #endregion
 
+    #region Stop
 
+    
     [ClientRpc]
-    public void RpcStopEvent(String path, bool fadeout)
+    private void RpcStopEvent(String path, bool fadeout)
     {
         soundManager.StopEventLocal(path, fadeout);
     }
@@ -128,13 +154,35 @@ public class SoundManagerOnline : NetworkBehaviour
         CmdStopEvent(path, fadeout);
     }
 
+    
+    [ClientRpc]
+    private void RpcStopEventOnGameObject(uint netId, int i)
+    {
+        SoundManager.Instance.StopEventOnGameObjectLocal(netId, i);
+       
+    }
 
+    [Command]
+    private void CmdStopEventOnGameObject(uint netId, int i)
+    {
+        RpcStopEventOnGameObject(netId,i);
+    }
+
+    public void StopEventOnGameObjectAllClients(uint netId, int i)
+    {
+        CmdPlayEventOnGameObject(netId,i);
+    }
+    
+    
+    #endregion
+  
+
+/*
     [ClientRpc]
     public void RpcPauseEvent(String path)
     {
         soundManager.PauseEventLocal(path);
     }
-
     [Command]
     private void CmdPauseEvent(String path)
     {
@@ -171,7 +219,7 @@ public class SoundManagerOnline : NetworkBehaviour
         soundManager.StopAllEventsLocal(fadeout);
     }
 
-/*
+
     public void PauseAllEvents()
     {
         foreach (var pair in eventsList)
