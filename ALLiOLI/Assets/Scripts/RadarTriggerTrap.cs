@@ -21,6 +21,8 @@ public class RadarTriggerTrap : MonoBehaviour
 
     public float GetRadarDistanceTo(Character character)
     {
+        //TODO: CHARACTER CAN BE NULL, throws exception
+        
         return Vector3.Distance(character.transform.position + Vector3.up, pointOfMaxEffectivity.position) /
                maximumRadarDistance;
         //return Vector3.Distance(character.cameraTarget.transform.position, this.gameObject.transform.position)/maximumRadarDistance;
