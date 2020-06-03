@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 719849014}
   - component: {fileID: 719849013}
   - component: {fileID: 719849016}
-  - component: {fileID: 719849015}
   m_Layer: 0
   m_Name: LandingSceneManager
   m_TagString: Untagged
@@ -367,20 +366,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &719849015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 719849012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 843bd0edeb643ff4eaf03230e327a093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &719849016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +709,7 @@ PrefabInstance:
         type: 3}
       propertyPath: soundManager
       value: 
-      objectReference: {fileID: 719849015}
+      objectReference: {fileID: 0}
     - target: {fileID: 2421204344691066923, guid: 2f8efb193fef54c408299ca5c47a324b,
         type: 3}
       propertyPath: sceneId
@@ -944,7 +929,7 @@ PrefabInstance:
         type: 3}
       propertyPath: soundManager
       value: 
-      objectReference: {fileID: 719849015}
+      objectReference: {fileID: 0}
     - target: {fileID: 2421204344691066923, guid: 2f8efb193fef54c408299ca5c47a324b,
         type: 3}
       propertyPath: sceneId
