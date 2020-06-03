@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.5752546, z: -3.7142355}
+  m_FollowOffset: {x: 0, y: 1.4959576, z: -3.833181}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 1.4, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 0.6, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
@@ -228,8 +228,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: -0.60264474, y: 0.056908254, z: -0.0060268724, w: 0.7959551}
-  m_LocalPosition: {x: 3132041.8, y: -249065.47, z: 34591.016}
+  m_LocalRotation: {x: -0.6531817, y: 0.061676376, z: -0.006535948, w: -0.7546569}
+  m_LocalPosition: {x: 44640732, y: -4222034.5, z: 396333.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.5752546, z: -3.7142355}
+  m_FollowOffset: {x: 0, y: 1.4959576, z: -3.833181}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 1.4, z: 0}
+  m_TrackedObjectOffset: {x: 0, y: 1.9, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
@@ -696,8 +696,8 @@ MonoBehaviour:
   m_BindingMode: 5
   m_SplineCurvature: 0.2
   m_Orbits:
-  - m_Height: 4
-    m_Radius: 6
+  - m_Height: 5
+    m_Radius: 4.5
   - m_Height: 2
     m_Radius: 4
   - m_Height: 0
@@ -721,7 +721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 769
+    m_Bits: 1
   m_IgnoreTag: 
   m_TransparentLayers:
     serializedVersion: 2
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 1.5752546, z: -3.7142355}
+  m_FollowOffset: {x: 0, y: 1.4959576, z: -3.833181}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
