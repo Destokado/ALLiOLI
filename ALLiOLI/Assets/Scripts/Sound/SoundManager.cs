@@ -153,6 +153,7 @@ public class SoundManager : MonoBehaviour
 
         //TODO: PASS A WAY TO FIND THE EVENT, NOT THE EVENT (MIRROR UNSUPORTED)
         EventInstance soundEvent = eventsList[path];
+        //The run event is stopped by the other player (in local)
         if (eventsList.Remove(path))
         {
             if (fadeout)
