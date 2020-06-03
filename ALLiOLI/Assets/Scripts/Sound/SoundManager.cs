@@ -1,16 +1,15 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
-using System.Collections.Generic;
-using Mirror;
 using UnityEngine;
 
-public class SoundManager : NetworkBehaviour
+public class SoundManager : MonoBehaviour
 {
     #region Parameters
 
-   
-    private Dictionary<String, EventInstance> eventsList;
+    private static SoundManager instance;
+    private Dictionary<string, EventInstance> eventsList;
 
     private EventInstance music;
 
@@ -18,11 +17,36 @@ public class SoundManager : NetworkBehaviour
 
     #endregion Parameters
 
-    #region Initialization
+    public static SoundManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = new GameObject();
+                instance = go.AddComponent<SoundManager>();
+                instance.name = "SoundManagerOnline";
+            }
+            return instance;
+        }
+    }
 
- 
+    void Awake()
+    {
+        if ((instance != null && instance != this))
+        {
+            DestroyObject(this.gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+            Init();
+        }
+    }
 
-    private void Awake()
+    private void Init()
     {
         eventsList = new Dictionary<string, EventInstance>();
         positionEvents = new List<SoundManagerMovingSound>();
@@ -50,14 +74,6 @@ public class SoundManager : NetworkBehaviour
         }
     }
 
-    #endregion Initialization
-
-
-    // #region FMOD Wrapper
-
-    //  #region Events
-
-    // Usamos esta para objetos con parámetros
     public void PlayOneShotLocal(string path, Vector3 pos, SoundManagerParameter[] parameters)
     {
         EventInstance soundEvent = RuntimeManager.CreateInstance(path);
@@ -78,23 +94,6 @@ public class SoundManager : NetworkBehaviour
             Debug.LogWarning("The event with path: " + path + " is null");
     }
 
-    [ClientRpc]
-    public void RpcPlayOneShot(string path, Vector3 pos, SoundManagerParameter[] parameters)
-    {
-        PlayOneShotLocal(path, pos, parameters);
-    }
-
-    [Command]
-    private void CmdPlayOneShot(string path, Vector3 pos, SoundManagerParameter[] parameters)
-    {
-        RpcPlayOneShot(path, pos, parameters);
-    }
-
-    public void PlayOneShotAllClients(String path, Vector3 pos, SoundManagerParameter[] parameters)
-    {
-        CmdPlayOneShot(path, pos, parameters);
-    }
-
     // Usamos esta para objetos en movimiento que actualizan la posición del sonido
     public void PlayOneShotMovingLocal(string path, Transform transform)
     {
@@ -109,24 +108,6 @@ public class SoundManager : NetworkBehaviour
         }
         else Debug.LogWarning("The event with path: " + path + " is null");
     }
-
-    [ClientRpc]
-    public void RpcPlayOneShotMoving(string path, Transform transform)
-    {
-        PlayOneShotMovingLocal(path, transform);
-    }
-
-    [Command]
-    public void CmdPlayOneShotMoving(string path, Transform transform)
-    {
-        RpcPlayOneShotMoving(path, transform);
-    }
-
-    public void PlayOneShotMovingAllClients(String path, Transform transform)
-    {
-        CmdPlayOneShotMoving(path, transform);
-    }
-
 
     public EventInstance PlayEventLocal(string path, Vector3 pos)
     {
@@ -144,24 +125,6 @@ public class SoundManager : NetworkBehaviour
 
         return soundEvent;
     }
-
-    [ClientRpc]
-    public void RpcPlayEvent(string path, Vector3 pos)
-    {
-        PlayEventLocal(path, pos);
-    }
-
-    [Command]
-    public void CmdPlayEvent(string path, Vector3 pos)
-    {
-        RpcPlayEvent(path, pos);
-    }
-
-    public EventInstance PlayEventAllClients(string path, Vector3 pos)
-    {
-        return PlayEventLocal(path, pos);
-    }
-
 
     // Usamos esta para objetos en movimiento que actualizan la posición del sonido
     public EventInstance PlayEventMovingLocal(string path, Transform transform)
@@ -183,37 +146,7 @@ public class SoundManager : NetworkBehaviour
         return soundEvent;
     }
 
-    [ClientRpc]
-    public void RpcPlayEventMoving(string path, Transform transform)
-    {
-        PlayEventMovingLocal(path, transform);
-    }
-
-    [Command]
-    private void CmdPlayEventMoving(string path, Transform transform)
-    {
-        RpcPlayEventMoving(path, transform);
-    }
-
-    public EventInstance PlayEventMovingAllClients(string path, Transform transform)
-    {
-        return PlayEventMovingLocal(path, transform);
-    }
-
-
-    //TODO: Maybe also With CMD and RPC?
-    public void UpdateEventParameter(EventInstance soundEvent, SoundManagerParameter parameter)
-    {
-        soundEvent.setParameterByName(parameter.name, parameter.value);
-    }
-
-    public void UpdateEventParameters(EventInstance soundEvent, List<SoundManagerParameter> parameters)
-    {
-        for (int i = 0; i < parameters.Count; i++)
-            soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
-    }
-
-    public void StopEventLocal(String path, bool fadeout)
+    public void StopEventLocal(string path, bool fadeout)
     {
         //TODO: PASS A WAY TO FIND THE EVENT, NOT THE EVENT (MIRROR UNSUPORTED)
         //soundEvent.clearHandle();
@@ -231,26 +164,7 @@ public class SoundManager : NetworkBehaviour
         }
     }
 
-
-    [ClientRpc]
-    public void RpcStopEvent(String path, bool fadeout)
-    {
-        StopEventLocal(path, fadeout);
-    }
-
-    [Command]
-    private void CmdStopEvent(String path, bool fadeout)
-    {
-        RpcStopEvent(path, fadeout);
-    }
-
-    public void StopEventAllClients(String path, bool fadeout)
-    {
-        CmdStopEvent(path, fadeout);
-    }
-
-
-    public void PauseEventLocal(String path)
+    public void PauseEventLocal(string path)
     {
         if (eventsList.ContainsKey(path))
         {
@@ -263,24 +177,7 @@ public class SoundManager : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcPauseEvent(String path)
-    {
-        PauseEventLocal(path);
-    }
-
-    [Command]
-    private void CmdPauseEvent(String path)
-    {
-        RpcPauseEvent(path);
-    }
-
-    public void PauseEventAllClients(String path)
-    {
-        PauseEventLocal(path);
-    }
-
-    public void ResumeEventLocal(String path)
+    public void ResumeEventLocal(string path)
     {
         if (eventsList.ContainsKey(path))
         {
@@ -294,24 +191,7 @@ public class SoundManager : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcResumeEvent(String path)
-    {
-        ResumeEventLocal(path);
-    }
-
-    [Command]
-    private void CmdResumeEvent(String path)
-    {
-        RpcResumeEvent(path);
-    }
-
-    public void ResumeEventAllClients(String path)
-    {
-        ResumeEventLocal(path);
-    }
-
-    public void StopAllEvents(bool fadeout)
+    public void StopAllEventsLocal(bool fadeout)
     {
         foreach (var pair in eventsList)
         {
@@ -322,29 +202,6 @@ public class SoundManager : NetworkBehaviour
         }
 
         eventsList.Clear();
-    }
-
-    [ClientRpc]
-    public void RpcStopAllEvents(bool fadeout)
-    {
-        StopAllEvents(fadeout);
-    }
-
-
-    public void PauseAllEvents()
-    {
-        foreach (var pair in eventsList)
-        {
-            pair.Value.setPaused(true);
-        }
-    }
-
-    public void ResumeAllEvents()
-    {
-        foreach (var pair in eventsList)
-        {
-            pair.Value.setPaused(false);
-        }
     }
 
     public bool isPlaying(EventInstance soundEvent)
@@ -368,69 +225,66 @@ public class SoundManager : NetworkBehaviour
 
     #endregion Mixer
 
-    //  #endregion FMOD Wrapper
-}
-
-
-#region ExtraClasses
+    #region ExtraClasses
 
 //Parametro genérico de FMOD para pasar a los eventos
 
-public readonly struct SoundManagerParameter
-{
-    public readonly string name;
-    public readonly float value;
-
-    public SoundManagerParameter(string name, float value)
+    public readonly struct SoundManagerParameter
     {
-        this.name = name;
-        this.value = value;
+        public readonly string name;
+        public readonly float value;
+
+        public SoundManagerParameter(string name, float value)
+        {
+            this.name = name;
+            this.value = value;
+        }
     }
-}
 
 
 //Parametro genérico de FMOD para pasar a los eventos
-class SoundManagerMovingSound
-{
-    Transform transform;
-    EventInstance eventIns;
-
-    public SoundManagerMovingSound(Transform transform, EventInstance eventIns)
+    class SoundManagerMovingSound
     {
-        this.transform = transform;
-        this.eventIns = eventIns;
+        Transform transform;
+        EventInstance eventIns;
+
+        public SoundManagerMovingSound(Transform transform, EventInstance eventIns)
+        {
+            this.transform = transform;
+            this.eventIns = eventIns;
+        }
+
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
+        public EventInstance GetEventInstance()
+        {
+            return eventIns;
+        }
     }
 
-    public Transform GetTransform()
+    public static class SoundEventPaths
     {
-        return transform;
+        public static string jumpPath = "event:/Jump";
+        public static string runPath = "event:/Run";
+        public static string activateTrapPath;
+        public static string landPath = "event:/Land";
+        public static string deathPath;
+        public static string punchPath;
+        public static string wallHitPath;
+        public static string spawnPath;
+        public static string winPath;
+        public static string defeatPath;
+        public static string finishPath;
+        public static string buttonCooldownPath;
+        public static string pickUpPath = "event:/FlagPickup";
+        public static string flagAnnouncePath;
+        public static string playButtonPath = "event:/PlayButton";
+        public static string buttonHoverPath = "event:/ButtonHover";
+        public static string buttonPath = "event:/Button";
     }
 
-    public EventInstance GetEventInstance()
-    {
-        return eventIns;
-    }
+    #endregion ExtraClasses
 }
-
-public static class SoundEventPaths
-{
-    public static string jumpPath = "event:/Jump";
-    public static string runPath = "event:/Run";
-    public static string activateTrapPath;
-    public static string landPath = "event:/Land";
-    public static string deathPath;
-    public static string punchPath;
-    public static string wallHitPath;
-    public static string spawnPath;
-    public static string winPath;
-    public static string defeatPath;
-    public static string finishPath;
-    public static string buttonCooldownPath;
-    public static string pickUpPath = "event:/FlagPickup";
-    public static string flagAnnouncePath;
-    public static string playButtonPath = "event:/PlayButton";
-    public static string buttonHoverPath = "event:/ButtonHover";
-    public static string buttonPath = "event:/Button";
-}
-
-#endregion ExtraClasses
