@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class RollingTubes : Trap
 {
-    [SerializeField] private int numberOfTubes = 5;
     private NetworkPool pool;
-    [SerializeField] private Transform spawnPos;
+    [SerializeField] private Transform[] spawnPos;
     [SerializeField] private float timeBetweenTubeSpanws = 0.5f;
     [SerializeField] private GameObject tubePrefab;
     [SerializeField] private float tubeSpeed = 5f;
@@ -29,11 +28,20 @@ public class RollingTubes : Trap
 
     private IEnumerator SpawnTubes()
     {
-        for (int t = 0; t < numberOfTubes; t++)
-        {
-            GameObject projectile = pool.Spawn();
-            projectile.GetComponent<Rigidbody>().velocity = Vector3.down * tubeSpeed;
-            yield return new WaitForSeconds(timeBetweenTubeSpanws);
-        }
+        
+           
+            
+            for (int t = 0; t < pool.size; t++)
+            {
+               
+                pool.instantiationTransform = spawnPos[Random.Range(0,spawnPos.Length-1)];
+                
+                GameObject projectile = pool.Spawn();
+                
+                projectile.GetComponent<Rigidbody>().velocity = Vector3.down * tubeSpeed;
+                yield return new WaitForSeconds(timeBetweenTubeSpanws);
+            }
+        
+       
     }
 }
