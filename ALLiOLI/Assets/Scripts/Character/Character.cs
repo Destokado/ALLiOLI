@@ -14,7 +14,7 @@ public class Character : NetworkBehaviour
     [SyncVar(hook = nameof(NewHasFlagValue))] public bool hasFlag = false;
     private void NewHasFlagValue(bool oldVal, bool newVal) { flagGameObject.SetActive(newVal); }
 
-    [SerializeField] private MeshRenderer[] meshRenderersToColor;
+    [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
 
     public Player Owner
     {
@@ -40,7 +40,7 @@ public class Character : NetworkBehaviour
         if (block == null)
             block = new MaterialPropertyBlock();
         
-        foreach (MeshRenderer mr in meshRenderersToColor)
+        foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
         {
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);

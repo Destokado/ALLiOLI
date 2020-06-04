@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class IKFootPlacement : MonoBehaviour
@@ -26,9 +27,10 @@ public class IKFootPlacement : MonoBehaviour
 
         RaycastHit hit;
         Ray ray = new Ray(anim.GetIKPosition(foot) + Vector3.up * maxFootElevation, Vector3.down);
-        if (Physics.Raycast(ray, out hit,
-            Vector3.Distance(anim.GetIKPosition(foot) + Vector3.down * footBoneDistanceToGround, ray.origin),
-            walkableLayers))
+        float distanceFromMaxElevation =
+            Vector3.Distance(anim.GetIKPosition(foot) + Vector3.down * footBoneDistanceToGround, ray.origin);
+        
+        if (Physics.Raycast(ray, out hit, distanceFromMaxElevation, walkableLayers))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             Vector3 footPosition = hit.point;
@@ -38,7 +40,14 @@ public class IKFootPlacement : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction, Color.green);
+            Debug.DrawLine(ray.origin, ray.origin+ray.direction*distanceFromMaxElevation, Color.green);
         }
     }
+
+    /*private void OnDrawGizmosSelected() 
+    {
+        Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f);
+        Gizmos.DrawSphere(anim.GetIKPosition(AvatarIKGoal.LeftFoot), 0.05f); // Warning
+        Gizmos.DrawSphere(anim.GetIKPosition(AvatarIKGoal.RightFoot), 0.05f); // Warning
+    }*/
 }
