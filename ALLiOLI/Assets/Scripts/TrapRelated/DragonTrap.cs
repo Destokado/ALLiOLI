@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class DragonTrap : Trap
 {
-    private SimpleAnimationsManager animManager;
+    [FormerlySerializedAs("animManager")] [SerializeField] private SimpleAnimationsManager fireAnim;
+   [FormerlySerializedAs("secondanimManager")] [SerializeField] private SimpleAnimationsManager jawAnim;
 
     private void Awake()
     {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
+        // fireAnim = gameObject.GetComponent<SimpleAnimationsManager>();
+       // jawAnim = gameObject.GetComponentInChildren<SimpleAnimationsManager>();
+
     }
 
     protected override void Reload()
     {
-        animManager.GetAnimation(0).mirror = true;
-        animManager.Play(0);
+        fireAnim.GetAnimation(0).mirror = true;
+        jawAnim.GetAnimation(0).mirror = true;
+        fireAnim.Play(0);
+        jawAnim.Play(0);
     }
 
     public override void Activate()
     {
         base.Activate();
-        animManager.GetAnimation(0).mirror = false;
-        animManager.Play(0);
+        fireAnim.GetAnimation(0).mirror = false;
+        jawAnim.GetAnimation(0).mirror = false;
+        fireAnim.Play(0);
+        jawAnim.Play(0);
     }
 }
