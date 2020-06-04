@@ -5,6 +5,33 @@ using UnityEngine.UI;
 
 public class RadarUI : MonoBehaviour
 {
+    /* //NEW
+    [SerializeField] private Image radarIndicator;
+    [SerializeField] private Sprite[] imagesAnimation;
+    
+    public void RenderReport(List<KeyValuePair<Trap, SortedList<float, Character>>> report)
+    {
+        float distanceClosestChar = 1f; // [0, 1]
+        Character closestCharacter = null;
+        
+        foreach (KeyValuePair<Trap, SortedList<float, Character>> trapReport in report)
+        {
+            float distance = trapReport.Value.Keys[0];
+            
+            if (distance < distanceClosestChar)
+            {
+                distanceClosestChar = distance;
+                closestCharacter = trapReport.Value.Values[0];
+            }
+        }
+
+        radarIndicator.sprite = imagesAnimation[Mathf.RoundToInt(distanceClosestChar*imagesAnimation.Length)];
+
+        if (closestCharacter != null)
+            radarIndicator.color = closestCharacter.Owner.Color;
+    }*/
+
+     // OLD
     [SerializeField] private GameObject playerInRadarIndicator;
     private readonly List<Image> radarIndicator = new List<Image>();
 
