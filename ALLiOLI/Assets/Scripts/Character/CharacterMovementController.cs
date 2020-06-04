@@ -152,8 +152,8 @@ public class CharacterMovementController : NetworkBehaviour
     private void GiveStateToAnimations(Vector3 displacement)
     {
         animator.SetFloat("HorMove", Mathf.Abs(displacement.ToVector2WithoutY().magnitude) * 10);
+        animator.SetFloat("VerMove", Mathf.Abs(displacement.y) * 10);
         animator.SetBool("Grounded", onGround);
-        
         if (groundLosed)
         {
             animator.SetTrigger("GroundLosed");
