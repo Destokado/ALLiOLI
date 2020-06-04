@@ -14,7 +14,23 @@ public class CharacterMovementController : NetworkBehaviour
     [NonSerialized] public Vector2 horizontalMovementInput;
     [SerializeField] private float jumpSpeed;
 
-    private bool onGround;
+    public bool onGround
+    {
+        get => _onGround;
+        private set
+        {
+            if (value != _onGround)
+            {
+                if (value == false)
+                    groundLosed = true;
+                _onGround = value;
+            }
+        }
+    }
+    // ReSharper disable once InconsistentNaming
+    private bool _onGround;
+    public bool groundLosed;
+    
     private float verticalSpeed;
 
     [Header("Configuration")] [SerializeField]
@@ -136,7 +152,13 @@ public class CharacterMovementController : NetworkBehaviour
     private void GiveStateToAnimations(Vector3 displacement)
     {
         animator.SetFloat("HorMove", Mathf.Abs(displacement.ToVector2WithoutY().magnitude) * 10);
+        animator.SetFloat("VerMove", Mathf.Abs(displacement.y) * 10);
         animator.SetBool("Grounded", onGround);
+        if (groundLosed)
+        {
+            animator.SetTrigger("GroundLosed");
+            groundLosed = false;
+        }
     }
 
     private Vector3 GetDirectionRelativeToTheCamera()
