@@ -222,4 +222,9 @@ public class HumanLocalPlayer : MonoBehaviour
         playerGui.SetupForCurrentPhase(Player);
     }
 
+    public void PickUpAmmunition()
+    {
+        
+    }
+
 }
