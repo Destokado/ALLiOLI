@@ -14,6 +14,8 @@ public class PlayerGuiManager : MonoBehaviour
     [Space] [SerializeField] private GameObject readinessGameObject;
 
     [SerializeField] private TMP_Text readinessText;
+    
+    [Space] [SerializeField] private TMP_Text ammunition;
 
     public void SetColor(Color color)
     {
@@ -47,5 +49,10 @@ public class PlayerGuiManager : MonoBehaviour
     public void ShowInteractionText(bool show)
     {
         interactionText.SetActive(show);
+    }
+
+    public void SetAmmunitionTo(int value)
+    {
+        ammunition.SetText(value.ToString());
     }
 }
