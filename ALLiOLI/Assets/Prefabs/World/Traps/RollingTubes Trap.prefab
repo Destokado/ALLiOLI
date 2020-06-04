@@ -17,7 +17,7 @@ MonoBehaviour:
   baseObject: {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79,
     type: 3}
   instantiationTransform: {fileID: 1543691916284427649}
-  size: 10
+  size: 15
   spawnOnStart: 0
 --- !u!114 &7764767479486591599
 MonoBehaviour:
@@ -33,15 +33,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cooldownTime: 5
-  durationTime: 3
+  cooldownTime: 10
+  durationTime: 5
   radarTrigger: {fileID: 7625213374966671918}
-  numberOfTubes: 10
-  spawnPos: {fileID: 1543691916284427649}
+  activateEmitter: {fileID: 0}
+  spawnPos:
+  - {fileID: 1543691916284427649}
+  - {fileID: 8050926863540187777}
+  - {fileID: 1315564155387164153}
   timeBetweenTubeSpanws: 0.25
   tubePrefab: {fileID: 2035957385171439919, guid: ced16860d6ce72b45940678ac20f3b79,
     type: 3}
-  tubeSpeed: 20
+  tubeSpeed: 3
+--- !u!1 &3354746049577866765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8050926863540187777}
+  m_Layer: 0
+  m_Name: TubeSpawnPos (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8050926863540187777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354746049577866765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.367, y: 2.5, z: -0.7979}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6042879340376861208}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4138392776361908775
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,11 +99,41 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4138392776361908775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 2.5, z: -0.75}
+  m_LocalPosition: {x: 1.458, y: 2.573, z: -0.7979}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6042879340376861208}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5308172219297534548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315564155387164153}
+  m_Layer: 0
+  m_Name: TubeSpawnPos (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1315564155387164153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5308172219297534548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.924, y: 2.182, z: -0.405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6042879340376861208}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8113973935822084477
 GameObject:
@@ -468,6 +531,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1543691916284427649}
+  - {fileID: 8050926863540187777}
+  - {fileID: 1315564155387164153}
   m_Father: {fileID: 334378563070445175}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

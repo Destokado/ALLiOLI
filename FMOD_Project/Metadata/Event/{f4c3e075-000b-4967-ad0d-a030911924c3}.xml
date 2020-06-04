@@ -5,7 +5,7 @@
 			<value>CorchoActive</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{53607ad2-ad5d-4470-8c9b-66aef5a71bdc}</destination>
@@ -113,6 +113,7 @@
 	<object class="MixerBusEffectChain" id="{a5d4b186-cb56-41e8-b5cc-fd6c184e3eec}">
 		<relationship name="effects">
 			<destination>{6da46891-a499-490e-a4c4-6146b75ffff3}</destination>
+			<destination>{2c12f4e4-1a15-411e-ae99-365dd6d4be55}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ef0b431d-cf01-47a0-b489-ab9f8f7f7a6a}" />
@@ -124,5 +125,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{1a7ddf0e-ba90-415c-a948-0951c5e6801c}" />
 	<object class="MixerBusFader" id="{6da46891-a499-490e-a4c4-6146b75ffff3}" />
+	<object class="SpatialiserEffect" id="{2c12f4e4-1a15-411e-ae99-365dd6d4be55}" />
 	<object class="MixerBusFader" id="{e90a93db-fa9b-4a23-8f50-b6a03bf133b0}" />
 </objects>

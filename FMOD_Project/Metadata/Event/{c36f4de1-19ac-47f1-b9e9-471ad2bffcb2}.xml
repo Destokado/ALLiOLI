@@ -5,7 +5,7 @@
 			<value>WallHit</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{53607ad2-ad5d-4470-8c9b-66aef5a71bdc}</destination>
@@ -113,6 +113,7 @@
 	<object class="MixerBusEffectChain" id="{1940218d-01ac-44ff-bc43-a9b4f30165ba}">
 		<relationship name="effects">
 			<destination>{12b26b11-426b-465a-9a2f-ea47519eb55c}</destination>
+			<destination>{85864eaf-e7a3-421a-b258-d6523389e794}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{12727f9e-0613-4283-bc84-773a9c36c489}" />
@@ -124,5 +125,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{b2e93158-5d8a-4679-9eba-833863a22caa}" />
 	<object class="MixerBusFader" id="{12b26b11-426b-465a-9a2f-ea47519eb55c}" />
+	<object class="SpatialiserEffect" id="{85864eaf-e7a3-421a-b258-d6523389e794}" />
 	<object class="MixerBusFader" id="{e5568e91-b3ef-4a1f-b376-3066db5abce8}" />
 </objects>
