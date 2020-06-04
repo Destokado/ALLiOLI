@@ -127,6 +127,13 @@ public class Player : NetworkBehaviour
     
     [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
+    
+    [SyncVar(hook = nameof(UpdatedAmmunition))] public int ammunition = 0;
+    public void UpdatedAmmunition(int oldVal, int newVal)
+    {
+        if (HumanLocalPlayer)
+            HumanLocalPlayer.playerGui.SetAmmunitionTo(newVal);
+    }
 
     private void NewPlayerIndex(int oldVal, int newVal)
     {
@@ -192,16 +199,18 @@ public class Player : NetworkBehaviour
         isReady = newValue;
     }
     
-    [Command]
+    [Command] // On server, called by a client
     public void CmdActivateTrap(uint trapNetId)
     {
-        if (!NetworkIdentity.spawned.ContainsKey(trapNetId))
-        {
-            Debug.LogWarning("The trap with NetId " + trapNetId + " not found.");
-            return;
-        }
+        if (ammunition <= 0) return;
         
-        NetworkIdentity.spawned[trapNetId].gameObject.GetComponent<Trap>().Activate();
+        GameObject trapGo = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(trapNetId);
+        Trap trap = trapGo.GetComponent<Trap>();
+        
+        if (!trap) return;
+        
+        trap.Activate();
+        ammunition -= 1;
     }
 
 }

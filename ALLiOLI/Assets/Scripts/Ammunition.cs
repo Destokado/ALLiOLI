@@ -48,6 +48,7 @@ public class Ammunition : NetworkBehaviour
         {
             activated = false;
             remainingCoolDown = coolDownTime;
+            character.Owner.ammunition += 1;
         }
     }
 }

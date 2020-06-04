@@ -15,7 +15,7 @@ public class Character : NetworkBehaviour
     private void NewHasFlagValue(bool oldVal, bool newVal) { flagGameObject.SetActive(newVal); }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
-
+    
     public Player Owner
     {
         get => _owner;
