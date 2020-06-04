@@ -5,7 +5,7 @@ using System.Data;
 using Mirror;
 using UnityEngine;
 
-public class Ammunition : NetworkBehaviour
+public class TrapActivator : NetworkBehaviour
 {
     [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]
     [SerializeField] private GameObject[] objectsToSynchronize;
@@ -48,7 +48,7 @@ public class Ammunition : NetworkBehaviour
         {
             activated = false;
             remainingCoolDown = coolDownTime;
-            character.Owner.ammunition += 1;
+            character.Owner.trapActivators += 1;
         }
     }
 }

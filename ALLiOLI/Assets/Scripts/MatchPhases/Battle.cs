@@ -38,6 +38,13 @@ public class Battle : MatchPhase
         FlagManager.Instance.Spawn();
         MatchManager.instance.KillAllCharacters();
         MatchManager.instance.ResetWinner();
+        foreach (Client client in MatchManager.instance.clients)
+        {
+            foreach (Player player in client.PlayersManager.players)
+            {
+                player.trapActivators = 0;
+            }
+        }
     }
 
     public override State GetCurrentState()

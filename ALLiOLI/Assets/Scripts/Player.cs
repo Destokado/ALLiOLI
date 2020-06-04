@@ -128,8 +128,8 @@ public class Player : NetworkBehaviour
     [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
     
-    [SyncVar(hook = nameof(UpdatedAmmunition))] public int ammunition = 0;
-    public void UpdatedAmmunition(int oldVal, int newVal)
+    [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))] public int trapActivators = 0;
+    private void UpdatedTrapActivationsNumber(int oldVal, int newVal)
     {
         if (HumanLocalPlayer)
             HumanLocalPlayer.playerGui.SetAmmunitionTo(newVal);
@@ -202,7 +202,7 @@ public class Player : NetworkBehaviour
     [Command] // On server, called by a client
     public void CmdActivateTrap(uint trapNetId)
     {
-        if (ammunition <= 0) return;
+        if (trapActivators <= 0) return;
         
         GameObject trapGo = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(trapNetId);
         Trap trap = trapGo.GetComponent<Trap>();
@@ -210,7 +210,7 @@ public class Player : NetworkBehaviour
         if (!trap) return;
         
         trap.Activate();
-        ammunition -= 1;
+        trapActivators -= 1;
     }
 
 }

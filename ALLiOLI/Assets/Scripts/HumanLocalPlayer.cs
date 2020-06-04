@@ -172,7 +172,9 @@ public class HumanLocalPlayer : MonoBehaviour
 
         switch (currentState)
         {
-            case Battle battle:
+            case Battle p1:
+            case WaitingForPlayers p2:
+                
                 Trap bestTrapToActivate = MatchManager.instance.AllTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
                     Player.CmdActivateTrap(bestTrapToActivate.netId);
