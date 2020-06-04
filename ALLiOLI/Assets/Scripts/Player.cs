@@ -203,4 +203,5 @@ public class Player : NetworkBehaviour
         
         NetworkIdentity.spawned[trapNetId].gameObject.GetComponent<Trap>().Activate();
     }
+
 }

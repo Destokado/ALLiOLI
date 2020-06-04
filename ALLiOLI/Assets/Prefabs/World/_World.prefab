@@ -31258,6 +31258,11 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2685891605886748698, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_Name
+      value: Ammunition
+      objectReference: {fileID: 0}
     - target: {fileID: 2746720676477936126, guid: 29aae8f061c20884e883287e69b059dc,
         type: 3}
       propertyPath: flagPositions.Array.size
@@ -31327,6 +31332,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441732200893538271, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7545826408336374803, guid: 29aae8f061c20884e883287e69b059dc,
         type: 3}
