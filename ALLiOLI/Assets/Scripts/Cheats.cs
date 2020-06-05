@@ -102,5 +102,35 @@ public class Cheats
         }
     }
     
+        
+    [MenuItem("ALLiOLI/Cheats/Server/Trap Activators/Give 100 to all players")]
+    public static void Give100TrapActivatorsAllPlayers()
+    {
+        if (Application.isPlaying)
+        {
+            foreach (Client client in MatchManager.instance.clients)
+                foreach (Player player in client.PlayersManager.players)
+                    player.trapActivators += 100;
+        }
+        else
+        {
+            Debug.LogError("Not in play mode.");
+        }
+    }
+    
+    [MenuItem("ALLiOLI/Cheats/Server/Trap Activators/Give 100 to local players")]
+    public static void Give100TrapActivatorsLocalPlayers()
+    {
+        if (Application.isPlaying)
+        {
+            foreach (Player player in Client.LocalClient.PlayersManager.players)
+                player.trapActivators += 100;
+        }
+        else
+        {
+            Debug.LogError("Not in play mode.");
+        }
+    }
+    
 }
 #endif
