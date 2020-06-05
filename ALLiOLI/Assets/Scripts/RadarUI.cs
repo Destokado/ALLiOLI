@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RadarUI : MonoBehaviour
 {
-    /* //NEW
+     //NEW
     [SerializeField] private Image radarIndicator;
     [SerializeField] private Sprite[] imagesAnimation;
     
@@ -25,13 +26,18 @@ public class RadarUI : MonoBehaviour
             }
         }
 
-        radarIndicator.sprite = imagesAnimation[Mathf.RoundToInt(distanceClosestChar*imagesAnimation.Length)];
-
+        int img = 0;
         if (closestCharacter != null)
+        {
+            img = Mathf.RoundToInt(distanceClosestChar*(imagesAnimation.Length-1));
             radarIndicator.color = closestCharacter.Owner.Color;
-    }*/
+        }
+        radarIndicator.sprite = imagesAnimation[img];
+            
+    }
 
-     // OLD
+    /*
+    // OLD
     [SerializeField] private GameObject playerInRadarIndicator;
     private readonly List<Image> radarIndicator = new List<Image>();
 
@@ -63,4 +69,5 @@ public class RadarUI : MonoBehaviour
             for (int i = -dif; i > 0; i--)
                 radarIndicator[radarIndicator.Count - i].gameObject.SetActive(false);
     }
+    */
 }

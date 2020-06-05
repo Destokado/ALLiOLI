@@ -7,8 +7,6 @@ public class PlayerGuiManager : MonoBehaviour
 {
     [Space] [SerializeField] private GameObject frame;
 
-    [Space] [SerializeField] private GameObject interactionText;
-
     [Space] [SerializeField] private RadarUI radarUi;
 
     [Space] [SerializeField] private GameObject readinessGameObject;
@@ -44,11 +42,6 @@ public class PlayerGuiManager : MonoBehaviour
     public void ReportInRadar(List<KeyValuePair<Trap, SortedList<float, Character>>> report)
     {
         radarUi.RenderReport(report);
-    }
-
-    public void ShowInteractionText(bool show)
-    {
-        interactionText.SetActive(show);
     }
 
     public void SetAmmunitionTo(int value)
