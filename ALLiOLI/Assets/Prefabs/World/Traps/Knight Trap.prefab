@@ -27,6 +27,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4941694541591473772}
   - component: {fileID: 6816514859615677858}
+  - component: {fileID: 7700574340534504509}
   m_Layer: 0
   m_Name: KillingZone
   m_TagString: Untagged
@@ -62,6 +63,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7700574340534504509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4497185454196338835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6afe82fa93e6041916699563b6aaa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 0}
+  minimumVelocityToKill: 0.75
 --- !u!114 &1943625355009113144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,12 +106,12 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 4fae549cd571de74591c7851f4c532d1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.00000014901
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4fae549cd571de74591c7851f4c532d1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.40769
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4fae549cd571de74591c7851f4c532d1,
         type: 3}
@@ -142,6 +157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 4fae549cd571de74591c7851f4c532d1,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7398376
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 4fae549cd571de74591c7851f4c532d1,
         type: 3}
