@@ -2,6 +2,7 @@
 using FMOD;
 using FMOD.Studio;
 using Mirror;
+using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -12,7 +13,10 @@ public class CharacterMovementController : NetworkBehaviour
     [Space] [SerializeField] private Animator animator;
 
     [NonSerialized] public Vector2 horizontalMovementInput;
-    [SerializeField] private float jumpSpeed;
+    [SerializeField] private float jumpForce;
+
+    [SerializeField] private LayerMask groundedLayers;
+    [SerializeField] private Transform groundCheckPosition;
 
     public bool onGround
     {
@@ -36,8 +40,11 @@ public class CharacterMovementController : NetworkBehaviour
     [Header("Configuration")] [SerializeField]
     private float walkSpeed;
 
-    public bool jumpTrigger { get; set; } // TODO: on set as true, apply force and automatically set as false (if grounded)
-    //TODO: play this sound when triggered the jump: Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
+    public void Jump()
+    {
+        Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
+    }
 
     private bool walking;
     
@@ -117,9 +124,9 @@ public class CharacterMovementController : NetworkBehaviour
         Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime); // TODO: account for the ground's normal if grounded
         walking = onGround && desiredDisplacement.magnitude > walkingStateVelocityThreshold && !Character.isDead;
         if (walking)
-            Rigidbody.velocity = desiredDisplacement;
+            Rigidbody.velocity = desiredDisplacement.WithY(Rigidbody.velocity.y);
         else if (onGround)
-            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.velocity = Vector3.zero.WithY(Rigidbody.velocity.y);
 
         //Apply rotation to Player
         if (direction.magnitude >= .1f)
@@ -131,16 +138,17 @@ public class CharacterMovementController : NetworkBehaviour
         }
 
         // Process vertical collisions
-        if (true) // TODO: if (checkIfGrounded() == true)
-        {
-            onGround = true;
-        }
-        else
-        {
-            onGround = false; // DO NOT REMOVE while the 'TODO' in "Process vertical collisions" still there
-        }
+        onGround = Physics.OverlapSphere(groundCheckPosition.position, 0.1f, groundedLayers).Length > 0;
 
+        Debug.DrawRay(groundCheckPosition.position, Vector3.up, onGround? Color.cyan : Color.gray);
+        
         GiveStateToAnimations(desiredDisplacement);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = onGround? Color.cyan : Color.gray;
+        Gizmos.DrawWireSphere(groundCheckPosition.position, 0.1f);
     }
 
     private void PlaySoundFall(float fallingDistance) // TODO: Re add where needed

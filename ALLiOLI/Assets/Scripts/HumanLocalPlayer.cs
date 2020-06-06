@@ -197,7 +197,8 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnJump(InputValue value)
     {
         if (Player == null || Player.Character == null) return;
-        Player.Character.movementController.jumpTrigger = value.isPressed;
+        if (value.isPressed) 
+            Player.Character.movementController.Jump();
     }
     
     private void OnPause()
