@@ -5,7 +5,7 @@ using Mirror;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Character))]
 public class CharacterMovementController : NetworkBehaviour
 {
@@ -29,15 +29,18 @@ public class CharacterMovementController : NetworkBehaviour
     }
     // ReSharper disable once InconsistentNaming
     private bool _onGround;
-    public bool groundLosed;
+    [NonSerialized] public bool groundLosed;
     
     private float verticalSpeed;
 
     [Header("Configuration")] [SerializeField]
     private float walkSpeed;
 
-    public bool jumping { get; set; }
+    public bool jumpTrigger { get; set; } // TODO: on set as true, apply force and automatically set as false (if grounded)
+    //TODO: play this sound when triggered the jump: Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
 
+    private bool walking;
+    
     private EventInstance runningEvent;
     private bool running
     {
@@ -64,55 +67,59 @@ public class CharacterMovementController : NetworkBehaviour
 
     private bool _running;
 
-    public CharacterController CharacterController { get; private set; }
-    public Character Character { get; private set; }
+    public Rigidbody Rigidbody
+    {
+        get
+        {
+            if (_rigidbody == null)
+                _rigidbody = gameObject.GetComponentRequired<Rigidbody>();
+            return _rigidbody;
+        }
+        private set { if (_rigidbody) Debug.LogWarning($"Trying to reset the rigidbody of the character {Character.gameObject.name} owned by {Character.Owner.gameObject.name}.", gameObject); _rigidbody = value; }
+    }
+    private Rigidbody _rigidbody;
+    
+    public Character Character
+    {
+        get
+        {
+            if (_character == null)
+                _character = gameObject.GetComponentRequired<Character>();
+            return _character;
+        }
+        private set { if (_character) Debug.LogWarning($"Trying to reset the rigidbody of {gameObject.name}.", gameObject); _character = value; }
+    }
+    private Character _character;
+    
     [Header("Rotation")]
     [SerializeField] private float turnSmoothTime = .1f;
     [SerializeField] private float turnSmoothVelocity;
+    [SerializeField] private float walkingStateVelocityThreshold = 0.01f;
 
-  
+
     private void Awake()
     {
-        CharacterController = gameObject.GetComponentRequired<CharacterController>();
+        
       
         Character = gameObject.GetComponentRequired<Character>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (hasAuthority)
-            AuthorityUpdate();
+            AuthorityFixedUpdate();
     }
 
-    private void AuthorityUpdate()
+    
+    private void AuthorityFixedUpdate()
     {
         Vector3 direction = GetDirectionRelativeToTheCamera();
-
-        // Calculate walking the distance
-        Vector3 displacement = direction * (walkSpeed * Time.deltaTime);
-
-        float fallingDistance = 0f;
-
-        //Jump
-        if (onGround && jumping)
-        {
-            verticalSpeed = jumpSpeed;
-
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
-            fallingDistance = transform.position.y;
-        }
-
-        // Apply gravity
-        verticalSpeed += Physics.gravity.y * Time.deltaTime;
-        displacement.y = verticalSpeed * Time.deltaTime;
-
-
-        Vector3 horDisplacement = displacement.WithY(0);
-        bool walking = onGround && horDisplacement.magnitude > CharacterController.minMoveDistance;
-        running = walking && !Character.isDead;
-
-        // Apply Movement to Player
-        CollisionFlags collisionFlags = CharacterController.Move(displacement);
+        Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime); // TODO: account for the ground's normal if grounded
+        walking = onGround && desiredDisplacement.magnitude > walkingStateVelocityThreshold && !Character.isDead;
+        if (walking)
+            Rigidbody.velocity = desiredDisplacement;
+        else if (onGround)
+            Rigidbody.velocity = Vector3.zero;
 
         //Apply rotation to Player
         if (direction.magnitude >= .1f)
@@ -124,29 +131,29 @@ public class CharacterMovementController : NetworkBehaviour
         }
 
         // Process vertical collisions
-        if ((collisionFlags & CollisionFlags.Below) != 0)
+        if (true) // TODO: if (checkIfGrounded() == true)
         {
-            SoundManager.SoundManagerParameter[] parameters = new SoundManager.SoundManagerParameter[1];
-            //Calculates de distance of the fall
-            fallingDistance = fallingDistance + transform.position.y;
-            //The Max in the Clamp must be the Max range of the Event in FMOD.
-            fallingDistance = Mathf.Clamp(fallingDistance, 0, 2);
-            parameters[0] = new SoundManager.SoundManagerParameter("Height", fallingDistance);
-            if (onGround == false)
-                Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.landPath,
-                    transform.position, parameters);
             onGround = true;
-            verticalSpeed = 0.0f;
         }
         else
         {
-            onGround = false;
+            onGround = false; // DO NOT REMOVE while the 'TODO' in "Process vertical collisions" still there
         }
 
-        if ((collisionFlags & CollisionFlags.Above) != 0 && verticalSpeed > 0.0f)
-            verticalSpeed = 0.0f;
+        GiveStateToAnimations(desiredDisplacement);
+    }
 
-        GiveStateToAnimations(displacement);
+    private void PlaySoundFall(float fallingDistance) // TODO: Re add where needed
+    {
+        SoundManager.SoundManagerParameter[] parameters = new SoundManager.SoundManagerParameter[1];
+        //Calculates de distance of the fall
+        fallingDistance = fallingDistance + transform.position.y;
+        //The Max in the Clamp must be the Max range of the Event in FMOD.
+        fallingDistance = Mathf.Clamp(fallingDistance, 0, 2);
+        parameters[0] = new SoundManager.SoundManagerParameter("Height", fallingDistance);
+        if (onGround == false)
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.landPath,
+                transform.position, parameters);
     }
 
     private void GiveStateToAnimations(Vector3 displacement)

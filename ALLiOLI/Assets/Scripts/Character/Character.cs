@@ -8,7 +8,6 @@ using UnityEngine;
 public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
-    [SerializeField] public Transform interactionRayOrigin;
     [SerializeField] public GameObject flagGameObject;
     
     [SyncVar(hook = nameof(NewHasFlagValue))] public bool hasFlag = false;
@@ -113,10 +112,10 @@ public class Character : NetworkBehaviour
         IEnumerator DieCoroutine()
         {
             movementController.enabled = false;
-            movementController.CharacterController.enabled = false;
+            // movementController.CharacterController.enabled = false;
         
-            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-            rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
+            //Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            //rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
 
             yield return new WaitForSeconds(1.5f);
 
