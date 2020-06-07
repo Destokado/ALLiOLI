@@ -173,13 +173,12 @@ public class CharacterMovementController : NetworkBehaviour
             }
             Rigidbody.velocity = new Vector3(tempHorVel.x, rigidbodyVelocity.y, tempHorVel.y);*/
         }
-
-
-
+        
         //Apply rotation to Player
-        if (direction.magnitude >= .1f)
+        Vector3 rigidbodyVelocity = Rigidbody.velocity;
+        if (rigidbodyVelocity.magnitude >= .1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(rigidbodyVelocity.x, rigidbodyVelocity.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
                 turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
