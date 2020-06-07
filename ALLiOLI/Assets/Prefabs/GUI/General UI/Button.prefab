@@ -107,8 +107,8 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: e4ec1ad6f4511a24ba6e51946cedb2c6,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: e4ec1ad6f4511a24ba6e51946cedb2c6, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: 425f44957bc6d98459cb2acad5c639e6, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e4ec1ad6f4511a24ba6e51946cedb2c6, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1215213b15f20a4f899c4168370034f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundManager: {fileID: 0}
 --- !u!1001 &4877743014910302644
 PrefabInstance:
   m_ObjectHideFlags: 0
