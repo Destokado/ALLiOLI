@@ -12,11 +12,15 @@ public class CharacterMovementController : NetworkBehaviour
 {
     [Space] [SerializeField] private Animator animator;
 
+    [SerializeField] private float walkingStateVelocityThreshold = 0.01f;
+    
     [NonSerialized] public Vector2 horizontalMovementInput;
+    
     [SerializeField] private float jumpForce;
-
     [SerializeField] private LayerMask groundedLayers;
     [SerializeField] private Transform groundCheckPosition;
+    [SerializeField] private float airForce = 1f;
+
 
     public bool onGround
     {
@@ -100,8 +104,7 @@ public class CharacterMovementController : NetworkBehaviour
     
     [Header("Rotation")]
     [SerializeField] private float turnSmoothTime = .1f;
-    [SerializeField] private float turnSmoothVelocity;
-    [SerializeField] private float walkingStateVelocityThreshold = 0.01f;
+    private float turnSmoothVelocity;
 
 
     private void Awake()
@@ -120,13 +123,58 @@ public class CharacterMovementController : NetworkBehaviour
     
     private void AuthorityFixedUpdate()
     {
+        if (Character.isDead)
+            return;
+
         Vector3 direction = GetDirectionRelativeToTheCamera();
-        Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime); // TODO: account for the ground's normal if grounded
-        walking = onGround && desiredDisplacement.magnitude > walkingStateVelocityThreshold && !Character.isDead;
-        if (walking)
+        Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime);
+
+        bool wantsToMove = desiredDisplacement.magnitude > walkingStateVelocityThreshold;
+        walking = onGround && wantsToMove;
+        
+        if (walking) // On ground and wants to move
             Rigidbody.velocity = desiredDisplacement.WithY(Rigidbody.velocity.y);
-        else if (onGround)
+        
+        else if (onGround) // On ground and does not want to move
             Rigidbody.velocity = Vector3.zero.WithY(Rigidbody.velocity.y);
+        
+        else if (wantsToMove) // On air and wants to move
+        {
+            Vector2 rigidbodyHorVelocity = Rigidbody.velocity.ToVector2WithoutY();
+            Vector2 desiredHorDisplacement = desiredDisplacement.ToVector2WithoutY();
+            float similarityBetweenVelocityAndDesiredDisplacement = Vector2.Dot(rigidbodyHorVelocity.normalized,desiredHorDisplacement.normalized)*-1f/2f+0.5f;
+            Vector3 force = desiredDisplacement * (airForce * similarityBetweenVelocityAndDesiredDisplacement);
+            Rigidbody.AddForce(force, ForceMode.Acceleration);
+            Debug.DrawRay(transform.position, rigidbodyHorVelocity.normalized, Color.white);
+            Debug.DrawLine(transform.position, transform.position+force, Color.black);
+            /*float GetAirDisplacementResult(float currentVelocity, float desiredVelocity)
+            {
+                float tempVel = currentVelocity;
+                
+                if ((currentVelocity < desiredVelocity && desiredVelocity > 0) || // Wants to increase
+                    (currentVelocity > desiredVelocity && desiredVelocity < 0)) // Wants to decrease
+                {
+                    tempVel += desiredVelocity * maxAirControl;
+                }
+
+                return tempVel;
+            }
+            
+            Vector3 rigidbodyVelocity = Rigidbody.velocity;
+            Vector2 tempHorVel = new Vector2(GetAirDisplacementResult(rigidbodyVelocity.x, desiredDisplacement.x), GetAirDisplacementResult(rigidbodyVelocity.z, desiredDisplacement.z));
+            if (tempHorVel.magnitude > maxAirSpeed)
+            {
+                Debug.Log($"TOO HIGH {tempHorVel.magnitude}");
+                tempHorVel = tempHorVel.normalized * maxAirSpeed;
+            }
+            else
+            {
+                Debug.Log($"normal {tempHorVel.magnitude}");
+            }
+            Rigidbody.velocity = new Vector3(tempHorVel.x, rigidbodyVelocity.y, tempHorVel.y);*/
+        }
+
+
 
         //Apply rotation to Player
         if (direction.magnitude >= .1f)

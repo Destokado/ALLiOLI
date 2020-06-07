@@ -183,15 +183,15 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animator: {fileID: 5487173628846093171}
+  walkingStateVelocityThreshold: 0.01
   jumpForce: 300
   groundedLayers:
     serializedVersion: 2
     m_Bits: 769
   groundCheckPosition: {fileID: 5153396315843923463}
+  airForce: 3
   walkSpeed: 350
   turnSmoothTime: 0.1
-  turnSmoothVelocity: 0
-  walkingStateVelocityThreshold: 0.01
 --- !u!114 &2078529568881006406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +449,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7157690928634023158}
-  m_Material: {fileID: 13400000, guid: 56528c1f5a02bd6489e502675c567746, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.16
