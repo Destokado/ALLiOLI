@@ -183,15 +183,16 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animator: {fileID: 5487173628846093171}
-  walkingStateVelocityThreshold: 0.01
-  jumpForce: 300
+  voluntaryMovementStateThreshold: 0.01
+  airMovementThreshold: 0.1
+  walkSpeed: 350
+  jumpForce: 250
+  movingForceOnAir: 3
   groundedLayers:
     serializedVersion: 2
     m_Bits: 769
   groundCheckPosition: {fileID: 5153396315843923463}
-  airForce: 3
-  walkSpeed: 350
-  turnSmoothTime: 0.1
+  turnSmoothTime: 0.15
 --- !u!114 &2078529568881006406
 MonoBehaviour:
   m_ObjectHideFlags: 0

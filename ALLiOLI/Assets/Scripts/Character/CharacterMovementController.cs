@@ -10,18 +10,27 @@ using Debug = UnityEngine.Debug;
 [RequireComponent(typeof(Character))]
 public class CharacterMovementController : NetworkBehaviour
 {
-    [Space] [SerializeField] private Animator animator;
-
-    [SerializeField] private float walkingStateVelocityThreshold = 0.01f;
     
     [NonSerialized] public Vector2 horizontalMovementInput;
     
+    [Header("Animation")] 
+    [SerializeField] private Animator animator;
+
+    [Header("Thresholds")] 
+    [Tooltip("Minimum velocity to declare that the character wants to move intentionally by the human.")]
+    [SerializeField] private float voluntaryMovementStateThreshold = 0.01f;
+    [Tooltip("Minimum horizontal velocity to apply forces (and be able to move) while the character is in air (not grounded).\nUseful to avoid getting stuck in walls while sliding next to them.")]
+    [SerializeField] private float airMovementThreshold = 0.1f;
+    
+    [Header("Movement configuration")]
+    [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float movingForceOnAir = 3f;
+    
+    [Header("Environment configuration")]
     [SerializeField] private LayerMask groundedLayers;
     [SerializeField] private Transform groundCheckPosition;
-    [SerializeField] private float airForce = 1f;
-
-
+    
     public bool onGround
     {
         get => _onGround;
@@ -30,55 +39,38 @@ public class CharacterMovementController : NetworkBehaviour
             if (value != _onGround)
             {
                 if (value == false)
-                    groundLosed = true;
+                    setAnimGroundLosed = true;
                 _onGround = value;
             }
         }
     }
     // ReSharper disable once InconsistentNaming
     private bool _onGround;
-    [NonSerialized] public bool groundLosed;
-    
-    private float verticalSpeed;
-
-    [Header("Configuration")] [SerializeField]
-    private float walkSpeed;
-
-    public void Jump()
-    {
-        Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
-        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath);
-    }
-
+    private bool setAnimGroundLosed;
     private bool walking;
     
+    [Header("Rotation")]
+    [SerializeField] private float turnSmoothTime = .1f;
+    private float turnSmoothVelocity;
+
     private EventInstance runningEvent;
     private bool running
     {
         get => _running;
         set
         {
-           
             if (value&& !_running  )
-            {
-               
-                    Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
-                
-            }
+                Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
             else if( !value && _running)
-            {
-                
-                    Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
-
-            }
+                Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
 
             _running = value;
         }
     }
-
+    // ReSharper disable once InconsistentNaming
     private bool _running;
 
-    public Rigidbody Rigidbody
+    private Rigidbody Rigidbody
     {
         get
         {
@@ -86,8 +78,9 @@ public class CharacterMovementController : NetworkBehaviour
                 _rigidbody = gameObject.GetComponentRequired<Rigidbody>();
             return _rigidbody;
         }
-        private set { if (_rigidbody) Debug.LogWarning($"Trying to reset the rigidbody of the character {Character.gameObject.name} owned by {Character.Owner.gameObject.name}.", gameObject); _rigidbody = value; }
+        set { if (_rigidbody) Debug.LogWarning($"Trying to reset the rigidbody of the character {Character.gameObject.name} owned by {Character.Owner.gameObject.name}.", gameObject); _rigidbody = value; }
     }
+    // ReSharper disable once InconsistentNaming
     private Rigidbody _rigidbody;
     
     public Character Character
@@ -100,11 +93,10 @@ public class CharacterMovementController : NetworkBehaviour
         }
         private set { if (_character) Debug.LogWarning($"Trying to reset the rigidbody of {gameObject.name}.", gameObject); _character = value; }
     }
+    // ReSharper disable once InconsistentNaming
     private Character _character;
     
-    [Header("Rotation")]
-    [SerializeField] private float turnSmoothTime = .1f;
-    private float turnSmoothVelocity;
+
 
 
     private void Awake()
@@ -129,7 +121,7 @@ public class CharacterMovementController : NetworkBehaviour
         Vector3 direction = GetDirectionRelativeToTheCamera();
         Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime);
 
-        bool wantsToMove = desiredDisplacement.magnitude > walkingStateVelocityThreshold;
+        bool wantsToMove = desiredDisplacement.magnitude > voluntaryMovementStateThreshold;
         walking = onGround && wantsToMove;
         
         if (walking) // On ground and wants to move
@@ -140,38 +132,15 @@ public class CharacterMovementController : NetworkBehaviour
         
         else if (wantsToMove) // On air and wants to move
         {
-            Vector2 rigidbodyHorVelocity = Rigidbody.velocity.ToVector2WithoutY();
-            Vector2 desiredHorDisplacement = desiredDisplacement.ToVector2WithoutY();
-            float similarityBetweenVelocityAndDesiredDisplacement = Vector2.Dot(rigidbodyHorVelocity.normalized,desiredHorDisplacement.normalized)*-1f/2f+0.5f;
-            Vector3 force = desiredDisplacement * (airForce * similarityBetweenVelocityAndDesiredDisplacement);
-            Rigidbody.AddForce(force, ForceMode.Acceleration);
-            Debug.DrawRay(transform.position, rigidbodyHorVelocity.normalized, Color.white);
-            Debug.DrawLine(transform.position, transform.position+force, Color.black);
-            /*float GetAirDisplacementResult(float currentVelocity, float desiredVelocity)
+            if (Rigidbody.velocity.ToVector2WithoutY().magnitude > airMovementThreshold)
             {
-                float tempVel = currentVelocity;
-                
-                if ((currentVelocity < desiredVelocity && desiredVelocity > 0) || // Wants to increase
-                    (currentVelocity > desiredVelocity && desiredVelocity < 0)) // Wants to decrease
-                {
-                    tempVel += desiredVelocity * maxAirControl;
-                }
-
-                return tempVel;
+                Vector2 rigidbodyHorVelocity = Rigidbody.velocity.ToVector2WithoutY();
+                Vector2 desiredHorDisplacement = desiredDisplacement.ToVector2WithoutY();
+                float similarityBetweenVelocityAndDesiredDisplacement = Vector2.Dot(rigidbodyHorVelocity.normalized,desiredHorDisplacement.normalized)*-1f/2f+0.5f;
+                Vector3 force = desiredDisplacement * (movingForceOnAir * similarityBetweenVelocityAndDesiredDisplacement);
+                Rigidbody.AddForce(force, ForceMode.Acceleration);
+                Debug.DrawLine(transform.position, transform.position+(force/10f), Color.black);
             }
-            
-            Vector3 rigidbodyVelocity = Rigidbody.velocity;
-            Vector2 tempHorVel = new Vector2(GetAirDisplacementResult(rigidbodyVelocity.x, desiredDisplacement.x), GetAirDisplacementResult(rigidbodyVelocity.z, desiredDisplacement.z));
-            if (tempHorVel.magnitude > maxAirSpeed)
-            {
-                Debug.Log($"TOO HIGH {tempHorVel.magnitude}");
-                tempHorVel = tempHorVel.normalized * maxAirSpeed;
-            }
-            else
-            {
-                Debug.Log($"normal {tempHorVel.magnitude}");
-            }
-            Rigidbody.velocity = new Vector3(tempHorVel.x, rigidbodyVelocity.y, tempHorVel.y);*/
         }
         
         //Apply rotation to Player
@@ -188,8 +157,16 @@ public class CharacterMovementController : NetworkBehaviour
         onGround = Physics.OverlapSphere(groundCheckPosition.position, 0.1f, groundedLayers).Length > 0;
 
         Debug.DrawRay(groundCheckPosition.position, Vector3.up, onGround? Color.cyan : Color.gray);
-        
+        Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
+
         GiveStateToAnimations(desiredDisplacement);
+    }
+    
+    public void Jump()
+    {
+        Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
+        // TODO: avoid jump sound if the jump has not been performed properly (the character got stucked in a wall)
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath); 
     }
 
     private void OnDrawGizmosSelected()
@@ -216,10 +193,10 @@ public class CharacterMovementController : NetworkBehaviour
         animator.SetFloat("HorMove", Mathf.Abs(displacement.ToVector2WithoutY().magnitude) * 10);
         animator.SetFloat("VerMove", Mathf.Abs(displacement.y) * 10);
         animator.SetBool("Grounded", onGround);
-        if (groundLosed)
+        if (setAnimGroundLosed)
         {
             animator.SetTrigger("GroundLosed");
-            groundLosed = false;
+            setAnimGroundLosed = false;
         }
     }
 
