@@ -5,34 +5,19 @@ using UnityEngine;
 
 public class KillZone : MonoBehaviour
 {
-    [Tooltip("Not mandatory")]
-    [SerializeField] public new Rigidbody rigidbody;
-    [Tooltip("Not mandatory")]
-    [SerializeField] private float minimumVelocityToKill = 0.75f;
+    [SerializeField] public Trap trap;
     
     // Should only be called on the server
     private void OnCollisionEnter(Collision other)
     {
-        // Debug.Log("COLLISION with " + gameObject.transform.parent.name + "/" + gameObject.name, gameObject);
-
+        Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{trap.gameObject.name}' with the object '{other.gameObject.name}.'", gameObject);
+        
         Character character = other.collider.GetComponentInParent<Character>();
-        if (!character || character.isDead) 
+        
+        if (!character || character.isDead || !trap.isActive) 
             return;
-
-        if (rigidbody)
-        {
-            if (rigidbody.velocity.magnitude < minimumVelocityToKill)
-            {
-                if (!character || character.isDead)  return;
-                Debug.Log(character.name + " avoided being killed by" + transform.gameObject.name + "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)", gameObject);
-                return;
-            }
-        }
-
+        
         character.ServerDie(other.impulse, other.GetContact(0).point);
-
-        // Print log of the kill
-        string additionalReport = rigidbody? "\nVelocity = " + rigidbody.velocity.magnitude + " (required " + minimumVelocityToKill + " to kill)" : "";
-        Debug.Log(character.name + " was killed by" + transform.gameObject.name + additionalReport, gameObject);
+        Debug.Log($"Killed '{character.name}' by the KillZone named '{transform.gameObject.name}' in the trap '{trap.gameObject.name}'.", gameObject);
     }
 }

@@ -19,6 +19,7 @@ public abstract class Trap : NetworkBehaviour
     [field: SyncVar] public float activatedTimer { get; private set; }
 
     [SerializeField] protected StudioEventEmitter activateEmitter;
+    public bool isActive { get; private set; }
 
     private void Update()
     {
@@ -41,12 +42,16 @@ public abstract class Trap : NetworkBehaviour
     [Server]
     protected virtual void Reload()
     {
+        isActive = false;
+        Debug.Log($"The trap '{gameObject.name}' is being deactivated. Reloading.", this.gameObject);
+
     }
 
     [Server]
     public virtual void Activate()
     {
-        Debug.Log("The trap '" + gameObject.name + "' has been activated.", this.gameObject);
+        isActive = true;
+        Debug.Log($"The trap '{gameObject.name}' is being activated.", this.gameObject);
         
         if (activateEmitter != null)
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, activateEmitter.Event);

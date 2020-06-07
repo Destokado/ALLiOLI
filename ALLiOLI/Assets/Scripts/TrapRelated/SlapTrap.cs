@@ -9,6 +9,7 @@ public class SlapTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
         JointSpring jointSpring = joint.spring;
         jointSpring.targetPosition = startAngle;
         joint.spring = jointSpring;

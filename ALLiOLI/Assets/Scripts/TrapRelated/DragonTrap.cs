@@ -16,6 +16,7 @@ public class DragonTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
         fireAnim.GetAnimation(0).mirror = true;
         jawAnim.GetAnimation(0).mirror = true;
         fireAnim.Play(0);

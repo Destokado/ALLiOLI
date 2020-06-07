@@ -14,6 +14,7 @@ public class BirdTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
         ((TransformAnimation) animManager.GetAnimation(0)).originTransform.SetProperties(poo.transform);
         poo.isKinematic = true;
         animManager.Play(0);

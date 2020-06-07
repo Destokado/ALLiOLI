@@ -17,6 +17,7 @@ public class RollingTubes : Trap
 
     protected override void Reload()
     {
+        base.Reload();
     }
 
     public override void Activate()
@@ -28,20 +29,15 @@ public class RollingTubes : Trap
 
     private IEnumerator SpawnTubes()
     {
-        
-           
-            
             for (int t = 0; t < pool.size; t++)
             {
-               
                 pool.instantiationTransform = spawnPos[Random.Range(0,spawnPos.Length-1)];
                 
                 GameObject projectile = pool.Spawn();
                 
                 projectile.GetComponent<Rigidbody>().velocity = Vector3.down * tubeSpeed;
+                projectile.GetComponent<KillZone>().trap = this;
                 yield return new WaitForSeconds(timeBetweenTubeSpanws);
             }
-        
-       
     }
 }

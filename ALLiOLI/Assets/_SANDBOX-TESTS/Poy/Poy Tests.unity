@@ -5737,6 +5737,11 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: e227238eb0b8e9643a949af54a0b2b6e
       objectReference: {fileID: 0}
+    - target: {fileID: 7058024902148942394, guid: e227238eb0b8e9643a949af54a0b2b6e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7137384186859575753, guid: e227238eb0b8e9643a949af54a0b2b6e,
         type: 3}
       propertyPath: m_Mesh

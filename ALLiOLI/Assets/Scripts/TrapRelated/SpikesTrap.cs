@@ -13,6 +13,7 @@ public class SpikesTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
         animManager.GetAnimation(0).mirror = true;
         animManager.Play(0);
     }

@@ -6,6 +6,7 @@ public class PendulumTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
         JointSpring hingeSpring = ball.spring;
         hingeSpring.spring = 10000;
         hingeSpring.damper = 0;

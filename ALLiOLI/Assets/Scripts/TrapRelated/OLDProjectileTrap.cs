@@ -27,6 +27,7 @@ public class OLDProjectileTrap : Trap
 
     protected override void Reload()
     {
+        base.Reload();
     }
 
     public override void Activate()
