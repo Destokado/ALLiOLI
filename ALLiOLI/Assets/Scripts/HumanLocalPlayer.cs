@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -40,12 +41,13 @@ public class HumanLocalPlayer : MonoBehaviour
                 Debug.LogWarning(
                     "Trying to assign a player to a HumanLocalPlayer with a Player already assigned. Operation Cancelled.",
                     this);
-            else
+            else if (_player != value)
             {
                 _player = value;
+                transform.SetParent(value? value.transform : null, true);
+                SetDynamicName();
             }
-
-            SetDynamicName();
+            
         }
     }
 
@@ -109,7 +111,6 @@ public class HumanLocalPlayer : MonoBehaviour
         else
         {
             newName = "HumanLocalPlayer " + id + " of " + Player.name;
-            transform.SetParent(Player.transform, true);
         }
 
         gameObject.name = newName;
