@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     /// <param name="inGameMode">If true, the cursor is not visible and locked at the center of the screen. If false, the opposite.</param>
     public static void SetCursorMode(bool inGameMode)
     {
-        Debug.Log("SETTING CURSOR AS " + inGameMode);
+        Debug.Log("SETTING CURSOR IN GAMING MODE: " + inGameMode);
         Cursor.visible = !inGameMode;
         Cursor.lockState = CursorLockMode.None; // Maybe bug fixing: http://answers.unity.com/answers/1119750/view.html
         Cursor.lockState = inGameMode ? CursorLockMode.Locked : CursorLockMode.None;

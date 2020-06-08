@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SlapTrap : Trap
 {
@@ -7,12 +8,23 @@ public class SlapTrap : Trap
     [SerializeField] private float startAngle;
     [SerializeField] private float targetAngle;
 
-    protected override void Reload()
+    private void Start()
     {
-        base.Reload();
+        if (isServer)
+            SetDefaultState();
+    }
+
+    private void SetDefaultState()
+    {
         JointSpring jointSpring = joint.spring;
         jointSpring.targetPosition = startAngle;
         joint.spring = jointSpring;
+    }
+
+    protected override void Reload()
+    {
+        base.Reload();
+        SetDefaultState();
     }
 
     public override void Activate()

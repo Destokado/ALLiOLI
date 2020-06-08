@@ -10,7 +10,7 @@ public class KillZone : MonoBehaviour
     // Should only be called on the server
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{trap.gameObject.name}' with the object '{other.gameObject.name}.'", gameObject);
+//        Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{trap.gameObject.name}' with the object '{other.gameObject.name}.'", gameObject);
         
         Character character = other.collider.GetComponentInParent<Character>();
         

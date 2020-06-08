@@ -13,17 +13,17 @@ public class Client : NetworkBehaviour
         get => _localClient;
         private set
         {
-            Debug.Log(value);
+//            Debug.Log(value);
             if (_localClient != null)
-                Debug.LogWarning("Reseting the local client.");
+                Debug.LogWarning($"Reseting the local client to '{value}'.");
             else
-                Debug.Log("Saving the reference to the local client.");
+                Debug.Log($"Saving the reference to the local client '{value}'.");
             if (value != _localClient)
             {
                 if (_localClient != null) _localClient.GetComponent<SoundManagerOnline>().enabled = false;
                 if (value != null)
                 {
-                    Debug.Log("SoundManagerOnline component added to localclient");
+                    Debug.Log("SoundManagerOnline component added to localclient.");
                     value.gameObject.GetComponent<SoundManagerOnline>().enabled = true;
                 }
             }

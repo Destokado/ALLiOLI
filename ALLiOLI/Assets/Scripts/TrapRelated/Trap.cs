@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FMODUnity;
 using Mirror;
 using Telepathy;
@@ -44,7 +45,6 @@ public abstract class Trap : NetworkBehaviour
     {
         isActive = false;
         Debug.Log($"The trap '{gameObject.name}' is being deactivated. Reloading.", this.gameObject);
-
     }
 
     [Server]
