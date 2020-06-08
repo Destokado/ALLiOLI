@@ -50,6 +50,10 @@ public class Character : NetworkBehaviour
     
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
+    
+    [Header("Ragdoll")]
+    [SerializeField] private Collider mainCollider;
+    [SerializeField] private Transform cameraRagdollLookAtTarget;
 
     [field: SyncVar] public bool isDead { get; private set; }
 
@@ -111,11 +115,7 @@ public class Character : NetworkBehaviour
 
         IEnumerator DieCoroutine()
         {
-            movementController.enabled = false;
-            // movementController.CharacterController.enabled = false;
-        
-            //Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-            //rb.AddForceAtPosition(impact, impactPoint, ForceMode.Impulse);
+            ActivateRagdoll();
 
             yield return new WaitForSeconds(1.5f);
 
@@ -124,5 +124,20 @@ public class Character : NetworkBehaviour
         }
     }
 
+    [ContextMenu("Enable Ragdoll")]
+    private void ActivateRagdoll()
+    {
+            movementController.animator.enabled = !true; // Automatically enables the ragdoll rigidbodies/colliders
+            
+            movementController.Rigidbody.constraints = true? RigidbodyConstraints.None : RigidbodyConstraints.FreezeRotation;
+            movementController.Rigidbody.isKinematic = true;
+            movementController.Rigidbody.detectCollisions = !true;
+            
+            movementController.enabled = !true;
+            
+            mainCollider.enabled = !true;
+            
+            Owner.HumanLocalPlayer.Camera.ForceSetLookAt(cameraRagdollLookAtTarget);
+    }
 
 }

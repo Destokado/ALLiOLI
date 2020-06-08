@@ -99,4 +99,9 @@ public class CmCamera : MonoBehaviour
         cameraComponent.gameObject.SetLayerRecursively(layer);
         cameraComponent.cullingMask |= 1 << layer;
     }
+
+    public void ForceSetLookAt(Transform target)
+    {
+        freeLook.LookAt = target;
+    }
 }

@@ -12,9 +12,10 @@ public class CharacterMovementController : NetworkBehaviour
 {
     
     [NonSerialized] public Vector2 horizontalMovementInput;
-    
+
     [Header("Animation")] 
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator _animator;
+    public Animator animator => _animator;
 
     [Header("Thresholds")] 
     [Tooltip("Minimum velocity to declare that the character wants to move intentionally by the human.")]
@@ -71,7 +72,7 @@ public class CharacterMovementController : NetworkBehaviour
     // ReSharper disable once InconsistentNaming
     private bool _running;
 
-    private Rigidbody Rigidbody
+    public Rigidbody Rigidbody
     {
         get
         {
@@ -79,7 +80,7 @@ public class CharacterMovementController : NetworkBehaviour
                 _rigidbody = gameObject.GetComponentRequired<Rigidbody>();
             return _rigidbody;
         }
-        set { if (_rigidbody) Debug.LogWarning($"Trying to reset the rigidbody of the character {Character.gameObject.name} owned by {Character.Owner.gameObject.name}.", gameObject); _rigidbody = value; }
+        private set { if (_rigidbody) Debug.LogWarning($"Trying to reset the rigidbody of the character {Character.gameObject.name} owned by {Character.Owner.gameObject.name}.", gameObject); _rigidbody = value; }
     }
     // ReSharper disable once InconsistentNaming
     private Rigidbody _rigidbody;
