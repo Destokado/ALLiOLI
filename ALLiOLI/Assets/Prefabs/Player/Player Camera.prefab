@@ -228,8 +228,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: -0.6531817, y: 0.061676376, z: -0.006535948, w: -0.7546569}
-  m_LocalPosition: {x: 44640732, y: -4222034.5, z: 396333.5}
+  m_LocalRotation: {x: -0.551794, y: 0.05210277, z: -0.005522748, w: -0.83233297}
+  m_LocalPosition: {x: 46630596, y: -4414250, z: 425080}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
@@ -734,8 +734,8 @@ MonoBehaviour:
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 1.5
-  m_DampingWhenOccluded: 0.3
+  m_Damping: 3
+  m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 5
 --- !u!1 &8189865671744833669
 GameObject:

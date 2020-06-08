@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9135703119902055159}
   - component: {fileID: 2218727174986274486}
   - component: {fileID: 337405830287483280}
+  - component: {fileID: 8179280136575224390}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6040213792172793891}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 258.56, z: 0}
 --- !u!33 &2218727174986274486
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79,6 +80,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!111 &8179280136575224390
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8253384822572326796}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: bd4233d2bc475404287c89ac9266193d, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: bd4233d2bc475404287c89ac9266193d, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8966716489277525807
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,9 +107,9 @@ GameObject:
   - component: {fileID: 6040213792172793891}
   - component: {fileID: 1347407064745597162}
   - component: {fileID: 5826197530487098782}
-  - component: {fileID: 7732014836396035077}
+  - component: {fileID: 3245349999298445986}
   m_Layer: 0
-  m_Name: Ammnition
+  m_Name: Activator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,16 +163,17 @@ MonoBehaviour:
   objectsToSynchronize:
   - {fileID: 8253384822572326796}
   coolDownTime: 5
---- !u!135 &7732014836396035077
-SphereCollider:
+--- !u!136 &3245349999298445986
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8966716489277525807}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.25
-  m_Center: {x: 0, y: 0.258, z: 0}
+  m_Height: 1.12
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

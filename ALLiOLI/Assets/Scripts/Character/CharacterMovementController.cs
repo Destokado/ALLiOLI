@@ -176,6 +176,7 @@ public class CharacterMovementController : NetworkBehaviour
 
     public void Jump()
     {
+        if(!onGround) return;
         Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
         // TODO: avoid jump sound if the jump has not been performed properly (the character got stucked in a wall)
         Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath); 

@@ -32,7 +32,7 @@ public class TrapActivator : NetworkBehaviour
 
     private void Update()
     {
-        if ( !isServer || !(remainingCoolDown > 0) ) return;
+        if ( !isServer || (remainingCoolDown <= 0) ) return;
 
         remainingCoolDown -= Time.deltaTime;
         if (remainingCoolDown <= 0)
@@ -41,11 +41,15 @@ public class TrapActivator : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.LogWarning("Collided with something");
+
+        
         if (!activated || !isServer || remainingCoolDown > 0) return;
 
-        Character character = other.GetComponent<Character>();
+        Character character = other.GetComponentInParent<Character>();
         if (character)
         {
+            Debug.LogWarning("Collided with char");
             activated = false;
             remainingCoolDown = coolDownTime;
             character.Owner.trapActivators += 1;

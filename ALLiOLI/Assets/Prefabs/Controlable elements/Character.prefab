@@ -186,8 +186,8 @@ MonoBehaviour:
   voluntaryMovementStateThreshold: 0.01
   airMovementThreshold: 0.1
   walkSpeed: 350
-  jumpForce: 250
-  movingForceOnAir: 3
+  jumpForce: 350
+  movingForceOnAir: 12
   groundedLayers:
     serializedVersion: 2
     m_Bits: 769

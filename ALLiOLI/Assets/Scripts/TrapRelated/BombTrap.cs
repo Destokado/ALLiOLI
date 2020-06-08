@@ -5,10 +5,10 @@ using UnityEngine;
 public class BombTrap : Trap
 {
     private SimpleAnimationsManager animManager;
-    [SerializeField] private float force = 100f;
+    /*[SerializeField] private float force = 100f;
     [SerializeField] private float radius = 5f;
     [SerializeField] private float upwwardsModifier = .1f;
-    [SerializeField] private ForceMode forceMode = ForceMode.Impulse;
+    [SerializeField] private ForceMode forceMode = ForceMode.Impulse;*/
     private void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
