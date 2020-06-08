@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3640114150368244251
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3640114150368244252}
-  m_Layer: 0
-  m_Name: FlagSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3640114150368244252
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3640114150368244251}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6438003404473645286}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3654797704671354893
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +182,7 @@ PrefabInstance:
         type: 3}
       propertyPath: flagPositions.Array.data[0]
       value: 
-      objectReference: {fileID: 3640114150368244252}
+      objectReference: {fileID: 0}
     - target: {fileID: 1484507204709169271, guid: 0be85801c560faf45b116daa5000001f,
         type: 3}
       propertyPath: flagPositions.Array.data[1]
@@ -246,6 +216,11 @@ PrefabInstance:
     - target: {fileID: 1484507204709169271, guid: 0be85801c560faf45b116daa5000001f,
         type: 3}
       propertyPath: flagPositions.Array.data[7]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750525471755584535, guid: 0be85801c560faf45b116daa5000001f,
+        type: 3}
+      propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7772132637072335215, guid: 0be85801c560faf45b116daa5000001f,
@@ -301,6 +276,11 @@ PrefabInstance:
     - target: {fileID: 7772132637072335215, guid: 0be85801c560faf45b116daa5000001f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036622016859779778, guid: 0be85801c560faf45b116daa5000001f,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -468,6 +448,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3450075774283907541}
     m_Modifications:
+    - target: {fileID: 1347407064745597162, guid: 321502428e375bd44810c2419ac6b4e2,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6040213792172793891, guid: 321502428e375bd44810c2419ac6b4e2,
         type: 3}
       propertyPath: m_LocalPosition.x

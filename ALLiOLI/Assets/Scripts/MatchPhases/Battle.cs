@@ -35,7 +35,7 @@ public class Battle : MatchPhase
     public override void ServerStartState()
     {
         base.ServerStartState();
-        FlagManager.Instance.Spawn();
+        //FlagSpawner.Instance.ActivateFlags();
         MatchManager.instance.KillAllCharacters();
         MatchManager.instance.ResetWinner();
         foreach (Client client in MatchManager.instance.clients)

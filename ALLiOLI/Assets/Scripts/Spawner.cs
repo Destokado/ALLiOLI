@@ -27,7 +27,7 @@ public class Spawner : NetworkBehaviour
 
 
     [Server]
-    public void Spawn(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
+    public void SpawnCharacter(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
     {
         float deltaX = UnityEngine.Random.Range(-spawnSize.x / 2f, spawnSize.x / 2f);
         float deltaY = UnityEngine.Random.Range(-spawnSize.y / 2f, spawnSize.y / 2f);
@@ -53,7 +53,7 @@ public class Spawner : NetworkBehaviour
         {
             Flag flag = other.GetComponent<Flag>();
             
-            if (flag && flag.hasOwner)
+            if (flag)
                 MatchManager.instance.FlagAtSpawn(flag.owner);
         }
     }

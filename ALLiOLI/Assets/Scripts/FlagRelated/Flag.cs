@@ -2,66 +2,103 @@
 using Mirror;
 using UnityEngine;
 
-// IMPORTANT NOTE: The flag class only stores information and does changes to his own information.
+// IMPORTANT NOTE: The flag class only stores information and makes changes to his own information.
 // It is not meant to perform any operation or change in any other object
 
 public class Flag : NetworkBehaviour
 {
-    public bool hasOwner => owner != null;
-    public Player owner { get; private set; } //Last player that carried the flag
-    public Character carrier //Currently carrying the flag
+
+    [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
+    private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
+    private MaterialPropertyBlock block;
+
+    private Color color
+    {
+        set
+        {
+            if (block == null)
+                block = new MaterialPropertyBlock();
+
+            foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
+            {
+                block.SetColor(baseColor, owner.Color);
+                mr.SetPropertyBlock(block);
+            }
+        }
+    }
+
+    public Player owner
+    {
+        get => _owner;
+        set
+        {
+            _owner = value;
+            color = _owner.Color;
+        }
+    } //Player that can interact with the flag
+
+    private Player _owner;
+
+    public bool hasCarrier //Currently carrying the flag?
     {
         get => _carrier;
         private set
         {
             if (value == _carrier) return;
-            if (_carrier != null) _carrier.hasFlag = false;
+            if (!_carrier) owner.Character.hasFlag = false;
             _carrier = value;
-            if (_carrier != null) _carrier.hasFlag = true;
+            if (_carrier) owner.Character.hasFlag = true;
         }
     }
-    private Character _carrier;
-    
-    [SyncVar] public bool canBePicked = true;
-   
 
-   
+    [field: SyncVar(hook = nameof(SetNewPlayerOwner))]
+    public uint OwnerNetId { get; set; }
+
+    private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId)
+    {
+        owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
+    }
+
+    private bool _carrier;
+    
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (carrier || !canBePicked || !isServer) return;
+        if (other.GetComponent<KillZone>())
+        {
+            if (hasAuthority)
+                Reset();
+
+            return;
+        }
+
+        if (hasCarrier  || isServer) return;
 
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead)
+        if (!character || character.isDead || character != _owner.Character)
             return;
-        
-        FlagManager.Instance.FlagPickedBy(character);
+
+        Attach();
     }
 
-    [Server]
-    public void AttachTo(Character character)
+    private void Attach()
     {
-        owner = character.Owner;
-        carrier = character;
-        canBePicked = false;
-        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,transform.position,null);
+        hasCarrier = true;
+        Debug.Log("The player "+owner.name+" has the "+owner.Color+" flag");
+        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
+            transform.position, null);
     }
 
-    [Server]
     public void Detach()
     {
-        carrier = null;
-        canBePicked = true;
+        hasCarrier = false;
         
-        // The owner only changes one the flag is picked, so the flag can get into the spawn point by physics, ... and the last player that owned it would win
-        // owner = null; 
     }
 
-    [Server]
     public void Reset()
     {
-        canBePicked = true;
-        carrier = null;
-        owner = null;
+        hasCarrier = false;
+        transform.position = FlagSpawner.Instance.GetSpawnPos();
     }
 }
