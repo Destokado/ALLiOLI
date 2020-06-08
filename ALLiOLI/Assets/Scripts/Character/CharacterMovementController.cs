@@ -154,12 +154,14 @@ public class CharacterMovementController : NetworkBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
+        bool tempOnGround = false;
         // Check if is grounded
         foreach (Transform checkTransform in groundCheckPositions)
         {
-            onGround = CheckIfTouchesGround(checkTransform.position);
-            if (onGround) break;
+            tempOnGround = CheckIfTouchesGround(checkTransform.position);
+            if (tempOnGround) break;
         }
+        onGround = tempOnGround;
 
         Debug.DrawRay(transform.position, Vector3.up, onGround? Color.cyan : Color.gray);
         Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
