@@ -25806,6 +25806,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4324163893027708368}
     m_Modifications:
+    - target: {fileID: 1771179356676803934, guid: 08531a0543abf5147bdeb8133b860c51,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1865134923399737744, guid: 08531a0543abf5147bdeb8133b860c51,
         type: 3}
       propertyPath: m_Mesh
@@ -25870,6 +25875,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058224755816280367, guid: 08531a0543abf5147bdeb8133b860c51,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486500088227111082, guid: 08531a0543abf5147bdeb8133b860c51,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557089091919338715, guid: 08531a0543abf5147bdeb8133b860c51,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9172327968706731772, guid: 08531a0543abf5147bdeb8133b860c51,
         type: 3}
@@ -33029,6 +33049,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4324163893027708368}
     m_Modifications:
+    - target: {fileID: 1118485616903974930, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 8.11
+      objectReference: {fileID: 0}
     - target: {fileID: 3171617262685406599, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33083,6 +33108,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727025244749824189, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786720480560931451, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
+        type: 3}
+      propertyPath: m_AssetId
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067242213653615316, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 8.11
       objectReference: {fileID: 0}
     - target: {fileID: 7199260252396953843, guid: 93d4e8cbdd44f6f4b8bc368bfd0a5091,
         type: 3}
