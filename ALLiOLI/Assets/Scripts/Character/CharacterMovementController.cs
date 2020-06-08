@@ -29,7 +29,8 @@ public class CharacterMovementController : NetworkBehaviour
     
     [Header("Environment configuration")]
     [SerializeField] private LayerMask groundedLayers;
-    [SerializeField] private Transform groundCheckPosition;
+    [SerializeField] private Transform[] groundCheckPositions;
+    [SerializeField] private float groundCheckRadius = 0.1f;
     
     public bool onGround
     {
@@ -153,15 +154,24 @@ public class CharacterMovementController : NetworkBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
-        // Process vertical collisions
-        onGround = Physics.OverlapSphere(groundCheckPosition.position, 0.1f, groundedLayers).Length > 0;
+        // Check if is grounded
+        foreach (Transform checkTransform in groundCheckPositions)
+        {
+            onGround = CheckIfTouchesGround(checkTransform.position);
+            if (onGround) break;
+        }
 
-        Debug.DrawRay(groundCheckPosition.position, Vector3.up, onGround? Color.cyan : Color.gray);
+        Debug.DrawRay(transform.position, Vector3.up, onGround? Color.cyan : Color.gray);
         Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
 
         GiveStateToAnimations(desiredDisplacement);
     }
-    
+
+    private bool CheckIfTouchesGround(Vector3 position)
+    {
+        return Physics.OverlapSphere(position, groundCheckRadius, groundedLayers).Length > 0;
+    }
+
     public void Jump()
     {
         Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
@@ -171,8 +181,11 @@ public class CharacterMovementController : NetworkBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = onGround? Color.cyan : Color.gray;
-        Gizmos.DrawWireSphere(groundCheckPosition.position, 0.1f);
+        foreach (Transform checkTransform in groundCheckPositions)
+        {
+            Gizmos.color = CheckIfTouchesGround(checkTransform.position)? Color.cyan : Color.gray;
+            Gizmos.DrawWireSphere(checkTransform.position, groundCheckRadius);
+        }
     }
 
     private void PlaySoundFall(float fallingDistance) // TODO: Re add where needed
