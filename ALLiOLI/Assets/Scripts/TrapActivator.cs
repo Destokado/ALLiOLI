@@ -13,10 +13,10 @@ public class TrapActivator : NetworkBehaviour
     [SyncVar (hook = nameof(NewActivationState))] private bool activated;
     private void NewActivationState(bool oldValue, bool newValue)
     {
-        Debug.Log("NewActivationState");
+//        Debug.Log("NewActivationState");
         foreach (GameObject obj in objectsToSynchronize)
         {
-            Debug.Log($"Setting {obj} in NewActivationState as {newValue}");
+//            Debug.Log($"Setting {obj} in NewActivationState as {newValue}");
             obj.SetActive(newValue);
         }
     }

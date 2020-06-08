@@ -251,9 +251,9 @@ HingeJoint:
   m_ConnectedAnchor: {x: -0.008077015, y: 0.027573666, z: 0}
   m_UseSpring: 1
   m_Spring:
-    spring: 2500
+    spring: 10000
     damper: 0
-    targetPosition: 85
+    targetPosition: -180
   m_UseMotor: 0
   m_Motor:
     targetVelocity: 0
@@ -284,8 +284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6afe82fa93e6041916699563b6aaa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trap: {fileID: 948268734656659658}
---- !u!114 &948268734656659658
+  trap: {fileID: 1483563380622240862}
+--- !u!114 &1483563380622240862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2135027122875692461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36f0a44a9549f8f4ca4062524b289b41, type: 3}
+  m_Script: {fileID: 11500000, guid: 880e99490d5f2924da8a6bc042a95779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -303,7 +303,9 @@ MonoBehaviour:
   durationTime: 3
   radarTrigger: {fileID: 4638663025538229398}
   activateEmitter: {fileID: 0}
-  ball: {fileID: 7724252859047401175}
+  joint: {fileID: 7724252859047401175}
+  startAngle: -90
+  targetAngle: 90
 --- !u!114 &3913352919014463695
 MonoBehaviour:
   m_ObjectHideFlags: 0
