@@ -102,8 +102,10 @@ public class Character : NetworkBehaviour
             return;
         
         isDead = true;
-        if (hasFlag) 
-            FlagManager.Instance.FlagDropped(flagGameObject.transform.position);
+        if (hasFlag) //TODO: Drop flag
+            FlagSpawner.Instance.GetFlag(Owner).Detach();
+            //FlagSpawner.Instance.FlagDropped(flagGameObject.transform.position);
+        
         
         RpcDie(impact, impactPoint);
     }

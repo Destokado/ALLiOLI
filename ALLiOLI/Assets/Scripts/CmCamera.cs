@@ -73,7 +73,7 @@ public class CmCamera : MonoBehaviour
         }
         else
         {
-            float blendingTime = cinemachineBrain.m_DefaultBlend.m_Time;
+            float blendingTime = cinemachineBrain.m_DefaultBlend.m_Time; //TODO: Make it depeendant from distance to Spawn
             StartCoroutine(ReSetCamera(target, follow, blendingTime));
             return blendingTime;
         }

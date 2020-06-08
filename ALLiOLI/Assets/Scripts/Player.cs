@@ -170,6 +170,7 @@ public class Player : NetworkBehaviour
         {
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
+            CmdSpawnNewFlag();
         }
 
         SetupForCurrentPhase();
@@ -184,7 +185,14 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSpawnNewCharacter()
     {
-        Spawner.Instance.Spawn(characterPrefab, this.netId, connectionToClient);
+        Spawner.Instance.SpawnCharacter(characterPrefab, this.netId, connectionToClient);
+    }
+    
+    [Command]
+    public void CmdSpawnNewFlag()
+    {
+        FlagSpawner.Instance.SpawnFlag(this.netId,connectionToClient);
+
     }
 
     public void SetupForCurrentPhase()
