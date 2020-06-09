@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99cca830c0f61ce4ba5009d908858d0e, type: 2}
+  - {fileID: 2100000, guid: a5c938d9b3e2d4e4b8d0a9c8574bf947, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -209,8 +209,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   meshRenderersToColor:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4704921215939629895}
 --- !u!136 &253451332789459856
 CapsuleCollider:
   m_ObjectHideFlags: 0

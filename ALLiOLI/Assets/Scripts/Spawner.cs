@@ -54,7 +54,7 @@ public class Spawner : NetworkBehaviour
             Flag flag = other.GetComponent<Flag>();
             
             if (flag)
-                MatchManager.instance.FlagAtSpawn(flag.owner);
+                MatchManager.instance.FlagAtSpawn(flag.Owner);
         }
     }
 

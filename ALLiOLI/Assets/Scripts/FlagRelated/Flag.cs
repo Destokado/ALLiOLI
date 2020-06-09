@@ -20,6 +20,7 @@ public class Flag : NetworkBehaviour
          private set
         {
             _owner = value;
+            UpdateColor();
         }
     } 
 
@@ -70,19 +71,24 @@ public class Flag : NetworkBehaviour
 
     private void Attach()
     {
+       
         hasCarrier = true;
-        this.transform.parent = Owner.Character.transform;
-        this.transform.LookAt( - Owner.Character.transform.forward);
+        Owner.Character.hasFlag = true;
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
         Debug.Log("The player "+Owner.name+" has the "+Owner.Color+" flag");
+        this.gameObject.SetActive(false);
 
     }
 
     public void Detach()
     {
         hasCarrier = false;
-        
+        Owner.Character.hasFlag = false;
+       // this.gameObject.SetActive(true); This cannot be done cuz it's unactive.
+       //It gets activated in the ServerDie of Character
+
+
     }
 
     public void Reset()

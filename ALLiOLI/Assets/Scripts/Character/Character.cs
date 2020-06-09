@@ -9,15 +9,16 @@ public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public GameObject flagGameObject;
+    [SerializeField] public Transform flagPos;
 
-   // [SyncVar(hook = nameof(NewHasFlagValue))]
+   [SyncVar(hook = nameof(NewHasFlagValue))]
     public bool hasFlag = false;
 
-  /*  private void NewHasFlagValue(bool oldVal, bool newVal)
+    private void NewHasFlagValue(bool oldVal, bool newVal)
     {
         flagGameObject.SetActive(newVal);
         
-    }*/
+    }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
 
@@ -110,6 +111,7 @@ public class Character : NetworkBehaviour
         isDead = true;
         if (hasFlag)
         {
+            Owner.Flag.gameObject.SetActive(true);
             Owner.Flag.Detach();
             hasFlag = false;
         }

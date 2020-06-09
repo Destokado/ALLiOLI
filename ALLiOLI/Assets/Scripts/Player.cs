@@ -20,20 +20,23 @@ public class Player : NetworkBehaviour
     public Character Character
     {
         get => _character;
-        set {
+        set
+        {
             _character = value;
             if (IsControlledLocally)
             {
-                float blendingTime = HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget,value.transform);
+                float blendingTime =
+                    HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget, value.transform);
                 HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
             }
-                
         }
     }
+
     // ReSharper disable once InconsistentNaming
     private Character _character;
 
     public Flag Flag;
+
     /// <summary>
     /// The color that identifies the player and their characters.
     /// </summary>
@@ -52,7 +55,8 @@ public class Player : NetworkBehaviour
             HumanLocalPlayer.playerGui.SetColor(newColor);
         if (Character != null)
             Character.UpdateColor();
-      if(Flag!=null) Flag.UpdateColor();
+        if (Flag != null) 
+            Flag.UpdateColor();
     }
 
     /// <summary>
@@ -87,7 +91,7 @@ public class Player : NetworkBehaviour
                 Debug.LogWarning("Trying to change the humanLocalPlayer of a Player. Operation cancelled.");
                 return;
             }
-            
+
             _humanLocalPlayer = value;
             if (value != null)
             {
@@ -96,27 +100,32 @@ public class Player : NetworkBehaviour
             }
         }
     }
+
     private HumanLocalPlayer _humanLocalPlayer;
 
 
     [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
     public int idOfHumanLocalPlayer;
+
     private void NewIdOfHumanLocalPlayer(int oldVal, int newVal)
     {
         if (oldVal != 0)
             Debug.LogWarning("Trying to change the idOfHumanLocalPlayer of a Player. It shouldn't be done.");
     }
-    
+
     [SyncVar(hook = nameof(NewIdOfHumanLocalPlayer))]
     public int idOfClient;
+
     private void NewIidOfClient(int oldVal, int newVal)
     {
         if (oldVal != 0)
             Debug.LogWarning("Trying to change the idOfClient of a Player. It shouldn't be done.");
     }
 
-    public Client Client {
-        get {
+    public Client Client
+    {
+        get
+        {
             if (!_client)
                 foreach (Client client in MatchManager.instance.clients.Where(client => client.clientId == idOfClient))
                     _client = client;
@@ -124,13 +133,16 @@ public class Player : NetworkBehaviour
             return _client;
         }
     }
+
     // ReSharper disable once InconsistentNaming
     private Client _client;
-    
+
     [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
-    
-    [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))] public int trapActivators = 0;
+
+    [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))]
+    public int trapActivators = 0;
+
     private void UpdatedTrapActivationsNumber(int oldVal, int newVal)
     {
         if (HumanLocalPlayer)
@@ -141,7 +153,7 @@ public class Player : NetworkBehaviour
     {
         if (oldVal != -1)
             Debug.LogWarning("Trying to change the playerIndex of a Player. It shouldn't be done.");
-        
+
         gameObject.name =
             $"Player {playerIndex} | {(IsControlledLocally ? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely")}";
         Color = MatchManager.instance.GetColor(playerIndex);
@@ -158,7 +170,7 @@ public class Player : NetworkBehaviour
         Client.PlayersManager.players.Add(this);
         transform.SetParent(Client.transform, true);
         Debug.Log($"Added player to owner client's player list.");
-        
+
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
         foreach (HumanLocalPlayer human in allHumans)
@@ -167,7 +179,7 @@ public class Player : NetworkBehaviour
                 HumanLocalPlayer = human;
                 break;
             }
-        
+
         if (hasAuthority)
         {
             CmdSetupPlayerOnServer();
@@ -189,12 +201,11 @@ public class Player : NetworkBehaviour
     {
         Spawner.Instance.SpawnCharacter(characterPrefab, this.netId, connectionToClient);
     }
-    
+
     [Command]
     public void CmdSpawnNewFlag()
     {
-       Flag = FlagSpawner.Instance.SpawnFlag(this.netId,connectionToClient);
-
+        Flag = FlagSpawner.Instance.SpawnFlag(this.netId, connectionToClient);
     }
 
     public void SetupForCurrentPhase()
@@ -208,19 +219,18 @@ public class Player : NetworkBehaviour
     {
         isReady = newValue;
     }
-    
+
     [Command] // On server, called by a client
     public void CmdActivateTrap(uint trapNetId)
     {
         if (trapActivators <= 0) return;
-        
+
         GameObject trapGo = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(trapNetId);
         Trap trap = trapGo.GetComponent<Trap>();
-        
+
         if (!trap) return;
-        
+
         trap.Activate();
         trapActivators -= 1;
     }
-
 }
