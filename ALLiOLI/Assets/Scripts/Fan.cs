@@ -19,7 +19,6 @@ public class Fan : MonoBehaviour
         Vector3 forceApplied = transform.forward * (force * forcePerByDistance);
         other.attachedRigidbody.AddForce(forceApplied, ForceMode.Impulse);
         
-        Debug.Log($"ADDING FORCE TO {other.gameObject}");
         Debug.DrawLine(other.transform.position, other.transform.position+forceApplied, Color.red);
     }
 
