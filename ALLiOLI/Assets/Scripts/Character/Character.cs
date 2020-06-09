@@ -9,7 +9,7 @@ public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public GameObject flagGameObject;
-    [SerializeField] public Transform flagPos;
+    [SerializeField] public MeshRenderer flagMeshToColor;
 
    [SyncVar(hook = nameof(NewHasFlagValue))]
     public bool hasFlag = false;
@@ -51,6 +51,8 @@ public class Character : NetworkBehaviour
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);
         }
+        
+        flagMeshToColor.SetPropertyBlock(block);
     }
 
     private Player _owner;
