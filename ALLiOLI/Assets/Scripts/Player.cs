@@ -33,6 +33,7 @@ public class Player : NetworkBehaviour
     // ReSharper disable once InconsistentNaming
     private Character _character;
 
+    public Flag Flag;
     /// <summary>
     /// The color that identifies the player and their characters.
     /// </summary>
@@ -51,6 +52,7 @@ public class Player : NetworkBehaviour
             HumanLocalPlayer.playerGui.SetColor(newColor);
         if (Character != null)
             Character.UpdateColor();
+      if(Flag!=null) Flag.UpdateColor();
     }
 
     /// <summary>
@@ -191,7 +193,7 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSpawnNewFlag()
     {
-        FlagSpawner.Instance.SpawnFlag(this.netId,connectionToClient);
+       Flag = FlagSpawner.Instance.SpawnFlag(this.netId,connectionToClient);
 
     }
 

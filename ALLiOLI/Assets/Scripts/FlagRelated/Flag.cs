@@ -8,34 +8,20 @@ using UnityEngine;
 public class Flag : NetworkBehaviour
 {
 
-    [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
+    [SerializeField] private MeshRenderer[] meshRenderersToColor;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
 
-    private Color color
-    {
-        set
-        {
-            if (block == null)
-                block = new MaterialPropertyBlock();
+   
 
-            foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
-            {
-                block.SetColor(baseColor, owner.Color);
-                mr.SetPropertyBlock(block);
-            }
-        }
-    }
-
-    public Player owner
+    public Player Owner //Player that can interact with the flag
     {
         get => _owner;
-        set
+         private set
         {
             _owner = value;
-            color = _owner.Color;
         }
-    } //Player that can interact with the flag
+    } 
 
     private Player _owner;
 
@@ -45,9 +31,9 @@ public class Flag : NetworkBehaviour
         private set
         {
             if (value == _carrier) return;
-            if (!_carrier) owner.Character.hasFlag = false;
+            if (!_carrier) Owner.Character.hasFlag = false;
             _carrier = value;
-            if (_carrier) owner.Character.hasFlag = true;
+            if (_carrier) Owner.Character.hasFlag = true;
         }
     }
 
@@ -56,7 +42,7 @@ public class Flag : NetworkBehaviour
 
     private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId)
     {
-        owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
+        Owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
     }
 
     private bool _carrier;
@@ -73,7 +59,7 @@ public class Flag : NetworkBehaviour
             return;
         }
 
-        if (hasCarrier  || isServer) return;
+        if (hasCarrier  || !isServer) return;
 
         Character character = other.GetComponentInParent<Character>();
         if (!character || character.isDead || character != _owner.Character)
@@ -85,9 +71,12 @@ public class Flag : NetworkBehaviour
     private void Attach()
     {
         hasCarrier = true;
-        Debug.Log("The player "+owner.name+" has the "+owner.Color+" flag");
+        this.transform.parent = Owner.Character.transform;
+        this.transform.LookAt( - Owner.Character.transform.forward);
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
+        Debug.Log("The player "+Owner.name+" has the "+Owner.Color+" flag");
+
     }
 
     public void Detach()
@@ -100,5 +89,17 @@ public class Flag : NetworkBehaviour
     {
         hasCarrier = false;
         transform.position = FlagSpawner.Instance.GetSpawnPos();
+    }
+
+    public void UpdateColor()
+    {
+        if (block == null)
+            block = new MaterialPropertyBlock();
+
+        foreach (MeshRenderer mr in meshRenderersToColor)
+        {
+            block.SetColor(baseColor, Owner.Color);
+            mr.SetPropertyBlock(block);
+        }
     }
 }
