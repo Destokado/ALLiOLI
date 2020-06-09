@@ -13,6 +13,8 @@ public class Fan : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         float distance = Vector3.Distance(transform.position, other.transform.position);
+        if (distance > maxEffectDistance)
+            return;
         float forcePerByDistance = forceByDistance.Evaluate(1 - (distance / maxEffectDistance));
         other.attachedRigidbody.AddForce(transform.forward * (force * forcePerByDistance), ForceMode.Impulse);
         Debug.Log($"ADDING FORCE TO {other.gameObject}");

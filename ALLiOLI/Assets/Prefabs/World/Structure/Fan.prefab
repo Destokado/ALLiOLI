@@ -139,8 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0209992957274b044bae5e07ede24755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEffectDistance: 30
-  force: 70
+  maxEffectDistance: 20
+  force: 3
   forceByDistance:
     serializedVersion: 2
     m_Curve:
