@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3529831284163933270}
   - component: {fileID: 177998800238918263}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194434538081000829}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 0.5, z: 3}
   m_Children: []
   m_Father: {fileID: 7771394947121478923}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &5085889029321319930
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7483558876376982625
@@ -103,6 +103,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7771394947121478923}
+  - component: {fileID: 4188309273512798728}
+  - component: {fileID: 6223668564355744837}
   m_Layer: 0
   m_Name: Fan
   m_TagString: Untagged
@@ -125,3 +127,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4188309273512798728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7483558876376982625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0209992957274b044bae5e07ede24755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEffectDistance: 30
+  force: 70
+  forceByDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.088435285
+      outSlope: -0.088435285
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07538462
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -3.0694468
+      outSlope: -3.0694468
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03692305
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!136 &6223668564355744837
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7483558876376982625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.6
+  m_Height: 30
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 15}
