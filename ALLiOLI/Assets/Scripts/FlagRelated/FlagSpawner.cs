@@ -34,7 +34,7 @@ public class FlagSpawner : NetworkBehaviour
     }
 
     [Server]
-    public void SpawnFlag(uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
+    public Flag SpawnFlag(uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
     {
         var spawnPoint = GetSpawnPos();
 
@@ -44,6 +44,7 @@ public class FlagSpawner : NetworkBehaviour
         script.OwnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(flag, playerOwnerConnectionToClient);
         //flag.SetActive(false);
+        return script;
     }
 
     public Vector3 GetSpawnPos()
@@ -122,6 +123,7 @@ public class FlagSpawner : NetworkBehaviour
             flag.Reset();
         }
     }
+    
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
@@ -130,13 +132,4 @@ public class FlagSpawner : NetworkBehaviour
         Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
 #endif
-    public Flag GetFlag(Player owner)
-    {
-        foreach (Flag flag in flags)
-        {
-            if (flag.owner == owner) return flag;
-        }
-
-        return null;
-    }
 }

@@ -147,6 +147,7 @@ MonoBehaviour:
   syncInterval: 0.05
   cameraTarget: {fileID: 8134060931265600200}
   flagGameObject: {fileID: 4308140877917608473}
+  flagMeshToColor: {fileID: 6113729888517033782}
   hasFlag: 0
   meshRenderersToColor:
   - {fileID: 6371019288703489938}
@@ -631,6 +632,12 @@ PrefabInstance:
     - {fileID: 2373627577922153673, guid: ee82e7269e3ad884ebfa67ea22a7b89e, type: 3}
     - {fileID: 4181884851136946174, guid: ee82e7269e3ad884ebfa67ea22a7b89e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee82e7269e3ad884ebfa67ea22a7b89e, type: 3}
+--- !u!23 &6113729888517033782 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4704921215939629895, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1554700757754240113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2680865011255694487 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3505824281560058086, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
