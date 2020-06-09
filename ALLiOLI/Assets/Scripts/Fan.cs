@@ -7,7 +7,7 @@ using UnityEngine;
 public class Fan : MonoBehaviour
 {
     [SerializeField] private float maxEffectDistance = 3f;
-    [SerializeField] private float force = 50f;
+    [SerializeField] private float force = 10f;
     [SerializeField] private AnimationCurve forceByDistance;
 
     private void OnTriggerStay(Collider other)
@@ -15,9 +15,12 @@ public class Fan : MonoBehaviour
         float distance = Vector3.Distance(transform.position, other.transform.position);
         if (distance > maxEffectDistance)
             return;
-        float forcePerByDistance = forceByDistance.Evaluate(1 - (distance / maxEffectDistance));
-        other.attachedRigidbody.AddForce(transform.forward * (force * forcePerByDistance), ForceMode.Impulse);
+        float forcePerByDistance = forceByDistance.Evaluate(distance / maxEffectDistance);
+        Vector3 forceApplied = transform.forward * (force * forcePerByDistance);
+        other.attachedRigidbody.AddForce(forceApplied, ForceMode.Impulse);
+        
         Debug.Log($"ADDING FORCE TO {other.gameObject}");
+        Debug.DrawLine(other.transform.position, other.transform.position+forceApplied, Color.red);
     }
 
     private void OnDrawGizmosSelected()
@@ -26,7 +29,7 @@ public class Fan : MonoBehaviour
         
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(position, maxEffectDistance);
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.white;
         Gizmos.DrawLine(position, position+transform.forward*force);
     }
 }

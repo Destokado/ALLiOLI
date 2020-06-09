@@ -119,7 +119,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7483558876376982625}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.9063079, y: 0, z: 0, w: 0.42261827}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -139,8 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0209992957274b044bae5e07ede24755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEffectDistance: 20
-  force: 3
+  maxEffectDistance: 13
+  force: 1
   forceByDistance:
     serializedVersion: 2
     m_Curve:
@@ -156,11 +156,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -3.0694468
-      outSlope: -3.0694468
+      inSlope: -2.6180468
+      outSlope: -2.6180468
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.03692305
+      inWeight: 0.018461525
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -175,7 +175,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.6
-  m_Height: 30
+  m_Radius: 2
+  m_Height: 20
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 15}
+  m_Center: {x: 0, y: 0, z: 10}
