@@ -82,7 +82,7 @@ public class Flag : NetworkBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void Detach(Vector3 droppedPos)
+    public void Dropped(Vector3 droppedPos)
     {
         hasCarrier = false;
         transform.position = droppedPos;

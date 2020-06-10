@@ -10,18 +10,22 @@ public class Character : NetworkBehaviour
     [SerializeField] public GameObject flagGameObject;
     [SerializeField] public MeshRenderer flagMeshToColor;
 
-   [SyncVar(hook = nameof(NewHasFlagValue))]
-    public bool hasFlag ;
-
+    [SyncVar(hook = nameof(NewHasFlagValue))] public bool hasFlag ;
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
-        flagGameObject.SetActive(newVal); //The gameobject of the placeholder flag
-        if(newVal)  NetworkServer.UnSpawn(Owner.Flag.gameObject); //The character picks the flag
+        flagGameObject.SetActive(newVal); //The flag object carried by the character
+
+        // Activate/deactivate the player's world flag if picked
+        if (newVal)
+        {
+            Owner.Flag.gameObject.SetActive(false); 
+            NetworkServer.UnSpawn(Owner.Flag.gameObject); 
+        }
         else
         {
-            Owner.Flag.gameObject.SetActive(true);
+            Owner.Flag.gameObject.SetActive(true); 
             NetworkServer.Spawn(Owner.Flag.gameObject,Owner.connectionToClient);
-            Owner.Flag.Detach(transform.position);
+            Owner.Flag.Dropped(transform.position);
         }
 
     }
