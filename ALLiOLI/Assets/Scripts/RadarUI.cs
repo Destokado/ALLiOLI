@@ -26,7 +26,6 @@ public class RadarUI : MonoBehaviour
             }
         }
 
-        Debug.Log($"Closest character = {closestCharacter}");
         int img = 0;
         if (closestCharacter != null)
         {

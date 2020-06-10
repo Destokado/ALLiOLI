@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FMOD;
 using FMOD.Studio;
 using Mirror;
@@ -167,12 +168,13 @@ public class CharacterMovementController : NetworkBehaviour
         Debug.DrawRay(transform.position, Vector3.up, onGround? Color.cyan : Color.gray);
         Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
 
-        GiveStateToAnimations(desiredDisplacement);
+        GiveStateToAnimations(Rigidbody.velocity);
     }
 
     private bool CheckIfTouchesGround(Vector3 position)
     {
-        return Physics.OverlapSphere(position, groundCheckRadius, groundedLayers).Length > 0;
+        Collider[] colliders = Physics.OverlapSphere(position, groundCheckRadius, groundedLayers);
+        return colliders.Any(collider => !collider.isTrigger);
     }
 
     public void Jump()
