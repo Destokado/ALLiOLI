@@ -18,6 +18,8 @@ public class RollingTubes : Trap
     protected override void Reload()
     {
         base.Reload();
+
+        //pool.DisableAllInstanciated();
     }
 
     public override void Activate()

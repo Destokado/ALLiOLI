@@ -40,9 +40,10 @@ public class Client : NetworkBehaviour
     [FormerlySerializedAs("_soundManager")] [SerializeField] private SoundManagerOnline soundManagerOnline;
 
     public PlayersManager PlayersManager => _playersManager;
-
     // ReSharper disable once InconsistentNaming
     [SerializeField] private PlayersManager _playersManager;
+
+    public bool isLocalClient => LocalClient == this;
 
     // Called on the server (when this NetworkBehaviour is network-ready)
     public override void OnStartServer()

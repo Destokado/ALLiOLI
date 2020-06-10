@@ -15,7 +15,7 @@ public class DeadZone : MonoBehaviour
             character.Owner.Flag.Reset(); //reset it
         }
         Debug.Log($"Killed '{character.name}', was caught trying to get out of the map!'.", gameObject);
-        character.ServerSuicide();
+        character.Kill(Vector3.zero, character.transform.position);
         Destroy(other.gameObject, 3f);
     }
 }

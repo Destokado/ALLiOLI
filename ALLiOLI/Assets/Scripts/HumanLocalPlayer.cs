@@ -192,7 +192,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnSuicide()
     {
         if (Player == null || Player.Character == null) return;
-        Player.Character.CmdServerSuicide();
+        Player.Character.Suicide();
     }
 
     private void OnJump(InputValue value)

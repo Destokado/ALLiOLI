@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FMODUnity;
 using Mirror;
 using Telepathy;
+using UnityEditor;
 using UnityEngine;
 
 [SelectionBase]
@@ -16,11 +17,10 @@ public abstract class Trap : NetworkBehaviour
     public bool OnCd => cdTimer > 0;
     [field: SyncVar] public float cdTimer { get; private set; }
 
-    public bool active => activatedTimer > 0;
+    public bool isActive => activatedTimer > 0;
     [field: SyncVar] public float activatedTimer { get; private set; }
 
     [SerializeField] protected StudioEventEmitter activateEmitter;
-    public bool isActive { get; private set; }
 
     private void Update()
     {
@@ -33,30 +33,30 @@ public abstract class Trap : NetworkBehaviour
     {
         if (OnCd) cdTimer -= Time.deltaTime;
 
-        if (active)
+        if (isActive)
         {
             activatedTimer -= Time.deltaTime;
-            if (!active) Reload();
+            if (!isActive) Reload();
         }
     }
 
+    [MenuItem("Reload")]
     [Server]
     protected virtual void Reload()
     {
-        isActive = false;
         Debug.Log($"The trap '{gameObject.name}' is being deactivated. Reloading.", this.gameObject);
     }
 
+    [MenuItem("Activate")]
     [Server]
     public virtual void Activate()
     {
-        isActive = true;
-        Debug.Log($"The trap '{gameObject.name}' is being activated.", this.gameObject);
-        
         if (activateEmitter != null)
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, activateEmitter.Event);
         cdTimer = cooldownTime;
         activatedTimer = durationTime;
+        
+        Debug.Log($"The trap '{gameObject.name}' is being activated.", this.gameObject);
     }
 
     public bool IsActivatable()

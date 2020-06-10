@@ -274,7 +274,7 @@ public class MatchManager : NetworkBehaviour
     {
         foreach (Client client in clients)
         foreach (Player player in client.PlayersManager.players)
-            player.Character.ServerSuicide();
+            player.Character.Kill(Vector3.zero, player.Character.transform.position);
     }
 
 

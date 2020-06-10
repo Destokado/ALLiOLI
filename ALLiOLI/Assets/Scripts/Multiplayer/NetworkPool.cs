@@ -76,6 +76,11 @@ namespace Mirror
             referencedObjects.Add(go);
             return go;
         }
-        
+
+        public void DisableAllInstanciated()
+        {
+            foreach (GameObject obj in referencedObjects)
+                obj.SetActive(false);
+        }
     }
 }

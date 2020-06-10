@@ -85,54 +85,39 @@ public class Character : NetworkBehaviour
     {
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
-
-    [Command] // From a client to the server
-    public void CmdServerSuicide()
+    
+    public void Suicide()
     {
-        ServerSuicide();
+        Kill(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
     }
 
-    [Server] // On the server
-    public void ServerSuicide()
+    public void Kill(Vector3 impactDirection, Vector3 impactPoint)
     {
-        ServerDie(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
+        CmdDie(impactDirection, impactPoint);
     }
 
-    public void SafeServerDie(Vector3 impact, Vector3 impactPoint)
+    [Command] // From client to server
+    private void CmdDie(Vector3 impactDirection, Vector3 impactPoint)
     {
-        if (!isServer)
-        {
-            string callingMethod = (new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name;
-            Debug.LogError(
-                $"Calling 'SafeServerDie' from an object that is not in a server. Called from method {callingMethod}. Dead impact happened at {impactPoint}.");
-        }
-
-        ServerDie(impact, impactPoint);
-    }
-
-    [Server]
-    public void ServerDie(Vector3 impact, Vector3 impactPoint)
-    {
+        hasFlag = false;
+        
         if (isDead)
             return;
-
+        
         isDead = true;
-        if (hasFlag)
-        {
-            hasFlag = false;
-        }
 
-        RpcDie(impact, impactPoint);
+        RpcDie(impactDirection, impactPoint);
     }
 
     [ClientRpc] // Called on server, executed on all clients
-    private void RpcDie(Vector3 impact, Vector3 impactPoint)
+    private void RpcDie(Vector3 impactDirection, Vector3 impactPoint)
     {
         StartCoroutine(DieCoroutine());
 
         IEnumerator DieCoroutine()
         {
             ActivateRagdoll();
+            // TODO: Apply impact
 
             yield return new WaitForSeconds(1.5f);
 
