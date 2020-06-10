@@ -171,8 +171,8 @@ MonoBehaviour:
   _animator: {fileID: 5487173628846093171}
   voluntaryMovementStateThreshold: 0.01
   airMovementThreshold: 0.1
-  walkSpeed: 350
-  jumpForce: 350
+  walkSpeed: 250
+  jumpForce: 4
   movingForceOnAir: 12
   groundedLayers:
     serializedVersion: 2
@@ -255,7 +255,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4170785821846641001}
   serializedVersion: 2
-  m_Mass: 60
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -716,6 +716,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674546996910511579, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: maxFootElevation
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674546996910511579, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: walkableLayers.m_Bits
+      value: 513
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eedae34bab0835e4fb87cad8379dd414, type: 3}
