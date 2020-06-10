@@ -49,20 +49,19 @@ public class Flag : NetworkBehaviour
 
     private bool _carrier;
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerExit(Collider other)
     {
-      
+        if (other.GetComponent<SafeZone>()) //If the flag falls off the map, reset it
+        {
+            if (hasAuthority)
+                Reset();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         GetComponent<Rigidbody>().isKinematic = true;
-        if (other.GetComponent<DeadZone>()) //If the flag falls off the map, reset it
-        {
-            if (hasAuthority)
-                Reset();
-            return;
-        }
+       
         if (hasCarrier  || !isServer) return;
         Character character = other.GetComponentInParent<Character>();
         if (!character || character.isDead ||character != Owner.Character)
@@ -82,10 +81,10 @@ public class Flag : NetworkBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void Dropped(Vector3 droppedPos)
+    public void Detach(Vector3 detachPos)
     {
         hasCarrier = false;
-        transform.position = droppedPos;
+        transform.position = detachPos;
         GetComponent<Rigidbody>().isKinematic = false;
 
         // this.gameObject.SetActive(true); This cannot be done cuz it's unactive.

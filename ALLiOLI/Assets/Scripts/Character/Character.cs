@@ -25,7 +25,7 @@ public class Character : NetworkBehaviour
         {
             Owner.Flag.gameObject.SetActive(true); 
             NetworkServer.Spawn(Owner.Flag.gameObject,Owner.connectionToClient);
-            Owner.Flag.Dropped(transform.position);
+            Owner.Flag.Detach(transform.position);
         }
 
     }
