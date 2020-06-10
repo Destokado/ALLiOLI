@@ -55,7 +55,7 @@ public class Player : NetworkBehaviour
             HumanLocalPlayer.playerGui.SetColor(newColor);
         if (Character != null)
             Character.UpdateColor();
-        if (Flag != null) 
+        if (Flag != null)
             Flag.UpdateColor();
     }
 

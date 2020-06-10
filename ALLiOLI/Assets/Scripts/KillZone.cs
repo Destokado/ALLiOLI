@@ -17,6 +17,7 @@ public class KillZone : MonoBehaviour
         if (!character || character.isDead || !trap.isActive) 
             return;
         
+       
         character.ServerDie(other.impulse, other.GetContact(0).point);
         Debug.Log($"Killed '{character.name}' by the KillZone named '{transform.gameObject.name}' in the trap '{trap.gameObject.name}'.", gameObject);
     }

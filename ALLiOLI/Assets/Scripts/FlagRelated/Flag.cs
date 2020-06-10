@@ -1,5 +1,6 @@
 ﻿using System;
 using Mirror;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 // IMPORTANT NOTE: The flag class only stores information and makes changes to his own information.
@@ -47,52 +48,53 @@ public class Flag : NetworkBehaviour
     }
 
     private bool _carrier;
-    
 
+    private void OnCollisionEnter(Collision other)
+    {
+      
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<KillZone>())
+        GetComponent<Rigidbody>().isKinematic = true;
+        if (other.GetComponent<DeadZone>()) //If the flag falls off the map, reset it
         {
             if (hasAuthority)
                 Reset();
-
             return;
         }
-
         if (hasCarrier  || !isServer) return;
-
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead || character != _owner.Character)
+        if (!character || character.isDead ||character != Owner.Character)
             return;
-
         Attach();
     }
 
     private void Attach()
     {
-       
         hasCarrier = true;
+        transform.rotation = Quaternion.Euler(0f,0,0f);
         Owner.Character.hasFlag = true;
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
         Debug.Log("The player "+Owner.name+" has the "+Owner.Color+" flag");
+        
         this.gameObject.SetActive(false);
-
     }
 
-    public void Detach()
+    public void Detach(Vector3 droppedPos)
     {
         hasCarrier = false;
-        Owner.Character.hasFlag = false;
-       // this.gameObject.SetActive(true); This cannot be done cuz it's unactive.
-       //It gets activated in the ServerDie of Character
+        transform.position = droppedPos;
+        GetComponent<Rigidbody>().isKinematic = false;
 
-
+        // this.gameObject.SetActive(true); This cannot be done cuz it's unactive.
+        //It gets activated in the hook field of Character HasFlag
     }
 
     public void Reset()
     {
+        Debug.Log("Reset flag");
         hasCarrier = false;
         transform.position = FlagSpawner.Instance.GetSpawnPos();
     }

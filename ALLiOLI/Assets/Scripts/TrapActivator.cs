@@ -41,9 +41,6 @@ public class TrapActivator : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning("Collided with something");
-
-        
         if (!activated || !isServer || remainingCoolDown > 0) return;
 
         Character character = other.GetComponentInParent<Character>();

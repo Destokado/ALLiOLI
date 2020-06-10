@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Mirror;
 using UnityEngine;
 
@@ -12,12 +11,19 @@ public class Character : NetworkBehaviour
     [SerializeField] public MeshRenderer flagMeshToColor;
 
    [SyncVar(hook = nameof(NewHasFlagValue))]
-    public bool hasFlag = false;
+    public bool hasFlag ;
 
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
-        flagGameObject.SetActive(newVal);
-        
+        flagGameObject.SetActive(newVal); //The gameobject of the placeholder flag
+        if(newVal)  NetworkServer.UnSpawn(Owner.Flag.gameObject); //The character picks the flag
+        else
+        {
+            Owner.Flag.gameObject.SetActive(true);
+            NetworkServer.Spawn(Owner.Flag.gameObject,Owner.connectionToClient);
+            Owner.Flag.Detach(transform.position);
+        }
+
     }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
@@ -113,8 +119,6 @@ public class Character : NetworkBehaviour
         isDead = true;
         if (hasFlag)
         {
-            Owner.Flag.gameObject.SetActive(true);
-            Owner.Flag.Detach();
             hasFlag = false;
         }
 
