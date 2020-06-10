@@ -7,7 +7,7 @@ public class DeadZone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead || character.Owner.Client.isLocalClient) return;
+        if (!character || character.isDead || !character.Owner.Client.isLocalClient) return;
         /*if (character.hasFlag) //If the character has the flag, reset it
         {
             character.hasFlag = false; //Tell the character they no longer have the flag (deactivate placeholder trap)
