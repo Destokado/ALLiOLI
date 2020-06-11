@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class KillZone : MonoBehaviour
+public class NetworkTrapKillZone : NetworkBehaviour
 {
-    [SerializeField] public Trap trap;
+    private Trap trap;
     
+    [NonSerialized] 
+    [SyncVar (hook = nameof(NewTrapNetId))]public uint trapNetId;
+    private void NewTrapNetId(uint oldValue, uint newValue)
+    {
+        AllIOliNetworkManager nwtManager = ((AllIOliNetworkManager) NetworkManager.singleton);
+        GameObject trapGameObject = nwtManager.GetGameObject(newValue);
+        trap = trapGameObject.GetComponentRequired<Trap>();
+    }
+
     // Should only be called on the server
     private void OnCollisionEnter(Collision other)
     {

@@ -38,7 +38,8 @@ public class RollingTubes : Trap
                 GameObject projectile = pool.Spawn();
                 
                 projectile.GetComponent<Rigidbody>().velocity = Vector3.down * tubeSpeed;
-                projectile.GetComponent<KillZone>().trap = this;
+                //projectile.GetComponent<TrapKillZone>().trap = this;
+                projectile.GetComponent<NetworkTrapKillZone>().trapNetId = this.netId;
                 yield return new WaitForSeconds(timeBetweenTubeSpanws);
             }
     }
