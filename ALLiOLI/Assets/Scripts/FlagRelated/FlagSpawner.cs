@@ -115,16 +115,23 @@ public class FlagSpawner : NetworkBehaviour
          }
          
      }*/
-
+    [Server]
     public void ResetFlags()
     {
-        foreach (Flag flag in flags)
+       RpcResetFlags();
+    }
+
+    [ClientRpc]
+    private void RpcResetFlags()
+    {
+      
+        foreach (Player p in   Client.LocalClient.PlayersManager.players)
         {
-            Debug.Log("Resetting all flags");
-            flag.Reset();
+            p.Flag.Reset();
+            
         }
     }
-    
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

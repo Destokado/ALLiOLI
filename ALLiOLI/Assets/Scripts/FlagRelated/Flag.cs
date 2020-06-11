@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mirror;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -49,12 +50,22 @@ public class Flag : NetworkBehaviour
         if (newVal) transform.position = Owner.Character.transform.position;
     }
 
+    List<Character> charactersInTrigger = new List<Character>();
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead || character != Owner.Character || character.HasFlag)
-            return;
+        if (!character || character.isDead || character != Owner.Character || character.HasFlag  ||
+        charactersInTrigger.Contains(character))
+        return;
+        charactersInTrigger.Add(character);
         Attach();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Character character = other.GetComponentInParent<Character>();
+        if (character != null)
+            charactersInTrigger.Remove(character);
     }
 
     private void Attach()
@@ -67,10 +78,11 @@ public class Flag : NetworkBehaviour
 
     public void Reset()
     {
-        if (!hasAuthority) return;
-        
+        Debug.Break();
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
     }
 
     public void UpdateColor()
