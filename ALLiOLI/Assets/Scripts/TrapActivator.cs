@@ -46,7 +46,6 @@ public class TrapActivator : NetworkBehaviour
         Character character = other.GetComponentInParent<Character>();
         if (character)
         {
-            Debug.LogWarning("Collided with char");
             activated = false;
             remainingCoolDown = coolDownTime;
             character.Owner.trapActivators += 1;

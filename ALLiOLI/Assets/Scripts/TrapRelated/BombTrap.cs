@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class BombTrap : Trap
@@ -24,7 +25,7 @@ public class BombTrap : Trap
     {
         base.Reload();
         
-        //TODO: Stop VFX
+        //TODO: Stop VFX (maybe it needs to be in RPC)
     }
 
     public override void Activate()
@@ -33,22 +34,26 @@ public class BombTrap : Trap
         
         RpcExplosionOnClients();
 
-        //TODO: Display VFX
-
     }
 
+    [ClientRpc]
     private void RpcExplosionOnClients()
     {
+        //TODO: Display VFX
+        
         foreach (var collider in GetCurrentlyEffectedColliders())
         {
             Character character = collider.GetComponentInParent<Character>();
             if (character && character.hasAuthority)
                 character.Kill();
-            
-            collider.attachedRigidbody.AddExplosionForce(force, transform.position, bombEffectRadius, upwardsModifier,
-                ForceMode.Impulse);
-            Debug.DrawRay(collider.transform.position, collider.transform.position - bombStartPosition.position,
-                new Color(1f, 0.5f, 0f), 3f);
+
+            if (collider.attachedRigidbody != null)
+            {
+                collider.attachedRigidbody.AddExplosionForce(force, transform.position, bombEffectRadius, upwardsModifier,
+                    ForceMode.Impulse);
+                Debug.DrawRay(collider.transform.position, collider.transform.position - bombStartPosition.position,
+                    new Color(1f, 0.5f, 0f), 3f);
+            }
         }
     }
 

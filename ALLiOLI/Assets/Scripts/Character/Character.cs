@@ -124,13 +124,13 @@ public class Character : NetworkBehaviour
     [ClientRpc] // Called on server, executed on all clients
     private void RpcDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
+        /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
+        
         if (hasAuthority)
             StartCoroutine(DieCoroutine());
 
         IEnumerator DieCoroutine()
         {
-            /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
-
             yield return new WaitForSeconds(1.5f);
             Owner.CmdSpawnNewCharacter();
         }
