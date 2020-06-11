@@ -105,13 +105,14 @@ public class Character : NetworkBehaviour
     public void Kill( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
         CmdDie( /*impactDirection, impactPoint*/);
+        CmdSetHasFlag(false);
     }
 
     [Command] // From client to server
     private void CmdDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        CmdSetHasFlag(false);
-        
+        Debug.Log("CmdDie called");
+
         if (isDead)
             return;
 
