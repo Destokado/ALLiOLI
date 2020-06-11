@@ -8,36 +8,23 @@ using UnityEngine;
 
 public class Flag : NetworkBehaviour
 {
-
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
 
-   
 
     public Player Owner //Player that can interact with the flag
     {
         get => _owner;
-         private set
-        {
-            _owner = value;
-            UpdateColor();
-        }
-    } 
-
-    private Player _owner;
-
-    public bool hasCarrier //Currently carrying the flag?
-    {
-        get => _carrier;
         private set
         {
-            if (value == _carrier) return;
-            if (!_carrier) Owner.Character.hasFlag = false;
-            _carrier = value;
-            if (_carrier) Owner.Character.hasFlag = true;
+            _owner = value;
+            value.Flag = this;
+            UpdateColor();
         }
     }
+
+    private Player _owner;
 
     [field: SyncVar(hook = nameof(SetNewPlayerOwner))]
     public uint OwnerNetId { get; set; }
@@ -49,52 +36,36 @@ public class Flag : NetworkBehaviour
 
     private bool _carrier;
 
-    private void OnTriggerExit(Collider other)
+    [SyncVar(hook = nameof(NewIsActiveInGame))] [NonSerialized]
+    public bool isActiveInGame = true;
+
+    private void NewIsActiveInGame(bool oldVal, bool newVal)
     {
-        if (other.GetComponent<SafeZone>()) //If the flag falls off the map, reset it
-        {
-            if (hasAuthority)
-                Reset();
-        }
+        this.gameObject.SetActive(newVal);
+        if (newVal) transform.position = Owner.Character.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        GetComponent<Rigidbody>().isKinematic = true;
-       
-        if (hasCarrier  || !isServer) return;
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead ||character != Owner.Character)
+        if (!character || character.isDead || character != Owner.Character || character.hasFlag)
             return;
         Attach();
     }
 
     private void Attach()
     {
-        hasCarrier = true;
-        transform.rotation = Quaternion.Euler(0f,0,0f);
         Owner.Character.hasFlag = true;
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
-        Debug.Log("The player "+Owner.name+" has the "+Owner.Color+" flag");
-        
-        this.gameObject.SetActive(false);
-    }
-
-    public void Detach(Vector3 detachPos)
-    {
-        hasCarrier = false;
-        transform.position = detachPos;
-        GetComponent<Rigidbody>().isKinematic = false;
-
-        // this.gameObject.SetActive(true); This cannot be done cuz it's unactive.
-        //It gets activated in the hook field of Character HasFlag
+        Debug.Log("The player " + Owner.name + " has the " + Owner.Color + " flag");
     }
 
     public void Reset()
     {
-        Debug.Log("Reset flag");
-        hasCarrier = false;
+        if (!hasAuthority) return;
+        
+        Owner.Character.hasFlag = false;
         transform.position = FlagSpawner.Instance.GetSpawnPos();
     }
 

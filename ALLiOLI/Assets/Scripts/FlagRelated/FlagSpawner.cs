@@ -120,6 +120,7 @@ public class FlagSpawner : NetworkBehaviour
     {
         foreach (Flag flag in flags)
         {
+            Debug.Log("Resetting all flags");
             flag.Reset();
         }
     }

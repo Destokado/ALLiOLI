@@ -10,24 +10,13 @@ public class Character : NetworkBehaviour
     [SerializeField] public GameObject flagGameObject;
     [SerializeField] public MeshRenderer flagMeshToColor;
 
-    [SyncVar(hook = nameof(NewHasFlagValue))] public bool hasFlag ;
+    [SyncVar(hook = nameof(NewHasFlagValue))]
+    public bool hasFlag;
+
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
         flagGameObject.SetActive(newVal); //The flag object carried by the character
-
-        // Activate/deactivate the player's world flag if picked
-        if (newVal)
-        {
-            Owner.Flag.gameObject.SetActive(false); 
-            NetworkServer.UnSpawn(Owner.Flag.gameObject); 
-        }
-        else
-        {
-            Owner.Flag.gameObject.SetActive(true); 
-            NetworkServer.Spawn(Owner.Flag.gameObject,Owner.connectionToClient);
-            Owner.Flag.Detach(transform.position);
-        }
-
+        Owner.Flag.isActiveInGame = !newVal;
     }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
@@ -61,7 +50,7 @@ public class Character : NetworkBehaviour
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);
         }
-        
+
         flagMeshToColor.SetPropertyBlock(block);
     }
 
@@ -89,7 +78,7 @@ public class Character : NetworkBehaviour
     {
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
-    
+
     public void Suicide()
     {
         Kill(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
@@ -104,10 +93,10 @@ public class Character : NetworkBehaviour
     private void CmdDie(Vector3 impactDirection, Vector3 impactPoint)
     {
         hasFlag = false;
-        
+
         if (isDead)
             return;
-        
+
         isDead = true;
 
         RpcDie(impactDirection, impactPoint);

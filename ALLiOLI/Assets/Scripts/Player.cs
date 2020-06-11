@@ -205,7 +205,7 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSpawnNewFlag()
     {
-        Flag = FlagSpawner.Instance.SpawnFlag(this.netId, connectionToClient);
+        FlagSpawner.Instance.SpawnFlag(this.netId, connectionToClient);
     }
 
     public void SetupForCurrentPhase()
