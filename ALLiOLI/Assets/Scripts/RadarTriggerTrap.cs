@@ -10,13 +10,19 @@ public class RadarTriggerTrap : MonoBehaviour
 
     public SortedList<float, Character> GetCharactersInTrapRadar(Player exception) // Sorted by distance
     {
-        SortedList<float, Character> playersInTrapRadar = new SortedList<float, Character>();
+        SortedList<float, Character> charactersWithDiestanceInRadar = new SortedList<float, Character>();
 
+        HashSet<Character> toRemove = new HashSet<Character>();
         foreach (Character character in charactersInRadar)
-            if (!character.isDead && character.Owner != exception)
-                playersInTrapRadar.Add(GetRadarDistanceTo(character), character);
+            if (!character)
+                toRemove.Add(character);
+            else if (!character.isDead && character.Owner != exception)
+                charactersWithDiestanceInRadar.Add(GetRadarDistanceTo(character), character);
 
-        return playersInTrapRadar;
+        foreach (Character character in toRemove)
+            charactersInRadar.Remove(character);
+        
+        return charactersWithDiestanceInRadar;
     }
 
     public float GetRadarDistanceTo(Character character)
