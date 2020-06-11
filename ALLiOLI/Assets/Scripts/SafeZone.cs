@@ -31,7 +31,7 @@ public class SafeZone : MonoBehaviour
         Character character = other.GetComponentInParent<Character>();
         if (!character || character.isDead || !character.Owner.Client.isLocalClient) return;
         Debug.Log($"Killed '{character.name}', was caught trying to get out of the map!'.", gameObject);
-        character.Kill(Vector3.zero, character.transform.position);
+        character.Kill(/*Vector3.zero, character.transform.position*/);
        // Destroy(character.gameObject,3);
         //NetworkServer.UnSpawn(character.gameObject);
     }

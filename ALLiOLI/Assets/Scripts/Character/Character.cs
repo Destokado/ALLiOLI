@@ -62,7 +62,16 @@ public class Character : NetworkBehaviour
     [Header("Ragdoll")] [SerializeField] private Collider mainCollider;
     [SerializeField] private Transform cameraRagdollLookAtTarget;
 
-    [field: SyncVar] public bool isDead { get; private set; }
+    [field: SyncVar (hook = nameof(NewDeadState))] public bool isDead { get; private set; }
+    private void NewDeadState(bool oldIsDead, bool newIsDead)
+    {
+        if (oldIsDead == true && newIsDead == false) // From dead to alive
+            Debug.LogError($"Trying to revive {this.gameObject.name}.");
+        else if (oldIsDead == false && newIsDead == true) // From alive to dead
+            ActivateRagdoll();
+        else // IDK....
+            Debug.LogError($"Unexpected behaviour of the dead state of the {this.gameObject.name}");
+    }
 
     public CharacterMovementController movementController { get; private set; }
 
@@ -81,16 +90,16 @@ public class Character : NetworkBehaviour
 
     public void Suicide()
     {
-        Kill(Vector3.up + transform.forward * 2, transform.position + Vector3.up);
+        Kill(/*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);
     }
 
-    public void Kill(Vector3 impactDirection, Vector3 impactPoint)
+    public void Kill(/*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        CmdDie(impactDirection, impactPoint);
+        CmdDie(/*impactDirection, impactPoint*/);
     }
 
     [Command] // From client to server
-    private void CmdDie(Vector3 impactDirection, Vector3 impactPoint)
+    private void CmdDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
     {
         hasFlag = false;
 
@@ -99,21 +108,20 @@ public class Character : NetworkBehaviour
 
         isDead = true;
 
-        RpcDie(impactDirection, impactPoint);
+        RpcDie(/*impactDirection, impactPoint*/);
     }
 
     [ClientRpc] // Called on server, executed on all clients
-    private void RpcDie(Vector3 impactDirection, Vector3 impactPoint)
+    private void RpcDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
     {
         StartCoroutine(DieCoroutine());
 
         IEnumerator DieCoroutine()
         {
-            ActivateRagdoll();
-            // TODO: Apply impact
+            /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
 
             yield return new WaitForSeconds(1.5f);
-
+            
             if (hasAuthority)
                 Owner.CmdSpawnNewCharacter();
         }

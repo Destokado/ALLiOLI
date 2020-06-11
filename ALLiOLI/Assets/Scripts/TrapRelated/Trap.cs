@@ -39,15 +39,13 @@ public abstract class Trap : NetworkBehaviour
             if (!isActive) Reload();
         }
     }
-
-    [MenuItem("Reload")]
+    
     [Server]
     protected virtual void Reload()
     {
         Debug.Log($"The trap '{gameObject.name}' is being deactivated. Reloading.", this.gameObject);
     }
-
-    [MenuItem("Activate")]
+    
     [Server]
     public virtual void Activate()
     {
