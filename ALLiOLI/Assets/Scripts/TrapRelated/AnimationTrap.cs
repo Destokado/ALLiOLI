@@ -1,14 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkAnimator))]
 public class AnimationTrap : Trap
 {
-    [SerializeField] private Animation trapAnimation;
+    private NetworkAnimator trapAnimator;
+
+    private void Awake()
+    {
+        trapAnimator = gameObject.GetComponentRequired<NetworkAnimator>();
+    }
 
     public override void Activate()
     {
         base.Activate();
-        trapAnimation.Play();
+        trapAnimator.animator.SetTrigger("Activated");
     }
 }
