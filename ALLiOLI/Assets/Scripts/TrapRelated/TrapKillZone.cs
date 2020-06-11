@@ -6,13 +6,13 @@ using UnityEngine;
 public class TrapKillZone : MonoBehaviour
 {
     [SerializeField] public Trap trap;
-
-    // Should only be called on the server
+    
     private void OnCollisionEnter(Collision other)
     {
         //Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{(trap? trap.gameObject.name : "NULL")}' with the object '{other.gameObject.name}.'", gameObject);
         
         Character character = other.collider.GetComponentInParent<Character>();
+        
         bool shouldKill = character && !character.isDead && character.Owner.Client.isLocalClient && trap && trap.isActive;
 
         if (!shouldKill)
