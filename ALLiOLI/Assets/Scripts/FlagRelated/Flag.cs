@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEditor.UIElements;
@@ -12,42 +13,36 @@ public class Flag : NetworkBehaviour
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
-
-
+    
     public Player Owner //Player that can interact with the flag
     {
         get => _owner;
         private set
         {
             _owner = value;
-            value.Flag = this;
-            UpdateColor();
+            _owner.Flag = this;
+            SetOwnerColor();
         }
     }
-
     private Player _owner;
 
     [field: SyncVar(hook = nameof(SetNewPlayerOwner))]
     public uint OwnerNetId { get; set; }
-
     private void SetNewPlayerOwner(uint oldOwnerNetId, uint newOwnerNetId)
     {
         Owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
     }
 
-  
-    [SyncVar(hook = nameof(NewIsActiveInGame))] 
-    private bool _isActiveInGame = true;
     [Command]
     public void CmdSetFlagActiveState(bool newVal)
     {
         _isActiveInGame = newVal;
     }
+    [SyncVar(hook = nameof(NewIsActiveInGame))] 
+    private bool _isActiveInGame = true;
     private void NewIsActiveInGame(bool oldVal, bool newVal)
     {
-        Debug.Log("NEW IS ACTIVE IN GAME SET  TO "+newVal+ " previous was "+ oldVal);
         this.gameObject.SetActive(newVal);
-        if (newVal) transform.position = Owner.Character.transform.position;
     }
 
     List<Character> charactersInTrigger = new List<Character>();
@@ -73,19 +68,20 @@ public class Flag : NetworkBehaviour
         Owner.Character.CmdSetHasFlag(true); 
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
-        Debug.Log("The player " + Owner.name + " has the " + Owner.Color + " flag");
+    }
+    
+    public void SetDetachPosition()
+    {
+        transform.position = Owner.Character.transform.position;
     }
 
     public void Reset()
     {
-        Debug.Break();
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-
     }
 
-    public void UpdateColor()
+    public void SetOwnerColor()
     {
         if (block == null)
             block = new MaterialPropertyBlock();
@@ -96,4 +92,5 @@ public class Flag : NetworkBehaviour
             mr.SetPropertyBlock(block);
         }
     }
+    
 }

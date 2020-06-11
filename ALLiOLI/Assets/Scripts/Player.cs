@@ -56,7 +56,7 @@ public class Player : NetworkBehaviour
         if (Character != null)
             Character.UpdateColor();
         if (Flag != null)
-            Flag.UpdateColor();
+            Flag.SetOwnerColor();
     }
 
     /// <summary>

@@ -23,7 +23,8 @@ public class Character : NetworkBehaviour
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
         flagGameObject.SetActive(newVal); //The flag object carried by the character
-        Owner.Flag.CmdSetFlagActiveState(!newVal);
+        if (Owner != null && Owner.Flag != null)
+            Owner.Flag.CmdSetFlagActiveState(!newVal);
     }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
@@ -125,9 +126,13 @@ public class Character : NetworkBehaviour
     private void RpcDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
         /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
-        
+
         if (hasAuthority)
+        {
+            if (HasFlag)
+                Owner.Flag.SetDetachPosition();
             StartCoroutine(DieCoroutine());
+        }
 
         IEnumerator DieCoroutine()
         {
