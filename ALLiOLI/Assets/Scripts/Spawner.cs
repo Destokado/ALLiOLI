@@ -46,7 +46,7 @@ public class Spawner : NetworkBehaviour
             return;
         
         Character character = other.GetComponent<Character>();
-        if (character && character.hasFlag)
+        if (character && character.HasFlag)
             MatchManager.instance.FlagAtSpawn(character.Owner);
 
         else

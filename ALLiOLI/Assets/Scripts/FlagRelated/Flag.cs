@@ -34,13 +34,17 @@ public class Flag : NetworkBehaviour
         Owner = (NetworkManager.singleton as AllIOliNetworkManager)?.GetPlayer(newOwnerNetId);
     }
 
-    private bool _carrier;
-
-    [SyncVar(hook = nameof(NewIsActiveInGame))] [NonSerialized]
-    public bool isActiveInGame = true;
-
+  
+    [SyncVar(hook = nameof(NewIsActiveInGame))] 
+    private bool _isActiveInGame = true;
+    [Command]
+    public void CmdSetFlagActiveState(bool newVal)
+    {
+        _isActiveInGame = newVal;
+    }
     private void NewIsActiveInGame(bool oldVal, bool newVal)
     {
+        Debug.Log("NEW IS ACTIVE IN GAME SET  TO "+newVal+ " previous was "+ oldVal);
         this.gameObject.SetActive(newVal);
         if (newVal) transform.position = Owner.Character.transform.position;
     }
@@ -48,14 +52,14 @@ public class Flag : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead || character != Owner.Character || character.hasFlag)
+        if (!character || character.isDead || character != Owner.Character || character.HasFlag)
             return;
         Attach();
     }
 
     private void Attach()
     {
-        Owner.Character.hasFlag = true;
+        Owner.Character.CmdSetHasFlag(true); 
         Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
             transform.position, null);
         Debug.Log("The player " + Owner.name + " has the " + Owner.Color + " flag");
@@ -65,7 +69,7 @@ public class Flag : NetworkBehaviour
     {
         if (!hasAuthority) return;
         
-        Owner.Character.hasFlag = false;
+        Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
     }
 

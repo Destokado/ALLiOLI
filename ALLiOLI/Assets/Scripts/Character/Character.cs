@@ -11,12 +11,19 @@ public class Character : NetworkBehaviour
     [SerializeField] public MeshRenderer flagMeshToColor;
 
     [SyncVar(hook = nameof(NewHasFlagValue))]
-    public bool hasFlag;
-
+    private bool _hasFlag;
+    public bool HasFlag => _hasFlag;
+    
+    [Command]
+    public void CmdSetHasFlag(bool value)
+    {
+        _hasFlag = value;
+    }
+    
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
         flagGameObject.SetActive(newVal); //The flag object carried by the character
-        Owner.Flag.isActiveInGame = !newVal;
+        Owner.Flag.CmdSetFlagActiveState(!newVal);
     }
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
@@ -62,7 +69,9 @@ public class Character : NetworkBehaviour
     [Header("Ragdoll")] [SerializeField] private Collider mainCollider;
     [SerializeField] private Transform cameraRagdollLookAtTarget;
 
-    [field: SyncVar (hook = nameof(NewDeadState))] public bool isDead { get; private set; }
+    [field: SyncVar(hook = nameof(NewDeadState))]
+    public bool isDead { get; private set; }
+
     private void NewDeadState(bool oldIsDead, bool newIsDead)
     {
         if (oldIsDead == true && newIsDead == false) // From dead to alive
@@ -90,40 +99,39 @@ public class Character : NetworkBehaviour
 
     public void Suicide()
     {
-        Kill(/*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);
+        Kill( /*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);
     }
 
-    public void Kill(/*Vector3 impactDirection, Vector3 impactPoint*/)
+    public void Kill( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        CmdDie(/*impactDirection, impactPoint*/);
+        CmdDie( /*impactDirection, impactPoint*/);
     }
 
     [Command] // From client to server
-    private void CmdDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
+    private void CmdDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        hasFlag = false;
-
+        CmdSetHasFlag(false);
+        
         if (isDead)
             return;
 
         isDead = true;
 
-        RpcDie(/*impactDirection, impactPoint*/);
+        RpcDie( /*impactDirection, impactPoint*/);
     }
 
     [ClientRpc] // Called on server, executed on all clients
-    private void RpcDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
+    private void RpcDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        StartCoroutine(DieCoroutine());
+        if (hasAuthority)
+            StartCoroutine(DieCoroutine());
 
         IEnumerator DieCoroutine()
         {
             /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
 
             yield return new WaitForSeconds(1.5f);
-            
-            if (hasAuthority)
-                Owner.CmdSpawnNewCharacter();
+            Owner.CmdSpawnNewCharacter();
         }
     }
 
