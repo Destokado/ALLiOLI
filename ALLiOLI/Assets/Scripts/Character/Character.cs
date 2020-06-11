@@ -98,6 +98,8 @@ public class Character : NetworkBehaviour
         CmdDie(/*impactDirection, impactPoint*/);
     }
 
+    
+    
     [Command] // From client to server
     private void CmdDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
     {
@@ -114,16 +116,15 @@ public class Character : NetworkBehaviour
     [ClientRpc] // Called on server, executed on all clients
     private void RpcDie(/*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        StartCoroutine(DieCoroutine());
+        /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
+        
+        if (hasAuthority)
+            StartCoroutine(DieCoroutine());
 
         IEnumerator DieCoroutine()
         {
-            /*MAYBE TODO: Apply impact with 'impactDirection' at 'impactPoint'*/
-
             yield return new WaitForSeconds(1.5f);
-            
-            if (hasAuthority)
-                Owner.CmdSpawnNewCharacter();
+            Owner.CmdSpawnNewCharacter();
         }
     }
 
