@@ -1,14 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BombTrap : Trap
 {
     private SimpleAnimationsManager animManager;
-    /*[SerializeField] private float force = 100f;
-    [SerializeField] private float radius = 5f;
-    [SerializeField] private float upwwardsModifier = .1f;
-    [SerializeField] private ForceMode forceMode = ForceMode.Impulse;*/
+
+    [Header("Explosion configuration")] 
+    [SerializeField] private Transform bombStartPosition;
+    [SerializeField] private float force = 200;
+    [SerializeField] private float bombEffectRadius = 3.14f;
+    [SerializeField] private float upwardsModifier = .1f;
+    //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
+    [SerializeField] private LayerMask ignoredBlockingLayers;
+    
     private void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
@@ -17,34 +23,60 @@ public class BombTrap : Trap
     protected override void Reload()
     {
         base.Reload();
-        animManager.GetAnimation(0).mirror = true;
-        animManager.Play(0);
+        
+        //TODO: Stop VFX
     }
 
     public override void Activate()
     {
         base.Activate();
-        //TODO: DIsplay VFX
-       /* 
-        foreach (Collider collider  in Physics.OverlapSphere(transform.position,radius))
+        
+        RpcExplosionOnClients();
+
+        //TODO: Display VFX
+
+    }
+
+    private void RpcExplosionOnClients()
+    {
+        foreach (var collider in GetCurrentlyEffectedColliders())
         {
-            if (collider.GetComponent<Rigidbody>() != null)
+            Character character = collider.GetComponentInParent<Character>();
+            if (character && character.hasAuthority)
+                character.Kill();
+            
+            collider.attachedRigidbody.AddExplosionForce(force, transform.position, bombEffectRadius, upwardsModifier,
+                ForceMode.Impulse);
+            Debug.DrawRay(collider.transform.position, collider.transform.position - bombStartPosition.position,
+                new Color(1f, 0.5f, 0f), 3f);
+        }
+    }
+
+
+    private List<Collider> GetCurrentlyEffectedColliders()
+    {
+        List<Collider> colliders = new List<Collider>();
+
+        foreach (Collider collider in Physics.OverlapSphere(bombStartPosition.position, bombEffectRadius))
+        {
+            if (collider.attachedRigidbody != null)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, collider.transform.position - transform.position, out hit,
-                    radius))
+                
+                
+                if (Physics.Linecast(bombStartPosition.position, collider.transform.position, ignoredBlockingLayers, QueryTriggerInteraction.Ignore))
                 {
-                    if (hit.collider == collider)
-                    {
-                        collider.GetComponent<Rigidbody>().AddExplosionForce(force,transform.position,radius,upwwardsModifier,forceMode);
-                        //KILL CHARACTER
-                    }
+                    // Noting intersects
+                    colliders.Add(collider);
                 }
             }
-            
-        }*/
-        
-        animManager.GetAnimation(0).mirror = false;
-        animManager.Play(0);
+        }
+
+        return colliders;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(bombStartPosition.position, bombEffectRadius);
     }
 }
