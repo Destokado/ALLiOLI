@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 // IMPORTANT NOTE: The flag class only stores information and makes changes to his own information.
