@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class SpikesTrap : Trap
+public class SimpleAnimationTrap : Trap
 {
     // Start is called before the first frame update
     private SimpleAnimationsManager animManager;
