@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{f4c3e075-000b-4967-ad0d-a030911924c3}">
 		<property name="name">
-			<value>CorchoActive</value>
+			<value>CorchoActivate</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{53607ad2-ad5d-4470-8c9b-66aef5a71bdc}</destination>
+			<destination>{cd01634d-528f-42a9-a686-9e00cc0921c4}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{416c9421-fc61-43b8-9079-582f14cf5f5f}</destination>
@@ -90,8 +90,11 @@
 	<object class="MixerBusPanner" id="{3340402e-7bde-4390-bb33-765005a442ef}" />
 	<object class="SingleSound" id="{6955a4ac-6e55-45d3-9e69-cd2ab966913e}">
 		<property name="length">
-			<value>0.80000000000000004</value>
+			<value>0.67000000000000004</value>
 		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{ee7cb2be-9e72-4d1e-8d47-944dffc4c189}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{902dbbab-1edc-46d4-b0ba-f85eb70b700b}</destination>
 		</relationship>
@@ -118,6 +121,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{ef0b431d-cf01-47a0-b489-ab9f8f7f7a6a}" />
 	<object class="MixerBusFader" id="{d3db9263-62ec-44f3-aac1-b197c5272cd9}" />
+	<object class="FadeCurve" id="{ee7cb2be-9e72-4d1e-8d47-944dffc4c189}">
+		<relationship name="startPoint">
+			<destination>{52f5b619-4033-4034-8927-583c2d1b837c}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{7dfdf5ff-927e-410e-8a9c-62d28ca61657}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{49c6703f-8ae3-4ea8-9706-0cff46647ea3}">
 		<relationship name="effects">
 			<destination>{e90a93db-fa9b-4a23-8f50-b6a03bf133b0}</destination>
@@ -126,5 +137,24 @@
 	<object class="MixerBusPanner" id="{1a7ddf0e-ba90-415c-a948-0951c5e6801c}" />
 	<object class="MixerBusFader" id="{6da46891-a499-490e-a4c4-6146b75ffff3}" />
 	<object class="SpatialiserEffect" id="{2c12f4e4-1a15-411e-ae99-365dd6d4be55}" />
+	<object class="AutomationPoint" id="{52f5b619-4033-4034-8927-583c2d1b837c}">
+		<property name="position">
+			<value>0.029999999999999999</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.25471893</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{7dfdf5ff-927e-410e-8a9c-62d28ca61657}">
+		<property name="position">
+			<value>0.67000000000000004</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{e90a93db-fa9b-4a23-8f50-b6a03bf133b0}" />
 </objects>
