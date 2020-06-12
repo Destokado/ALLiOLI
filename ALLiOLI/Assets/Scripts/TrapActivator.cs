@@ -10,7 +10,7 @@ public class TrapActivator : NetworkBehaviour
     [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]
     [SerializeField] private GameObject[] objectsToSynchronize;
     
-    [SyncVar (hook = nameof(NewActivationState))] private bool activated;
+    [SyncVar (hook = nameof(NewActivationState))] private bool activated = true;
     private void NewActivationState(bool oldValue, bool newValue)
     {
 //        Debug.Log("NewActivationState");
@@ -21,11 +21,11 @@ public class TrapActivator : NetworkBehaviour
         }
     }
 
-    private void Start()
+    /*private void Start()
     {
         if (isServer)
             activated = true;
-    }
+    }*/
 
     private float remainingCoolDown = 0f;
     [SerializeField] private float coolDownTime = 5f;
