@@ -155,7 +155,7 @@ public class Character : NetworkBehaviour
 
         mainCollider.enabled = !true;
 
-        if (Owner.HumanLocalPlayer)
+        if (Owner != null && Owner.HumanLocalPlayer)
             Owner.HumanLocalPlayer.Camera.ForceSetLookAt(cameraRagdollLookAtTarget);
     }
 }
