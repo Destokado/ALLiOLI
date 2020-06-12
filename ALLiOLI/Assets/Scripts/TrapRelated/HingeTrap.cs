@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SlapTrap : Trap
+public class HingeTrap : Trap
 {
     // Start is called before the first frame update
     [SerializeField] private HingeJoint joint;
