@@ -140,9 +140,10 @@ public class Player : NetworkBehaviour
     [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
 
+    public static int startTrapActivators = 3;
+    
     [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))]
-    public int trapActivators = 0;
-
+    public int trapActivators = -1;
     private void UpdatedTrapActivationsNumber(int oldVal, int newVal)
     {
         if (HumanLocalPlayer)
@@ -182,6 +183,7 @@ public class Player : NetworkBehaviour
 
         if (hasAuthority)
         {
+            trapActivators = startTrapActivators;
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
             CmdSpawnNewFlag();

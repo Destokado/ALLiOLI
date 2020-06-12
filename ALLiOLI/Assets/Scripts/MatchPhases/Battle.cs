@@ -42,7 +42,7 @@ public class Battle : MatchPhase
         {
             foreach (Player player in client.PlayersManager.players)
             {
-                player.trapActivators = 0;
+                player.trapActivators = Player.startTrapActivators;
             }
         }
     }
