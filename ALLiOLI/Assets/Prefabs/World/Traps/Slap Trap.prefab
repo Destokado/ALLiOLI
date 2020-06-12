@@ -339,6 +339,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Matamoscas - Killing Object
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 82da61b819e3e7d4f89b01e2ef124be6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82da61b819e3e7d4f89b01e2ef124be6, type: 3}
 --- !u!1 &230621545522072099 stripped

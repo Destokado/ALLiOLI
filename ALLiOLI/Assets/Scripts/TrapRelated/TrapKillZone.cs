@@ -9,7 +9,7 @@ public class TrapKillZone : MonoBehaviour
     
     private void OnCollisionEnter(Collision other)
     {
-        //Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{(trap? trap.gameObject.name : "NULL")}' with the object '{other.gameObject.name}.'", gameObject);
+        // Debug.Log($"OnCollisionEnter of the KillZone named '{transform.gameObject.name}' of the trap '{(trap? trap.gameObject.name : "NULL")}' with the object '{other.gameObject.name}.'", gameObject);
         
         Character character = other.collider.GetComponentInParent<Character>();
         
@@ -17,11 +17,11 @@ public class TrapKillZone : MonoBehaviour
 
         if (!shouldKill)
         {
-            //Debug.Log($"Avoided kill. was the character found? {character != null}. Was the character alive { (character? (!character.isDead).ToString() : "-") }? Did the trap exist? {trap != null}. Was the trap active? { (trap? trap.isActive.ToString() : "-") }");
+            // Debug.Log($"Avoided kill. was the character found? {character != null}. Was the character alive { (character? (!character.isDead).ToString() : "-") }? Did the trap exist? {trap != null}. Was the trap active? { (trap? trap.isActive.ToString() : "-") }");
             return;
         }
         
         character.Kill(/*other.impulse, other.GetContact(0).point*/);
-        //Debug.Log($"Killed '{character.name}' by the KillZone named '{transform.gameObject.name}' in the trap '{trap.gameObject.name}'.", gameObject);
+        // Debug.Log($"Killed '{character.name}' by the KillZone named '{transform.gameObject.name}' in the trap '{trap.gameObject.name}'.", gameObject);
     }
 }

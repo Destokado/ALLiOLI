@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1425615728735481725}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1196941867597806741}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: KeyPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 4682928978728365888}
   - component: {fileID: 824537327092160640}
   - component: {fileID: 7263579503131537605}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,7 +564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4470873371129345934}
   - component: {fileID: 5606674644972386958}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Killing Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 542669257520755184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Origin_Boca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,7 +638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6247599105469716315}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7432017622730128767}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Destination_Boca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 800880994220928380}
   - component: {fileID: 142201673404776428}
   - component: {fileID: 2794551139723291534}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Radar in fire shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1133,7 +1133,7 @@ PrefabInstance:
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.7
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -1143,7 +1143,7 @@ PrefabInstance:
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.86
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -1367,6 +1367,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6c482ed1f13c2db4a8900a59cdf9ac42,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -5716681864270162303, guid: 6c482ed1f13c2db4a8900a59cdf9ac42, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c482ed1f13c2db4a8900a59cdf9ac42, type: 3}
@@ -1383,6 +1388,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1968178801185440708}
     m_Modifications:
+    - target: {fileID: -6472672897284987981, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1498,6 +1508,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: drake_mandibula
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5536796682806353988, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -1542,6 +1557,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7060268501910946018, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8aec002f31c8fd640a5bfe8ed52fbcb0, type: 3}

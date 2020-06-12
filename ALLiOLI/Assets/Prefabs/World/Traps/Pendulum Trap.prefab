@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7837163204253706721}
   - component: {fileID: 8015484362026322773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SoundEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,10 +685,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3129366461157353606, guid: a6593cb7e6d3b524385cd7e7a49be4cb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: a6593cb7e6d3b524385cd7e7a49be4cb,
         type: 3}
       propertyPath: m_Name
       value: wreckingball Bien
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a6593cb7e6d3b524385cd7e7a49be4cb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4593363088872002670, guid: a6593cb7e6d3b524385cd7e7a49be4cb,
         type: 3}
