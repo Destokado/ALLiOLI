@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Mirror;
+using UnityEditor;
 using UnityEngine;
 
 [SelectionBase]
@@ -10,22 +11,22 @@ public class Character : NetworkBehaviour
     [SerializeField] public GameObject flagGameObject;
     [SerializeField] public MeshRenderer flagMeshToColor;
 
-    [SyncVar(hook = nameof(NewHasFlagValue))]
-    private bool _hasFlag;
-    public bool HasFlag => _hasFlag;
+
     
     [Command]
     public void CmdSetHasFlag(bool value)
     {
         _hasFlag = value;
     }
-    
+    [SyncVar(hook = nameof(NewHasFlagValue))]
+    private bool _hasFlag;
     private void NewHasFlagValue(bool oldVal, bool newVal)
     {
         flagGameObject.SetActive(newVal); //The flag object carried by the character
-        if (Owner != null && Owner.Flag != null)
+        if (hasAuthority && Owner != null && Owner.Flag != null)
             Owner.Flag.CmdSetFlagActiveState(!newVal);
     }
+    public bool HasFlag => _hasFlag;
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
 
@@ -97,7 +98,7 @@ public class Character : NetworkBehaviour
     {
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
-
+    
     public void Suicide()
     {
         Kill( /*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);
@@ -106,14 +107,11 @@ public class Character : NetworkBehaviour
     public void Kill( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
         CmdDie( /*impactDirection, impactPoint*/);
-        CmdSetHasFlag(false);
     }
 
     [Command] // From client to server
     private void CmdDie( /*Vector3 impactDirection, Vector3 impactPoint*/)
     {
-        Debug.Log("CmdDie called");
-
         if (isDead)
             return;
 
@@ -130,7 +128,10 @@ public class Character : NetworkBehaviour
         if (hasAuthority)
         {
             if (HasFlag)
+            {
+                CmdSetHasFlag(false);
                 Owner.Flag.SetDetachPosition();
+            }
             StartCoroutine(DieCoroutine());
         }
 
@@ -140,8 +141,7 @@ public class Character : NetworkBehaviour
             Owner.CmdSpawnNewCharacter();
         }
     }
-
-    [ContextMenu("Enable Ragdoll")]
+    
     private void ActivateRagdoll()
     {
         movementController.animator.enabled = !true; // Automatically enables the ragdoll rigidbodies/colliders

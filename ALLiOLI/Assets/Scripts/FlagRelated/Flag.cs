@@ -72,11 +72,14 @@ public class Flag : NetworkBehaviour
     
     public void SetDetachPosition()
     {
+        Debug.Log($"Setting detach position {Owner.Character.transform.position} for ");
+        Debug.DrawRay(Owner.Character.transform.position, Vector3.up, Owner.Color, 5f);
         transform.position = Owner.Character.transform.position;
     }
 
     public void Reset()
     {
+        Debug.Log($"Reseting flag of {Owner.gameObject.name}");
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
     }
