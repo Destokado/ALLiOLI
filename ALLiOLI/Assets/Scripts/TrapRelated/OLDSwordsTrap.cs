@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
-public class OLDSwordsTrap : SlapTrap
+public class OLDSwordsTrap : HingeTrap
 {
     [SerializeField] private HingeJoint secondJoint;
     [SerializeField] private float secondSstartAngle;

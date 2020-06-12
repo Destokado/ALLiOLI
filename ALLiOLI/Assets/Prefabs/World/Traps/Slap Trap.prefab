@@ -68,7 +68,7 @@ MonoBehaviour:
       type: {class: TransformAnimation, ns: UnityEngine, asm: UnityEssentials}
       data:
         mirror: 0
-        duration: 0.3
+        duration: 0.7
         curve:
           serializedVersion: 2
           m_Curve:
@@ -82,31 +82,31 @@ MonoBehaviour:
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 0.90618384
-            value: 0.9912008
-            inSlope: 0.12084686
-            outSlope: 0.12084686
+            time: 0.3900247
+            value: 0.97466236
+            inSlope: -1.5696881
+            outSlope: -1.5696881
             tangentMode: 0
             weightedMode: 0
             inWeight: 0.33333334
-            outWeight: 0.33333334
+            outWeight: 0.10728089
           - serializedVersion: 3
-            time: 0.95721817
-            value: 0.9803044
-            inSlope: -0.2759149
-            outSlope: -0.2759149
+            time: 0.80565965
+            value: 0.98123926
+            inSlope: -0.5705715
+            outSlope: -0.5705715
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
+            inWeight: 0.16815007
+            outWeight: 0.45758733
           - serializedVersion: 3
-            time: 1
+            time: 1.0015259
             value: 1
-            inSlope: 0.045053933
-            outSlope: 0.045053933
+            inSlope: 0.5795681
+            outSlope: 0.5795681
             tangentMode: 0
             weightedMode: 0
-            inWeight: 1
+            inWeight: 0.5357165
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2

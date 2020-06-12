@@ -1,3 +1,3 @@
-﻿public class KnightTrap : SlapTrap
+﻿public class KnightTrap : HingeTrap
 {
 }
