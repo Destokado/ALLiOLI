@@ -148,7 +148,6 @@ MonoBehaviour:
   cameraTarget: {fileID: 8134060931265600200}
   flagGameObject: {fileID: 4308140877917608473}
   flagMeshToColor: {fileID: 6113729888517033782}
-  hasFlag: 0
   meshRenderersToColor:
   - {fileID: 6371019288703489938}
   - {fileID: 7374676827921981138}
@@ -525,16 +524,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1411894424297864597, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2105262522530045931, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 3340262825248851560, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
         type: 3}
       propertyPath: m_Name
@@ -544,16 +533,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3340262825248851560, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3402721407702599362, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3505824281560058086, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
         type: 3}
@@ -614,16 +593,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7933209014010800359, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8545482829419815593, guid: ee82e7269e3ad884ebfa67ea22a7b89e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8263740954772882033, guid: ee82e7269e3ad884ebfa67ea22a7b89e, type: 3}

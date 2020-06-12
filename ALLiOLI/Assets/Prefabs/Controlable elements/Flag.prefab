@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7147590859573472947}
   - component: {fileID: 4291013641841651869}
   - component: {fileID: 4704921215939629895}
-  m_Layer: 2
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3764285083418102781}
   - component: {fileID: 7149164509518349914}
   - component: {fileID: 6861295334260816670}
-  m_Layer: 2
+  m_Layer: 15
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,8 @@ GameObject:
   - component: {fileID: 8263740954772882033}
   - component: {fileID: 4181884851136946174}
   - component: {fileID: 7216443189752249670}
-  m_Layer: 2
+  - component: {fileID: 642051100089439860}
+  m_Layer: 15
   m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,6 +290,21 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &642051100089439860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3340262825248851560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb40ef92fd9f504ca2d4e5abfa34228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  searchChildren: 1
 --- !u!1 &3402721407702599362
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3005609100258935123}
-  m_Layer: 2
+  m_Layer: 15
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +350,7 @@ GameObject:
   - component: {fileID: 3917555883140452536}
   - component: {fileID: 9168666425665693657}
   - component: {fileID: 899644944533106344}
-  m_Layer: 2
+  m_Layer: 15
   m_Name: New Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +443,7 @@ GameObject:
   - component: {fileID: 7938089190395813167}
   - component: {fileID: 6885965995815136548}
   - component: {fileID: 6585232349439401928}
-  m_Layer: 2
+  m_Layer: 15
   m_Name: New Text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
