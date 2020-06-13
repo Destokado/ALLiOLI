@@ -4,8 +4,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class DragonTrap : Trap
 {
-    [FormerlySerializedAs("animManager")] [SerializeField] private SimpleAnimationsManager fireAnim;
-   [FormerlySerializedAs("secondanimManager")] [SerializeField] private SimpleAnimationsManager jawAnim;
+    [SerializeField] private SimpleAnimationsManager animManager;
 
     private void Awake()
     {
@@ -17,18 +16,19 @@ public class DragonTrap : Trap
     protected override void Reload()
     {
         base.Reload();
-        fireAnim.GetAnimation(0).mirror = true;
-        jawAnim.GetAnimation(0).mirror = true;
-        fireAnim.Play(0);
-        jawAnim.Play(0);
+        animManager.GetAnimation(0).mirror = true;
+        animManager.GetAnimation(1).mirror = true;
+        animManager.Play(0);
+        animManager.Play(1);
     }
 
     public override void Activate()
     {
         base.Activate();
-        fireAnim.GetAnimation(0).mirror = false;
-        jawAnim.GetAnimation(0).mirror = false;
-        fireAnim.Play(0);
-        jawAnim.Play(0);
+        animManager.GetAnimation(1).mirror = false;
+        animManager.GetAnimation(0).mirror = false;
+        animManager.Play(1);
+        animManager.Play(0);
+        
     }
 }
