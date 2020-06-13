@@ -7,6 +7,7 @@ using UnityEngine;
 // IMPORTANT NOTE: The flag class only stores information and makes changes to his own information.
 // It is not meant to perform any operation or change in any other object
 
+[SelectionBase]
 public class Flag : NetworkBehaviour
 {
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
@@ -81,6 +82,7 @@ public class Flag : NetworkBehaviour
         Debug.Log($"Reseting flag of {Owner.gameObject.name}");
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     public void SetOwnerColor()
@@ -93,6 +95,18 @@ public class Flag : NetworkBehaviour
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);
         }
+    }
+
+    private void Update()
+    {
+        if (!hasAuthority)
+            return;
+        
+        // Check if should be reseted
+        if (transform.position.y > MapBoundries.DeactivationZoneHeight)
+            return;
+        Debug.Log($"The flag of the player {Owner.name} has fallen into the void, resetting it");
+        Reset();
     }
     
 }

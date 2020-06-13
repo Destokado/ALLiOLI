@@ -1,12 +1,11 @@
-﻿using System;
-using FMOD;
-using Mirror;
-using UnityEngine;
-using Debug = UnityEngine.Debug;
+﻿using UnityEngine;
 
-public class SafeZone : MonoBehaviour
+public class MapBoundries : MonoBehaviour
 {
-    private void OnTriggerExit(Collider other)
+    public static float KillZoneHeight => -25;
+    public static float DeactivationZoneHeight => -100;
+    
+    /*private void OnTriggerExit(Collider other)
     {
         Flag flag = other.GetComponent<Flag>();
         if (flag && flag.hasAuthority) //If the flag falls off the map, reset it
@@ -19,8 +18,17 @@ public class SafeZone : MonoBehaviour
         Character character = other.GetComponentInParent<Character>();
         if (!character || character.isDead || !character.Owner.Client.isLocalClient) 
             return;
-        character.Kill( /*Vector3.zero, character.transform.position*/);
+        character.Kill( Vector3.zero, character.transform.position);
         Debug.Log($"Killed '{character.name}', was caught trying to get out of the map!'.", gameObject);
+    }*/
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawCube(Vector3.up*DeactivationZoneHeight, new Vector3(100, 0, 100));
+        
+        Gizmos.color = Color.gray;
+        Gizmos.DrawCube(Vector3.up*KillZoneHeight, new Vector3(100, 0, 100));
     }
     
 }
