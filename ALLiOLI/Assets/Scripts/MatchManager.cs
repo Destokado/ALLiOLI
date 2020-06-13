@@ -197,9 +197,10 @@ public class MatchManager : NetworkBehaviour
     {
         if (thereIsWinner)
         {
-            EventInstance finishInstance =
+            // TODO: Fix, it makes the game crash
+            /*EventInstance finishInstance =
                 SoundManager.Instance.PlayEventLocal(SoundManager.SoundEventPaths.finishPath, Vector3.zero);
-            outcomeInstance.setVolume(50f);
+            outcomeInstance.setVolume(50f);*/
             return;
         }
 
