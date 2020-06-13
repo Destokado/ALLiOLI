@@ -38,6 +38,7 @@ public class Spawner : NetworkBehaviour
         GameObject character = Instantiate(prefab, spawnPoint, spawnCenter.rotation);
         character.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);
+
     }
 
     private void OnTriggerEnter(Collider other)

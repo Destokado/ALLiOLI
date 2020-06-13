@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{ad983d64-c3e1-4ec8-b8ce-02ed62fcc0d3}">
 		<property name="name">
-			<value>Button</value>
+			<value>BackButton</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{216a255e-b0a8-4ac2-ac9b-2519ab1ebc43}">
+		<property name="pitch">
+			<value>-8</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{a5553eaa-13b6-4f60-93d2-5198aa3e35f8}</destination>
 		</relationship>

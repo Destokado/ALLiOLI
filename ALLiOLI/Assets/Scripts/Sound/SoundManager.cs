@@ -76,6 +76,7 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
+
     private EventInstance GetEventFromPath(string path)
     {
         if (eventsList.ContainsKey(path)) return eventsList[path];
@@ -83,7 +84,7 @@ public class SoundManager : MonoBehaviour
         //  Debug.LogWarning($"The event with path {path} wasn't found in the {eventsList} dictionary");
         throw new KeyNotFoundException($"The event with path {path} wasn't found in the {eventsList} dictionary");
     }
-    
+
     public void PlayOneShotLocal(string path, Vector3 pos, SoundManagerParameter[] parameters)
     {
         EventInstance soundEvent = RuntimeManager.CreateInstance(path);
@@ -93,6 +94,8 @@ public class SoundManager : MonoBehaviour
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
+                    Debug.Log(
+                        $"Playing {path} in the position {pos} with the parameter {parameters[i].name} with value {parameters[i].value}");
                 }
 
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
@@ -126,7 +129,14 @@ public class SoundManager : MonoBehaviour
         {
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
             soundEvent.start();
-            eventsList.Add(path, soundEvent);
+            if (eventsList.ContainsKey(path))
+                Debug.LogWarning(
+                    $"Trying to add the event {path} that already exists in the dictionary. Operation Cancelled");
+
+            else
+            {
+                eventsList.Add(path, soundEvent);
+            }
         }
         else
         {
@@ -156,6 +166,21 @@ public class SoundManager : MonoBehaviour
         return soundEvent;
     }
 
+    public void StopEventOnGameObjectLocal(uint netId, string path)
+    {
+        var gameObject = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+        Debug.Log($"Stopping{path} in {gameObject}");
+
+        gameObject.GetComponentInChildren<SoundEmitterHandler>().Stop(path);
+    }
+
+    public void PlayEventOnGameObjectLocal(uint netId, string path)
+    {
+        var gameObject = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
+        Debug.Log($"Playing {path} in {gameObject}");
+        gameObject.GetComponentInChildren<SoundEmitterHandler>().Play(path);
+    }
+
     public void StopEventLocal(string path, bool fadeout)
     {
         EventInstance soundEvent = GetEventFromPath(path);
@@ -175,22 +200,16 @@ public class SoundManager : MonoBehaviour
     }
 
 
-  
-
     public void PauseEventLocal(string path)
     {
-
         EventInstance soundEvent = GetEventFromPath(path);
-            soundEvent.setPaused(true);
-        
-        
+        soundEvent.setPaused(true);
     }
 
     public void ResumeEventLocal(string path)
     {
         EventInstance soundEvent = GetEventFromPath(path);
         soundEvent.setPaused(false);
-
     }
 
     public void StopAllEventsLocal(bool fadeout)
@@ -217,7 +236,7 @@ public class SoundManager : MonoBehaviour
         }
         catch (KeyNotFoundException)
         {
-            Debug.Log(path+" evnet not found");
+            Debug.Log(path + " evnet not found");
             return false;
         }
     }
@@ -276,39 +295,62 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public static class SoundEventPaths
+    public static class EventPaths
     {
-        public static string jumpPath = "event:/Jump";
-        public static string runPath = "event:/Run";
-        public static string activateTrapPath;
-        public static string landPath = "event:/Land";
-        public static string deathPath;
-        public static string punchPath;
-        public static string wallHitPath;
-        public static string spawnPath;
-        public static string winPath;
-        public static string defeatPath;
-        public static string finishPath;
-        public static string buttonCooldownPath;
-        public static string pickUpPath = "event:/FlagPickup";
-        public static string flagAnnouncePath;
-        public static string playButtonPath = "event:/PlayButton";
-        public static string buttonHoverPath = "event:/ButtonHover";
-        public static string buttonPath = "event:/Button";
+        #region Character
+
+        public static string Jump = "event:/Character/Jump";
+        public static string Run = "event:/Character/Run";
+        public static string ActivateTrapPath;
+        public static string Land = "event:/Character/Land";
+        public static string Death = "event:/Character/Defeat";
+
+        public static string
+            WallHit =
+                "event:/Character/WallHit"; //TODO: Make the character detect collisions with walls when sent away by traps
+
+        public static string Spawn = "event:/Character/Spawn";
+        public static string Win = "event:/Character/Win2";
+        public static string Defeat = "event:/Character/Defeat";
+        public static string PickUp = "event:/Character/FlagPickup";
+
+        #endregion
+
+        #region Traps
+
+        public static string BirdShitActivate = "event:/Trap/BirdShitActivate";
+        public static string BirdShitHit = "event:/Trap/BirdShitHit";
+        public static string BombActivate = "event:/Trap/BombActivate";
+        public static string BombReset = "event:/Trap/BombReset";
+        public static string ChapaActivate = "event:/Trap/ChapaActivate";
+        public static string ChapaHit = "event:/Trap/ChapaHit";
+        public static string DragonActivate = "event:/Trap/DragonActivate";
+        public static string DragonReset = "event:/Trap/DragonReset";
+        public static string PendulumActivate = "event:/Trap/PendulumActivate";
+        public static string PendulumReset = "event:/Trap/PendulumReset";
+        public static string RollingActivate = "event:/Trap/RollingActivate";
+        public static string RollingHit = "event:/Trap/RollingHit";
+        public static string SlapActivate = "event:/Trap/SlapActivate";
+        public static string SlapHit = "event:/Trap/SlapHit";
+        public static string SlapReset = "event:/Trap/SlapReset";
+        public static string SpikesActivate = "event:/Trap/SpikesActivate";
+        public static string SpikesHit = "event:/Trap/SpikesHit";
+
+        #endregion
+
+        #region UI
+
+        public static string Button = "event:/UI/Button";
+        public static string PlayButton = "event:/UI/PlayButton";
+        public static string FlagAnnouncement = "event:/UI/FlagAnnounce";
+        public static string ButtonHover = "event:/UI/ButtonHover";
+        public static string BackButton = "event:/UI/BackButton";
+        public static string DeathAnnouncement = "event:/UI/DeathAnnouncement";
+        public static string Finish = "event:/UI/Finish";
+        public static string CountDown = "event:/UI/RaceCountdown";
+
+        #endregion
     }
 
     #endregion ExtraClasses
-
-    public void StopEventOnGameObjectLocal(uint netId, string path)
-    {
-         var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-                gameObject.GetComponent<SoundEmitterHandler>().Stop(path);
-    }
-
-    public void PlayEventOnGameObjectLocal(uint netId, string path)
-    {
-         var gameObject=  ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-               gameObject.GetComponent<SoundEmitterHandler>().Play(path);
-    }
-    
 }

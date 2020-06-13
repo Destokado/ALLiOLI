@@ -46,6 +46,8 @@ public class Character : NetworkBehaviour
             gameObject.name = "Character owned by " + value.gameObject.name;
             transform.SetParent(value.transform, true);
             UpdateColor();
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(OwnerNetId,SoundManager.EventPaths.Spawn);
+
         }
     }
 
@@ -132,12 +134,15 @@ public class Character : NetworkBehaviour
                 CmdSetHasFlag(false);
                 Owner.Flag.SetDetachPosition();
             }
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.EventPaths.Death);
             StartCoroutine(DieCoroutine());
         }
 
         IEnumerator DieCoroutine()
         {
             yield return new WaitForSeconds(1.5f);
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.DeathAnnouncement,Vector3.zero,null);
+
             Owner.CmdSpawnNewCharacter();
         }
     }

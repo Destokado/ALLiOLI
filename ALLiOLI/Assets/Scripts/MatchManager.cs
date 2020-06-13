@@ -198,7 +198,7 @@ public class MatchManager : NetworkBehaviour
         if (thereIsWinner)
         {
             EventInstance finishInstance =
-                SoundManager.Instance.PlayEventLocal(SoundManager.SoundEventPaths.finishPath, Vector3.zero);
+                SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Finish, Vector3.zero);
             outcomeInstance.setVolume(50f);
             return;
         }
@@ -208,11 +208,11 @@ public class MatchManager : NetworkBehaviour
         string path;
         if (roundWinnerPlayerNetId == Client.LocalClient.netId)
         {
-            path = SoundManager.SoundEventPaths.winPath;
+            path = SoundManager.EventPaths.Win;
         }
         else
         {
-            path = SoundManager.SoundEventPaths.defeatPath;
+            path = SoundManager.EventPaths.Defeat;
         }
 
         if (!path.IsNullOrEmpty())
