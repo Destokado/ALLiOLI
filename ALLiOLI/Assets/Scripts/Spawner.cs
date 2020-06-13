@@ -43,8 +43,7 @@ public class Spawner : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isServer)
-            return;
+        if(MatchManager.instance.thereIsWinner||!isServer) return;
         
         Character character = other.GetComponentInParent<Character>();
         if (character && character.HasFlag)

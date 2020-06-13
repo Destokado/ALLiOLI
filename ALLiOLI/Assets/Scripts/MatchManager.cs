@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FMOD.Studio;
@@ -195,28 +196,22 @@ public class MatchManager : NetworkBehaviour
     [Server]
     public void FlagAtSpawn(Player carrier)
     {
-        if (thereIsWinner)
-        {
-            EventInstance finishInstance =
-                SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Finish, Vector3.zero);
-            outcomeInstance.setVolume(50f);
-            return;
-        }
-
+        SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Finish, Vector3.zero);
+        outcomeInstance.setVolume(50f);
         roundWinnerPlayerNetId = carrier.netId;
+        StartCoroutine(PlayResult(carrier));
+    }
 
+    private IEnumerator PlayResult(Player carrier)
+    {
+       yield return  new WaitForSeconds(1.5f);
         string path;
-        if (roundWinnerPlayerNetId == Client.LocalClient.netId)
-        {
-            path = SoundManager.EventPaths.Win;
-        }
-        else
-        {
-            path = SoundManager.EventPaths.Defeat;
-        }
+        path = roundWinnerPlayerNetId == carrier.netId
+            ? SoundManager.EventPaths.Win
+            : SoundManager.EventPaths.Defeat;
 
         if (!path.IsNullOrEmpty())
-            outcomeInstance =  SoundManager.Instance.PlayEventMovingLocal(path, carrier.Character.transform);
+            outcomeInstance = SoundManager.Instance.PlayEventMovingLocal(path, carrier.Character.transform);
     }
 
     [Server]
