@@ -225,8 +225,6 @@ public class Player : NetworkBehaviour
     [Command] // On server, called by a client
     public void CmdActivateTrap(uint trapNetId)
     {
-        if (trapActivators <= 0) return;
-
         GameObject trapGo = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(trapNetId);
         Trap trap = trapGo.GetComponent<Trap>();
 
