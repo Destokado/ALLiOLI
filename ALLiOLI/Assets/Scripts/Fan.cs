@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[SelectionBase]
 public class Fan : MonoBehaviour
 {
     [SerializeField] private float maxEffectDistance = 3f;

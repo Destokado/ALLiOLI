@@ -19,6 +19,11 @@ public class Flag : NetworkBehaviour
         get => _owner;
         private set
         {
+            if (value == null)
+            {
+                Debug.LogWarning("Trying to set a null _owner. Cancelling operation.", gameObject);
+                return;
+            }
             _owner = value;
             _owner.Flag = this;
             SetOwnerColor();
