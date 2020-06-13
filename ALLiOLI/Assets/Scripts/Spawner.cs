@@ -45,7 +45,7 @@ public class Spawner : NetworkBehaviour
         if (!isServer)
             return;
         
-        Character character = other.GetComponent<Character>();
+        Character character = other.GetComponentInParent<Character>();
         if (character && character.HasFlag)
             MatchManager.instance.FlagAtSpawn(character.Owner);
 
