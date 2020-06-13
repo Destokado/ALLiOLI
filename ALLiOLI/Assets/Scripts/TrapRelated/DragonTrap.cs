@@ -6,13 +6,6 @@ public class DragonTrap : Trap
 {
     [SerializeField] private SimpleAnimationsManager animManager;
 
-    private void Awake()
-    {
-        // fireAnim = gameObject.GetComponent<SimpleAnimationsManager>();
-       // jawAnim = gameObject.GetComponentInChildren<SimpleAnimationsManager>();
-
-    }
-
     protected override void Reload()
     {
         base.Reload();

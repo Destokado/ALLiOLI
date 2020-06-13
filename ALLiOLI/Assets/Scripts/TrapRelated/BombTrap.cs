@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class BombTrap : Trap
+public class BombTrap : SimpleAnimationTrap
 {
     private SimpleAnimationsManager animManager;
 
@@ -16,16 +16,11 @@ public class BombTrap : Trap
     //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
     [SerializeField] private LayerMask ignoredBlockingLayers;
     
-    private void Awake()
+    protected void Awake()
     {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
-    }
-
-    protected override void Reload()
-    {
-        base.Reload();
+        base.Awake();
         
-        //TODO: Stop VFX (maybe it needs to be in RPC)
+        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
     public override void Activate()
