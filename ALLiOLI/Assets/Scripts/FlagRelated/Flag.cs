@@ -82,7 +82,7 @@ public class Flag : NetworkBehaviour
         Debug.Log($"Reseting flag of {Owner.gameObject.name}");
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponentRequired<Rigidbody>().velocity = Vector3.zero;
     }
 
     public void SetOwnerColor()
@@ -105,7 +105,7 @@ public class Flag : NetworkBehaviour
         // Check if should be reseted
         if (transform.position.y > MapBoundries.DeactivationZoneHeight)
             return;
-        Debug.Log($"The flag of the player {Owner.name} has fallen into the void, resetting it");
+        Debug.Log($"The flag of the player {Owner.name} has fallen into the void. Resetting it", gameObject);
         Reset();
     }
     

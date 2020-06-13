@@ -25,7 +25,7 @@ public class MapBoundries : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawCube(Vector3.up*DeactivationZoneHeight, new Vector3(100, 0, 100));
+        Gizmos.DrawCube(Vector3.up*DeactivationZoneHeight, new Vector3(120, 0, 120));
         
         Gizmos.color = Color.gray;
         Gizmos.DrawCube(Vector3.up*KillZoneHeight, new Vector3(100, 0, 100));

@@ -146,8 +146,7 @@ public class Character : NetworkBehaviour
     {
         movementController.animator.enabled = !true; // Automatically enables the ragdoll rigidbodies/colliders
 
-        movementController.Rigidbody.constraints =
-            true ? RigidbodyConstraints.None : RigidbodyConstraints.FreezeRotation;
+        movementController.Rigidbody.constraints = RigidbodyConstraints.None;
         movementController.Rigidbody.isKinematic = true;
         movementController.Rigidbody.detectCollisions = !true;
 
@@ -157,5 +156,25 @@ public class Character : NetworkBehaviour
 
         if (Owner != null && Owner.HumanLocalPlayer)
             Owner.HumanLocalPlayer.Camera.ForceSetLookAt(cameraRagdollLookAtTarget);
+    }
+    
+    private void Update()
+    {
+        if (!hasAuthority)
+            return;
+        
+        // Check if should be disabled
+        if (isDead && cameraRagdollLookAtTarget.position.y <= MapBoundries.DeactivationZoneHeight)
+        {
+            Debug.Log($"The character {gameObject.name} of the player {Owner.name} has fallen into the void. Disabling it.", gameObject);
+            gameObject.SetActive(false);
+        } 
+        else if (!isDead && transform.position.y <= MapBoundries.KillZoneHeight)
+        {
+            Debug.Log($"The character {gameObject.name} of the player {Owner.name} was caught trying to get out of the map! Killing it.", gameObject);
+            Kill();
+        }
+        
+        
     }
 }
