@@ -169,6 +169,9 @@ public class CharacterMovementController : NetworkBehaviour
         Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
 
         GiveStateToAnimations(Rigidbody.velocity);
+        
+        //Synchronize the velocity
+        Character.CmdSyncVelocity(Rigidbody.velocity);
     }
 
     private bool CheckIfTouchesGround(Vector3 position)

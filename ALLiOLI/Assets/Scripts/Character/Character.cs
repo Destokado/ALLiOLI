@@ -12,7 +12,12 @@ public class Character : NetworkBehaviour
     [SerializeField] public GameObject flagGameObject;
     [SerializeField] public MeshRenderer flagMeshToColor;
 
-
+    [SyncVar] public Vector3 synchronizedVelocity;
+    [Command]
+    public void CmdSyncVelocity(Vector3 velocity)
+    {
+        synchronizedVelocity = velocity;
+    }
     
     [Command]
     public void CmdSetHasFlag(bool value)
@@ -145,7 +150,7 @@ public class Character : NetworkBehaviour
     
     private void ActivateRagdoll()
     {
-        Vector3 currentVelocity = movementController.Rigidbody.velocity;
+        Vector3 currentVelocity = hasAuthority ? movementController.Rigidbody.velocity : synchronizedVelocity;
         
         // Enabling the ragdoll
         movementController.animator.enabled = false; // Automatically enables the ragdoll rigidbodies/colliders
