@@ -3,7 +3,7 @@
 public class MapBoundries : MonoBehaviour
 {
     public static float KillZoneHeight => -10;
-    public static float DeactivationZoneHeight => -100;
+    public static float DeactivationZoneHeight => -150;
     
     /*private void OnTriggerExit(Collider other)
     {

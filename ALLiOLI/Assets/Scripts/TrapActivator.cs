@@ -5,6 +5,7 @@ using System.Data;
 using Mirror;
 using UnityEngine;
 
+[SelectionBase]
 public class TrapActivator : NetworkBehaviour
 {
     [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]

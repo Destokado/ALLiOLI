@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class BombTrap : SimpleAnimationTrap
 {
-    private SimpleAnimationsManager animManager;
-
     [Header("Explosion configuration")] 
     [SerializeField] private Transform bombStartPosition;
     [SerializeField] private float force = 200;
@@ -15,13 +13,6 @@ public class BombTrap : SimpleAnimationTrap
     [SerializeField] private float upwardsModifier = .1f;
     //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
     [SerializeField] private LayerMask ignoredBlockingLayers;
-    
-    protected void Awake()
-    {
-        base.Awake();
-        
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
-    }
 
     public override void Activate()
     {
