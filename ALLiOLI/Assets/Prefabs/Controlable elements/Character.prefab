@@ -149,6 +149,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 8134060931265600200}
   flagGameObject: {fileID: 4308140877917608473}
   flagMeshToColor: {fileID: 6113729888517033782}
+  synchronizedVelocity: {x: 0, y: 0, z: 0}
   meshRenderersToColor:
   - {fileID: 6371019288703489938}
   - {fileID: 7374676827921981138}
@@ -169,6 +170,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _animator: {fileID: 5487173628846093171}
+  networkAnimator: {fileID: 2078529568881006406}
   voluntaryMovementStateThreshold: 0.01
   airMovementThreshold: 0.1
   walkSpeed: 250
