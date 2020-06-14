@@ -36,7 +36,7 @@ public class Battle : MatchPhase
     {
         base.ServerStartState();
         //FlagSpawner.Instance.ActivateFlags();
-        MatchManager.instance.KillAllCharacters();
+        MatchManager.instance.RpcKillAllCharacters();
         MatchManager.instance.ResetWinner();
         foreach (Client client in MatchManager.instance.clients)
         {

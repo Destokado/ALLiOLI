@@ -270,12 +270,13 @@ public class MatchManager : NetworkBehaviour
         //MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }
 
-    [Server]
-    public void KillAllCharacters()
+    [ClientRpc]
+    public void RpcKillAllCharacters()
     {
         foreach (Client client in clients)
-        foreach (Player player in client.PlayersManager.players)
-            player.Character.Kill(/*Vector3.zero, player.Character.transform.position*/);
+            if (client.isLocalClient)
+                foreach (Player player in client.PlayersManager.players)
+                    player.Character.Kill(/*Vector3.zero, player.Character.transform.position*/);
     }
 
 
