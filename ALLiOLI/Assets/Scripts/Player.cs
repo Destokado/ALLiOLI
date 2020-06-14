@@ -170,7 +170,7 @@ public class Player : NetworkBehaviour
     {
         Client.PlayersManager.players.Add(this);
         transform.SetParent(Client.transform, true);
-        Debug.Log($"Added player to owner client's player list.");
+        Debug.Log($"Added player to {Client.gameObject.name} client's player list.");
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
