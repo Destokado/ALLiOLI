@@ -13,6 +13,8 @@ public class LandingSceneManager : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.SetCursorMode(false);
+        
         if (singleton != null)
         {
             Debug.LogWarning("Multiple GameManagers have been created", this);
@@ -20,11 +22,6 @@ public class LandingSceneManager : MonoBehaviour
         }
 
         singleton = this;
-    }
-
-    private void Start()
-    {
-        GameManager.SetCursorMode(false);
     }
 
     public void ExitGame()
