@@ -61,11 +61,9 @@ public class Client : NetworkBehaviour
 
         transform.SetParent(NetworkManager.singleton.transform, true);
         MatchManager.instance.clients.Add(this);
-
-
-        // GameManager.Instance.GUI.UpdateOnlineLobby(false);
-
-        MatchManager.instance.FinishAndRestartCurrentPhase();
+        
+        
+        MatchManager.instance.InitializePhaseSystem();
 
         gameObject.name = "Client " + clientId;
     }

@@ -132,21 +132,14 @@ public class MatchManager : NetworkBehaviour
     }
 
     [Client]
-    public void FinishAndRestartCurrentPhase()
+    public void InitializePhaseSystem()
     {
         MatchPhase phase = currentPhase;
 
-        if (phase == null)
-        {
-            phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
-            Debug.Log(
-                $"Restarting the CurrentPhase - obtained from the currentPhaseId '{currentPhaseId}' ({(phase != null ? phase.GetType().Name : "null")}) as a MatchPhase object.");
-        }
-        else
-        {
-            Debug.Log($"Restarting the CurrentPhase ({phase.GetType().Name}).");
-        }
-
+        if (phase != null) return;
+        
+        phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
+        Debug.Log($"Initializing the phase system with the phase '{phase.GetType().Name}'.");
         SetNewMatchPhase(phase);
     }
 
