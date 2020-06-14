@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
@@ -144,20 +145,30 @@ public class Character : NetworkBehaviour
     
     private void ActivateRagdoll()
     {
-        movementController.animator.enabled = !true; // Automatically enables the ragdoll rigidbodies/colliders
+        Vector3 currentVelocity = movementController.Rigidbody.velocity;
+        
+        // Enabling the ragdoll
+        movementController.animator.enabled = false; // Automatically enables the ragdoll rigidbodies/colliders
 
+        // Configuration of "default" character
         movementController.Rigidbody.constraints = RigidbodyConstraints.None;
         movementController.Rigidbody.isKinematic = true;
-        movementController.Rigidbody.detectCollisions = !true;
-
-        movementController.enabled = !true;
-
-        mainCollider.enabled = !true;
+        movementController.Rigidbody.detectCollisions = false;
+        movementController.enabled = false;
+        mainCollider.enabled = false;
+        
+        // Ragdoll configuration
+        Rigidbody[] ragdollRigidbodies = movementController.animator.GetComponentsInChildren<Rigidbody>();
+        foreach (var ragdollRb in ragdollRigidbodies)
+        {
+            ragdollRb.isKinematic = false;
+            ragdollRb.velocity = currentVelocity;
+        }
 
         if (Owner != null && Owner.HumanLocalPlayer)
             Owner.HumanLocalPlayer.Camera.ForceSetLookAt(cameraRagdollLookAtTarget);
     }
-    
+
     private void Update()
     {
         if (!hasAuthority)

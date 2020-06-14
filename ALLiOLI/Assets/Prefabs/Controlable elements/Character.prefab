@@ -643,10 +643,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4735946187683033368}
     m_Modifications:
+    - target: {fileID: 271700330495070999, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 632358557923463258, guid: eedae34bab0835e4fb87cad8379dd414,
         type: 3}
       propertyPath: m_Name
       value: Character model and ragdoll
+      objectReference: {fileID: 0}
+    - target: {fileID: 913926699594130119, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553017282844265030, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053394122116758433, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2087712056302870629, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5072149659601206621, guid: eedae34bab0835e4fb87cad8379dd414,
         type: 3}
@@ -703,6 +728,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5234685618017857005, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501663467949442131, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6029111167238665504, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6674546996910511579, guid: eedae34bab0835e4fb87cad8379dd414,
         type: 3}
       propertyPath: maxFootElevation
@@ -712,6 +752,21 @@ PrefabInstance:
         type: 3}
       propertyPath: walkableLayers.m_Bits
       value: 513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7798446638468778032, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092412467840424744, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004709383816711854, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eedae34bab0835e4fb87cad8379dd414, type: 3}
