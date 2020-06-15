@@ -226,6 +226,7 @@ MonoBehaviour:
   syncInterval: 0.1
   meshRenderersToColor:
   - {fileID: 4704921215939629895}
+  rigidbody: {fileID: 8263740954772882033}
 --- !u!136 &253451332789459856
 CapsuleCollider:
   m_ObjectHideFlags: 0

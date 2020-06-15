@@ -11,6 +11,7 @@ using UnityEngine;
 public class Flag : NetworkBehaviour
 {
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
+    [SerializeField] private Rigidbody rigidbody;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
     
@@ -50,23 +51,25 @@ public class Flag : NetworkBehaviour
         this.gameObject.SetActive(newVal);
     }
 
-    List<Character> charactersInTrigger = new List<Character>();
+    //List<Character> charactersInTrigger = new List<Character>();
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
-        if (!character || character.isDead || character != Owner.Character || character.HasFlag  ||
-        charactersInTrigger.Contains(character))
-        return;
-        charactersInTrigger.Add(character);
+        
+        if (!character || character.isDead || character != Owner.Character || character.HasFlag  ||  
+            /*charactersInTrigger.Contains(character) ||*/ !(MatchManager.instance.currentPhase is Battle))
+            return;
+
+        //charactersInTrigger.Add(character);
         Attach();
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
         if (character != null)
             charactersInTrigger.Remove(character);
-    }
+    }*/
 
     private void Attach()
     {
@@ -106,12 +109,18 @@ public class Flag : NetworkBehaviour
     {
         if (!hasAuthority)
             return;
+
+        // Avoid from being moved if not in battle state
+        bool kinematicState = !(MatchManager.instance.currentPhase is Battle);
+        if (rigidbody.isKinematic != kinematicState)
+            rigidbody.isKinematic = kinematicState;
         
         // Check if should be reseted
-        if (transform.position.y > MapBoundries.DeactivationZoneHeight)
-            return;
-        Debug.Log($"The flag of the player {Owner.name} has fallen into the void. Resetting it", gameObject);
-        Reset();
+        if (transform.position.y <= MapBoundries.DeactivationZoneHeight)
+        {
+            Debug.Log($"The flag of the player {Owner.name} has fallen into the void. Resetting it", gameObject);
+            Reset();
+        }
     }
     
 }
