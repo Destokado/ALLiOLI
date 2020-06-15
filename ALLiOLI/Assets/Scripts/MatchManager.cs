@@ -231,7 +231,7 @@ public class MatchManager : NetworkBehaviour
 
 
     public static int TotalCurrentPlayers => instance.clients.Sum(client => client.PlayersManager.players.Count);
-    //public static int indexOfLastPlayer = -1;
+    [SyncVar] public int lastPlayerIndex = -1;
 
     public Color GetColor(int playerIndex)
     {

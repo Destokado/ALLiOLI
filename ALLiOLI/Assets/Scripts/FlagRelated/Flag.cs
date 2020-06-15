@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // IMPORTANT NOTE: The flag class only stores information and makes changes to his own information.
 // It is not meant to perform any operation or change in any other object
@@ -11,7 +12,7 @@ using UnityEngine;
 public class Flag : NetworkBehaviour
 {
     [SerializeField] private MeshRenderer[] meshRenderersToColor;
-    [SerializeField] private Rigidbody rigidbody;
+    [FormerlySerializedAs("rigidbody")] [SerializeField] private Rigidbody rb;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
     
@@ -112,8 +113,8 @@ public class Flag : NetworkBehaviour
 
         // Avoid from being moved if not in battle state
         bool kinematicState = !(MatchManager.instance.currentPhase is Battle);
-        if (rigidbody.isKinematic != kinematicState)
-            rigidbody.isKinematic = kinematicState;
+        if (rb.isKinematic != kinematicState)
+            rb.isKinematic = kinematicState;
         
         // Check if should be reseted
         if (transform.position.y <= MapBoundries.DeactivationZoneHeight)
