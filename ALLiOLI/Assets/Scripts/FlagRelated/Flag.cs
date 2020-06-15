@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 [SelectionBase]
 public class Flag : NetworkBehaviour
 {
-    [SerializeField] private MeshRenderer[] meshRenderersToColor;
+    [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
     [FormerlySerializedAs("rigidbody")] [SerializeField] private Rigidbody rb;
     private static readonly int baseColor = Shader.PropertyToID("_BaseColor");
     private MaterialPropertyBlock block;
@@ -99,7 +99,7 @@ public class Flag : NetworkBehaviour
         if (block == null)
             block = new MaterialPropertyBlock();
 
-        foreach (MeshRenderer mr in meshRenderersToColor)
+        foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
         {
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);

@@ -10,7 +10,6 @@ public class Character : NetworkBehaviour
 {
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public GameObject flagGameObject;
-    [SerializeField] public MeshRenderer flagMeshToColor;
 
     [SyncVar] public Vector3 synchronizedVelocity;
     [Command]
@@ -65,8 +64,6 @@ public class Character : NetworkBehaviour
             block.SetColor(baseColor, Owner.Color);
             mr.SetPropertyBlock(block);
         }
-
-        flagMeshToColor.SetPropertyBlock(block);
     }
 
     private Player _owner;
