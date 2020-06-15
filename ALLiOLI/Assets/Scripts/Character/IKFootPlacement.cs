@@ -6,7 +6,7 @@ public class IKFootPlacement : MonoBehaviour
 {
     private Animator anim;
     [SerializeField] private float footBoneDistanceToGround = 0.05f;
-    [SerializeField] private float maxFootElevation = 1f;
+    [SerializeField] private float maxFootElevation = 0.4f;
     [SerializeField] private LayerMask walkableLayers;
 
     private void Awake()
