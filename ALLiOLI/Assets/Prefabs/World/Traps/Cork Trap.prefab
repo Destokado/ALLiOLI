@@ -113,8 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247a05db6ec0e72458cfec84225237ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmitter:
-  - {fileID: 3059668604156449498}
 --- !u!114 &3059668604156449498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +126,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/CorchoActive
+  Event: event:/Trap/CorchoActivate
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &2784848004414282141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853413257462064099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Trap/CorchoHit
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1

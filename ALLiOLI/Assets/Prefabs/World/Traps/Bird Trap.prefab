@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247a05db6ec0e72458cfec84225237ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmitter:
-  - {fileID: 5655250518595342135}
 --- !u!114 &4796729697725588980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/BirdShitActivate
+  Event: event:/Trap/BirdShitActivate
   PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1

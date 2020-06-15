@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class ShootingTrap : Trap
 {
     private SimpleAnimationsManager animManager;
+    [SerializeField] private StudioEventEmitter hitEmitter; //TODO: Implement Hit Sound
+
     [SerializeField] private Rigidbody killingObject;
     [SerializeField] private float throwSpeed;
     private Vector3 throwDirection => radarTrigger.transform.forward;

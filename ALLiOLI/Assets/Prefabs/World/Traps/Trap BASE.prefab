@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 336801222149163571}
   - component: {fileID: 1611141193084705529}
   - component: {fileID: 4321196041237724576}
+  - component: {fileID: 2863285741700474810}
   m_Layer: 9
   m_Name: Trap BASE
   m_TagString: Untagged
@@ -145,6 +146,18 @@ MonoBehaviour:
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
   target: {fileID: 0}
+--- !u!114 &2863285741700474810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3749176523569646397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247a05db6ec0e72458cfec84225237ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3770962324667729147
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,9 +15,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cooldownTime: 10
-  durationTime: 2
+  durationTime: 3
   radarTrigger: {fileID: 6960186032727082966}
-  activateEmitter: {fileID: 0}
+  activateEmitter: {fileID: 6014036630638827814}
+  reloadEmitter: {fileID: 1701083987812769455}
   bombStartPosition: {fileID: 2313245820004972590}
   force: 150
   bombEffectRadius: 3.14
@@ -25,6 +26,52 @@ MonoBehaviour:
   ignoredBlockingLayers:
     serializedVersion: 2
     m_Bits: 32566
+--- !u!114 &6014036630638827814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8014492734907763039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Trap/BombActivate
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &1701083987812769455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8014492734907763039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Trap/BombReset
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!135 &7122919041573850965
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -172,6 +219,12 @@ PrefabInstance:
 --- !u!1 &4425201128878167789 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3749176523569646397, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+    type: 3}
+  m_PrefabInstance: {fileID: 679683814551363024}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8014492734907763039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7374515171479966863, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
     type: 3}
   m_PrefabInstance: {fileID: 679683814551363024}
   m_PrefabAsset: {fileID: 0}
