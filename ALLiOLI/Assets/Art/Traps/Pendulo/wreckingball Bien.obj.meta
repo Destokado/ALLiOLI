@@ -3,7 +3,12 @@ guid: a6593cb7e6d3b524385cd7e7a49be4cb
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ZBrush_defualt_groupMat
+    second: {fileID: 2100000, guid: ba5908a6b7b778849b13217002cd05b0, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -44,7 +49,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

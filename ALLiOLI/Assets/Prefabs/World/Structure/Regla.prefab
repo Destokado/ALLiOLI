@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &1705832749626672798
 Transform:
@@ -55,11 +55,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2200211271648674677}
   m_Layer: 0
-  m_Name: Bridge
+  m_Name: Regla
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &2200211271648674677
 Transform:
@@ -157,6 +157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Regla
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 097ca61b5c2ae714d9b2bbdb7a677384,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 097ca61b5c2ae714d9b2bbdb7a677384, type: 3}

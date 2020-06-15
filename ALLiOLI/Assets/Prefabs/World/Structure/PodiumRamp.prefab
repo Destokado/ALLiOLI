@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 0
 --- !u!4 &6078284155531183944
 Transform:
@@ -4300,7 +4300,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 0
 --- !u!4 &740700786497755870
 Transform:
@@ -4404,7 +4404,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &4602460891141199043
 Transform:
@@ -4504,6 +4504,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Revista
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 20886619a7907df44a82c7b451026c31,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20886619a7907df44a82c7b451026c31, type: 3}

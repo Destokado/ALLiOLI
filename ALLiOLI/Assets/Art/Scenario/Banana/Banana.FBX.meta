@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Material #0
+    second: {fileID: 2100000, guid: b9e5f72011ca50c4a88c8dda1b5c0f09, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material #25
     second: {fileID: 2100000, guid: b9e5f72011ca50c4a88c8dda1b5c0f09, type: 2}
   materials:
@@ -49,7 +54,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

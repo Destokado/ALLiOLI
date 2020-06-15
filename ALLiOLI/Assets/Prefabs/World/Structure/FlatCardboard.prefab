@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &8849654852956850136
 Transform:
@@ -47,7 +47,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &9193521348233102701
 Transform:
@@ -157,6 +157,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pared_Lisa_3
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 64c338d0d1ca0974caa543977005cd61,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64c338d0d1ca0974caa543977005cd61, type: 3}

@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 0
 --- !u!4 &2433327704014800785
 Transform:
@@ -107,7 +107,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &645338129944816818
 Transform:
@@ -223,6 +223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cubo_Juguete
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 97aafa372d0b59e41880cbf6f2039794,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97aafa372d0b59e41880cbf6f2039794, type: 3}
 --- !u!1 &3677367486570410038 stripped
@@ -244,6 +249,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 645338129944816818}
     m_Modifications:
+    - target: {fileID: 1646248065694503537, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3307282511001437124, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477561290039385881, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 3816804025553276072, guid: 58619b2e967888a479c5af961961a14b,
         type: 3}
       propertyPath: m_Mesh
@@ -314,6 +334,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PodiumRamp
       objectReference: {fileID: 0}
+    - target: {fileID: 9134142358573459128, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58619b2e967888a479c5af961961a14b, type: 3}
 --- !u!4 &7535823382729245633 stripped
@@ -329,6 +354,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 645338129944816818}
     m_Modifications:
+    - target: {fileID: 1646248065694503537, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3307282511001437124, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477561290039385881, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 3816804025553276072, guid: 58619b2e967888a479c5af961961a14b,
         type: 3}
       propertyPath: m_Mesh
@@ -398,6 +438,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PodiumRamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134142358573459128, guid: 58619b2e967888a479c5af961961a14b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58619b2e967888a479c5af961961a14b, type: 3}

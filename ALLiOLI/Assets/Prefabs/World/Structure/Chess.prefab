@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &8387229773731093318
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7447868884786753406}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5296129568566095445, guid: 55abb07c16096db44a404bcdd3ffc628, type: 3}
 --- !u!1 &4427795912665089481
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &6126540425335947980
 Transform:
@@ -45,6 +31,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &8387229773731093318
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7447868884786753406}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5296129568566095445, guid: 55abb07c16096db44a404bcdd3ffc628, type: 3}
 --- !u!1001 &1476556550937605751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,6 +126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tablero_ajedrez
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 55abb07c16096db44a404bcdd3ffc628,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55abb07c16096db44a404bcdd3ffc628, type: 3}

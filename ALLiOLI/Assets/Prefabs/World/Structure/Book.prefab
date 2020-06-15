@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &4804985401705173470
 Transform:
@@ -127,15 +127,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: bookBien
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 81d194119d3223b4197e6b38541fcd72,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 721056895991426811, guid: 81d194119d3223b4197e6b38541fcd72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 721056895991426811, guid: 81d194119d3223b4197e6b38541fcd72,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5687579511768761628, guid: 81d194119d3223b4197e6b38541fcd72,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5687579511768761628, guid: 81d194119d3223b4197e6b38541fcd72,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7054974467174576704, guid: 81d194119d3223b4197e6b38541fcd72,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81d194119d3223b4197e6b38541fcd72, type: 3}
