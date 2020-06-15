@@ -133,21 +133,14 @@ public class MatchManager : NetworkBehaviour
     }
 
     [Client]
-    public void FinishAndRestartCurrentPhase()
+    public void InitializePhaseSystem()
     {
         MatchPhase phase = currentPhase;
 
-        if (phase == null)
-        {
-            phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
-            Debug.Log(
-                $"Restarting the CurrentPhase - obtained from the currentPhaseId '{currentPhaseId}' ({(phase != null ? phase.GetType().Name : "null")}) as a MatchPhase object.");
-        }
-        else
-        {
-            Debug.Log($"Restarting the CurrentPhase ({phase.GetType().Name}).");
-        }
-
+        if (phase != null) return;
+        
+        phase = MatchPhaseManager.GetNewMatchPhase(currentPhaseId);
+        Debug.Log($"Initializing the phase system with the phase '{phase.GetType().Name}'.");
         SetNewMatchPhase(phase);
     }
 
@@ -193,7 +186,6 @@ public class MatchManager : NetworkBehaviour
 
     private EventInstance outcomeInstance;
 
-    [Server]
     public void FlagAtSpawn(Player carrier)
     {
         SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Finish, Vector3.zero);
@@ -204,7 +196,7 @@ public class MatchManager : NetworkBehaviour
 
     private IEnumerator PlayResult(Player carrier)
     {
-       yield return  new WaitForSeconds(1.5f);
+        yield return  new WaitForSeconds(1.5f);
         string path;
         path = roundWinnerPlayerNetId == carrier.netId
             ? SoundManager.EventPaths.Win
@@ -232,7 +224,7 @@ public class MatchManager : NetworkBehaviour
 
 
     public static int TotalCurrentPlayers => instance.clients.Sum(client => client.PlayersManager.players.Count);
-    //public static int indexOfLastPlayer = -1;
+    [SyncVar] public int lastPlayerIndex = -1;
 
     public Color GetColor(int playerIndex)
     {
@@ -264,12 +256,13 @@ public class MatchManager : NetworkBehaviour
         //MatchManager.instance.BroadcastNewMatchPhase(new WaitingForPlayers());
     }
 
-    [Server]
-    public void KillAllCharacters()
+    [ClientRpc]
+    public void RpcKillAllCharacters()
     {
         foreach (Client client in clients)
-        foreach (Player player in client.PlayersManager.players)
-            player.Character.Kill(/*Vector3.zero, player.Character.transform.position*/);
+            if (client.isLocalClient)
+                foreach (Player player in client.PlayersManager.players)
+                    player.Character.Kill(/*Vector3.zero, player.Character.transform.position*/);
     }
 
 

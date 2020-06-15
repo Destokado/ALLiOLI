@@ -5,10 +5,12 @@ using FMODUnity;
 using Mirror;
 using UnityEngine;
 
-public class BombTrap : Trap
+public class BombTrap : SimpleAnimationTrap
 {
+
     private SimpleAnimationsManager animManager;
     [SerializeField] private StudioEventEmitter reloadEmitter;
+
 
     [Header("Explosion configuration")] 
     [SerializeField] private Transform bombStartPosition;
@@ -17,6 +19,7 @@ public class BombTrap : Trap
     [SerializeField] private float upwardsModifier = .1f;
     //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
     [SerializeField] private LayerMask ignoredBlockingLayers;
+
     
     private void Awake()
     {
@@ -34,7 +37,7 @@ public class BombTrap : Trap
         }
         //TODO: Stop VFX (maybe it needs to be in RPC)
     }
-
+    
     public override void Activate()
     {
         base.Activate();

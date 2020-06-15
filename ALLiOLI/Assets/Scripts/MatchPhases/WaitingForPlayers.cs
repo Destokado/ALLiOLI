@@ -37,7 +37,6 @@ public class WaitingForPlayers : MatchPhase
     {
         base.StartState();
         MatchManager.instance.matchTimer = 1; // Securing timing, can not end instantly
-        GameManager.Instance.GUI.SetStartMatchConfiguration();
     }
     
 

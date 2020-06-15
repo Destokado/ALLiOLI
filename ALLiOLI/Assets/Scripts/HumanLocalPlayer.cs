@@ -175,7 +175,7 @@ public class HumanLocalPlayer : MonoBehaviour
         {
             case Battle p1:
             case WaitingForPlayers p2:
-                
+                if (Player.trapActivators <= 0) return;
                 Trap bestTrapToActivate = MatchManager.instance.AllTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
                     Player.CmdActivateTrap(bestTrapToActivate.netId);
@@ -213,7 +213,7 @@ public class HumanLocalPlayer : MonoBehaviour
             OnPause();
         else
         {
-            Debug.Log($"Esc key pressed while being in editor.");
+            //Debug.Log($"Esc key pressed while being in editor.");
             //TODO: Program that the 'GameManager.Instance.escapeOnEditor' var set to false on regain focus again inside the editor and then uncomment the next line.
             //GameManager.Instance.escapeOnEditor = true;
         }

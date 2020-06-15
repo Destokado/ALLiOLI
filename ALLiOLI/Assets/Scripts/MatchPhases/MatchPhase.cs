@@ -22,6 +22,7 @@ public abstract class MatchPhase : State
     public override void StartState()
     {
         Debug.Log($"Starting phase '{this.GetType().Name}' ({MatchPhaseManager.GetPhaseId(this)}).");
+        GameManager.Instance.GUI.SetStartMatchConfiguration();
     }
     
     public override void EndState()

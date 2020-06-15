@@ -6,7 +6,7 @@ public class SimpleAnimationTrap : Trap
     // Start is called before the first frame update
     private SimpleAnimationsManager animManager;
 
-    private void Awake()
+    protected void Awake()
     {
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }

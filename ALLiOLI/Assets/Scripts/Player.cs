@@ -136,9 +136,18 @@ public class Player : NetworkBehaviour
 
     // ReSharper disable once InconsistentNaming
     private Client _client;
-
+    
     [SyncVar(hook = nameof(NewPlayerIndex))]
     private int playerIndex = -1;
+    private void NewPlayerIndex(int oldVal, int newVal)
+    {
+        if (oldVal != -1)
+            Debug.LogWarning("Trying to change the playerIndex of a Player. It shouldn't be done.");
+
+        gameObject.name =
+            $"Player {playerIndex} | {(IsControlledLocally ? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely")}";
+        Color = MatchManager.instance.GetColor(playerIndex);
+    }
 
     public static int startTrapActivators = 3;
     
@@ -150,15 +159,6 @@ public class Player : NetworkBehaviour
             HumanLocalPlayer.playerGui.SetAmmunitionTo(newVal);
     }
 
-    private void NewPlayerIndex(int oldVal, int newVal)
-    {
-        if (oldVal != -1)
-            Debug.LogWarning("Trying to change the playerIndex of a Player. It shouldn't be done.");
-
-        gameObject.name =
-            $"Player {playerIndex} | {(IsControlledLocally ? $"Input by {HumanLocalPlayer.PlayerInput.user.controlScheme}" : "Controlled remotely")}";
-        Color = MatchManager.instance.GetColor(playerIndex);
-    }
 
     /// <summary>
     /// If the player is controlled by a human in this machine (locally).
@@ -170,7 +170,7 @@ public class Player : NetworkBehaviour
     {
         Client.PlayersManager.players.Add(this);
         transform.SetParent(Client.transform, true);
-        Debug.Log($"Added player to owner client's player list.");
+        Debug.Log($"Added player to {Client.gameObject.name} client's player list.");
 
         // Is any human waiting for a player to be available? If it is, set the player as their property
         HumanLocalPlayer[] allHumans = UnityEngine.Object.FindObjectsOfType<HumanLocalPlayer>();
@@ -195,7 +195,8 @@ public class Player : NetworkBehaviour
     [Command] //Only executed on server after being called by client with authority
     private void CmdSetupPlayerOnServer()
     {
-        playerIndex = MatchManager.TotalCurrentPlayers;
+        playerIndex = MatchManager.instance.lastPlayerIndex+1;
+        MatchManager.instance.lastPlayerIndex = playerIndex;
     }
 
     [Command]
@@ -225,8 +226,6 @@ public class Player : NetworkBehaviour
     [Command] // On server, called by a client
     public void CmdActivateTrap(uint trapNetId)
     {
-        if (trapActivators <= 0) return;
-
         GameObject trapGo = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(trapNetId);
         Trap trap = trapGo.GetComponent<Trap>();
 

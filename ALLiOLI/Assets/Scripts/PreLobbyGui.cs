@@ -38,7 +38,7 @@ public class PreLobbyGui : MonoBehaviour
         
         
         AllIOliNetworkManager.singleton.networkAddress = text;
-        connectingText.SetText($"Connecting to {AllIOliNetworkManager.singleton.networkAddress}...");
+        connectingText.SetText($"Connecting...");
         Debug.Log($"Joining '{AllIOliNetworkManager.singleton.networkAddress}'");
         AllIOliNetworkManager.singleton.StartClient();
     }

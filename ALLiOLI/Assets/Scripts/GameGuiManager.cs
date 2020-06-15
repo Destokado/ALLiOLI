@@ -7,14 +7,8 @@ using UnityEngine.UI;
 public class GameGuiManager : MonoBehaviour
 {
 
-    [Space] [SerializeField] private GameObject clientsPanel;
-
     [Header("PreLobby")]
     [SerializeField] private GameObject preLobby;
-    
-    [Header("Lobby")]
-    [SerializeField] private GameObject clientVisualizationPrefab;
-    [SerializeField] private GameObject startMatchButton;
 
     [Header("PauseMenu")]
     [SerializeField] private GameObject pauseMenu;
@@ -75,13 +69,7 @@ public class GameGuiManager : MonoBehaviour
         //TODO: Implement lobby open/close
         Debug.LogWarning("lobby in pause not implemented yet");
     }
-    
-    public void ShowPlayersMenu(bool show)
-    {
-        //TODO: Implement players menu
-        Debug.LogWarning("Players menu not implemented yet");
-    }
-    
+
     public void Quit()
     {
         GameManager.Instance.QuitClient();

@@ -16,7 +16,8 @@ public class CharacterMovementController : NetworkBehaviour
 
     [Header("Animation")] 
     [SerializeField] private Animator _animator;
-    public Animator animator => _animator;
+    [SerializeField] public Animator animator => _animator;
+    [SerializeField] public NetworkAnimator networkAnimator;
 
     [Header("Thresholds")] 
     [Tooltip("Minimum velocity to declare that the character wants to move intentionally by the human.")]
@@ -181,6 +182,9 @@ public class CharacterMovementController : NetworkBehaviour
         Debug.DrawRay(transform.position, Rigidbody.velocity/10f, Color.white);
 
         GiveStateToAnimations(Rigidbody.velocity);
+        
+        //Synchronize the velocity
+        Character.CmdSyncVelocity(Rigidbody.velocity);
     }
 
     private bool CheckIfTouchesGround(Vector3 position)
@@ -226,7 +230,7 @@ public class CharacterMovementController : NetworkBehaviour
         animator.SetBool("Grounded", onGround);
         if (setAnimGroundLosed)
         {
-            animator.SetTrigger("GroundLosed");
+            networkAnimator.SetTrigger("GroundLosed");
             setAnimGroundLosed = false;
         }
     }

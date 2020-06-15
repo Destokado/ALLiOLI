@@ -36,8 +36,13 @@ public class EndRound : MatchPhase
     public override void StartState()
     {
         base.StartState();
-        FlagSpawner.Instance.ResetFlags();
         MatchManager.instance.newRoundWinnerPlayerNetIdEvent += UpdateInformativeText;
+    }
+
+    public override void ServerStartState()
+    {
+        base.ServerStartState();
+        FlagSpawner.Instance.ResetFlags();
     }
 
     public override void EndState()

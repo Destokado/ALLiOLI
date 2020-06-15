@@ -128,7 +128,6 @@ public class FlagSpawner : NetworkBehaviour
         foreach (Player p in   Client.LocalClient.PlayersManager.players)
         {
             p.Flag.Reset();
-            
         }
     }
 
