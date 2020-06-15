@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using Mirror;
 using UnityEngine;
 
 public class NetworkTrapKillZone : NetworkBehaviour
 {
     private Trap trap;
-    
+    [SerializeField] private StudioEventEmitter hitEmitter;
+
     [NonSerialized] 
     [SyncVar (hook = nameof(NewTrapNetId))]public uint trapNetId;
     private void NewTrapNetId(uint oldValue, uint newValue)
@@ -31,6 +33,11 @@ public class NetworkTrapKillZone : NetworkBehaviour
             return;
         }
 
+        if (hitEmitter != null)
+        {
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, hitEmitter.Event);
+
+        }
         character.Kill(/*other.impulse, other.GetContact(0).point*/);
         //Debug.Log($"Killed '{character.name}' by the KillZone named '{transform.gameObject.name}' in the trap '{trap.gameObject.name}'.", gameObject);
     }
