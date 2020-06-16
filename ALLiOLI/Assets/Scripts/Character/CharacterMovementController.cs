@@ -172,7 +172,7 @@ public class CharacterMovementController : NetworkBehaviour
         }
         if (tempOnGround && !onGround) //It joust touched the ground
         {
-            
+            //TODO: Adjust the fallingDistance, always 5
             PlaySoundFall(Mathf.Abs(fallStartPos.y-transform.position.y));
         }
         

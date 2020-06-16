@@ -94,8 +94,6 @@ public class SoundManager : MonoBehaviour
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     soundEvent.setParameterByName(parameters[i].name, parameters[i].value);
-                    Debug.Log(
-                        $"Playing {path} in the position {pos} with the parameter {parameters[i].name} with value {parameters[i].value}");
                 }
 
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
@@ -169,15 +167,12 @@ public class SoundManager : MonoBehaviour
     public void StopEventOnGameObjectLocal(uint netId, string path)
     {
         var gameObject = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-        Debug.Log($"Stopping{path} in {gameObject}");
-
         gameObject.GetComponentInChildren<SoundEmitterHandler>().Stop(path);
     }
 
     public void PlayEventOnGameObjectLocal(uint netId, string path)
     {
         var gameObject = ((AllIOliNetworkManager) NetworkManager.singleton).GetGameObject(netId);
-        Debug.Log($"Playing {path} in {gameObject}");
         gameObject.GetComponentInChildren<SoundEmitterHandler>().Play(path);
     }
 

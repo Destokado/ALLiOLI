@@ -17,11 +17,11 @@ public class SimpleAnimationTrap : Trap
     protected override void Reload()
     {
         base.Reload();
-        if (resetEmitter.Event != null)
+        if (resetEmitter != null)
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
         else
         {
-            Debug.LogWarning($" The resetEmitter.Event  is null in {gameObject.name}");
+            Debug.LogWarning($" The resetEmitter is null in {gameObject.name}");
         }
         animManager.GetAnimation(0).mirror = true;
         animManager.Play(0);
