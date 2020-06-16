@@ -122,8 +122,8 @@ public class CharacterMovementController : NetworkBehaviour
         if (Character.isDead)
             return;
 
-        Vector3 direction = GetDirectionRelativeToTheCamera();
-        Vector3 desiredDisplacement = direction * (walkSpeed * Time.deltaTime);
+        Vector3 desiredDirection = GetDesiredDirectionRelativeToTheCamera();
+        Vector3 desiredDisplacement = desiredDirection * (walkSpeed * Time.deltaTime);
 
         bool wantsToMove = desiredDisplacement.magnitude > voluntaryMovementStateThreshold;
         walking = onGround && wantsToMove;
@@ -148,10 +148,10 @@ public class CharacterMovementController : NetworkBehaviour
         }
         
         //Apply rotation to Player
-        Vector3 rigidbodyVelocity = Rigidbody.velocity;
-        if (rigidbodyVelocity.magnitude >= .1f)
+        //Vector3 rigidbodyVelocity = Rigidbody.velocity;
+        if (desiredDirection.magnitude >= .1f)
         {
-            float targetAngle = Mathf.Atan2(rigidbodyVelocity.x, rigidbodyVelocity.z) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(desiredDirection.x, desiredDirection.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
                 turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -235,7 +235,7 @@ public class CharacterMovementController : NetworkBehaviour
         }
     }
 
-    private Vector3 GetDirectionRelativeToTheCamera()
+    private Vector3 GetDesiredDirectionRelativeToTheCamera()
     {
         Vector3 targetDirection = new Vector3(horizontalMovementInput.x, 0f, horizontalMovementInput.y);
         targetDirection =
