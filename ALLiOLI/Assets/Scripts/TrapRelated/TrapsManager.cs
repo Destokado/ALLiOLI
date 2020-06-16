@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class TrapsManager : List<Trap>
 {
@@ -49,13 +50,16 @@ public class TrapsManager : List<Trap>
 
         // Order the traps by the distance to the closest character
         // chInTrapsSorted = new SortedList<distanceToClosestChar, KeyValuePair<Trap, sortedListOfTheDistToAllChars>>();
-        SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>> chInTrapsSorted =
-            new SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>>();
+        
+        SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>> chInTrapsSorted = new SortedList<float, KeyValuePair<Trap, SortedList<float, Character>>>();
+        
         foreach (Trap trap in this)
         {
             SortedList<float, Character> t = trap.GetCharactersInTrapRadar(exception); // sortedListOfTheDistToAllChars
+            
             if (t.Count > 0)
-                chInTrapsSorted.Add(t.Keys[0], new KeyValuePair<Trap, SortedList<float, Character>>(trap, t));
+                if (!chInTrapsSorted.ContainsKey(t.Keys[0]))
+                    chInTrapsSorted.Add(t.Keys[0], new KeyValuePair<Trap, SortedList<float, Character>>(trap, t));
         }
 
         //Convert to more readable list
