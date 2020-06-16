@@ -9,7 +9,8 @@ public class GameGuiManager : MonoBehaviour
     private enum Menu
     {
         SETTINGS,
-        CONTROLS
+        CONTROLS,
+        PAUSE
     }
 
     private Menu currentMenu;
@@ -74,8 +75,7 @@ public class GameGuiManager : MonoBehaviour
                 ShowControlsMenu(false);
                 break;
         }
-
-        ShowPauseMenu(true);
+        
     }
 
     public void StartMatch()
@@ -86,6 +86,7 @@ public class GameGuiManager : MonoBehaviour
     public void ShowPauseMenu(bool show)
     {
         this.pauseMenu.SetActive(show);
+        currentMenu = Menu.PAUSE;
     }
 
     public void Resume()
@@ -96,7 +97,12 @@ public class GameGuiManager : MonoBehaviour
     public void ShowControlsMenu(bool show)
     {
         controlsMenu.SetActive(show);
-        currentMenu = Menu.CONTROLS;
+       if(show) currentMenu = Menu.CONTROLS;
+       else
+       {
+           currentMenu = Menu.PAUSE;
+
+       }
     }
 
     public void Quit()
@@ -112,6 +118,10 @@ public class GameGuiManager : MonoBehaviour
     public void ShowSettingsMenu(bool show)
     {
         settingsMenu.SetActive(show);
-        currentMenu = Menu.SETTINGS;
+       if(show) currentMenu = Menu.SETTINGS;
+       else
+       {
+           currentMenu = Menu.PAUSE;
+       }
     }
 }

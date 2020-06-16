@@ -25,7 +25,7 @@ public class AudioSettings : MonoBehaviour
     
     void Awake()
     {
-        Master = FMODUnity.RuntimeManager.GetBus("bus:/Master");
+        Master = FMODUnity.RuntimeManager.GetBus("bus:/");
         Music = FMODUnity.RuntimeManager.GetVCA("vca:/Music");
         FX = FMODUnity.RuntimeManager.GetVCA("vca:/FX");
         UI = FMODUnity.RuntimeManager.GetVCA("vca:/UI");
