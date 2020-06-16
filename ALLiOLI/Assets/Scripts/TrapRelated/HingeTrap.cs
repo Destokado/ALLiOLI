@@ -1,6 +1,7 @@
 ﻿using System;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class HingeTrap : Trap
 {
@@ -8,7 +9,7 @@ public class HingeTrap : Trap
     [SerializeField] private HingeJoint joint;
     [SerializeField] private float startAngle;
     [SerializeField] private float targetAngle;
-    [SerializeField] private StudioEventEmitter reloadEmitter;
+    [FormerlySerializedAs("reloadEmitter")] [SerializeField] private StudioEventEmitter resetEmitter;
 
     private void Start()
     {
@@ -30,8 +31,8 @@ public class HingeTrap : Trap
     protected override void Reload()
     {
         base.Reload();
-        if (reloadEmitter != null)
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, reloadEmitter.Event);
+        if (resetEmitter != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
         SetDefaultState();
     }
 

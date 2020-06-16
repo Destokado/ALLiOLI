@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEditor;
@@ -51,8 +52,6 @@ public class Character : NetworkBehaviour
             gameObject.name = "Character owned by " + value.gameObject.name;
             transform.SetParent(value.transform, true);
             UpdateColor();
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(OwnerNetId,SoundManager.EventPaths.Spawn);
-
         }
     }
 
@@ -103,7 +102,12 @@ public class Character : NetworkBehaviour
     {
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
-    
+
+    private void Start()
+    {
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(OwnerNetId,SoundManager.EventPaths.Spawn);
+    }
+
     public void Suicide()
     {
         Kill( /*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);

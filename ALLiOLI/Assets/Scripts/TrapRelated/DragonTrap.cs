@@ -8,7 +8,7 @@ public class DragonTrap : Trap
 
     
 
-   [SerializeField] private StudioEventEmitter reloadEmitter;
+   [SerializeField] private StudioEventEmitter resetEmitter;
    [SerializeField] private SimpleAnimationsManager animManager;
 
 
@@ -16,8 +16,8 @@ public class DragonTrap : Trap
     {
         base.Reload();
 
-        if (reloadEmitter != null)
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, reloadEmitter.Event);
+        if (resetEmitter != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
         
 
         animManager.GetAnimation(0).mirror = true;

@@ -1,12 +1,13 @@
 ﻿using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]
 public class SimpleAnimationTrap : Trap
 {
     // Start is called before the first frame update
-    private SimpleAnimationsManager animManager;
-    [SerializeField] private StudioEventEmitter reloadEmitter;
+    protected SimpleAnimationsManager animManager;
+   [SerializeField] protected StudioEventEmitter resetEmitter;
 
     protected void Awake()
     {
@@ -16,11 +17,11 @@ public class SimpleAnimationTrap : Trap
     protected override void Reload()
     {
         base.Reload();
-        if (reloadEmitter.Event != null)
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, reloadEmitter.Event);
+        if (resetEmitter.Event != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
         else
         {
-            Debug.LogWarning($" The reloadEmitter.Event  is null in {gameObject.name}");
+            Debug.LogWarning($" The resetEmitter.Event  is null in {gameObject.name}");
         }
         animManager.GetAnimation(0).mirror = true;
         animManager.Play(0);

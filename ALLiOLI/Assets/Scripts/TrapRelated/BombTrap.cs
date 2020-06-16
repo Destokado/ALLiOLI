@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using FMODUnity;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BombTrap : SimpleAnimationTrap
 {
 
-    private SimpleAnimationsManager animManager;
-    [SerializeField] private StudioEventEmitter reloadEmitter;
+    
 
 
     [Header("Explosion configuration")] 
@@ -23,17 +23,17 @@ public class BombTrap : SimpleAnimationTrap
     
     private void Awake()
     {
-        animManager = gameObject.GetComponent<SimpleAnimationsManager>();
+        base.animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
     protected override void Reload()
     {
         base.Reload();
-        if (reloadEmitter.Event != null)
-            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, reloadEmitter.Event);
+        if (base.resetEmitter.Event != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
         else
         {
-            Debug.LogWarning($" The reloadEmitter.Event  is null in {gameObject.name}");
+            Debug.LogWarning($" The resetEmitter.Event  is null in {gameObject.name}");
         }
         //TODO: Stop VFX (maybe it needs to be in RPC)
     }
