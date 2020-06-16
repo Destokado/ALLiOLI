@@ -101,7 +101,6 @@ public class GameGuiManager : MonoBehaviour
        else
        {
            currentMenu = Menu.PAUSE;
-
        }
     }
 
