@@ -127,7 +127,7 @@ public class CharacterMovementController : NetworkBehaviour
 
         bool wantsToMove = desiredDisplacement.magnitude > voluntaryMovementStateThreshold;
         walking = onGround && wantsToMove;
-        
+        running = walking;
         if (walking) // On ground and wants to move
             Rigidbody.velocity = desiredDisplacement.WithY(Rigidbody.velocity.y);
         

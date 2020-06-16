@@ -20,7 +20,7 @@ public class SoundEmitterHandler : MonoBehaviour
     {
         foreach (var emitter in soundEmitter)
         {
-            if (Compare(emitter.Event, path, StringComparison.Ordinal) == 0 && !emitter.IsPlaying())
+            if (Compare(emitter.Event, path, StringComparison.Ordinal) == 0 )
             {
                 emitter.Play();
                 return;
@@ -39,6 +39,6 @@ public class SoundEmitterHandler : MonoBehaviour
                 return;
             }
         }
-        Debug.LogWarning($"Event {path} not found in {gameObject}, add the Event Emitter to the gameobject or check the typo ");
+        Debug.LogWarning($"Event {path} not found in {gameObject} or the event is not playing");
     }
 }

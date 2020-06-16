@@ -300,7 +300,7 @@ public class SoundManager : MonoBehaviour
         #region Character
 
         public static string Jump = "event:/Character/Jump";
-        public static string Run = "event:/Character/Run";
+        public static string Run = "event:/Character/Run 2";
         public static string ActivateTrapPath;
         public static string Land = "event:/Character/Land";
         public static string Death = "event:/Character/Death";
