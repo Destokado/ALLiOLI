@@ -303,7 +303,7 @@ public class SoundManager : MonoBehaviour
         public static string Run = "event:/Character/Run";
         public static string ActivateTrapPath;
         public static string Land = "event:/Character/Land";
-        public static string Death = "event:/Character/Defeat";
+        public static string Death = "event:/Character/Death";
 
         public static string
             WallHit =

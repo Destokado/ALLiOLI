@@ -10,6 +10,9 @@
 		<property name="name">
 			<value>Reverb</value>
 		</property>
+		<relationship name="masters">
+			<destination>{2fa39a0a-3a02-4260-887c-b16739ef6343}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{0ea716e8-6b1e-47ba-8a31-66de928a7a8e}</destination>
 		</relationship>
@@ -29,7 +32,7 @@
 	<object class="MixerBusPanner" id="{d4ec6990-a3be-4ced-858a-743d12e3a0e2}" />
 	<object class="SFXReverbEffect" id="{771695da-26c7-49ea-9a4f-9d786bad7138}">
 		<property name="wetLevel">
-			<value>0</value>
+			<value>10</value>
 		</property>
 		<property name="dryLevel">
 			<value>-80</value>
