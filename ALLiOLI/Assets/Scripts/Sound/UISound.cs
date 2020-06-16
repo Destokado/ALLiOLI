@@ -14,6 +14,8 @@ public class UISound : MonoBehaviour
         soundManager=SoundManager.Instance;
     }
 
+   
+
     public void OnMouseEnter()
     {
         var path = SoundManager.EventPaths.ButtonHover;
