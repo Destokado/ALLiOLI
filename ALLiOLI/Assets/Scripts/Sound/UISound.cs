@@ -28,4 +28,8 @@ public class UISound : MonoBehaviour
     {
         soundManager.PlayOneShotLocal(SoundManager.EventPaths.PlayButton,Vector3.zero, null);
     }
+    public void OnBackButtonPressed()
+    {
+        soundManager.PlayOneShotLocal(SoundManager.EventPaths.BackButton,Vector3.zero, null);
+    }
 }

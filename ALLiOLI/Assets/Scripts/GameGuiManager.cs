@@ -6,24 +6,38 @@ using UnityEngine.UI;
 
 public class GameGuiManager : MonoBehaviour
 {
+    private enum Menu
+    {
+        SETTINGS,
+        CONTROLS
+    }
 
-    [Header("PreLobby")]
-    [SerializeField] private GameObject preLobby;
+    private Menu currentMenu;
 
-    [Header("PauseMenu")]
-    [SerializeField] private GameObject pauseMenu;
-    
+
+    [Header("PreLobby")] [SerializeField] private GameObject preLobby;
+
+    [Header("PauseMenu")] [SerializeField] private GameObject pauseMenu;
+
+    [Header("SettingsMenu")] [SerializeField]
+    private GameObject settingsMenu;
+
+    [Header("ControlsMenu")] [SerializeField]
+    private GameObject controlsMenu;
+
     private void Awake()
     {
         // Set start values
         preLobby.SetActive(true);
         pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     public void SetStartMatchConfiguration()
     {
         preLobby.SetActive(false);
         pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
     }
 
     public void UpdateOnlineLobby(bool showLobby)
@@ -48,7 +62,22 @@ public class GameGuiManager : MonoBehaviour
         
         lobby.SetActive(showLobby);*/
     }
-    
+
+    public void Back()
+    {
+        switch (currentMenu)
+        {
+            case Menu.SETTINGS:
+                ShowSettingsMenu(false);
+                break;
+            case Menu.CONTROLS:
+                ShowControlsMenu(false);
+                break;
+        }
+
+        ShowPauseMenu(true);
+    }
+
     public void StartMatch()
     {
         MatchManager.instance.StartMatch();
@@ -63,11 +92,11 @@ public class GameGuiManager : MonoBehaviour
     {
         GameManager.Instance.SetPause(false);
     }
-    
-    public void ShowLobbyMenu(bool show)
+
+    public void ShowControlsMenu(bool show)
     {
-        //TODO: Implement lobby open/close
-        Debug.LogWarning("lobby in pause not implemented yet");
+        controlsMenu.SetActive(show);
+        currentMenu = Menu.CONTROLS;
     }
 
     public void Quit()
@@ -79,10 +108,10 @@ public class GameGuiManager : MonoBehaviour
     {
         GameManager.Instance.ExitScene();
     }
-    
+
     public void ShowSettingsMenu(bool show)
     {
-        //TODO: Implement settings
-        Debug.LogWarning("Settings not implemented yet");
+        settingsMenu.SetActive(show);
+        currentMenu = Menu.SETTINGS;
     }
 }
