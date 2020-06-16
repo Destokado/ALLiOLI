@@ -179,7 +179,7 @@ MonoBehaviour:
   syncInterval: 0.1
   objectsToSynchronize:
   - {fileID: 7814753639938286161}
-  coolDownTime: 5
+  coolDownTime: 30
 --- !u!136 &3245349999298445986
 CapsuleCollider:
   m_ObjectHideFlags: 0
