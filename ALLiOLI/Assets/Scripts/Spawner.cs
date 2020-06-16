@@ -30,15 +30,21 @@ public class Spawner : NetworkBehaviour
     [Server]
     public void SpawnCharacter(GameObject prefab, uint playerOwnerNetId, NetworkConnection playerOwnerConnectionToClient)
     {
+        Vector3 spawnPoint = GetSpawnPos();
+
+        GameObject characterGo = Instantiate(prefab, spawnPoint, spawnCenterAndRotation.rotation);
+        characterGo.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
+        NetworkServer.Spawn(characterGo, playerOwnerConnectionToClient);
+    }
+
+    public Vector3 GetSpawnPos()
+    {
         float deltaX = UnityEngine.Random.Range(-spawnSize.x / 2f, spawnSize.x / 2f);
         float deltaY = UnityEngine.Random.Range(-spawnSize.y / 2f, spawnSize.y / 2f);
 
         Vector3 centerPos = spawnCenterAndRotation.position;
         Vector3 spawnPoint = new Vector3(centerPos.x + deltaX, centerPos.y, centerPos.z + deltaY);
-
-        GameObject characterGo = Instantiate(prefab, spawnPoint, spawnCenterAndRotation.rotation);
-        characterGo.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
-        NetworkServer.Spawn(characterGo, playerOwnerConnectionToClient);
+        return spawnPoint;
     }
 
     private void OnTriggerEnter(Collider other)
