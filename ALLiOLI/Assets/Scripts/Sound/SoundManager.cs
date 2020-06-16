@@ -53,6 +53,7 @@ public class SoundManager : MonoBehaviour
     {
         eventsList = new Dictionary<string, EventInstance>();
         positionEvents = new List<SoundManagerMovingSound>();
+        PlayEventLocal(EventPaths.Music, Vector3.zero);
     }
 
     void Update()
@@ -292,6 +293,7 @@ public class SoundManager : MonoBehaviour
 
     public static class EventPaths
     {
+        public static string Music = "event:/Music";
         #region Character
 
         public static string Jump = "event:/Character/Jump";
