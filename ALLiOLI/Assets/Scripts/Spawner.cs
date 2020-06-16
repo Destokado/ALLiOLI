@@ -3,11 +3,12 @@ using Mirror;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 public class Spawner : NetworkBehaviour
 {
     public static Spawner Instance { get; private set; }
-    [SerializeField] private Transform spawnCenter;
+    [SerializeField] private Transform spawnCenterAndRotation;
     [SerializeField] private Vector2 spawnSize = Vector2.one;
     
 
@@ -32,13 +33,12 @@ public class Spawner : NetworkBehaviour
         float deltaX = UnityEngine.Random.Range(-spawnSize.x / 2f, spawnSize.x / 2f);
         float deltaY = UnityEngine.Random.Range(-spawnSize.y / 2f, spawnSize.y / 2f);
 
-        Vector3 centerPos = spawnCenter.position;
+        Vector3 centerPos = spawnCenterAndRotation.position;
         Vector3 spawnPoint = new Vector3(centerPos.x + deltaX, centerPos.y, centerPos.z + deltaY);
 
-        GameObject character = Instantiate(prefab, spawnPoint, spawnCenter.rotation);
-        character.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
-        NetworkServer.Spawn(character, playerOwnerConnectionToClient);
-
+        GameObject characterGo = Instantiate(prefab, spawnPoint, spawnCenterAndRotation.rotation);
+        characterGo.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
+        NetworkServer.Spawn(characterGo, playerOwnerConnectionToClient);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,7 +63,7 @@ public class Spawner : NetworkBehaviour
     {
         Handles.zTest = CompareFunction.LessEqual;
         Handles.color = Color.cyan;
-        Handles.DrawWireCube(spawnCenter.position, new Vector3(spawnSize.x, 0, spawnSize.y));
+        Handles.DrawWireCube(spawnCenterAndRotation.position, new Vector3(spawnSize.x, 0, spawnSize.y));
     }
     #endif
 

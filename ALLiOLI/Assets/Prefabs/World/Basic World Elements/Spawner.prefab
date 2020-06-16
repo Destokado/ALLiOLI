@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 223876501486742232}
   m_Layer: 2
-  m_Name: Center
+  m_Name: Center and rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3834243065996644357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 8.25, z: 5.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8351155173063010713}
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  spawnCenter: {fileID: 223876501486742232}
+  spawnCenterAndRotation: {fileID: 223876501486742232}
   spawnSize: {x: 8.5, y: 7}
 --- !u!135 &6121862427029547728
 SphereCollider:
@@ -229,8 +229,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5414510623835177060}
-  m_LocalRotation: {x: -0.031737994, y: 0.00000001749001, z: 5.5537747e-10, w: 0.9994962}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: 0, y: 2.45, z: 3.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2067626776864360542}
@@ -255,8 +255,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 5
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 4283050923702321626}
-  m_Follow: {fileID: 4283050923702321626}
+  m_LookAt: {fileID: 223876501486742232}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
