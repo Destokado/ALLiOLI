@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="Event" id="{ad983d64-c3e1-4ec8-b8ce-02ed62fcc0d3}">
 		<property name="name">
-			<value>Button</value>
+			<value>BackButton</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{53607ad2-ad5d-4470-8c9b-66aef5a71bdc}</destination>
+			<destination>{dbf17d86-5058-44da-8c5e-3b53452fcfa5}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{fa398c5a-e487-4bbe-8aeb-8891ce1be182}</destination>
@@ -46,6 +46,9 @@
 		</relationship>
 	</object>
 	<object class="MixerInput" id="{a325a62a-2c38-4d3c-bbd0-2ce2864f76d2}">
+		<relationship name="masters">
+			<destination>{2fa39a0a-3a02-4260-887c-b16739ef6343}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{8984b172-5bf6-435f-8391-dbc7907cc0fa}</destination>
 		</relationship>
@@ -53,7 +56,7 @@
 			<destination>{dd7178ad-5571-4b14-b944-901ca38e057d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{8b2c9592-c57b-4e36-9d2b-3486649db549}</destination>
+			<destination>{b87c92a7-aa3d-4180-b4da-d0e2ea5e23d8}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{24bd24aa-eb3f-4917-b8ab-d5bb7db93a89}" />
@@ -72,6 +75,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{216a255e-b0a8-4ac2-ac9b-2519ab1ebc43}">
+		<property name="pitch">
+			<value>-8</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{a5553eaa-13b6-4f60-93d2-5198aa3e35f8}</destination>
 		</relationship>

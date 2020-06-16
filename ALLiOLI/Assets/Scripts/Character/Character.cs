@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEditor;
@@ -101,7 +102,12 @@ public class Character : NetworkBehaviour
     {
         movementController = gameObject.GetComponentRequired<CharacterMovementController>();
     }
-    
+
+    private void Start()
+    {
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(OwnerNetId,SoundManager.EventPaths.Spawn);
+    }
+
     public void Suicide()
     {
         Kill( /*Vector3.up + transform.forward * 2, transform.position + Vector3.up*/);
@@ -135,12 +141,15 @@ public class Character : NetworkBehaviour
                 CmdSetHasFlag(false);
                 Owner.Flag.SetDetachPosition();
             }
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.EventPaths.Death);
             StartCoroutine(DieCoroutine());
         }
 
         IEnumerator DieCoroutine()
         {
             yield return new WaitForSeconds(1.5f);
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.DeathAnnouncement,Vector3.zero,null);
+
             Owner.CmdSpawnNewCharacter();
         }
     }

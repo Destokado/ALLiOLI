@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BombTrap : SimpleAnimationTrap
 {
+
+    
+
+
     [Header("Explosion configuration")] 
     [SerializeField] private Transform bombStartPosition;
     [SerializeField] private float force = 200;
@@ -14,6 +20,24 @@ public class BombTrap : SimpleAnimationTrap
     //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
     [SerializeField] private LayerMask ignoredBlockingLayers;
 
+    
+    private void Awake()
+    {
+        base.animManager = gameObject.GetComponent<SimpleAnimationsManager>();
+    }
+
+    protected override void Reload()
+    {
+        base.Reload();
+        if (base.resetEmitter.Event != null)
+            Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, resetEmitter.Event);
+        else
+        {
+            Debug.LogWarning($" The resetEmitter.Event  is null in {gameObject.name}");
+        }
+        //TODO: Stop VFX (maybe it needs to be in RPC)
+    }
+    
     public override void Activate()
     {
         base.Activate();

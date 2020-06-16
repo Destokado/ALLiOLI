@@ -38,12 +38,12 @@ public class Spawner : NetworkBehaviour
         GameObject character = Instantiate(prefab, spawnPoint, spawnCenter.rotation);
         character.GetComponent<Character>().OwnerNetId = playerOwnerNetId;
         NetworkServer.Spawn(character, playerOwnerConnectionToClient);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isServer)
-            return;
+        if(MatchManager.instance.thereIsWinner||!isServer) return;
         
         Character character = other.GetComponentInParent<Character>();
         if (character && character.HasFlag)

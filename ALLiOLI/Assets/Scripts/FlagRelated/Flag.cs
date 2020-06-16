@@ -75,7 +75,7 @@ public class Flag : NetworkBehaviour
     private void Attach()
     {
         Owner.Character.CmdSetHasFlag(true); 
-        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.pickUpPath,
+        Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.PickUp,
             transform.position, null);
     }
     

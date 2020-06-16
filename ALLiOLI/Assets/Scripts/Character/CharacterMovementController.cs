@@ -63,10 +63,10 @@ public class CharacterMovementController : NetworkBehaviour
         get => _running;
         set
         {
-            if (value&& !_running  )
-                Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.SoundEventPaths.runPath);
+            if (value&& !_running )
+                Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, SoundManager.EventPaths.Run);
             else if( !value && _running)
-                Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.runPath);
+                Client.LocalClient.SoundManagerOnline.StopEventOnGameObjectAllClients(netId,SoundManager.EventPaths.Run);
 
             _running = value;
         }
@@ -127,7 +127,7 @@ public class CharacterMovementController : NetworkBehaviour
 
         bool wantsToMove = desiredDisplacement.magnitude > voluntaryMovementStateThreshold;
         walking = onGround && wantsToMove;
-        
+        running = walking;
         if (walking) // On ground and wants to move
             Rigidbody.velocity = desiredDisplacement.WithY(Rigidbody.velocity.y);
         
@@ -164,6 +164,18 @@ public class CharacterMovementController : NetworkBehaviour
             tempOnGround = CheckIfTouchesGround(checkTransform.position);
             if (tempOnGround) break;
         }
+
+        Vector3 fallStartPos = Vector3.zero;
+        if (!tempOnGround && onGround) //It just stopped being grounded
+        {
+            fallStartPos = transform.position;
+        }
+        if (tempOnGround && !onGround) //It joust touched the ground
+        {
+            
+            PlaySoundFall(Mathf.Abs(fallStartPos.y-transform.position.y));
+        }
+        
         onGround = tempOnGround;
 
         Debug.DrawRay(transform.position, Vector3.up, onGround? Color.cyan : Color.gray);
@@ -186,7 +198,7 @@ public class CharacterMovementController : NetworkBehaviour
         if(!onGround) return;
         Rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
         // TODO: avoid jump sound if the jump has not been performed properly (the character got stucked in a wall)
-        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.SoundEventPaths.jumpPath); 
+        Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.EventPaths.Jump); 
     }
 
     private void OnDrawGizmosSelected()
@@ -204,10 +216,10 @@ public class CharacterMovementController : NetworkBehaviour
         //Calculates de distance of the fall
         fallingDistance = fallingDistance + transform.position.y;
         //The Max in the Clamp must be the Max range of the Event in FMOD.
-        fallingDistance = Mathf.Clamp(fallingDistance, 0, 2);
-        parameters[0] = new SoundManager.SoundManagerParameter("Height", fallingDistance);
+        fallingDistance = Mathf.Clamp(fallingDistance, 0, 5);
+        parameters[0] = new SoundManager.SoundManagerParameter("Distance", fallingDistance);
         if (onGround == false)
-            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.SoundEventPaths.landPath,
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.Land,
                 transform.position, parameters);
     }
 

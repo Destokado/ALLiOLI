@@ -53,6 +53,15 @@ public abstract class Trap : NetworkBehaviour
     {
         if (activateEmitter != null)
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, activateEmitter.Event);
+        else if(activateEmitter.Event.IsNullOrEmpty())
+        {
+            Debug.LogWarning($" The activateEmitter.event is Empty  in {gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning($" The activateEmitter is null in {gameObject.name}");
+
+        }
         cdTimer = cooldownTime;
         activatedTimer = durationTime;
         

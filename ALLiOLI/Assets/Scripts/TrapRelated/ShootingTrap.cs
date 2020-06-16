@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(SimpleAnimationsManager))]

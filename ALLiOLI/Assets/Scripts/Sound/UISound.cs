@@ -16,16 +16,16 @@ public class UISound : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        var path = SoundManager.SoundEventPaths.buttonHoverPath;
+        var path = SoundManager.EventPaths.ButtonHover;
         soundManager.PlayOneShotLocal(path, Vector3.zero, null);
     }
 
     public void OnButtonPressed()
     {
-        soundManager.PlayOneShotLocal(SoundManager.SoundEventPaths.buttonPath,Vector3.zero, null);
+        soundManager.PlayOneShotLocal(SoundManager.EventPaths.Button,Vector3.zero, null);
     }
     public void OnPlayButtonPressed()
     {
-        soundManager.PlayOneShotLocal(SoundManager.SoundEventPaths.playButtonPath,Vector3.zero, null);
+        soundManager.PlayOneShotLocal(SoundManager.EventPaths.PlayButton,Vector3.zero, null);
     }
 }
