@@ -21,7 +21,25 @@ public abstract class Trap : NetworkBehaviour
     [field: SyncVar] public float activatedTimer { get; private set; }
 
     [SerializeField] protected StudioEventEmitter activateEmitter;
+    [SerializeField] private Material myMaterial;
 
+    private void Awake()
+    {
+        myMaterial = GetComponentInChildren<Material>();
+    }
+
+    public bool isHighlighted
+    {
+        get => _isHighlighted;
+        set
+        {
+            if(value) myMaterial.EnableKeyword("IS_HIGHLIGHTED");
+            if(!value) myMaterial.DisableKeyword("IS_HIGHLIGHTED");
+            _isHighlighted = value;
+        }
+    }
+
+    private bool _isHighlighted;
     private void Update()
     {
         if (isServer)
