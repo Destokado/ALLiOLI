@@ -28,15 +28,17 @@ public class BattleCountdown : MatchPhase
 
     public override bool inGamingMode
     {
-        get => true; 
-        protected set{}
+        get => true;
+        protected set { }
     }
 
     public override void StartState()
     {
         base.StartState();
         MatchManager.instance.matchTimer = 3;
-        SoundManager.Instance.StopEventLocal(SoundManager.EventPaths.Music,true);
+        if (SoundManager.Instance.isPlaying(SoundManager.EventPaths.Music))
+            SoundManager.Instance.StopEventLocal(SoundManager.EventPaths.Music, true);
+        
         SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.CountDown, Vector3.zero);
     }
 

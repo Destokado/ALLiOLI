@@ -47,7 +47,7 @@ public class TrapActivator : NetworkBehaviour
         Character character = other.GetComponentInParent<Character>();
         if (character)
         {
-            SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.PickActivator,Vector3.zero, null);
+            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.PickActivator,transform.position,null);
             activated = false;
             remainingCoolDown = coolDownTime;
             character.Owner.trapActivators += 1;
