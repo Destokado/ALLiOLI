@@ -15,8 +15,6 @@ public class Player : NetworkBehaviour
     /// </summary>
     [Space] [SerializeField] private GameObject characterPrefab;
 
-    [Space] [SerializeField] private PlayerCamera playerCamera;
-
     /// <summary>
     /// A reference to the current active character for the player
     /// </summary>
@@ -38,7 +36,7 @@ public class Player : NetworkBehaviour
                             Debug.LogWarning($"The HumanLocalPlayer of the '{this.gameObject.name}' is null.", gameObject);
                         
                         HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
-                        playerCamera.cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
+                        HumanLocalPlayer.Camera.cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
                     }
                 }
                 if (value != null) value.freeLookCamera.Priority = 10;

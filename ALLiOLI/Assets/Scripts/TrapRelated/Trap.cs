@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FMODUnity;
 using Mirror;
 using Telepathy;
@@ -20,12 +21,17 @@ public abstract class Trap : NetworkBehaviour
     public bool isActive => activatedTimer > 0;
     [field: SyncVar] public float activatedTimer { get; private set; }
     
+    [NonSerialized] private List<MeshRenderer>myMeshes = new List<MeshRenderer>();
+    
     protected virtual void Awake()
     {
-        myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>();
+        myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
+        
+        MeshRenderer m = GetComponent<MeshRenderer>();
+        if (m != null && !myMeshes.Contains(m)) 
+            myMeshes.Add(m);
     }
 
-    [NonSerialized] private MeshRenderer[] myMeshes;
     public bool isHighlighted
     {
         get => _isHighlighted;
