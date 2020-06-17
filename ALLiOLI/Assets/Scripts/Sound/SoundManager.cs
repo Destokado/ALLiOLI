@@ -295,10 +295,9 @@ public class SoundManager : MonoBehaviour
     {
         public static string Music = "event:/Music";
         #region Character
-
+        
         public static string Jump = "event:/Character/Jump";
         public static string Run = "event:/Character/Run 2";
-        public static string ActivateTrapPath;
         public static string Land = "event:/Character/Land";
         public static string Death = "event:/Character/Death";
 
@@ -315,6 +314,12 @@ public class SoundManager : MonoBehaviour
 
         #region Traps
 
+        public static string ActivateTrap= "event:/Trap/Activate";
+        public static string Deny="event:/Trap/Deny";
+        public static string Alarm ="event:/Trap/Alarm";
+        public static string PickActivator ="event:/Trap/PickActivator";
+        
+        
         public static string BirdShitActivate = "event:/Trap/BirdShitActivate";
         public static string BirdShitHit = "event:/Trap/BirdShitHit";
         public static string BombActivate = "event:/Trap/BombActivate";

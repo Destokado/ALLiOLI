@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{45395dcd-6763-4e4c-a9e9-3481c88dc5a9}">
+		<property name="assetPath">
+			<value>stretch.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.52621315192743767</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8adead9d-e77b-41e4-b031-1e051b3c97c3}</destination>
+		</relationship>
+	</object>
+</objects>
