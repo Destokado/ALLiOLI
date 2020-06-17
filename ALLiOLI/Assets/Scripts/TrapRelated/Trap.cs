@@ -21,11 +21,11 @@ public abstract class Trap : NetworkBehaviour
     [field: SyncVar] public float activatedTimer { get; private set; }
 
     [SerializeField] protected StudioEventEmitter activateEmitter;
-    [SerializeField] private Material myMaterial;
+    [NonSerialized] private MeshRenderer[] myMeshes;
 
     protected virtual void Awake()
     {
-        myMaterial = GetComponentInChildren<MeshRenderer>().material;
+        myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
 
     public bool isHighlighted
@@ -33,8 +33,14 @@ public abstract class Trap : NetworkBehaviour
         get => _isHighlighted;
         set
         {
-            if(value) myMaterial.EnableKeyword("IS_HIGHLIGHTED");
-            if(!value) myMaterial.DisableKeyword("IS_HIGHLIGHTED");
+            if(value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.EnableKeyword("IS_HIGHLIGHTED");
+            
+            else if (!value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.DisableKeyword("IS_HIGHLIGHTED");
+
             _isHighlighted = value;
         }
     }

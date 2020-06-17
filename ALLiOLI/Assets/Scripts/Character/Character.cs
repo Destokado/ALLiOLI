@@ -56,8 +56,15 @@ public class Character : NetworkBehaviour
                 value.Character = this;
                 gameObject.name = "Character owned by " + value.gameObject.name;
                 transform.SetParent(value.transform, true);
-                freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
-                freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+                if (Owner.HumanLocalPlayer != null)
+                {
+                    freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
+                    freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+                }/*
+                else
+                {
+                    Debug.LogWarning($"The HumanLocalPlayer of the owner ({Owner.name}) is null.");
+                }*/
             }
             else
             {

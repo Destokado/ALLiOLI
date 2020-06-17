@@ -17,14 +17,23 @@ public class PlayerCamera : MonoBehaviour
         set
         {
             if (_humanLocalPlayer != null)
+            {
+                Debug.LogWarning("Trying to reset the HumanLocalPlayer of a PlayerCamera. Shouldn't be done");
+                
                 axisNameToHumanInput.Remove(_humanLocalPlayer.gameObject.name);
+            }
 
             _humanLocalPlayer = value;
 
             if (value != null)
             {
+                Debug.Log($"PlayerCamera has set the HumanLocalPlayer as {HumanLocalPlayer.gameObject.name} in {gameObject.name}", gameObject);
                 GameObject humanGameObject = value.gameObject;
                 axisNameToHumanInput.Add(humanGameObject.name, value);
+            }
+            else
+            {
+                Debug.LogWarning($"Setting a null HumanLocalPlayer in {gameObject.name}", gameObject);
             }
         }
     }
@@ -44,7 +53,10 @@ public class PlayerCamera : MonoBehaviour
     private float GetAxisCustom(string axisName)
     {
         if (axisNameToHumanInput.Count <= 0 || HumanLocalPlayer == null)
+        {
+            //Debug.LogWarning($"HUMANLOCALPLAYER IS {HumanLocalPlayer} and axisNameToHumanInput.Count is {axisNameToHumanInput.Count}", gameObject);
             return 0;
+        }
 
         Vector2 lookDelta = axisNameToHumanInput[axisName.Remove(axisName.Length - 1)].CameraMovement;
 
