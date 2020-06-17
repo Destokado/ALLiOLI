@@ -36,6 +36,7 @@ public class BattleCountdown : MatchPhase
     {
         base.StartState();
         MatchManager.instance.matchTimer = 3;
+        SoundManager.Instance.StopEventLocal(SoundManager.EventPaths.Music,true);
         SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.CountDown, Vector3.zero);
     }
 

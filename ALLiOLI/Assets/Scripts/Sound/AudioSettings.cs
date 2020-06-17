@@ -19,7 +19,7 @@ public class AudioSettings : MonoBehaviour
     
     
     float MusicVolume = 0.3f;
-    float FXVolume = 0.5f;
+    float FXVolume = 0.7f;
     float MasterVolume = 1f;
     float UIVolume = .7f;
     

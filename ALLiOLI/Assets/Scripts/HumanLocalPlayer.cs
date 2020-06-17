@@ -18,6 +18,7 @@ public class HumanLocalPlayer : MonoBehaviour
             {
                 _id = UnityEngine.Random.Range(0, int.MaxValue);
             }
+
             return _id;
         }
         private set { _id = value; }
@@ -44,10 +45,9 @@ public class HumanLocalPlayer : MonoBehaviour
             else if (_player != value)
             {
                 _player = value;
-                transform.SetParent(value? value.transform : null, true);
+                transform.SetParent(value ? value.transform : null, true);
                 SetDynamicName();
             }
-            
         }
     }
 
@@ -93,15 +93,18 @@ public class HumanLocalPlayer : MonoBehaviour
 
     public Vector2 CameraMovement
     {
-        get => !HasControl? Vector2.zero : _cameraMovement*ControlsConfiguration.Instance.sensitivity;
+        get => !HasControl ? Vector2.zero : _cameraMovement * ControlsConfiguration.Instance.sensitivity;
         private set => _cameraMovement = value;
     }
+
     // ReSharper disable once InconsistentNaming
     private Vector2 _cameraMovement;
-    
+
     public int localPlayerNumber;
-    
-    private bool HasControl => (!GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation && !GameManager.Instance.escapeOnEditor) || !Application.isFocused;
+
+    private bool HasControl =>
+        (!GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation &&
+         !GameManager.Instance.escapeOnEditor) || !Application.isFocused;
 
     private void SetDynamicName()
     {
@@ -142,6 +145,7 @@ public class HumanLocalPlayer : MonoBehaviour
             EnablePlayerInput();
             return;
         }
+
         PlayerInput.DeactivateInput();
         Invoke(nameof(EnablePlayerInput), time);
     }
@@ -175,10 +179,20 @@ public class HumanLocalPlayer : MonoBehaviour
         {
             case Battle p1:
             case WaitingForPlayers p2:
-                if (Player.trapActivators <= 0) return;
+                if (Player.trapActivators <= 0)
+                {
+                    if (!SoundManager.Instance.isPlaying(SoundManager.EventPaths.Deny))
+                        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.Deny, Vector3.zero, null);
+                    return;
+                }
+
                 Trap bestTrapToActivate = MatchManager.instance.AllTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
+                {
                     Player.CmdActivateTrap(bestTrapToActivate.netId);
+                    SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.ActivateTrap, Vector3.zero, null);
+                }
+
                 break;
         }
     }
@@ -198,15 +212,15 @@ public class HumanLocalPlayer : MonoBehaviour
     private void OnJump(InputValue value)
     {
         if (Player == null || Player.Character == null) return;
-        if (value.isPressed) 
+        if (value.isPressed)
             Player.Character.movementController.Jump();
     }
-    
+
     private void OnPause()
     {
         GameManager.Instance.PauseButtonPressed();
     }
-    
+
     private void OnEscape()
     {
         if (!Application.isEditor)
@@ -228,7 +242,5 @@ public class HumanLocalPlayer : MonoBehaviour
 
     public void PickUpAmmunition()
     {
-        
     }
-
 }
