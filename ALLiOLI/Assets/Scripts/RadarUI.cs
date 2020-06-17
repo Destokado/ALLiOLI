@@ -27,7 +27,7 @@ public class RadarUI : MonoBehaviour
             }
         }
 
-        if (closestTrap!=null)
+        if (closestTrap!=null&& !closestTrap.OnCd)
             closestTrap.isHighlighted = true;
 
         int img = 0;
