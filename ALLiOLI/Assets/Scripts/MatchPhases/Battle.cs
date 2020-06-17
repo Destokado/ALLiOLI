@@ -38,7 +38,8 @@ public class Battle : MatchPhase
         //FlagSpawner.Instance.ActivateFlags();
       //  MatchManager.instance.RpcKillAllCharacters();
       MatchManager.instance.RpcAllCharactersToSpawn();
-      SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Music, Vector3.zero);
+      Client.LocalClient.SoundManagerOnline.PlayEventInPosAllClients(SoundManager.EventPaths.Music, Vector3.zero);
+
         MatchManager.instance.ResetWinner();
         foreach (Client client in MatchManager.instance.clients)
         {

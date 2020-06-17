@@ -80,10 +80,17 @@ public class SoundManager : MonoBehaviour
 
     private EventInstance GetEventFromPath(string path)
     {
-        if (eventsList.ContainsKey(path)) return eventsList[path];
+        try
+        {
+            if (eventsList.ContainsKey(path)) return eventsList[path];
 
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogWarning($"The event with path {path} wasn't found in the {eventsList} dictionary");
+        }
+        return new EventInstance();
         //  Debug.LogWarning($"The event with path {path} wasn't found in the {eventsList} dictionary");
-        throw new KeyNotFoundException($"The event with path {path} wasn't found in the {eventsList} dictionary");
     }
 
     public void PlayOneShotLocal(string path, Vector3 pos, SoundManagerParameter[] parameters)
