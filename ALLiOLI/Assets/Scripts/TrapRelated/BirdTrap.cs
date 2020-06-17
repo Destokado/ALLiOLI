@@ -7,8 +7,9 @@ public class BirdTrap : Trap
     [SerializeField] private Rigidbody poo;
     [SerializeField] private float shitForce = 100;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 

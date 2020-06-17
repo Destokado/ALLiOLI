@@ -9,8 +9,9 @@ public class SimpleAnimationTrap : Trap
     protected SimpleAnimationsManager animManager;
    [SerializeField] protected StudioEventEmitter resetEmitter;
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
