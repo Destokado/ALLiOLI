@@ -40,8 +40,14 @@ public class LandingSceneManager : MonoBehaviour
         resetCursorTimer += Time.deltaTime;
         if (resetCursorTimer <= 5) 
             return;
-        
-        GameManager.SetCursorMode(false);
+
+        SetMenuCursor();
         resetCursorTimer = 0;
+    }
+    
+    private void SetMenuCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
