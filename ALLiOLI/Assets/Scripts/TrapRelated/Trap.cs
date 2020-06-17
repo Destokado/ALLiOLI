@@ -58,20 +58,12 @@ public abstract class Trap : NetworkBehaviour
             ServerUpdate();
     }
 
-    private bool isEnabled
-    {
-        set
-        {
-            if(value)
-                foreach (MeshRenderer mr in myMeshes)
-                    mr.material.EnableKeyword("IS_DISABLED"); //TODO: WHEN !Active && OnCd
-            
-            else if (!value)
-                foreach (MeshRenderer mr in myMeshes)
-                    mr.material.DisableKeyword("IS_DISABLED");
-        }
-    }
+    private float dissolvePercent;
+    private float dissolveSpeed = .01f;
+    private static readonly int DissolvePercent = Shader.PropertyToID("DISSOLVE_PERCENT");
 
+    private bool isEnabled  => !isActive && OnCd;
+    
     [Server]
     private void ServerUpdate()
     {
@@ -82,11 +74,32 @@ public abstract class Trap : NetworkBehaviour
             if (!isActive) Reload();
         }
 
-        if (!isActive && OnCd) isEnabled = false;
-        else
+        if (isEnabled)
         {
-            isEnabled = false;
+            if (dissolvePercent < 1)
+            {
+                dissolvePercent += dissolveSpeed;
+            }
         }
+
+        if (!isEnabled)
+        {
+            if (dissolvePercent > 0)
+            {
+                dissolvePercent -= dissolveSpeed;
+            }
+        }
+
+         dissolvePercent = Mathf.Clamp01(dissolvePercent);
+         
+         MaterialPropertyBlock bundle = new MaterialPropertyBlock();
+         foreach (MeshRenderer mr in myMeshes)
+         {
+             bundle.SetFloat( DissolvePercent,dissolvePercent);
+             mr.SetPropertyBlock(bundle);
+         }
+     
+        
     }
 
     [ContextMenu("Reload")]
