@@ -18,7 +18,7 @@ public class AudioSettings : MonoBehaviour
     private FMOD.Studio.VCA UI;
     
     
-    float MusicVolume = 0.3f;
+    float MusicVolume = 0.1f;
     float FXVolume = 0.7f;
     float MasterVolume = 1f;
     float UIVolume = .7f;

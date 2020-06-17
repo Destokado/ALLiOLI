@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
     public void PauseButtonPressed()
     {
         PauseMenuShowing = !PauseMenuShowing;
+        if(!PauseMenuShowing){}
     }
     
     public void SetPause(bool val)

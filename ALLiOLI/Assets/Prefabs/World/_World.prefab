@@ -3721,6 +3721,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 8764141426857911307, guid: 29aae8f061c20884e883287e69b059dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: SpawnerCamera
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6362876895590720171, guid: 29aae8f061c20884e883287e69b059dc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 29aae8f061c20884e883287e69b059dc, type: 3}

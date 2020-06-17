@@ -52,16 +52,16 @@ public class Flag : NetworkBehaviour
         this.gameObject.SetActive(newVal);
     }
 
-    //List<Character> charactersInTrigger = new List<Character>();
+    List<Character> charactersInTrigger = new List<Character>();
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponentInParent<Character>();
         
         if (!character || character.isDead || character != Owner.Character || character.HasFlag  ||  
-            /*charactersInTrigger.Contains(character) ||*/ !(MatchManager.instance.currentPhase is Battle))
+            charactersInTrigger.Contains(character) || !(MatchManager.instance.currentPhase is Battle))
             return;
 
-        //charactersInTrigger.Add(character);
+        charactersInTrigger.Add(character);
         Attach();
     }
 
@@ -79,11 +79,14 @@ public class Flag : NetworkBehaviour
             transform.position, null);
     }
     
-    public void SetDetachPosition()
+    public void Detach()
     {
+        
         Debug.Log($"Setting detach position {Owner.Character.transform.position} for ");
         Debug.DrawRay(Owner.Character.transform.position, Vector3.up, Owner.Color, 5f);
+        charactersInTrigger.Remove(Owner.Character);
         transform.position = Owner.Character.transform.position;
+        
     }
 
     public void Reset()
@@ -92,6 +95,8 @@ public class Flag : NetworkBehaviour
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
         gameObject.GetComponentRequired<Rigidbody>().velocity = Vector3.zero;
+        charactersInTrigger.Remove(Owner.Character);
+
     }
 
     public void SetOwnerColor()

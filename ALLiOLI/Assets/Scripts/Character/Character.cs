@@ -139,7 +139,7 @@ public class Character : NetworkBehaviour
             if (HasFlag)
             {
                 CmdSetHasFlag(false);
-                Owner.Flag.SetDetachPosition();
+                Owner.Flag.Detach();
             }
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId,SoundManager.EventPaths.Death);
             StartCoroutine(DieCoroutine());

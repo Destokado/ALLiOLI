@@ -228,8 +228,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2603928358129318467}
-  m_LocalRotation: {x: 0.086378254, y: -0.008153029, z: 0.0008837693, w: 0.9962287}
-  m_LocalPosition: {x: 158944160, y: -15010732, z: 1584231.1}
+  m_LocalRotation: {x: -0.57702804, y: 0.054476652, z: -0.00578608, w: -0.81488496}
+  m_LocalPosition: {x: 164630740, y: -15553134, z: 1602476.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9207622111445026258}
@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   freeLook: {fileID: 3397914554968537729}
   cinemachineBrain: {fileID: 2985370262938075103}
+  timeToKeepLookingToCorpse: 1.5
 --- !u!114 &6538428542913284359
 MonoBehaviour:
   m_ObjectHideFlags: 0

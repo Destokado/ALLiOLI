@@ -87,6 +87,11 @@ public class GameGuiManager : MonoBehaviour
     {
         this.pauseMenu.SetActive(show);
         currentMenu = Menu.PAUSE;
+        if (!show)
+        {
+            ShowControlsMenu(false);
+            ShowSettingsMenu(false);
+        }
     }
 
     public void Resume()
