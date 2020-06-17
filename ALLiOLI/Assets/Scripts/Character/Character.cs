@@ -46,17 +46,24 @@ public class Character : NetworkBehaviour
         {
             if (_owner != null)
             {
-                Debug.LogError("Trying to change the owner of a Character. Operation cancelled.");
+                Debug.LogError("Trying to change the owner of a Character. Operation cancelled.", gameObject);
                 return;
             }
 
             _owner = value;
-            value.Character = this;
-            gameObject.name = "Character owned by " + value.gameObject.name;
-            transform.SetParent(value.transform, true);
-            
-            freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
-            freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+            if (value != null)
+            {
+                value.Character = this;
+                gameObject.name = "Character owned by " + value.gameObject.name;
+                transform.SetParent(value.transform, true);
+                freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
+                freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+            }
+            else
+            {
+                Debug.LogWarning("Setting a null Owner", gameObject);
+                transform.SetParent(null, true);
+            }
             
             UpdateColor();
         }
