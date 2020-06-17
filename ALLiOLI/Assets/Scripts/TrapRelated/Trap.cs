@@ -14,23 +14,18 @@ public abstract class Trap : NetworkBehaviour
     [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
     [SerializeField] protected RadarTriggerTrap radarTrigger;
     [SerializeField] protected StudioEventEmitter activateEmitter;
-    [SerializeField] private Material myMaterial;
 
     public bool OnCd => cdTimer > 0;
     [field: SyncVar] public float cdTimer { get; private set; }
     public bool isActive => activatedTimer > 0;
     [field: SyncVar] public float activatedTimer { get; private set; }
-
-
-    [SerializeField] protected StudioEventEmitter activateEmitter;
-    [NonSerialized] private MeshRenderer[] myMeshes;
-
-
+    
     protected virtual void Awake()
     {
         myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>();
     }
 
+    [NonSerialized] private MeshRenderer[] myMeshes;
     public bool isHighlighted
     {
         get => _isHighlighted;
@@ -61,8 +56,13 @@ public abstract class Trap : NetworkBehaviour
     {
         set
         {
-            if (value) myMaterial.EnableKeyword("IS_DISABLED"); //TODO: WHEN !Active && OnCd
-            if (!value) myMaterial.DisableKeyword("IS_DISABLED");
+            if(value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.EnableKeyword("IS_DISABLED"); //TODO: WHEN !Active && OnCd
+            
+            else if (!value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.DisableKeyword("IS_DISABLED");
         }
     }
 
