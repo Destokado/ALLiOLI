@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FMODUnity;
 using Mirror;
 using Telepathy;
@@ -14,17 +15,21 @@ public abstract class Trap : NetworkBehaviour
     [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
     [SerializeField] protected RadarTriggerTrap radarTrigger;
     [SerializeField] protected StudioEventEmitter activateEmitter;
-    [SerializeField] private Material myMaterial;
 
     public bool OnCd => cdTimer > 0;
     [field: SyncVar] public float cdTimer { get; private set; }
     public bool isActive => activatedTimer > 0;
     [field: SyncVar] public float activatedTimer { get; private set; }
-
-
+    
+    [NonSerialized] private List<MeshRenderer>myMeshes = new List<MeshRenderer>();
+    
     protected virtual void Awake()
     {
-        myMaterial = GetComponentInChildren<MeshRenderer>().material;
+        myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
+        
+        MeshRenderer m = GetComponent<MeshRenderer>();
+        if (m != null && !myMeshes.Contains(m)) 
+            myMeshes.Add(m);
     }
 
     public bool isHighlighted
@@ -32,8 +37,15 @@ public abstract class Trap : NetworkBehaviour
         get => _isHighlighted;
         set
         {
-            if (value) myMaterial.EnableKeyword("IS_HIGHLIGHTED");
-            if (!value) myMaterial.DisableKeyword("IS_HIGHLIGHTED");
+
+            if(value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.EnableKeyword("IS_HIGHLIGHTED");
+            
+            else if (!value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.DisableKeyword("IS_HIGHLIGHTED");
+
             _isHighlighted = value;
         }
     }
@@ -50,8 +62,13 @@ public abstract class Trap : NetworkBehaviour
     {
         set
         {
-            if (value) myMaterial.EnableKeyword("IS_DISABLED"); //TODO: WHEN !Active && OnCd
-            if (!value) myMaterial.DisableKeyword("IS_DISABLED");
+            if(value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.EnableKeyword("IS_DISABLED"); //TODO: WHEN !Active && OnCd
+            
+            else if (!value)
+                foreach (MeshRenderer mr in myMeshes)
+                    mr.material.DisableKeyword("IS_DISABLED");
         }
     }
 

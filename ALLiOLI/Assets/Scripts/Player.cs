@@ -15,8 +15,6 @@ public class Player : NetworkBehaviour
     /// </summary>
     [Space] [SerializeField] private GameObject characterPrefab;
 
-    [Space] [SerializeField] private PlayerCamera playerCamera;
-
     /// <summary>
     /// A reference to the current active character for the player
     /// </summary>
@@ -29,10 +27,17 @@ public class Player : NetworkBehaviour
             {
                 if (value != null & _character != null)
                 {
-                    float blendingTime = 0.8f + 0.045f * Vector3.Distance(value.transform.position, _character.transform.position);
-                    Debug.Log($"BT: {blendingTime}");
-                    playerCamera.cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
-                    HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
+                    //Debug.Log($"BT: {blendingTime} for brain '{(playerCamera? "#PlayerCameraIsNull_ERROR" : playerCamera.cinemachineBrain.name)}' accessed trough '{playerCamera}'");
+                    if (value.Owner._client.isLocalClient)
+                    {
+                        float blendingTime = 0.8f + 0.045f * Vector3.Distance(value.transform.position, _character.transform.position);
+                        
+                        if (HumanLocalPlayer == null) 
+                            Debug.LogWarning($"The HumanLocalPlayer of the '{this.gameObject.name}' is null.", gameObject);
+                        
+                        HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
+                        HumanLocalPlayer.Camera.cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
+                    }
                 }
                 if (value != null) value.freeLookCamera.Priority = 10;
                 if (_character != null) _character.freeLookCamera.Priority = 5;
@@ -107,6 +112,10 @@ public class Player : NetworkBehaviour
             {
                 _humanLocalPlayer.Player = this;
                 HumanLocalPlayer.localPlayerNumber = Client.LocalClient.PlayersManager.players.Count;
+            }
+            else
+            {
+                Debug.LogWarning($"Setting a null HumanLocalPlayer in {gameObject.name}", gameObject);
             }
         }
     }
@@ -187,12 +196,14 @@ public class Player : NetworkBehaviour
         foreach (HumanLocalPlayer human in allHumans)
             if (human.id == idOfHumanLocalPlayer)
             {
+                //Debug.Log($"Setting Human {human} with id '{human.id}', same as '{idOfHumanLocalPlayer}'", gameObject);
                 HumanLocalPlayer = human;
                 break;
             }
 
         if (hasAuthority)
         {
+            //Debug.Log("Spawning character");
             trapActivators = startTrapActivators;
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
