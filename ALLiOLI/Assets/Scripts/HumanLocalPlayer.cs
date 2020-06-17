@@ -72,13 +72,13 @@ public class HumanLocalPlayer : MonoBehaviour
     private PlayerInput _playerInput;
 
 
-    public CmCamera Camera
+    public PlayerCamera Camera
     {
         get
         {
             if (_camera == null)
             {
-                _camera = PlayerInput.camera.gameObject.GetComponentRequired<CmCamera>();
+                _camera = PlayerInput.camera.gameObject.GetComponentRequired<PlayerCamera>();
                 _camera.HumanLocalPlayer = this;
                 _camera.SetLayer(localPlayerNumber + 10, PlayerInput.camera);
             }
@@ -89,7 +89,7 @@ public class HumanLocalPlayer : MonoBehaviour
     }
 
     // ReSharper disable once InconsistentNaming
-    private CmCamera _camera;
+    private PlayerCamera _camera;
 
     public Vector2 CameraMovement
     {

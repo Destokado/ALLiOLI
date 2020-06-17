@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class Character : NetworkBehaviour
     [SerializeField] public Transform cameraTarget;
     [SerializeField] public GameObject flagGameObject;
 
+    private bool wasOnHell;
+    
     [SyncVar] public Vector3 synchronizedVelocity;
     [Command]
     public void CmdSyncVelocity(Vector3 velocity)
@@ -35,7 +38,7 @@ public class Character : NetworkBehaviour
     public bool HasFlag => _hasFlag;
 
     [SerializeField] private SkinnedMeshRenderer[] meshRenderersToColor;
-
+    
     public Player Owner
     {
         get => _owner;
@@ -51,6 +54,10 @@ public class Character : NetworkBehaviour
             value.Character = this;
             gameObject.name = "Character owned by " + value.gameObject.name;
             transform.SetParent(value.transform, true);
+            
+            freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
+            freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+            
             UpdateColor();
         }
     }
@@ -74,6 +81,9 @@ public class Character : NetworkBehaviour
 
     [Header("Ragdoll")] [SerializeField] private Collider mainCollider;
     [SerializeField] private Transform cameraRagdollLookAtTarget;
+    
+    [Header("Camera")]
+    [SerializeField] public CinemachineFreeLook freeLookCamera;
 
     [field: SyncVar(hook = nameof(NewDeadState))]
     public bool isDead { get; private set; }
@@ -177,7 +187,7 @@ public class Character : NetworkBehaviour
         }
 
         if (Owner != null && Owner.HumanLocalPlayer)
-            Owner.HumanLocalPlayer.Camera.ForceSetLookAt(cameraRagdollLookAtTarget);
+            freeLookCamera.LookAt = cameraRagdollLookAtTarget;
     }
 
     private void Update()
@@ -195,8 +205,18 @@ public class Character : NetworkBehaviour
         {
             Debug.Log($"The character {gameObject.name} of the player {Owner.name} was caught trying to get out of the map! Killing it.", gameObject);
             Kill();
+            wasOnHell = true;
         }
-        
-        
+
+        if (wasOnHell && transform.position.y < MapBoundries.HeavenHeight)
+        {
+            float distance = MapBoundries.HeavenHeight - transform.position.y;
+            Vector3 transformPosition = transform.position;
+            transformPosition.y = transformPosition.y+MapBoundries.HeavenAttraction*Time.deltaTime;
+            transform.position = transformPosition;
+        }
+
     }
+    
+
 }

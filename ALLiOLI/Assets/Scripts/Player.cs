@@ -5,6 +5,7 @@ using Cinemachine;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [SelectionBase]
 public class Player : NetworkBehaviour
@@ -14,6 +15,8 @@ public class Player : NetworkBehaviour
     /// </summary>
     [Space] [SerializeField] private GameObject characterPrefab;
 
+    [Space] [SerializeField] private PlayerCamera playerCamera;
+
     /// <summary>
     /// A reference to the current active character for the player
     /// </summary>
@@ -22,13 +25,20 @@ public class Player : NetworkBehaviour
         get => _character;
         set
         {
-            _character = value;
             if (IsControlledLocally)
             {
-                float blendingTime =
-                    HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget, value.transform);
-                HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
+                if (value != null & _character != null)
+                {
+                    float blendingTime = 0.8f + 0.045f * Vector3.Distance(value.transform.position, _character.transform.position);
+                    Debug.Log($"BT: {blendingTime}");
+                    playerCamera.cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
+                    HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
+                }
+                if (value != null) value.freeLookCamera.Priority = 10;
+                if (_character != null) _character.freeLookCamera.Priority = 5;
             }
+            
+            _character = value;
         }
     }
 
