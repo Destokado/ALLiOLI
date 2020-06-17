@@ -1,0 +1,9 @@
+diff a/ALLiOLI/Assets/Scripts/CmCamera.cs b/ALLiOLI/Assets/Scripts/CmCamera.cs	(rejected hunks)
+@@ -11,6 +11,7 @@
+     [SerializeField] private CinemachineFreeLook freeLook;
+     [SerializeField] private CinemachineBrain cinemachineBrain;
+ 
++    [SerializeField] public float timeToKeepLookingToCorpse;
+     public HumanLocalPlayer HumanLocalPlayer
+     {
+         get => _humanLocalPlayer;

@@ -27,7 +27,7 @@ public class Player : NetworkBehaviour
             {
                 float blendingTime =
                     HumanLocalPlayer.Camera.SetTargetWithCinematics(value.cameraTarget, value.transform);
-                HumanLocalPlayer.DisablePlayerInputDuring(blendingTime+HumanLocalPlayer.Camera.timeToKeepLookingToCorpse);
+                HumanLocalPlayer.DisablePlayerInputDuring(blendingTime);
             }
         }
     }

@@ -10,8 +10,7 @@ public class CmCamera : MonoBehaviour
 
     [SerializeField] private CinemachineFreeLook freeLook;
     [SerializeField] private CinemachineBrain cinemachineBrain;
-
-    [SerializeField] public float timeToKeepLookingToCorpse;
+    [SerializeField] private float blendVelocity=1f;
     public HumanLocalPlayer HumanLocalPlayer
     {
         get => _humanLocalPlayer;
@@ -42,9 +41,8 @@ public class CmCamera : MonoBehaviour
     private void Awake()
     {
         CinemachineCore.GetInputAxis = GetAxisCustom;
-        timeToKeepLookingToCorpse = cinemachineBrain.m_DefaultBlend.m_Time;
     }
-    
+
     private float GetAxisCustom(string axisName)
     {
         if (axisNameToHumanInput.Count <= 0 || HumanLocalPlayer == null)
@@ -66,6 +64,7 @@ public class CmCamera : MonoBehaviour
 
     public float SetTargetWithCinematics(Transform target, Transform follow)
     {
+        Vector3 oldPos =  freeLook.LookAt?freeLook.LookAt.position:Vector3.zero;
         if (!initialized)
         {
             freeLook.Follow = follow;
@@ -73,41 +72,36 @@ public class CmCamera : MonoBehaviour
             initialized = true;
             return 0f;
         }
-        else
-        {
-           // float blendingTime = cinemachineBrain.m_DefaultBlend.m_Time; //TODO: Make it depeendant from distance to Spawn
-           float blendingTime = GetDistanceBlendingTime(follow.position);
-           cinemachineBrain.m_DefaultBlend.m_Time = blendingTime;
-           Debug.Log(blendingTime);
-            StartCoroutine(ReSetCamera(target, follow, blendingTime));
-            return blendingTime;
-        }
+
+
+        float blendingTime = GetDistanceBlendingTime(oldPos);
+        Debug.Log(blendingTime);
+        cinemachineBrain.m_DefaultBlend.m_Time = blendingTime ;
+        StartCoroutine(ReSetCamera(target, follow,blendingTime));
+        return blendingTime;
     }
 
     private float GetDistanceBlendingTime(Vector3 startPos)
     {
-      // return cinemachineBrain.m_DefaultBlend.m_Time * Mathf.InverseLerp(.1f,cinemachineBrain.m_DefaultBlend.m_Time,Vector3.Distance(startPos, Spawner.Instance.transform.position)) ;
-       return cinemachineBrain.m_DefaultBlend.m_Time * Mathf.InverseLerp(.1f,FlagSpawner.Instance.transform.position.magnitude,Vector3.Distance(startPos, Spawner.Instance.transform.position)) ;
+        Debug.Log(startPos);
+        Debug.Log(Spawner.Instance.transform.position);
+        //Debug.Break();
+        Debug.DrawLine(startPos,Spawner.Instance.transform.position,Color.red,10);
+        return blendVelocity*0.05f * Vector3.Distance(startPos, Spawner.Instance.transform.position);
     }
 
-    private IEnumerator ReSetCamera(Transform target, Transform follow, float blendingTime)
+    private IEnumerator ReSetCamera(Transform target, Transform follow,float blendingTime)
     {
         freeLook.Priority = 1;
-        
-        yield return new WaitForSeconds(timeToKeepLookingToCorpse);
-        
+
+        yield return new WaitForSeconds(blendingTime);
         freeLook.Follow = follow;
         freeLook.LookAt = target;
         freeLook.Priority = 10;
-
-        AxisState x = freeLook.m_XAxis;
-        AxisState y = freeLook.m_YAxis;
         
         //TODO: DoRecenter instead? so the recenter time in the inspector is separated from this one
-        freeLook.m_YAxisRecentering.DoRecentering( ref y,blendingTime,0.5f);
-        freeLook.m_RecenterToTargetHeading.DoRecentering( ref x,blendingTime,0);
-        // freeLook.m_YAxisRecentering.RecenterNow(); 
-       // freeLook.m_RecenterToTargetHeading.RecenterNow();
+        freeLook.m_YAxisRecentering.RecenterNow();
+        freeLook.m_RecenterToTargetHeading.RecenterNow();
     }
 
     public void SetLayer(int layer, Camera cameraComponent)
