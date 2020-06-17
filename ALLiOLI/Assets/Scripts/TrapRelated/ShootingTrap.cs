@@ -10,8 +10,9 @@ public class ShootingTrap : Trap
     [SerializeField] private float throwSpeed;
     private Vector3 throwDirection => radarTrigger.transform.forward;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 

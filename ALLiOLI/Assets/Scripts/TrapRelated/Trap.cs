@@ -23,9 +23,9 @@ public abstract class Trap : NetworkBehaviour
     [SerializeField] protected StudioEventEmitter activateEmitter;
     [SerializeField] private Material myMaterial;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        myMaterial = GetComponentInChildren<Material>();
+        myMaterial = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public bool isHighlighted
