@@ -69,7 +69,7 @@ MonoBehaviour:
   activeTime: 1
   radarTrigger: {fileID: 7516821138722849392}
   activateEmitter: {fileID: 5655250518595342135}
-  dissolveSpeed: 0.05
+  dissolveDuration: 1
   poo: {fileID: 6542530484790526000}
   shitForce: 50
 --- !u!114 &5655250518595342135
@@ -119,7 +119,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.45
   m_Height: 5.65
   m_Direction: 1
   m_Center: {x: 0, y: -0.5724411, z: 0}

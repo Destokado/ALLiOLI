@@ -811,9 +811,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cooldownTime: 4
-  durationTime: 1.5
+  activeTime: 1.5
   radarTrigger: {fileID: 2109852728291271529}
   activateEmitter: {fileID: 15903126566205365}
+  dissolveDuration: 1
 --- !u!114 &7080646428410072636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2619,12 +2620,12 @@ PrefabInstance:
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.z
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.x
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}

@@ -442,9 +442,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cooldownTime: 5
-  durationTime: 3
+  activeTime: 3
   radarTrigger: {fileID: 8512261324401487773}
   activateEmitter: {fileID: 7673681270597264669}
+  dissolveDuration: 1
   resetEmitter: {fileID: 0}
   animManager: {fileID: 2482306002497385325}
 --- !u!114 &3589215838413155095
@@ -718,7 +719,7 @@ PrefabInstance:
     - target: {fileID: 2648026877294383129, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Name
-      value: RadarHolder
+      value: Radar
       objectReference: {fileID: 0}
     - target: {fileID: 2648026877294383129, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -778,7 +779,7 @@ PrefabInstance:
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.z
-      value: 7.7426214
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -788,7 +789,7 @@ PrefabInstance:
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_Size.x
-      value: 5.48952
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4927384128543305752, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}

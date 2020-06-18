@@ -51,6 +51,9 @@ public class RadarTriggerTrap : MonoBehaviour
 
         Gizmos.color = new Color(1f, 0f, 1f, 0.25f);
         Gizmos.DrawSphere(pointOfMaxEffectivity.position, maximumRadarDistance);
+        
+        Gizmos.color = new Color(0f, 0f, 0f, 0.6f);
+        Gizmos.DrawSphere(pointOfMaxEffectivity.position, 0.1f);
     }
 #endif
 }
