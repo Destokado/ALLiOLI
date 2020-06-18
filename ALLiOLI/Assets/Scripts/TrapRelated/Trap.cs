@@ -80,19 +80,19 @@ public abstract class Trap : NetworkBehaviour
         if (isServer)
             ServerUpdate();
         
-        if (isEnabled)
-        {
-            if (dissolvePercent < 1)
-            {
-                dissolvePercent += dissolveSpeed;
-            }
-        }
-
-        if (!isEnabled)
+        if (isVisible)
         {
             if (dissolvePercent > 0)
             {
-                dissolvePercent -= dissolveSpeed;
+                dissolvePercent -= dissolveDuration*Time.deltaTime;
+            }
+        }
+
+        if (!isVisible)
+        {
+            if (dissolvePercent < 1)
+            {
+                dissolvePercent += dissolveDuration*Time.deltaTime;
             }
         }
 
@@ -105,11 +105,12 @@ public abstract class Trap : NetworkBehaviour
 
     }
 
-    private float dissolvePercent;
-   [SerializeField] private float dissolveSpeed = .01f;
+    private float dissolvePercent; 
+    [SerializeField] private float dissolveDuration = 1f;
     private static readonly int DissolvePercent = Shader.PropertyToID("DISSOLVE_PERCENT");
 
-    private bool isEnabled  => !isActive && OnCd;
+    private bool isVisible  => isActive || !OnCd;
+    private bool reloaded;
     
     [Server]
     private void ServerUpdate()
@@ -118,7 +119,14 @@ public abstract class Trap : NetworkBehaviour
         if (isActive)
         {
             activatedTimer -= Time.deltaTime;
-            if (!isActive) Reload();
+            reloaded = false;
+        }
+        else
+        {
+            if (dissolvePercent >=1 && !reloaded)
+            {
+                Reload();
+            }
         }
         
     }
@@ -127,7 +135,8 @@ public abstract class Trap : NetworkBehaviour
     [Server]
     protected virtual void Reload()
     {
-        Debug.Log($"The trap '{gameObject.name}' is being deactivated. Reloading.", this.gameObject);
+        reloaded = true;
+        Debug.Log($"The trap '{gameObject.name}' is being reloaded.", this.gameObject);
     }
 
     [ContextMenu("Activate")]
