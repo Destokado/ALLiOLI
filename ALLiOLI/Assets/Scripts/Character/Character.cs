@@ -5,6 +5,7 @@ using Cinemachine;
 using Mirror;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [SelectionBase]
 [RequireComponent(typeof(CharacterMovementController))]
@@ -21,6 +22,7 @@ public class Character : NetworkBehaviour
     {
         synchronizedVelocity = velocity;
     }
+
     
     [Command]
     public void CmdSetHasFlag(bool value)
@@ -96,7 +98,8 @@ public class Character : NetworkBehaviour
 
     [Header("Ragdoll")] [SerializeField] private Collider mainCollider;
     [SerializeField] private Transform cameraRagdollLookAtTarget;
-    
+    [SerializeField] private GameObject[] ragdollVisualElements;
+
     [Header("Camera")]
     [SerializeField] public CinemachineFreeLook freeLookCamera;
 
@@ -203,6 +206,10 @@ public class Character : NetworkBehaviour
             ragdollRb.isKinematic = false;
             ragdollRb.velocity = currentVelocity;
         }
+        
+        // Remove oppacity shader
+        foreach (GameObject ragdollElement in ragdollVisualElements)
+            ragdollElement.layer = 0;
 
         if (Owner != null && Owner.HumanLocalPlayer)
             freeLookCamera.LookAt = cameraRagdollLookAtTarget;
