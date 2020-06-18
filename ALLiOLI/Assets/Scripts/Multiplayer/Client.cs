@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class Client : NetworkBehaviour
 {
     [field: SyncVar] public int clientId { get; private set; }
+    [field: SyncVar] public string customName { get; private set; }
 
     public static Client LocalClient
     {
@@ -67,14 +68,23 @@ public class Client : NetworkBehaviour
 
         gameObject.name = "Client " + clientId;
     }
-
+    
     // Called on the local client (when this NetworkBehaviour is network-ready)
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
         LocalClient = this;
         PlayersManager.playerInputManager.enabled = true;
+
+        CmdSynchCrustomName(GlobalConfiguration.Instance.clientName);
         // GameManager.Instance.GUI.UpdateOnlineLobby(false);
+    }
+
+    [Command]
+    private void CmdSynchCrustomName(string name)
+    {
+        customName = name;
+        Debug.Log($"Got the name '{name}' for the Client.");
     }
 
     //Called on remaining clients, when a client disconnects

@@ -6,11 +6,11 @@ public class ControlsSettings : MonoBehaviour
 {
     public void NewSensitivity (float value)
     {
-        ControlsConfiguration.Instance.sensitivity = value;
+        GlobalConfiguration.Instance.sensitivity = value;
     }
     
     public void NewSplitScreen (bool value)
     {
-        ControlsConfiguration.Instance.splitScreen = value;
+        GlobalConfiguration.Instance.splitScreen = value;
     }
 }

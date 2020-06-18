@@ -19,8 +19,9 @@ public class OLDProjectileTrap : Trap
     private NetworkPool pool;
     private EasyRandom random;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         pool = gameObject.GetComponentRequired<NetworkPool>();
         random = new EasyRandom();
     }

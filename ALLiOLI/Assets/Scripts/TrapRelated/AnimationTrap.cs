@@ -9,8 +9,9 @@ public class AnimationTrap : Trap
 {
     private NetworkAnimator trapAnimator;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         trapAnimator = gameObject.GetComponentRequired<NetworkAnimator>();
     }
 

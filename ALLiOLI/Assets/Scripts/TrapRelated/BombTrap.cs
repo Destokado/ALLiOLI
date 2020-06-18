@@ -20,9 +20,10 @@ public class BombTrap : SimpleAnimationTrap
     //[SerializeField] private ForceMode forceMode = ForceMode.Impulse;
     [SerializeField] private LayerMask ignoredBlockingLayers;
 
-    
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         base.animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 
