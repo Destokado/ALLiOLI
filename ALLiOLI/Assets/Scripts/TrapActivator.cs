@@ -9,9 +9,12 @@ using UnityEngine;
 public class TrapActivator : NetworkBehaviour
 {
     [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]
-    [SerializeField] private GameObject[] objectsToSynchronize;
-    
-    [SyncVar (hook = nameof(NewActivationState))] private bool activated = true;
+    [SerializeField]
+    private GameObject[] objectsToSynchronize;
+
+    [SyncVar(hook = nameof(NewActivationState))]
+    private bool activated = true;
+
     private void NewActivationState(bool oldValue, bool newValue)
     {
 //        Debug.Log("NewActivationState");
@@ -33,7 +36,7 @@ public class TrapActivator : NetworkBehaviour
 
     private void Update()
     {
-        if ( !isServer || (remainingCoolDown <= 0) ) return;
+        if (!isServer || (remainingCoolDown <= 0)) return;
 
         remainingCoolDown -= Time.deltaTime;
         if (remainingCoolDown <= 0)
@@ -47,7 +50,7 @@ public class TrapActivator : NetworkBehaviour
         Character character = other.GetComponentInParent<Character>();
         if (character)
         {
-            Client.LocalClient.SoundManagerOnline.PlayOneShotOnPosAllClients(SoundManager.EventPaths.PickActivator,transform.position,null);
+            SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.PickActivator, transform.position, null);
             activated = false;
             remainingCoolDown = coolDownTime;
             character.Owner.trapActivators += 1;
