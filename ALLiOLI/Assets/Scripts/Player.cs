@@ -169,7 +169,11 @@ public class Player : NetworkBehaviour
     }
 
     public static int startTrapActivators = 3;
-    
+    [Command]
+    public void CmdSetActivators(int count)
+    {
+        trapActivators = count;
+    }
     [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))]
     public int trapActivators = -1;
 
@@ -220,7 +224,7 @@ public class Player : NetworkBehaviour
         if (hasAuthority)
         {
             //Debug.Log("Spawning character");
-            trapActivators = startTrapActivators;
+            CmdSetActivators(startTrapActivators);
             CmdSetupPlayerOnServer();
             CmdSpawnNewCharacter();
             CmdSpawnNewFlag();

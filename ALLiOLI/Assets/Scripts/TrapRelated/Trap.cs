@@ -143,6 +143,12 @@ public abstract class Trap : NetworkBehaviour
     [Server]
     public virtual void Activate()
     {
+        if (OnCd)
+        {
+            Debug.LogWarning($"Trying to activate {this.gameObject.name} but it is on Oc. Remaning CD = {cdTimer}");
+            return;
+        }
+        
         if (activateEmitter != null)
             Client.LocalClient.SoundManagerOnline.PlayEventOnGameObjectAllClients(netId, activateEmitter.Event);
         else if (activateEmitter.Event.IsNullOrEmpty())

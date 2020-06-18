@@ -190,8 +190,15 @@ public class HumanLocalPlayer : MonoBehaviour
                 Trap bestTrapToActivate = MatchManager.instance.AllTraps.GetBestTrapToActivate(Player);
                 if (bestTrapToActivate != null)
                 {
-                    Player.CmdActivateTrap(bestTrapToActivate.netId);
-                    SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.ActivateTrap, Vector3.zero, null);
+                    if (bestTrapToActivate.OnCd)
+                    {
+                        Debug.LogWarning($"Trying to activate {bestTrapToActivate} but it is on Oc. Remaning CD = {bestTrapToActivate.cdTimer}");
+                    }
+                    else
+                    {
+                        Player.CmdActivateTrap(bestTrapToActivate.netId);
+                        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.ActivateTrap, Vector3.zero, null);
+                    }
                 }
 
                 break;
