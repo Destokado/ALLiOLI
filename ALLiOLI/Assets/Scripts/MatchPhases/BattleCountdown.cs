@@ -36,10 +36,7 @@ public class BattleCountdown : MatchPhase
     {
         base.StartState();
         MatchManager.instance.matchTimer = 3;
-        if (SoundManager.Instance.isPlaying(SoundManager.EventPaths.Music))
-            SoundManager.Instance.StopEventLocal(SoundManager.EventPaths.Music, true);
-        
-        SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.CountDown, Vector3.zero);
+        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.CountDown, Vector3.zero,null);
     }
 
     public override void UpdateState(float deltaTime)

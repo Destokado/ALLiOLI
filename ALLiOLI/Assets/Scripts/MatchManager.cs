@@ -184,12 +184,11 @@ public class MatchManager : NetworkBehaviour
         }
     }
 
-    private EventInstance outcomeInstance;
+   
 
     public void FlagAtSpawn(Player carrier)
     {
-        SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Finish, Vector3.zero);
-        outcomeInstance.setVolume(50f);
+        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.Finish, Vector3.zero,null);
         roundWinnerPlayerNetId = carrier.netId;
         StartCoroutine(PlayResult(carrier));
     }
@@ -203,7 +202,7 @@ public class MatchManager : NetworkBehaviour
             : SoundManager.EventPaths.Defeat;
 
         if (!path.IsNullOrEmpty())
-            outcomeInstance = SoundManager.Instance.PlayEventMovingLocal(path, carrier.Character.transform);
+            SoundManager.Instance.PlayOneShotMovingLocal(path, carrier.Character.transform);
     }
 
     [Server]
