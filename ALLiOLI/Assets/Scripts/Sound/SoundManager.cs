@@ -308,16 +308,11 @@ public class SoundManager : MonoBehaviour
         #region Character
         
         public static string Jump = "event:/Character/Jump";
-        public static string Run = "event:/Character/Run 2";
+        public static string Run = "event:/Character/Run";
         public static string Land = "event:/Character/Land";
         public static string Death = "event:/Character/Death";
-
-        public static string
-            WallHit =
-                "event:/Character/WallHit"; //TODO: Make the character detect collisions with walls when sent away by traps
-
         public static string Spawn = "event:/Character/Spawn";
-        public static string Win = "event:/Character/Win2";
+        public static string Win = "event:/Character/Win";
         public static string Defeat = "event:/Character/Defeat";
         public static string PickUp = "event:/Character/FlagPickup";
 
@@ -326,9 +321,7 @@ public class SoundManager : MonoBehaviour
         #region Traps
 
         public static string ActivateTrap= "event:/Trap/Activate";
-        public static string Deny="event:/Trap/Deny";
-        public static string Alarm ="event:/Trap/Alarm";
-        public static string PickActivator ="event:/Trap/PickActivator";
+       
         
         
         public static string BirdShitActivate = "event:/Trap/BirdShitActivate";
@@ -352,7 +345,9 @@ public class SoundManager : MonoBehaviour
         #endregion
 
         #region UI
-
+        public static string Deny="event:/UI/Deny";
+        public static string Alarm ="event:/UI/Alarm";
+        public static string PickActivator ="event:/UI/PickActivator";
         public static string Button = "event:/UI/Button";
         public static string PlayButton = "event:/UI/PlayButton";
         public static string FlagAnnouncement = "event:/UI/FlagAnnounce";

@@ -165,8 +165,11 @@
 	</object>
 	<object class="MixerBusFader" id="{bdade162-b62f-487d-9008-feed58803f98}" />
 	<object class="SFXReverbEffect" id="{9049b532-144d-4cae-a9cd-9eac0d2f4407}">
+		<property name="decayTime">
+			<value>3400</value>
+		</property>
 		<property name="wetLevel">
-			<value>-19.5</value>
+			<value>-13.5</value>
 		</property>
 	</object>
 </objects>

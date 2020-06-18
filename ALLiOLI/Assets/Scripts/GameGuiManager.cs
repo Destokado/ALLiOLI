@@ -31,6 +31,7 @@ public class GameGuiManager : MonoBehaviour
         // Set start values
         preLobby.SetActive(true);
         pauseMenu.SetActive(false);
+        controlsMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 

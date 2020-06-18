@@ -66,9 +66,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   cooldownTime: 3
-  durationTime: 1
+  activeTime: 1
   radarTrigger: {fileID: 7516821138722849392}
   activateEmitter: {fileID: 5655250518595342135}
+  dissolveSpeed: 0.05
   poo: {fileID: 6542530484790526000}
   shitForce: 50
 --- !u!114 &5655250518595342135
@@ -473,7 +474,7 @@ PrefabInstance:
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.95
+      value: -2.12
       objectReference: {fileID: 0}
     - target: {fileID: 3749176523569646397, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
@@ -503,12 +504,12 @@ PrefabInstance:
     - target: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.09
       objectReference: {fileID: 0}
     - target: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5.32
       objectReference: {fileID: 0}
     - target: {fileID: 6742354704484453580, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}

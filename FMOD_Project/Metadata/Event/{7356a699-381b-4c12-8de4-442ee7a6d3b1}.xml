@@ -5,7 +5,7 @@
 			<value>FlagPickup</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{481373b6-c9db-4c80-957a-e44903b97d95}</destination>
@@ -120,6 +120,7 @@
 	<object class="MixerBusEffectChain" id="{9d98d961-f85e-4cbb-9a38-da831b7bc9bc}">
 		<relationship name="effects">
 			<destination>{8f320d1a-f882-4bb3-8bc5-ad43120fc0fc}</destination>
+			<destination>{11261c2e-c86a-457d-b635-fae27422ca56}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{60b5fb08-5318-4857-93f4-41543a761300}" />
@@ -131,5 +132,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{8bd1f79e-ac4f-438e-b14b-56a1d1d1abb6}" />
 	<object class="MixerBusFader" id="{8f320d1a-f882-4bb3-8bc5-ad43120fc0fc}" />
+	<object class="SpatialiserEffect" id="{11261c2e-c86a-457d-b635-fae27422ca56}">
+		<property name="maximumDistance">
+			<value>55</value>
+		</property>
+		<property name="soundSize">
+			<value>120</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{c7a2df01-10b5-42a9-8501-15c68c2477f4}" />
 </objects>

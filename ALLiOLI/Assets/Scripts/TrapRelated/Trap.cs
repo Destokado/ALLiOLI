@@ -6,13 +6,14 @@ using Mirror;
 using Telepathy;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [SelectionBase]
 public abstract class Trap : NetworkBehaviour
 {
     [SerializeField] private float cooldownTime = 5f;
 
-    [SerializeField] private float durationTime = 3f; // must be greater than the cdTimer
+    [FormerlySerializedAs("durationTime")] [SerializeField] private float activeTime = 3f; // must be greater than cooldownTime
     [SerializeField] protected RadarTriggerTrap radarTrigger;
     [SerializeField] protected StudioEventEmitter activateEmitter;
 
@@ -105,7 +106,7 @@ public abstract class Trap : NetworkBehaviour
     }
 
     private float dissolvePercent;
-    private float dissolveSpeed = .01f;
+   [SerializeField] private float dissolveSpeed = .01f;
     private static readonly int DissolvePercent = Shader.PropertyToID("DISSOLVE_PERCENT");
 
     private bool isEnabled  => !isActive && OnCd;
@@ -145,7 +146,7 @@ public abstract class Trap : NetworkBehaviour
         }
 
         cdTimer = cooldownTime;
-        activatedTimer = durationTime;
+        activatedTimer = activeTime;
 
         Debug.Log($"The trap '{gameObject.name}' is being activated.", this.gameObject);
     }
