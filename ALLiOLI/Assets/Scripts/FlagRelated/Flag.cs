@@ -91,7 +91,6 @@ public class Flag : NetworkBehaviour
 
     public void Reset()
     {
-        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.FlagAnnouncement,Vector3.zero, null);
         Debug.Log($"Reseting flag of {Owner.gameObject.name}");
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();
@@ -126,6 +125,7 @@ public class Flag : NetworkBehaviour
         if (transform.position.y <= MapBoundries.DeactivationZoneHeight)
         {
             Debug.Log($"The flag of the player {Owner.name} has fallen into the void. Resetting it", gameObject);
+            SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.FlagAnnouncement,Vector3.zero, null);
             Reset();
         }
     }
