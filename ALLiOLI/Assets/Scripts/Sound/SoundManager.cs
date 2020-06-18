@@ -136,8 +136,12 @@ public class SoundManager : MonoBehaviour
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
             soundEvent.start();
             if (eventsList.ContainsKey(path))
+            {
                 Debug.LogWarning(
-                    $"Trying to add the event {path} that already exists in the dictionary. Operation Cancelled");
+                    $"Trying to add the event {path} that already exists in the dictionary. Removing old event");
+                eventsList.Remove(path);
+            }
+             
 
             else
             {
@@ -187,7 +191,7 @@ public class SoundManager : MonoBehaviour
     public void StopEventLocal(string path, bool fadeout)
     {
         EventInstance soundEvent = GetEventFromPath(path);
-
+        
 
         if (eventsList.Remove(path))
         {

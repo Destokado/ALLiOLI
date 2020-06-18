@@ -34,6 +34,8 @@ public class GameGuiManager : MonoBehaviour
         settingsMenu.SetActive(false);
     }
 
+   
+
     public void SetStartMatchConfiguration()
     {
         preLobby.SetActive(false);

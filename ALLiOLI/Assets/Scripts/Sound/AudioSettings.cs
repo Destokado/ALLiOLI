@@ -1,27 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AudioSettings : MonoBehaviour
 {
-    FMOD.Studio.EventInstance SFXVolumeTestEvent;
-
-   /* [SerializeField] private Slider MasterSlider;
-    [SerializeField] private Slider MusicSlider;
-    [SerializeField] private Slider FXSlider;
-    [SerializeField] private Slider UISlider;*/
-    
+    //TODO: Needs to be put in the GameGUI gameobject in order to execute the awake.
     private FMOD.Studio.Bus Master;
     private FMOD.Studio.VCA Music;
     private FMOD.Studio.VCA FX;
     private FMOD.Studio.VCA UI;
-    
-    
-    float MusicVolume = 0.1f;
-    float FXVolume = 0.7f;
-    float MasterVolume = 1f;
-    float UIVolume = .7f;
+
+
+    private float  MusicVolume = 0.2f;
+    private float  FXVolume = 0.7f;
+    private float  MasterVolume = .9f;
+    private float  UIVolume = .7f;
     
     void Awake()
     {
@@ -30,26 +25,28 @@ public class AudioSettings : MonoBehaviour
         FX = FMODUnity.RuntimeManager.GetVCA("vca:/FX");
         UI = FMODUnity.RuntimeManager.GetVCA("vca:/UI");
         
-       /* MasterSlider.onValueChanged.AddListener(MasterVolumeLevel);
-        MusicSlider.onValueChanged.AddListener(MusicVolumeLevel);
-        FXSlider.onValueChanged.AddListener(FXVolumeLevel);
-        UISlider.onValueChanged.AddListener(UIVolumeLevel);
-        SFXVolumeTestEvent = FMODUnity.RuntimeManager.CreateInstance (SoundManager.EventPaths.WallHit);*/
-        
-
     }
 
+ 
+
+    private float result;
     // Update is called once per frame
     void Update()
     {
+        
+        
         Master.setVolume(MasterVolume);
         Music.setVolume(MusicVolume);
         FX.setVolume(FXVolume);
         UI.setVolume(UIVolume);
+        
+        
+        
     }
     public void MasterVolumeLevel (float newMasterVolume)
     {
         MasterVolume = newMasterVolume;
+        
     }
     public void UIVolumeLevel (float newUIVolume)
     {
@@ -63,12 +60,7 @@ public class AudioSettings : MonoBehaviour
     public void FXVolumeLevel (float newSFXVolume)
     {
         FXVolume = newSFXVolume;
-        FMOD.Studio.PLAYBACK_STATE PbState;
-        SFXVolumeTestEvent.getPlaybackState (out PbState);
-        if (PbState != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
-        {
-            SFXVolumeTestEvent.start ();
-        }
+      
        
     }
 }
