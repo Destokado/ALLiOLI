@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 8275789553012366694}
   - component: {fileID: 128895315493688669}
   m_Layer: 5
-  m_Name: Image
+  m_Name: RadarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,13 +237,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radarIndicator: {fileID: 8275789553012366694}
   imagesAnimation:
-  - {fileID: 21300000, guid: 7d37debbfc1d26f4b97fdbd8ff713f88, type: 3}
-  - {fileID: 21300000, guid: 759db2b27e5b69c458a6cb24c93de6e5, type: 3}
-  - {fileID: 21300000, guid: 0362c6f577a962042808f1af9af744ef, type: 3}
-  - {fileID: 21300000, guid: 3fbbe8222f448174d82c2fac395f960c, type: 3}
-  - {fileID: 21300000, guid: d799d154311026d49a7aea6e2c899fab, type: 3}
-  - {fileID: 21300000, guid: cf187b61c5254084aa9262336e777628, type: 3}
   - {fileID: 21300000, guid: 26334127eb90a5a43941549026285fd6, type: 3}
+  - {fileID: 21300000, guid: cf187b61c5254084aa9262336e777628, type: 3}
+  - {fileID: 21300000, guid: d799d154311026d49a7aea6e2c899fab, type: 3}
+  - {fileID: 21300000, guid: 3fbbe8222f448174d82c2fac395f960c, type: 3}
+  - {fileID: 21300000, guid: 0362c6f577a962042808f1af9af744ef, type: 3}
+  - {fileID: 21300000, guid: 759db2b27e5b69c458a6cb24c93de6e5, type: 3}
+  - {fileID: 21300000, guid: 7d37debbfc1d26f4b97fdbd8ff713f88, type: 3}
 --- !u!1 &2278905296427295721
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 
@@ -10,32 +11,53 @@ public class TrapActivator : NetworkBehaviour
 {
     [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]
     [SerializeField]
-    private GameObject[] objectsToSynchronize;
-
-    [SyncVar(hook = nameof(NewActivationState))]
+    
     private bool activated = true;
 
-    private void NewActivationState(bool oldValue, bool newValue)
+    private void Awake()
     {
-//        Debug.Log("NewActivationState");
-        foreach (GameObject obj in objectsToSynchronize)
-        {
-//            Debug.Log($"Setting {obj} in NewActivationState as {newValue}");
-            obj.SetActive(newValue);
-        }
+        myMeshes = gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
+        
+        MeshRenderer m = GetComponent<MeshRenderer>();
+        if (m != null && !myMeshes.Contains(m)) 
+            myMeshes.Add(m);
     }
-
-    /*private void Start()
-    {
-        if (isServer)
-            activated = true;
-    }*/
 
     private float remainingCoolDown = 0f;
     [SerializeField] private float coolDownTime = 5f;
 
+    private List<MeshRenderer>myMeshes = new List<MeshRenderer>();
+    private float dissolvePercent; 
+    private float dissolveDuration = 3f;
+    private float appearingDuration = 1f;
+    private static readonly int DissolvePercent = Shader.PropertyToID("DISSOLVE_PERCENT");
     private void Update()
     {
+        if (activated)
+        {
+            if (dissolvePercent > 0)
+            {
+                dissolvePercent -= appearingDuration*Time.deltaTime;
+            }
+        }
+
+        if (!activated)
+        {
+            if (dissolvePercent < 1)
+            {
+                dissolvePercent += dissolveDuration*Time.deltaTime;
+            }
+        }
+
+        dissolvePercent = Mathf.Clamp01(dissolvePercent);
+         
+        MaterialPropertyBlock bundle = new MaterialPropertyBlock();
+        bundle.SetFloat( DissolvePercent, dissolvePercent);
+        foreach (MeshRenderer mr in myMeshes)
+            mr.SetPropertyBlock(bundle);
+        
+        
+        
         if (!isServer || (remainingCoolDown <= 0)) return;
 
         remainingCoolDown -= Time.deltaTime;

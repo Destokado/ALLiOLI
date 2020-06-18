@@ -59,7 +59,9 @@ public class EndRound : MatchPhase
 
     private string GetInformativeText()
     {
-        return $"The winner is {MatchManager.instance.roundWinnerName}!";
+        string color = "#ffffff";
+        string winnerString = $"<color={color}>The winner is </color>{MatchManager.instance.roundWinnerName}<color={color}>!</color>";
+        return winnerString + "\nPress \"ready\" to play again" ;
     }
 
     public override State GetCurrentState()
