@@ -28,14 +28,18 @@ public class GlobalConfiguration
                 return;
 
             PlayerInputManager pim = Client.LocalClient.PlayersManager.playerInputManager;
-            FieldInfo prop = pim.GetType().GetField("m_MaxPlayerCount", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (prop != null)  prop.SetValue(pim, value ? 4 : 1);
-            else Debug.LogWarning("PROP IS NULL");
-
+            //FieldInfo prop = pim.GetType().GetField("m_MaxPlayerCount", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            //if (prop != null)  prop.SetValue(pim, value ? 4 : 1);
+            //else Debug.LogWarning("PROP IS NULL");
+            if (!value) 
+                pim.DisableJoining();
+            else
+                pim.EnableJoining();
+            
             _splitScreen = value;
         }
     }
 
-    private bool _splitScreen;
+    private bool _splitScreen = false;
     public string clientName = "";
 }
