@@ -18,7 +18,7 @@ public class RadarUI : MonoBehaviour
         Trap closestTrap = null;
         foreach (KeyValuePair<Trap, SortedList<float, Character>> trapReport in report)
         {
-            float distance = trapReport.Value.Keys[0] / (trapReport.Value.Values[0].HasFlag?1:5);
+            float distance = trapReport.Value.Keys[0] / (!trapReport.Value.Values[0].HasFlag ? 1:1.7f);
             trapReport.Key.isHighlighted = false;
 
             if (distance < distanceClosestChar)
@@ -32,19 +32,16 @@ public class RadarUI : MonoBehaviour
         if (closestTrap != null && !closestTrap.OnCd)
             closestTrap.isHighlighted = true;
 
-        int img = 0;
+        int img = imagesAnimation.Length - 1;
         if (closestCharacter != null)
         {
             img = Mathf.RoundToInt(distanceClosestChar * (imagesAnimation.Length - 1));
+            Debug.Log(img + " with a distance of " + distanceClosestChar);
             radarIndicator.color = closestCharacter.Owner.Color;
             if (img == imagesAnimation.Length - 1)
             {
                 if (!SoundManager.Instance.isPlaying(SoundManager.EventPaths.Alarm))
                    alarmEvent= SoundManager.Instance.PlayEventLocal(SoundManager.EventPaths.Alarm, Vector3.zero);
-               /* else
-                {
-                    SoundManager.Instance.StopEventLocal(SoundManager.EventPaths.Alarm,true);
-                }*/
             }
         }
 

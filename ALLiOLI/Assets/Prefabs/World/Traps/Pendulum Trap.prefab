@@ -130,8 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cooldownTime: 10
-  activeTime: 3
+  cooldownTime: 7
+  activeTime: 1.5
   radarTrigger: {fileID: 4638663025538229398}
   activateEmitter: {fileID: 2779100556042171542}
   dissolveDuration: 1
@@ -562,7 +562,12 @@ PrefabInstance:
     - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: -2.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2729378031939605958, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.04
       objectReference: {fileID: 0}
     - target: {fileID: 3749176523569646397, guid: c6f1e609c6ac64f4a8a460f8fb2f956a,
         type: 3}
