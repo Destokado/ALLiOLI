@@ -28,17 +28,17 @@ public class Battle : MatchPhase
 
     public override bool inGamingMode
     {
-        get => true; 
-        protected set{}
+        get => true;
+        protected set { }
     }
-    
+
     public override void ServerStartState()
     {
         base.ServerStartState();
         //FlagSpawner.Instance.ActivateFlags();
-      //  MatchManager.instance.RpcKillAllCharacters();
-      MatchManager.instance.RpcAllCharactersToSpawn();
-      Client.LocalClient.SoundManagerOnline.PlayEventInPosAllClients(SoundManager.EventPaths.Music, Vector3.zero);
+        //  MatchManager.instance.RpcKillAllCharacters();
+        MatchManager.instance.RpcAllCharactersToSpawn();
+        Client.LocalClient.SoundManagerOnline.PlayEventInPosAllClients(SoundManager.EventPaths.Music, Vector3.zero);
 
         MatchManager.instance.ResetWinner();
         foreach (Client client in MatchManager.instance.clients)
@@ -54,8 +54,7 @@ public class Battle : MatchPhase
     {
         if (!MatchManager.instance.thereIsWinner)
             return this;
-        
+
         return new EndRound();
     }
-    
 }

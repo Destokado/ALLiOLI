@@ -5,7 +5,7 @@
 			<value>FlagAnnounce</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{dbf17d86-5058-44da-8c5e-3b53452fcfa5}</destination>
@@ -116,7 +116,6 @@
 	<object class="MixerBusEffectChain" id="{4881a21a-8710-4199-8e86-6ac051ac87a8}">
 		<relationship name="effects">
 			<destination>{0a6313b6-d51d-46de-92c1-aebb3155636e}</destination>
-			<destination>{ac94457c-d9bb-4664-9817-b3bfcefaad43}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{85d9126b-0ebb-488e-b58e-79fbe1af516a}" />
@@ -128,6 +127,5 @@
 	</object>
 	<object class="MixerBusPanner" id="{ca2937f6-72c5-40c1-9625-aba339ebf975}" />
 	<object class="MixerBusFader" id="{0a6313b6-d51d-46de-92c1-aebb3155636e}" />
-	<object class="SpatialiserEffect" id="{ac94457c-d9bb-4664-9817-b3bfcefaad43}" />
 	<object class="MixerBusFader" id="{25fbd16f-8c48-427d-a4fd-eb1db4682712}" />
 </objects>

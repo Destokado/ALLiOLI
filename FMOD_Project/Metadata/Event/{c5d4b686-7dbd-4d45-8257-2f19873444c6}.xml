@@ -5,7 +5,7 @@
 			<value>PickActivator</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{dbf17d86-5058-44da-8c5e-3b53452fcfa5}</destination>
@@ -122,7 +122,6 @@
 	<object class="MixerBusEffectChain" id="{8170c660-aedc-48a1-9422-1adea39ca4f4}">
 		<relationship name="effects">
 			<destination>{7925b1d9-4a76-4c89-abbe-fce294baa8e8}</destination>
-			<destination>{d4b20dbb-aacd-40b1-b30b-4b67436ba4d4}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{892a39bc-8fa9-4f9e-9485-5650e946ea28}" />
@@ -150,7 +149,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{f05f80e5-36d2-48ce-8476-4ea3fa61800e}" />
 	<object class="MixerBusFader" id="{7925b1d9-4a76-4c89-abbe-fce294baa8e8}" />
-	<object class="SpatialiserEffect" id="{d4b20dbb-aacd-40b1-b30b-4b67436ba4d4}" />
 	<object class="AutomationPoint" id="{ae653f1a-5985-4b90-b78c-a242fefaa839}">
 		<property name="position">
 			<value>0</value>
