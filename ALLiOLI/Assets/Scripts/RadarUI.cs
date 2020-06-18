@@ -18,7 +18,7 @@ public class RadarUI : MonoBehaviour
         Trap closestTrap = null;
         foreach (KeyValuePair<Trap, SortedList<float, Character>> trapReport in report)
         {
-            float distance = trapReport.Value.Keys[0];
+            float distance = trapReport.Value.Keys[0] / (trapReport.Value.Values[0].HasFlag?1:5);
             trapReport.Key.isHighlighted = false;
 
             if (distance < distanceClosestChar)
