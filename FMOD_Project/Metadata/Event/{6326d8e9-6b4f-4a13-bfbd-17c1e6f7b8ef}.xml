@@ -59,7 +59,11 @@
 			<destination>{8c1fc3e8-a8a7-48fb-96ba-a7bbb5c6e9c5}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{184b4b69-b942-4861-87c0-20de20ecb012}" />
+	<object class="EventAutomatableProperties" id="{184b4b69-b942-4861-87c0-20de20ecb012}">
+		<property name="priority">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{8dd80d9b-dd38-4dfb-ab96-c2e8f6ec608c}" />
 	<object class="GroupTrack" id="{4e7e2cd9-81fb-4258-9eab-63b2aba595b9}">
 		<relationship name="modules">
@@ -146,6 +150,7 @@
 	<object class="MixerBusEffectChain" id="{25ec1ea8-f4f0-4b31-9bcb-61d95a0ff592}">
 		<relationship name="effects">
 			<destination>{9cbe9b58-f3ca-445f-a3da-6a0e0357be17}</destination>
+			<destination>{2b700b0e-c6fc-4311-9418-432b8def4c04}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{f97cb217-ee8f-4579-8e38-1ec33768fc8d}" />
@@ -159,7 +164,7 @@
 			<value>0</value>
 		</property>
 		<property name="curveShape">
-			<value>-0.2547189</value>
+			<value>-1.00000048</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{88402438-9f80-451c-b324-ac19644657dd}">
@@ -190,4 +195,5 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{9cbe9b58-f3ca-445f-a3da-6a0e0357be17}" />
+	<object class="SFXReverbEffect" id="{2b700b0e-c6fc-4311-9418-432b8def4c04}" />
 </objects>
