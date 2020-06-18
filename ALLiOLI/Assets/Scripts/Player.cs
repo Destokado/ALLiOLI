@@ -172,6 +172,22 @@ public class Player : NetworkBehaviour
     
     [SyncVar(hook = nameof(UpdatedTrapActivationsNumber))]
     public int trapActivators = -1;
+
+    public string customName
+    {
+        get
+        {
+            string name;
+
+            if (Client.customName.IsNullEmptyOrWhiteSpace())
+                name = gameObject.name.Split('|')[0].Trim();
+            else
+                name = Client.customName;
+            
+            return $"<color=#{ColorUtility.ToHtmlStringRGB(Color)}>{name}</color>";
+        }
+    }
+
     private void UpdatedTrapActivationsNumber(int oldVal, int newVal)
     {
         if (HumanLocalPlayer)

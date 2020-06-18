@@ -5,8 +5,9 @@ public class WindowTrap : Trap
 {
     private SimpleAnimationsManager animManager;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animManager = gameObject.GetComponent<SimpleAnimationsManager>();
     }
 

@@ -93,7 +93,7 @@ public class HumanLocalPlayer : MonoBehaviour
 
     public Vector2 CameraMovement
     {
-        get => !HasControl ? Vector2.zero : _cameraMovement * ControlsConfiguration.Instance.sensitivity;
+        get => !HasControl ? Vector2.zero : _cameraMovement * GlobalConfiguration.Instance.sensitivity;
         private set => _cameraMovement = value;
     }
 

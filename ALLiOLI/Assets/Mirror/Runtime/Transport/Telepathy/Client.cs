@@ -88,7 +88,7 @@ namespace Telepathy
             catch (Exception exception)
             {
                 // something went wrong. probably important.
-                Logger.LogError("Client Recv Exception: " + exception);
+                Logger.LogError("Client Recv Exception: " + exception + "\n---------------------\n" + "Client is '" + client + "'\n");
             }
 
             // sendthread might be waiting on ManualResetEvent,

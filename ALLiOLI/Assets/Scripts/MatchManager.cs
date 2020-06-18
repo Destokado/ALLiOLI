@@ -75,7 +75,7 @@ public class MatchManager : NetworkBehaviour
         get
         {
             Player winner = roundWinnerPlayer;
-            string winnerName = winner != null ? winner.gameObject.name : "NULL";
+            string winnerName = winner != null ? winner.customName : "NULL";
             return winnerName;
         }
     }

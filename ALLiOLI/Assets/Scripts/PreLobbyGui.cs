@@ -53,4 +53,9 @@ public class PreLobbyGui : MonoBehaviour
     {
         AllIOliNetworkManager.singleton.StopClient();
     }
+
+    public void SetNewName(String newName)
+    {
+        GlobalConfiguration.Instance.clientName = newName;
+    }
 }

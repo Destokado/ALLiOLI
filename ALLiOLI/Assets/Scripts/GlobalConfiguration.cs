@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlsConfiguration
+public class GlobalConfiguration
 {
-    public static ControlsConfiguration Instance
+    public static GlobalConfiguration Instance
     {
         get
         {
             if (_instance == null)
-                _instance = new ControlsConfiguration();
+                _instance = new GlobalConfiguration();
             return _instance;
         }
     }
-    private static ControlsConfiguration _instance;
+    private static GlobalConfiguration _instance;
     
     public float sensitivity = 1;
     public bool splitScreen = false;
-    
+    public string clientName = "";
 }

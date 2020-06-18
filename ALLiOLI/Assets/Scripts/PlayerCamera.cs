@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private bool initialized = false;
-
-    
     [SerializeField] public CinemachineBrain cinemachineBrain;
 
     public HumanLocalPlayer HumanLocalPlayer

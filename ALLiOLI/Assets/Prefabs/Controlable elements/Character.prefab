@@ -1036,6 +1036,36 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.0060468763
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.00031620264
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.001339674
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.19110306
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.3025766
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607000735908731126, guid: eedae34bab0835e4fb87cad8379dd414,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.13713923
+      objectReference: {fileID: 0}
     - target: {fileID: 7798446638468778032, guid: eedae34bab0835e4fb87cad8379dd414,
         type: 3}
       propertyPath: m_IsKinematic
@@ -1098,12 +1128,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3568256419870948451, guid: d522cba47f5fea645a33eecf1e4ff8ee,
         type: 3}
-      propertyPath: m_Follow
+      propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 8134060931265600200}
     - target: {fileID: 3568256419870948451, guid: d522cba47f5fea645a33eecf1e4ff8ee,
         type: 3}
-      propertyPath: m_LookAt
+      propertyPath: m_Follow
       value: 
       objectReference: {fileID: 8134060931265600200}
     - target: {fileID: 7019744579135718192, guid: d522cba47f5fea645a33eecf1e4ff8ee,
