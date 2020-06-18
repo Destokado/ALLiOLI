@@ -37,10 +37,23 @@ public abstract class Trap : NetworkBehaviour
         get => _isHighlighted;
         set
         {
-
-            if(value)
+            if (value == _isHighlighted)
+                return;
+            
+            if (value)
+            {
+                MaterialPropertyBlock bundle = new MaterialPropertyBlock();
+                bundle.SetColor("HIGHLIGHT_COLOR", GetHighlightColor() );
+                
                 foreach (MeshRenderer mr in myMeshes)
+                    mr.SetPropertyBlock(bundle);
+                
+                foreach (MeshRenderer mr in myMeshes)
+                {
                     mr.material.EnableKeyword("IS_HIGHLIGHTED");
+
+                }
+            }
             
             else if (!value)
                 foreach (MeshRenderer mr in myMeshes)
@@ -48,6 +61,15 @@ public abstract class Trap : NetworkBehaviour
 
             _isHighlighted = value;
         }
+    }
+
+    private static Color GetHighlightColor()
+    {
+        Color color = Color.white;
+        if (Client.LocalClient.PlayersManager.players.Count == 1)
+            foreach (Player player in Client.LocalClient.PlayersManager.players)
+                color = player.Color;
+        return color;
     }
 
     private bool _isHighlighted;
@@ -76,11 +98,10 @@ public abstract class Trap : NetworkBehaviour
         dissolvePercent = Mathf.Clamp01(dissolvePercent);
          
         MaterialPropertyBlock bundle = new MaterialPropertyBlock();
+        bundle.SetFloat( DissolvePercent, dissolvePercent);
         foreach (MeshRenderer mr in myMeshes)
-        {
-            bundle.SetFloat( DissolvePercent, dissolvePercent);
             mr.SetPropertyBlock(bundle);
-        }
+
     }
 
     private float dissolvePercent;
