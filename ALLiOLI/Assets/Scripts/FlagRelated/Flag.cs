@@ -91,6 +91,7 @@ public class Flag : NetworkBehaviour
 
     public void Reset()
     {
+        SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.FlagAnnouncement,Vector3.zero, null);
         Debug.Log($"Reseting flag of {Owner.gameObject.name}");
         Owner.Character.CmdSetHasFlag(false); 
         transform.position = FlagSpawner.Instance.GetSpawnPos();

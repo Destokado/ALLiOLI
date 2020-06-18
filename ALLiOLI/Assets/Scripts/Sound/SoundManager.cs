@@ -320,10 +320,6 @@ public class SoundManager : MonoBehaviour
 
         #region Traps
 
-        public static string ActivateTrap= "event:/Trap/Activate";
-       
-        
-        
         public static string BirdShitActivate = "event:/Trap/BirdShitActivate";
         public static string BirdShitHit = "event:/Trap/BirdShitHit";
         public static string BombActivate = "event:/Trap/BombActivate";
@@ -345,6 +341,7 @@ public class SoundManager : MonoBehaviour
         #endregion
 
         #region UI
+        public static string ActivateTrap= "event:/UI/Activate";
         public static string Deny="event:/UI/Deny";
         public static string Alarm ="event:/UI/Alarm";
         public static string PickActivator ="event:/UI/PickActivator";
