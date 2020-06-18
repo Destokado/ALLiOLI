@@ -4537,6 +4537,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 36110126489085232, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 36110126489085239, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 746268168611439140, guid: 29deb8317772f594eac85926d851862c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -4827,6 +4837,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3545564463159711024, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545564463159711024, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545564463159711024, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545564463924386121, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 3649347860740299544, guid: 29deb8317772f594eac85926d851862c,
         type: 3}
       propertyPath: m_Name
@@ -4936,6 +4966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412584386494392102, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: 6755680136612194554, guid: 29deb8317772f594eac85926d851862c,
         type: 3}
@@ -5166,6 +5201,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId
       value: 29deb8317772f594eac85926d851862c
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433643492178704648, guid: 29deb8317772f594eac85926d851862c,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 88.55
       objectReference: {fileID: 0}
     - target: {fileID: 8650391178161357599, guid: 29deb8317772f594eac85926d851862c,
         type: 3}
