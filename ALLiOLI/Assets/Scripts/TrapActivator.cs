@@ -9,9 +9,7 @@ using UnityEngine;
 [SelectionBase]
 public class TrapActivator : NetworkBehaviour
 {
-    [Tooltip("Objects that will be activated and deactivated when needed. Visuals or anything needed.")]
-    [SerializeField]
-    
+    [SyncVar]
     private bool activated = true;
 
     private void Awake()
