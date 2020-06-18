@@ -56,6 +56,31 @@ public abstract class Trap : NetworkBehaviour
     {
         if (isServer)
             ServerUpdate();
+        
+        if (isEnabled)
+        {
+            if (dissolvePercent < 1)
+            {
+                dissolvePercent += dissolveSpeed;
+            }
+        }
+
+        if (!isEnabled)
+        {
+            if (dissolvePercent > 0)
+            {
+                dissolvePercent -= dissolveSpeed;
+            }
+        }
+
+        dissolvePercent = Mathf.Clamp01(dissolvePercent);
+         
+        MaterialPropertyBlock bundle = new MaterialPropertyBlock();
+        foreach (MeshRenderer mr in myMeshes)
+        {
+            bundle.SetFloat( DissolvePercent, dissolvePercent);
+            mr.SetPropertyBlock(bundle);
+        }
     }
 
     private float dissolvePercent;
@@ -73,32 +98,6 @@ public abstract class Trap : NetworkBehaviour
             activatedTimer -= Time.deltaTime;
             if (!isActive) Reload();
         }
-
-        if (isEnabled)
-        {
-            if (dissolvePercent < 1)
-            {
-                dissolvePercent += dissolveSpeed;
-            }
-        }
-
-        if (!isEnabled)
-        {
-            if (dissolvePercent > 0)
-            {
-                dissolvePercent -= dissolveSpeed;
-            }
-        }
-
-         dissolvePercent = Mathf.Clamp01(dissolvePercent);
-         
-         MaterialPropertyBlock bundle = new MaterialPropertyBlock();
-         foreach (MeshRenderer mr in myMeshes)
-         {
-             bundle.SetFloat( DissolvePercent,dissolvePercent);
-             mr.SetPropertyBlock(bundle);
-         }
-     
         
     }
 

@@ -9,9 +9,10 @@ public class RollingTubes : Trap
     [SerializeField] private float timeBetweenTubeSpanws = 0.5f;
     [SerializeField] private GameObject tubePrefab;
     [SerializeField] private float tubeSpeed = 5f;
-    
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         pool = gameObject.GetComponentRequired<NetworkPool>();
     }
 
