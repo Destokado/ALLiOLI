@@ -35,7 +35,7 @@ public class RadarUI : MonoBehaviour
         {
             img = Mathf.RoundToInt(distanceClosestChar * (imagesAnimation.Length - 1));
             radarIndicator.color = closestCharacter.Owner.Color;
-            if (img == imagesAnimation.Length)
+            if (img == imagesAnimation.Length-1 && !SoundManager.Instance.isPlaying(SoundManager.EventPaths.Alarm))
                 SoundManager.Instance.PlayOneShotLocal(SoundManager.EventPaths.Alarm, Vector3.zero, null);
         }
 

@@ -235,7 +235,7 @@ public class SoundManager : MonoBehaviour
             EventInstance soundEvent = GetEventFromPath(path);
             PLAYBACK_STATE state;
             soundEvent.getPlaybackState(out state);
-            return !state.Equals(PLAYBACK_STATE.STOPPED);
+            return state.Equals(PLAYBACK_STATE.PLAYING);
         }
         catch (KeyNotFoundException)
         {
