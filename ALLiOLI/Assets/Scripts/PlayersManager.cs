@@ -40,6 +40,9 @@ public class PlayersManager : NetworkBehaviour
     /// <param name="playerInput">The PlayerInput component of the new HumanLocalPlayer gameObject automatically instantiated.</param>
     private void OnPlayerJoined(PlayerInput playerInput)
     {
+        if(!GlobalConfiguration.Instance.splitScreen)
+            playerInputManager.DisableJoining();
+        
         int id = playerInput.GetComponent<HumanLocalPlayer>().id;
         Debug.Log(
             $"Local player with local index {playerInput.playerIndex} and HumanLocalPlayer id '{id}' joined with input device: '{playerInput.devices[0]}'", playerInput.gameObject);
