@@ -36,7 +36,7 @@ public class RadarUI : MonoBehaviour
         if (closestCharacter != null)
         {
             img = Mathf.RoundToInt(distanceClosestChar * (imagesAnimation.Length - 1));
-            Debug.Log(img + " with a distance of " + distanceClosestChar);
+
             radarIndicator.color = closestCharacter.Owner.Color;
             if (img == 0)
             {
