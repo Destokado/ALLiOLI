@@ -80,7 +80,7 @@ public class HumanLocalPlayer : MonoBehaviour
             {
                 _camera = PlayerInput.camera.gameObject.GetComponentRequired<PlayerCamera>();
                 _camera.HumanLocalPlayer = this;
-                _camera.SetLayer(localPlayerNumber + 10, PlayerInput.camera);
+                _camera.SetLayer(PlayerLayer, PlayerInput.camera);
             }
 
             return _camera;
@@ -101,6 +101,7 @@ public class HumanLocalPlayer : MonoBehaviour
     private Vector2 _cameraMovement;
 
     public int localPlayerNumber;
+    public int PlayerLayer => localPlayerNumber + 10;
 
     private bool HasControl =>
         (!GameManager.Instance.PauseMenuShowing && MatchManager.instance.currentPhase.allowMovementAndCameraRotation &&

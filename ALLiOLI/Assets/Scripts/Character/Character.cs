@@ -60,6 +60,7 @@ public class Character : NetworkBehaviour
                 {
                     freeLookCamera.m_XAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "X";
                     freeLookCamera.m_YAxis.m_InputAxisName = Owner.HumanLocalPlayer.name + "Y";
+                    freeLookCamera.gameObject.SetLayerRecursively(Owner.HumanLocalPlayer.PlayerLayer);
                 }/*
                 else
                 {
