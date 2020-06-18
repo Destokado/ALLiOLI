@@ -108,7 +108,10 @@ public class Character : NetworkBehaviour
         if (oldIsDead == true && newIsDead == false) // From dead to alive
             Debug.LogError($"Trying to revive {this.gameObject.name}.");
         else if (oldIsDead == false && newIsDead == true) // From alive to dead
+        {
+            HitParticlesManager.Instance.DisplayAt(transform.position + Vector3.up * 1.7f);
             ActivateRagdoll();
+        }
         else // IDK....
             Debug.LogError($"Unexpected behaviour of the dead state of the {this.gameObject.name}");
     }
