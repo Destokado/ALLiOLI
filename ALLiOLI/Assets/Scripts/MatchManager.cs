@@ -268,8 +268,14 @@ public class MatchManager : NetworkBehaviour
     {
         foreach (Client client in clients)
             if (client.isLocalClient)
+            {
                 foreach (Player player in client.PlayersManager.players)
+                {
+                    player.HumanLocalPlayer.DisablePlayerInputDuring(0.1f);
                     player.Character.transform.position = Spawner.Instance.GetSpawnPos();
+                    player.Character.transform.rotation = Spawner.Instance.GetSpawnRotation();
+                }
+            }
     }
 
 

@@ -47,6 +47,11 @@ public class Spawner : NetworkBehaviour
         return spawnPoint;
     }
 
+    public Quaternion GetSpawnRotation()
+    {
+        return spawnCenterAndRotation.rotation;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(MatchManager.instance.thereIsWinner||!isServer) return;
