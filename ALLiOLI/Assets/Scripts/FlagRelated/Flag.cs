@@ -106,7 +106,8 @@ public class Flag : NetworkBehaviour
 
         foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
         {
-            block.SetColor(baseColor, Owner.Color);
+            Color newColor = new Color( Mathf.Clamp(Owner.Color.r, 0.5f, 1f), Mathf.Clamp(Owner.Color.g, 0.5f, 1f), Mathf.Clamp(Owner.Color.b, 0.5f, 1f) );
+            block.SetColor(baseColor, newColor);
             mr.SetPropertyBlock(block);
         }
     }
