@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Threading;
@@ -88,7 +88,7 @@ namespace Telepathy
             catch (Exception exception)
             {
                 // something went wrong. probably important.
-                Logger.LogError("Client Recv Exception: " + exception + "\n---------------------\n" + "Client is '" + client + "'\n");
+                Logger.LogError("Client Recv Exception: " + exception);
             }
 
             // sendthread might be waiting on ManualResetEvent,
@@ -113,7 +113,10 @@ namespace Telepathy
         {
             // not if already started
             if (Connecting || Connected)
+            {
+                Logger.LogWarning("Telepathy Client can not create connection because an existing connection is connecting or connected");
                 return;
+            }
 
             // We are connecting from now until Connect succeeds or fails
             _Connecting = true;
