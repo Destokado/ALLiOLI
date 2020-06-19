@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: fb4e8280466203a45b4a40f19fb1cb9d,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -383,17 +383,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 719849013}
-    - target: {fileID: 2454005017966744524, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_SpriteState.m_PressedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 425f44957bc6d98459cb2acad5c639e6,
-        type: 3}
-    - target: {fileID: 2454005017966744525, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2454005017966744527, guid: 576b3aaf9f8987645967354983218ac1,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -424,20 +413,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6562718440193497497, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282241323169923607, guid: 576b3aaf9f8987645967354983218ac1,
+    - target: {fileID: 3728987303315574762, guid: 576b3aaf9f8987645967354983218ac1,
         type: 3}
       propertyPath: m_text
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282241323956456363, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      value: A game by Guillem Poy (guplem), Daniel Navarro (Destokado), Emma Montserrat
+        (yakemi), Alba Samaranch (SAMI) and ESteve Sandoval (Steve) with the colaboration
+        of Marc Duran (@marcrey.art)
       objectReference: {fileID: 0}
     - target: {fileID: 8282241323966009946, guid: 576b3aaf9f8987645967354983218ac1,
         type: 3}
@@ -549,27 +530,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8282241324469374572, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8282241324469374573, guid: 576b3aaf9f8987645967354983218ac1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 719849013}
-    - target: {fileID: 8282241324469374573, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_SpriteState.m_PressedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 425f44957bc6d98459cb2acad5c639e6,
-        type: 3}
-    - target: {fileID: 8282241324469374573, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartMatch
-      objectReference: {fileID: 0}
     - target: {fileID: 8282241324469374574, guid: 576b3aaf9f8987645967354983218ac1,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -599,16 +564,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282241324566916616, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282241324566916616, guid: 576b3aaf9f8987645967354983218ac1,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 576b3aaf9f8987645967354983218ac1, type: 3}
