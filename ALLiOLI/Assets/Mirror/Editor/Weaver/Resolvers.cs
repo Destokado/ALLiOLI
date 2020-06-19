@@ -17,12 +17,7 @@ namespace Mirror.Weaver
                 Weaver.Error($"Cannot resolve method {name} without a class");
                 return null;
             }
-            MethodReference method = ResolveMethod(tr, scriptDef, m => m.Name == name);
-            if (method == null)
-            {
-                Weaver.Error($"Method not found with name {name} in type {tr.Name}", tr);
-            }
-            return method;
+            return ResolveMethod(tr, scriptDef, method => method.Name == name);
         }
 
         public static MethodReference ResolveMethod(TypeReference t, AssemblyDefinition scriptDef, System.Func<MethodDefinition, bool> predicate)

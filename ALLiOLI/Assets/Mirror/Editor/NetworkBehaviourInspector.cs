@@ -21,13 +21,10 @@ namespace Mirror
         // does this type sync anything? otherwise we don't need to show syncInterval
         bool SyncsAnything(Type scriptClass)
         {
-            // check for all SyncVar fields, they don't have to be visible
-            foreach (FieldInfo field in InspectorHelper.GetAllFields(scriptClass, typeof(NetworkBehaviour)))
+            // syncVarNames should be set because SyncsAnything is called
+            if (syncVarNames.Count > 0)
             {
-                if (field.IsSyncVar())
-                {
-                    return true;
-                }
+                return true;
             }
 
             // has OnSerialize that is not in NetworkBehaviour?

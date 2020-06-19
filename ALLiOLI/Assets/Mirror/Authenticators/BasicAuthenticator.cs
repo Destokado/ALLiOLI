@@ -6,8 +6,6 @@ namespace Mirror.Authenticators
     [AddComponentMenu("Network/Authenticators/BasicAuthenticator")]
     public class BasicAuthenticator : NetworkAuthenticator
     {
-        static readonly ILogger logger = LogFactory.GetLogger(typeof(BasicAuthenticator));
-
         [Header("Custom Properties")]
 
         // set these in the inspector
@@ -58,7 +56,7 @@ namespace Mirror.Authenticators
 
         public void OnAuthRequestMessage(NetworkConnection conn, AuthRequestMessage msg)
         {
-            if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "Authentication Request: {0} {1}", msg.authUsername, msg.authPassword);
+            Debug.LogFormat("Authentication Request: {0} {1}", msg.authUsername, msg.authPassword);
 
             // check the credentials by calling your web server, database table, playfab api, or any method appropriate.
             if (msg.authUsername == username && msg.authPassword == password)
@@ -104,14 +102,14 @@ namespace Mirror.Authenticators
         {
             if (msg.code == 100)
             {
-                if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "Authentication Response: {0}", msg.message);
+                Debug.LogFormat("Authentication Response: {0}", msg.message);
 
                 // Invoke the event to complete a successful authentication
                 OnClientAuthenticated.Invoke(conn);
             }
             else
             {
-                logger.LogFormat(LogType.Error, "Authentication Response: {0}", msg.message);
+                Debug.LogErrorFormat("Authentication Response: {0}", msg.message);
 
                 // Set this on the client for local reference
                 conn.isAuthenticated = false;

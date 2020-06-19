@@ -1,12 +1,11 @@
+// this class generates OnSerialize/OnDeserialize when inheriting from MessageBase
+
 using System.Linq;
 using Mono.CecilX;
 using Mono.CecilX.Cil;
 
 namespace Mirror.Weaver
 {
-    /// <summary>
-    /// generates OnSerialize/OnDeserialize when inheriting from MessageBase
-    /// </summary>
     static class MessageClassProcessor
     {
 
@@ -62,18 +61,18 @@ namespace Mirror.Weaver
             {
                 serializeFunc.Parameters.Add(new ParameterDefinition("writer", ParameterAttributes.None, Weaver.CurrentAssembly.MainModule.ImportReference(Weaver.NetworkWriterType)));
             }
-            ILProcessor worker = serializeFunc.Body.GetILProcessor();
+            ILProcessor serWorker = serializeFunc.Body.GetILProcessor();
             if (existingMethod != null)
             {
                 //remove default nop&ret from existing empty interface method
-                worker.Body.Instructions.Clear();
+                serWorker.Body.Instructions.Clear();
             }
 
             // if it is not a struct, call base
             if (!td.IsValueType)
             {
                 // call base
-                CallBase(td, worker, "Serialize");
+                CallBase(td, serWorker, "Serialize");
             }
 
             foreach (FieldDefinition field in td.Fields)
@@ -81,9 +80,9 @@ namespace Mirror.Weaver
                 if (field.IsStatic || field.IsPrivate || field.IsSpecialName)
                     continue;
 
-                CallWriter(worker, field);
+                CallWriter(serWorker, field);
             }
-            worker.Append(worker.Create(OpCodes.Ret));
+            serWorker.Append(serWorker.Create(OpCodes.Ret));
 
             //only add if not just replaced body
             if (existingMethod == null)
@@ -92,15 +91,15 @@ namespace Mirror.Weaver
             }
         }
 
-        static void CallWriter(ILProcessor worker, FieldDefinition field)
+        static void CallWriter(ILProcessor serWorker, FieldDefinition field)
         {
             MethodReference writeFunc = Writers.GetWriteFunc(field.FieldType);
             if (writeFunc != null)
             {
-                worker.Append(worker.Create(OpCodes.Ldarg_1));
-                worker.Append(worker.Create(OpCodes.Ldarg_0));
-                worker.Append(worker.Create(OpCodes.Ldfld, field));
-                worker.Append(worker.Create(OpCodes.Call, writeFunc));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_1));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_0));
+                serWorker.Append(serWorker.Create(OpCodes.Ldfld, field));
+                serWorker.Append(serWorker.Create(OpCodes.Call, writeFunc));
             }
             else
             {
@@ -108,16 +107,16 @@ namespace Mirror.Weaver
             }
         }
 
-        static void CallBase(TypeDefinition td, ILProcessor worker, string name)
+        static void CallBase(TypeDefinition td, ILProcessor serWorker, string name)
         {
             MethodReference method = Resolvers.ResolveMethodInParents(td.BaseType, Weaver.CurrentAssembly, name);
             if (method != null)
             {
                 // base
-                worker.Append(worker.Create(OpCodes.Ldarg_0));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_0));
                 // writer
-                worker.Append(worker.Create(OpCodes.Ldarg_1));
-                worker.Append(worker.Create(OpCodes.Call, method));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_1));
+                serWorker.Append(serWorker.Create(OpCodes.Call, method));
             }
         }
 
@@ -144,17 +143,17 @@ namespace Mirror.Weaver
             {
                 serializeFunc.Parameters.Add(new ParameterDefinition("reader", ParameterAttributes.None, Weaver.CurrentAssembly.MainModule.ImportReference(Weaver.NetworkReaderType)));
             }
-            ILProcessor worker = serializeFunc.Body.GetILProcessor();
+            ILProcessor serWorker = serializeFunc.Body.GetILProcessor();
             if (existingMethod != null)
             {
                 //remove default nop&ret from existing empty interface method
-                worker.Body.Instructions.Clear();
+                serWorker.Body.Instructions.Clear();
             }
 
             // if not value type, call base
             if (!td.IsValueType)
             {
-                CallBase(td, worker, "Deserialize");
+                CallBase(td, serWorker, "Deserialize");
             }
 
             foreach (FieldDefinition field in td.Fields)
@@ -162,9 +161,9 @@ namespace Mirror.Weaver
                 if (field.IsStatic || field.IsPrivate || field.IsSpecialName)
                     continue;
 
-                CallReader(worker, field);
+                CallReader(serWorker, field);
             }
-            worker.Append(worker.Create(OpCodes.Ret));
+            serWorker.Append(serWorker.Create(OpCodes.Ret));
 
             //only add if not just replaced body
             if (existingMethod == null)
@@ -173,15 +172,15 @@ namespace Mirror.Weaver
             }
         }
 
-        static void CallReader(ILProcessor worker, FieldDefinition field)
+        static void CallReader(ILProcessor serWorker, FieldDefinition field)
         {
             MethodReference readerFunc = Readers.GetReadFunc(field.FieldType);
             if (readerFunc != null)
             {
-                worker.Append(worker.Create(OpCodes.Ldarg_0));
-                worker.Append(worker.Create(OpCodes.Ldarg_1));
-                worker.Append(worker.Create(OpCodes.Call, readerFunc));
-                worker.Append(worker.Create(OpCodes.Stfld, field));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_0));
+                serWorker.Append(serWorker.Create(OpCodes.Ldarg_1));
+                serWorker.Append(serWorker.Create(OpCodes.Call, readerFunc));
+                serWorker.Append(serWorker.Create(OpCodes.Stfld, field));
             }
             else
             {
