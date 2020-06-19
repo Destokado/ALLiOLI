@@ -84,11 +84,12 @@ public class Character : NetworkBehaviour
         if (block == null)
             block = new MaterialPropertyBlock();
 
-        foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
-        {
-            block.SetColor(baseColor, Owner.Color);
-            mr.SetPropertyBlock(block);
-        }
+        if (Owner != null)
+            foreach (SkinnedMeshRenderer mr in meshRenderersToColor)
+            {
+                block.SetColor(baseColor, Owner.Color);
+                mr.SetPropertyBlock(block);
+            }
     }
 
     private Player _owner;
